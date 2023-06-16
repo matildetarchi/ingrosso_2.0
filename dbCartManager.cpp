@@ -10,14 +10,17 @@ void dbCartManager::add_to_db(Cart *cart) {
     int index=cart->get_num_prod()-1;
     //prendo l'id dell'utente che sta usando il programma e
     // del fornitore del prodotto che sto mettendo nel carrello
-    string query_user="SELECT id FROM users WHERE username='"+cart->get_user(index)+"'";
+    string query_user="SELECT id FROM users WHERE username='"+cart->get_user()+"'";
     int id_user=db.execAndGet(query_user);
 
     string query_prov="SELECT id FROM users WHERE username='"+cart->get_prov(index)+"'";
     int id_prov=db.execAndGet(query_prov);
 
+    string query_store="SELECT id FROM store WHERE desc_prod='"+cart->get_prod(index)+"' AND id_prov="+ to_string(id_prov)+"";
+    int id_store=db.execAndGet(query_store);
+
     //inserisco i dati nel db
-    string query_insert="INSERT INTO cart (quantity, id_store,id_user, id_prov) VALUES (" + to_string(cart->get_quantity(index)) + ", " + to_string(cart->get_id_prod(index)) + ","+ to_string(id_user)+","+to_string(id_prov)+")";
+    string query_insert="INSERT INTO cart (quantity, id_store,id_user, id_prov) VALUES (" + to_string(cart->get_quantity(index)) + ", " + to_string(id_store) + ","+ to_string(id_user)+","+to_string(id_prov)+")";
 
     db.exec(query_insert);
 
@@ -36,8 +39,7 @@ void dbCartManager::remove_all(const string &username) {
     string query="DELETE FROM cart WHERE id_user = "+ to_string(id)+"";
     db.exec(query);
 
-    Cart cart;
-    cart.remove_all(username);
+    cart->remove_all();
 
 }
 
@@ -48,27 +50,10 @@ void dbCartManager::remove_prod(int id) {
     string query="DELETE FROM cart WHERE id = "+ to_string(id)+"";
     db.exec(query);
 
-    Cart cart;
-    cart.remove_one(id);
+    cart->remove_one(id);
 
 }
 
-int dbCartManager::select_count(const string &username) {
-
-    //metodo per sapere quanti prodotti ha l'utente nel carrello
-
-    //prendo l'id dell'utente che sta usando il programma
-    string query="SELECT id FROM users WHERE username ='"+ username+"'";
-    int id = db.execAndGet(query).getInt();
-
-    //lancio la query select count(*) e restituisco il valore
-    string query_select_count="SELECT count(*) FROM cart WHERE id_user ="+ to_string(id)+"";
-    int count = db.execAndGet(query_select_count).getInt();
-    return count;
-
-
-
-}
 
 void dbCartManager::select(const string &username) {
 
@@ -89,7 +74,7 @@ void dbCartManager::select(const string &username) {
         double price=query.getColumn(1).getDouble();
         string username_prov=query.getColumn(2).getText();
         int quantity=query.getColumn(3).getInt();
-        Cart *cart=new Cart(quantity,desc,price,username,username_prov);
+        Cart *cart_sel=new Cart(quantity,desc,price,username,username_prov);
 
     }
 

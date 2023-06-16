@@ -7,6 +7,7 @@
 
 
 #include "database.h"
+#include "favourites.h"
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
@@ -14,12 +15,14 @@
 
 using namespace std;
 class dbFavouritesManager {
-//methods
-
-    void add_to_db();
+public:
+    //methods
+    void add_to_db(Favourites *new_fav);
     void remove_prod(int id);
     void select(const string &username);
-    int select_count(const string &username);
+
+private:
+    Favourites *fav;
 };
 
 
