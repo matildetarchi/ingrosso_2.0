@@ -4,7 +4,7 @@
 
 #include "SelectionSubcategoryPage.h"
 #include "categories.h"
-#include "subcategories.h"
+#include "dbSubcategoriesManager.h"
 #include "ProductListPage.h"
 #include <string>
 #include <vector>
@@ -101,7 +101,7 @@ void SelectionSubcategoryPage::OnChoice(wxCommandEvent& event) {
     choiceSubC->Clear();
     choiceSubC->Append("Select");
     wxVector<string> choices2;
-    Subcategories sub;
+    dbSubcategoriesManager sub;
     std::vector<std::string> subcategories;
     string cat=event.GetString().ToStdString();
     subcategories = sub.select(cat);

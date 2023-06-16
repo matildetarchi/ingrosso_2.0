@@ -4,7 +4,7 @@
 
 #include "OrderHistoryForClientPage.h"
 #include "GlobalVariables.h"
-#include "SingleOrderDataForClient.h"
+#include "SingleOrderClientPage.h"
 
 
 const long OrderHistoryForClientPage::IdButtonCancel =::wxNewId();
@@ -108,7 +108,7 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
             row = selectedRows[i];
         }
         code = mat_order[row][0];
-        SingleOrderDataForClient *view = new SingleOrderDataForClient(_T("ORDER LIST"), code, mat_order[row][1]);
+        SingleOrderClientPage *view = new SingleOrderClientPage(_T("ORDER LIST"), code, mat_order[row][1]);
         view->Show(TRUE);
     }
 

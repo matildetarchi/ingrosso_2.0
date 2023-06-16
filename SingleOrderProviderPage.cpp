@@ -2,24 +2,24 @@
 // Created by dario on 20/04/2023.
 //
 
-#include "SingleOrderDataForProvider.h"
+#include "SingleOrderProviderPage.h"
 #include "GlobalVariables.h"
 
-const long SingleOrderDataForProvider::IdButtonBack =::wxNewId();
+const long SingleOrderProviderPage::IdButtonBack =::wxNewId();
 
 
-BEGIN_EVENT_TABLE (SingleOrderDataForProvider, wxDialog)
-                EVT_BUTTON(IdButtonBack, SingleOrderDataForProvider::ComeBack)
+BEGIN_EVENT_TABLE (SingleOrderProviderPage, wxDialog)
+                EVT_BUTTON(IdButtonBack, SingleOrderProviderPage::ComeBack)
 
 
 END_EVENT_TABLE()
 
-SingleOrderDataForProvider::SingleOrderDataForProvider(const wxString &title, const std::string &code_order):
+SingleOrderProviderPage::SingleOrderProviderPage(const wxString &title, const std::string &code_order):
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
     order=code_order;
     username=GlobalVariables::GetInstance().GetValueUsername();
 
-    OrderProduct orders;
+    Orders orders;
     int row = orders.select_count_single_order_for_provider(username, order);
 
     grid = new wxGrid(this, wxID_ANY);
@@ -53,7 +53,7 @@ SingleOrderDataForProvider::SingleOrderDataForProvider(const wxString &title, co
     Centre();
 }
 
-void SingleOrderDataForProvider::ComeBack(wxCommandEvent &event) {
+void SingleOrderProviderPage::ComeBack(wxCommandEvent &event) {
 
     Close();
 

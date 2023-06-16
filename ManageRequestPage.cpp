@@ -3,7 +3,7 @@
 //
 #include "ManageRequestPage.h"
 #include "GlobalVariables.h"
-#include "SingleOrderDataForProvider.h"
+#include "SingleOrderProviderPage.h"
 
 
 const long ManageRequestPage::IdButtonConfirm =::wxNewId();
@@ -139,7 +139,7 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
             row = selectedRows[i];
         }
         code = mat_order[row][0];
-        SingleOrderDataForProvider *view = new SingleOrderDataForProvider(_T("ORDER LIST"), code);
+        SingleOrderProviderPage *view = new SingleOrderProviderPage(_T("ORDER LIST"), code);
         view->Show(TRUE);
     }
 

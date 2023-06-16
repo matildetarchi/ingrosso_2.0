@@ -5,7 +5,7 @@
 
 #include "wx/wx.h"
 #include "RegistrationPage.h"
-#include "city.h"
+#include "dbCityManager.h"
 #include "InitialPage.h"
 
 const long RegistrationPage::IdButtonConfirm =::wxNewId();
@@ -32,7 +32,7 @@ RegistrationPage::RegistrationPage(const wxString &title):
 
     fgs = new wxFlexGridSizer(20, 1, 12, -5);
 
-    City table;
+    dbCityManager table;
     std::vector<std::string> cities;
 
     cities=table.select();

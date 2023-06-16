@@ -2,8 +2,8 @@
 // Created by Andrea Lipperi on 26/04/23.
 //
 
-#ifndef INGROSSO_ONLINE_SINGLEORDERDATAFORPROVIDER_H
-#define INGROSSO_ONLINE_SINGLEORDERDATAFORPROVIDER_H
+#ifndef INGROSSO_ONLINE_SINGLEORDERPROVIDERPAGE_H
+#define INGROSSO_ONLINE_SINGLEORDERPROVIDERPAGE_H
 
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
@@ -14,9 +14,9 @@
 #include <iostream>
 #include <fstream>
 
-class SingleOrderDataForProvider: public wxDialog {
+class SingleOrderProviderPage: public wxDialog {
 public:
-    SingleOrderDataForProvider(const wxString& title, const std::string &code_order);
+    SingleOrderProviderPage(const wxString& title, const std::string &code_order);
 
     static const long IdButtonBack;
 
@@ -41,4 +41,4 @@ private:
 };
 
 
-#endif //INGROSSO_ONLINE_SINGLEORDERDATAFORPROVIDER_H
+#endif //INGROSSO_ONLINE_SINGLEORDERPROVIDERPAGE_H

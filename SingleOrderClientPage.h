@@ -2,8 +2,8 @@
 // Created by Andrea Lipperi on 04/05/23.
 //
 
-#ifndef INGROSSO_ONLINE_SINGLEORDERDATAFORCLIENT_H
-#define INGROSSO_ONLINE_SINGLEORDERDATAFORCLIENT_H
+#ifndef INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
+#define INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 
 
 
@@ -15,9 +15,9 @@
 #include <iostream>
 #include <fstream>
 
-class SingleOrderDataForClient: public wxDialog {
+class SingleOrderClientPage: public wxDialog {
 public:
-    SingleOrderDataForClient(const wxString& title, const std::string &code_order, const std::string &us_prov);
+    SingleOrderClientPage(const wxString& title, const std::string &code_order, const std::string &us_prov);
 
     static const long IdButtonBack;
 
@@ -35,4 +35,4 @@ private:
     std::string prov;
     std::vector<std::vector<std::string>> mat_order;
 };
-#endif //INGROSSO_ONLINE_SINGLEORDERDATAFORCLIENT_H
+#endif //INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H

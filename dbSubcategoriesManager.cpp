@@ -2,7 +2,7 @@
 // Created by Andrea Lipperi on 16/03/23.
 //
 
-#include "subcategories.h"
+#include "dbSubcategoriesManager.h"
 #include "database.h"
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/Statement.h>
@@ -10,9 +10,9 @@
 #include <string>
 using namespace std;
 
-Subcategories::Subcategories() {}
+dbSubcategoriesManager::dbSubcategoriesManager() {}
 
-std::vector<std::string> Subcategories::select(const string &categories_name) {
+std::vector<std::string> dbSubcategoriesManager::select(const string &categories_name) {
 
     //funzione che seleziona i dati di tutte le sottocategorie
     //appartenenti a una categoria specifica

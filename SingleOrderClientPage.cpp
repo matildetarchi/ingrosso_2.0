@@ -2,26 +2,26 @@
 // Created by Andrea Lipperi on 04/05/23.
 //
 
-#include "SingleOrderDataForClient.h"
+#include "SingleOrderClientPage.h"
 #include "orders.h"
 #include "GlobalVariables.h"
 
-const long SingleOrderDataForClient::IdButtonBack =::wxNewId();
+const long SingleOrderClientPage::IdButtonBack =::wxNewId();
 
 
-BEGIN_EVENT_TABLE (SingleOrderDataForClient, wxDialog)
-                EVT_BUTTON(IdButtonBack, SingleOrderDataForClient::ComeBack)
+BEGIN_EVENT_TABLE (SingleOrderClientPage, wxDialog)
+                EVT_BUTTON(IdButtonBack, SingleOrderClientPage::ComeBack)
 
 
 END_EVENT_TABLE()
 
-SingleOrderDataForClient::SingleOrderDataForClient(const wxString &title, const std::string &code_order, const std::string &us_prov):
+SingleOrderClientPage::SingleOrderClientPage(const wxString &title, const std::string &code_order, const std::string &us_prov):
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
     order=code_order;
     prov=us_prov;
     username=GlobalVariables::GetInstance().GetValueUsername();
 
-    OrderProduct orders;
+    Orders orders;
     int row = orders.select_count_single_order_for_client(username, order, prov);
 
     grid = new wxGrid(this, wxID_ANY);
@@ -54,7 +54,7 @@ SingleOrderDataForClient::SingleOrderDataForClient(const wxString &title, const 
     Centre();
 }
 
-void SingleOrderDataForClient::ComeBack(wxCommandEvent &event) {
+void SingleOrderClientPage::ComeBack(wxCommandEvent &event) {
 
     Close();
 

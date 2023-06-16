@@ -2,7 +2,7 @@
 // Created by Andrea Lipperi on 08/05/23.
 //
 
-#include "city.h"
+#include "dbCityManager.h"
 #include <fstream>
 #include "database.h"
 #include <SQLiteCpp/Statement.h>
@@ -11,7 +11,7 @@
 #include <string>
 using namespace std;
 
-City::City() {
+dbCityManager::dbCityManager() {
 
     //metodo per creare la tabella delle categorie di prodotti nel database
     string query="CREATE TABLE IF NOT EXISTS cities (id INTEGER PRIMARY KEY autoincrement, name VARCHAR NOT NULL);";
@@ -19,7 +19,7 @@ City::City() {
 
 }
 
-int City::number_of_city(){
+int dbCityManager::number_of_city(){
 
     //metodo per sapere il numero di città nel db
     int n;
@@ -28,7 +28,7 @@ int City::number_of_city(){
     return n;
 
 }
-std::vector<std::string> City::select() {
+std::vector<std::string> dbCityManager::select() {
 
     //metodo per prendere i nomi delle categorie dal db
     string city;

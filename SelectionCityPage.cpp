@@ -3,7 +3,7 @@
 //
 
 #include "SelectionCityPage.h"
-#include "city.h"
+#include "dbCityManager.h"
 #include "UsersDataListPage.h"
 #include "categories.h"
 #include "ProductListPage.h"
@@ -34,7 +34,7 @@ SelectionCityPage::SelectionCityPage(const wxString &title) :
 
     wxFlexGridSizer *fgs=new wxFlexGridSizer(6,2,20,5);
 
-    City *table;
+    dbCityManager *table;
 
     std::vector<std::string> cities;
 

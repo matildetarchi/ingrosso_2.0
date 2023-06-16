@@ -4,12 +4,17 @@
 
 #ifndef INGROSSO_ONLINE_USER_H
 #define INGROSSO_ONLINE_USER_H
+
+#define add 0
+#define cancel 1
 #include <string>
+#include <vector>
+
 using namespace std;
 class User {
 public:
     User();
-    User(const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &psw, const std::string &us, int city);
+    User(const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
 
     const string get_type() {
         return type;
@@ -20,38 +25,42 @@ public:
     const string get_address() {
         return address;
     }
-    int get_city() {
-        return id_city;
+    const string get_city() {
+        return city;
     }
     const string get_email() {
         return email;
     }
     const string get_psw() {
-        return pass;
+        return psw;
     }
     const string get_username() {
         return username;
     }
+    void set_address(const string &new_addr) {
+        User::address = new_addr;
+    }
+    void set_city(const string &new_city) {
+        User::city = new_city;
+    }
+    void set_email(const string &new_email) {
+        User::email = new_email;
+    }
+    void set_password(const string &new_psw) {
+        User::psw= new_psw;
+    }
+    void set_username(const string &new_username) {
+        User::username = new_username;
+    }
 
-    //methods
-    void add();
-    bool access_reg(const string &email, const string &psw, int control);
-    bool remove(const string &username, const string &type);
-    void changeData(const string &username_old);
-    void changePsw(const string &email, const string &new_psw);
-    vector<string> select_data(const string &username);
-    const string select_type(const string &email);
-    const string select_username(const string &email);
-    vector<vector<string>> select_data_all_users(const string &type, const string &city, const string &control="users.id");
-    int select_count_users(const string &type, const string &city);
 
 private:
     std::string type;
     string business_name;
     std::string address;
-    int id_city;
+    std::string city;
     std::string email;
-    std::string pass;
+    std::string psw;
     std::string username;
 };
 

@@ -4,7 +4,7 @@
 
 #include "InsertProductPage.h"
 #include "GlobalVariables.h"
-#include "subcategories.h"
+#include "dbSubcategoriesManager.h"
 #include "categories.h"
 #include "store.h"
 #include <vector>
