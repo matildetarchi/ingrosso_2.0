@@ -14,6 +14,7 @@ public:
     Favourites();
     Favourites(const string &desc_product, double price, const string &client, const string &provider);
 
+    virtual ~Favourites() {}
     const string get_prod(int index){
         return desc_prod[index];
     }

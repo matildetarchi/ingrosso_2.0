@@ -15,6 +15,7 @@ public:
     Cart();
     Cart(int quant, const string &desc_product, double price, const string &client, const string &provider);
 
+    virtual ~Cart() {}
     int get_quantity(int index) {
         return quantity[index];
     }

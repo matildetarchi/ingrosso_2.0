@@ -5,7 +5,7 @@
 #ifndef INGROSSO_ONLINE_DBSUBCATEGORIESMANAGER_H
 #define INGROSSO_ONLINE_DBSUBCATEGORIESMANAGER_H
 
-#include "categories.h"
+#include "dbCategoriesManager.h"
 #include <string>
 using namespace std;
 class dbSubcategoriesManager{

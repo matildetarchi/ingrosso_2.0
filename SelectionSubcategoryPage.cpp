@@ -3,7 +3,7 @@
 //
 
 #include "SelectionSubcategoryPage.h"
-#include "categories.h"
+#include "dbCategoriesManager.h"
 #include "dbSubcategoriesManager.h"
 #include "ProductListPage.h"
 #include <string>

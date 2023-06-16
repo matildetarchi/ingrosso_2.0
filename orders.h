@@ -18,6 +18,7 @@ public:
     Orders();
     Orders(int quant, const string &desc,double price_prod, const string &st, const string &d, const string &user, const string &other, int id_ord);
 
+    virtual ~Orders() {}
     int get_quantity(int index) {
         return quantity[index];
     }
@@ -50,7 +51,7 @@ public:
     void set_status(const string &cod_order, const string &new_status){
         for (int i=0;i<get_num_prod(); i++){
             if( get_id_ord(i)==stoi(cod_order))
-                Orders::status[i]=new_status;
+                status[i]=new_status;
         }
     }
 

@@ -5,7 +5,7 @@
 #include "InsertProductPage.h"
 #include "GlobalVariables.h"
 #include "dbSubcategoriesManager.h"
-#include "categories.h"
+#include "dbCategoriesManager.h"
 #include "store.h"
 #include <vector>
 #include <wx/spinctrl.h>

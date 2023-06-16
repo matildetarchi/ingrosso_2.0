@@ -6,7 +6,7 @@
 #include "OrderHistoryForClientPage.h"
 #include "ManageRequestPage.h"
 #include "GlobalVariables.h"
-#include "categories.h"
+#include "dbCategoriesManager.h"
 #include "ProductListPage.h"
 #include <string>
 #include <vector>

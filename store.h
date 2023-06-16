@@ -16,6 +16,7 @@ public:
     Store();
     Store(int quant,const string &sub, double price,const string &desc, const string &provider);
 
+    virtual ~Store() {}
     int get_quantity(int index) {
         return available_quantity[index];
     }

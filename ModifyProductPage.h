@@ -12,7 +12,7 @@
 #include <wx/spinctrl.h>
 #include <string>
 #include "HomePageProviders.h"
-#include "categories.h"
+#include "dbCategoriesManager.h"
 
 
 
