@@ -48,7 +48,7 @@ void dbOrdersManager::changeStatus(const string &username, const string &cod_ord
 }
 
 
-void dbOrdersManager::select_for_provider(const std::string &username, int control) {
+void dbOrdersManager::select_for_provider(const std::string &username) {
 
     //metodo che restituisce una matrice di stringhe
     // contenente i dati generali degli ordini di un fornitore
@@ -83,7 +83,7 @@ void dbOrdersManager::select_for_provider(const std::string &username, int contr
 
 
 
-void dbOrdersManager::select_for_client(const string &username, int control) {
+void dbOrdersManager::select_for_client(const string &username) {
 
     //matodo che prende i dati generali degli ordini di un cliente
 

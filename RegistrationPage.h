@@ -18,6 +18,7 @@
 #include "HomePageProviders.h"
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
+#include "engine.h"
 
 
 

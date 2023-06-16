@@ -10,8 +10,6 @@
 #include "database.h"
 #include <SQLiteCpp/Statement.h>
 #include <string>
-#define accesso 0
-#define registrazione 1
 
 bool dbUserManager::access_reg(const string &email, const string &psw, int control) {
 
@@ -54,12 +52,12 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
     }
     return true;
 }
-void dbUserManager::add_to_db() {
+void dbUserManager::add_to_db(User *us) {
 
     //funzione che aggiunge un nuovo utente al database
 
     //lancio la query di insert
-    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user.get_type() + "', '" +user.get_bus_name() + "', '" + user.get_address() + "', " + user.get_city() + ", '" + user.get_email() + "', '" + user.get_psw() + "', '" + user.get_username() + "');";
+    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + us->get_type() + "', '" +us->get_bus_name() + "', '" + us->get_address() + "', " + us->get_city() + ", '" + us->get_email() + "', '" + us->get_psw() + "', '" + us->get_username() + "');";
     db.exec(query);
 
 }

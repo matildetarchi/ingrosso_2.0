@@ -12,10 +12,12 @@
 #include <iostream>
 #include "database.h"
 #include "user.h"
+#define accesso 0
+#define registrazione 1
 
 class dbUserManager {
 public:
-    void add_to_db();
+    void add_to_db(User *us);
     bool access_reg(const string &email, const string &psw, int control);
     bool remove_from_db(const string &username, const string &type);
     void changeData(const string &username_old, const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username);

@@ -21,9 +21,9 @@ public:
     Favourites *getFavorites();
     Cart *getCart();
 
-    void setOrder(Orders *ord);
-    void setFavourites(Favourites *f);
-    void setCart(Cart *crt);
+    void setOrder(Orders *ord) override;
+    void setFavourites(Favourites *f) override;
+    void setCart(Cart *crt) override;
 
 private:
     Orders *order;

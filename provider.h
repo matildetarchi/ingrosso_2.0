@@ -19,8 +19,8 @@ public:
     Orders *getOrder();
     Store *getStore();
 
-    void setOrder(Orders *ord);
-    void setStore(Store *st);
+    void setOrder(Orders *ord) override;
+    void setStore(Store *st) override;
 
 private:
     Orders *order;

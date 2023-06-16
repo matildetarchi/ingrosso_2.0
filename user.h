@@ -9,6 +9,10 @@
 #define cancel 1
 #include <string>
 #include <vector>
+#include "orders.h"
+#include "cart.h"
+#include "favourites.h"
+#include "store.h"
 
 using namespace std;
 class User {
@@ -17,6 +21,12 @@ public:
     User(const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
 
     virtual ~User() {}
+
+    virtual void setOrder(Orders *ord);
+    virtual void setFavourites(Favourites *fav);
+    virtual void setCart(Cart *crt);
+    virtual void setStore(Store *st);
+
     const string get_type() {
         return type;
     }
