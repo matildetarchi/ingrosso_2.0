@@ -2,7 +2,7 @@
 // Created by Andrea Lipperi on 14/11/22.
 //
 
-#include "categories.h"
+#include "dbCategoriesManager.h"
 #include <fstream>
 #include "database.h"
 #include <SQLiteCpp/Statement.h>
@@ -11,7 +11,7 @@
 #include <string>
 using namespace std;
 
-Categories::Categories() {
+dbCategoriesManager::dbCategoriesManager() {
 
     //metodo per creare la tabella delle categorie di prodotti nel database
     string query="CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY autoincrement, name VARCHAR NOT NULL);";
@@ -19,7 +19,7 @@ Categories::Categories() {
 
 }
 
-int Categories::number_of_cat(){
+int dbCategoriesManager::number_of_cat(){
 
     //metodo per sapere il numero di categorie nel db
     int n;
@@ -28,7 +28,7 @@ int Categories::number_of_cat(){
     return n;
 
 }
-std::vector<std::string> Categories::select() {
+std::vector<std::string> dbCategoriesManager::select() {
 
     //metodo per prendere i nomi delle categorie dal db
     string category;

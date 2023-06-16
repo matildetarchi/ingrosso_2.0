@@ -16,6 +16,7 @@ public:
     User();
     User(const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
 
+    virtual ~User() {}
     const string get_type() {
         return type;
     }
@@ -38,19 +39,19 @@ public:
         return username;
     }
     void set_address(const string &new_addr) {
-        User::address = new_addr;
+        address = new_addr;
     }
     void set_city(const string &new_city) {
-        User::city = new_city;
+        city = new_city;
     }
     void set_email(const string &new_email) {
-        User::email = new_email;
+        email = new_email;
     }
     void set_password(const string &new_psw) {
-        User::psw= new_psw;
+        psw= new_psw;
     }
     void set_username(const string &new_username) {
-        User::username = new_username;
+        username = new_username;
     }
 
 
