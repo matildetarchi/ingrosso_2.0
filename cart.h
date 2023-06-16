@@ -21,11 +21,11 @@ public:
     const string get_prod(int index){
         return desc_prod[index];
     }
-    double get_proce(int index){
+    double get_price(int index){
         return price_prod[index];
     }
-    const string get_user(int index){
-        return username_client[index];
+    const string get_user(){
+        return username_client;
     }
     const string get_prov(int index) {
         return username_prov[index];
@@ -43,7 +43,7 @@ public:
         }
     }
 
-    void remove_all(const string usernam_c);
+    void remove_all();
     void remove_one(int index);
 
 private:
@@ -51,7 +51,7 @@ private:
     std::vector<int> quantity;
     std::vector<string> desc_prod;
     std::vector<double> price_prod;
-    std::vector<string> username_client;
+    string username_client;
     std::vector<string> username_prov;
     int num_prod;
 };
