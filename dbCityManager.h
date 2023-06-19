@@ -9,6 +9,11 @@
 #include <string>
 #include "dbCityManager.h"
 #include <vector>
+#include <fstream>
+#include "database.h"
+#include <SQLiteCpp/Statement.h>
+#include <iostream>
+
 class dbCityManager {
 public :
     dbCityManager();

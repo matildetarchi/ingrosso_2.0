@@ -10,6 +10,10 @@
 #include "store.h"
 #include <string>
 #include <vector>
+#include "database.h"
+#include <SQLiteCpp/Statement.h>
+#include <iostream>
+
 
 using namespace std;
 

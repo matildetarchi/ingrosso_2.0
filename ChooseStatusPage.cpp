@@ -3,13 +3,7 @@
 //
 
 #include "ChooseStatusPage.h"
-#include "OrderHistoryForClientPage.h"
-#include "ManageRequestPage.h"
-#include "GlobalVariables.h"
-#include "dbCategoriesManager.h"
-#include "ProductListPage.h"
-#include <string>
-#include <vector>
+
 
 using namespace std;
 

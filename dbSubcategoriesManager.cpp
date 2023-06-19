@@ -3,11 +3,7 @@
 //
 
 #include "dbSubcategoriesManager.h"
-#include "database.h"
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <string>
+
 using namespace std;
 
 dbSubcategoriesManager::dbSubcategoriesManager() {}

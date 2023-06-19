@@ -8,6 +8,12 @@
 #include <string>
 #include <vector>
 #include "dbCategoriesManager.h"
+#include <fstream>
+#include "database.h"
+#include <SQLiteCpp/Statement.h>
+#include <iostream>
+
+
 using namespace std;
 class dbCategoriesManager {
 public :

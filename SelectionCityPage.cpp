@@ -3,12 +3,7 @@
 //
 
 #include "SelectionCityPage.h"
-#include "dbCityManager.h"
-#include "UsersDataListPage.h"
-#include "dbCategoriesManager.h"
-#include "ProductListPage.h"
-#include <string>
-#include <vector>
+
 
 using namespace std;
 

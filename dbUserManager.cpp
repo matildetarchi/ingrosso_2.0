@@ -3,13 +3,7 @@
 //
 
 #include "dbUserManager.h"
-#include "user.h"
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include "database.h"
-#include <SQLiteCpp/Statement.h>
-#include <string>
+
 #define accesso 0
 #define registrazione 1
 

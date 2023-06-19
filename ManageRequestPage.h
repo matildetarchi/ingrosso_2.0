@@ -8,6 +8,8 @@
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
+#include "GlobalVariables.h"
+#include "SingleOrderProviderPage.h"
 
 class ManageRequestPage: public wxDialog{
 public:

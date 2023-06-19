@@ -3,10 +3,7 @@
 //
 
 #include "ManageProfilePage.h"
-#include "GlobalVariables.h"
-#include "dbCityManager.h"
-#include "user.h"
-#include "wx/textctrl.h"
+
 
 
 const long ManageProfilePage::IdButtonConfirm =::wxNewId();

@@ -3,15 +3,7 @@
 //
 
 #include "ForgotPasswordPage.h"
-#include "InitialPage.h"
-#include <wx/hyperlink.h>
-#include "GlobalVariables.h"
-#include "LogInPage.h"
-#include "wx/wx.h"
-#include "MyApp.h"
-#include "SelectionSubcategoryPage.h"
-#include "user.h"
-#include "HomePageClient.h"
+
 
 
 

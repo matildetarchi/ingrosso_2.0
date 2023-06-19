@@ -8,6 +8,14 @@
 
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
+#include "OrderHistoryForClientPage.h"
+#include "ManageRequestPage.h"
+#include "GlobalVariables.h"
+#include "dbCategoriesManager.h"
+#include "ProductListPage.h"
+#include <string>
+#include <vector>
+
 class ChooseStatusPage : public wxFrame {
 public:
     ChooseStatusPage(const wxString &title);

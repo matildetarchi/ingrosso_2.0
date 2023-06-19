@@ -7,6 +7,12 @@
 
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
+#include "dbCityManager.h"
+#include "UsersDataListPage.h"
+#include "dbCategoriesManager.h"
+#include "ProductListPage.h"
+#include <string>
+#include <vector>
 
 class SelectionCityPage : public wxFrame {
 public:

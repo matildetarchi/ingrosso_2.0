@@ -7,6 +7,11 @@
 
 #include "dbCategoriesManager.h"
 #include <string>
+#include "database.h"
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <SQLiteCpp/Statement.h>
+#include <iostream>
+
 using namespace std;
 class dbSubcategoriesManager{
 public:

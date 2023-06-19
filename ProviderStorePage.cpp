@@ -4,8 +4,7 @@
 
 
 #include "ProviderStorePage.h"
-#include "GlobalVariables.h"
-#include "ModifyProductPage.h"
+
 #define colonne 4
 const long ProviderStorePage::IdButtonDelete =::wxNewId();
 const long ProviderStorePage::IdButtonBack =::wxNewId();

@@ -2,9 +2,13 @@
 // Created by dario on 16/11/2022.
 //
 
-#include"wx/wx.h"
 #ifndef BUTTON_WXWIDGETS_MYAPP_H
 #define BUTTON_WXWIDGETS_MYAPP_H
+#include "wx/wx.h"
+#include "InitialPage.h"
+#include "SelectionSubcategoryPage.h"
+#include "LogInPage.h"
+#include "RegistrationPage.h"
 
 class MyApp: public wxApp // MainApp is the class for our application
 {

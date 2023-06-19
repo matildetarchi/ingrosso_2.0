@@ -20,6 +20,12 @@
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
 #include "wx/grid.h"
+#include "SelectionCityPage.h"
+#include "GlobalVariables.h"
+#include "favourites.h"
+#include "cart.h"
+#include <wx/app.h>
+#include <wx/spinctrl.h>
 
 class UsersDataListPage : public wxFrame {
 public:

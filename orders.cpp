@@ -4,11 +4,7 @@
 
 #define only_pending 0
 #include "orders.h"
-#include "database.h"
-#include <vector>
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <string>
+
 using namespace std;
 
 Orders::Orders() {

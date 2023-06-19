@@ -3,7 +3,7 @@
 //
 
 #include "SingleOrderProviderPage.h"
-#include "GlobalVariables.h"
+
 
 const long SingleOrderProviderPage::IdButtonBack =::wxNewId();
 

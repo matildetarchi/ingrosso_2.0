@@ -3,12 +3,7 @@
 //
 
 #include "FavouritesListPage.h"
-#include "GlobalVariables.h"
-#include "orders.h"
-#include "favourite.h"
-#include "wx/grid.h"
 
-#include <wx/spinctrl.h>
 
 const long FavouritesListPage::IdButtonRemove =::wxNewId();
 const long FavouritesListPage::IdButtonOrder =::wxNewId();

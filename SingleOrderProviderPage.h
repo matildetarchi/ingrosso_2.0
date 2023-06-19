@@ -13,6 +13,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include "GlobalVariables.h"
 
 class SingleOrderProviderPage: public wxDialog {
 public:

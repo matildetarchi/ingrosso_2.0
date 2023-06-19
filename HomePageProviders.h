@@ -8,6 +8,13 @@
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
 #include "InsertProductPage.h"
+#include "ChooseStatusPage.h"
+#include "ProviderStorePage.h"
+#include "SelectionCityPage.h"
+#include "GlobalVariables.h"
+#include "ManageProfilePage.h"
+#include "InitialPage.h"
+#include "user.h"
 
 class HomePageProviders: public wxFrame {
 public:

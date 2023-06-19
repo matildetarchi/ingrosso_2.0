@@ -19,6 +19,11 @@
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
 #include "wx/grid.h"
+#include "GlobalVariables.h"
+#include "cart.h"
+#include "orders.h"
+#include <wx/spinctrl.h>
+
 
 class CartPage : public wxFrame {
 public:

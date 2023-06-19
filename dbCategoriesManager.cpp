@@ -3,12 +3,7 @@
 //
 
 #include "dbCategoriesManager.h"
-#include <fstream>
-#include "database.h"
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <vector>
-#include <string>
+
 using namespace std;
 
 dbCategoriesManager::dbCategoriesManager() {

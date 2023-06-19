@@ -13,6 +13,10 @@
 #include <string>
 #include "HomePageProviders.h"
 #include "dbCategoriesManager.h"
+#include "GlobalVariables.h"
+#include "dbSubcategoriesManager.h"
+#include "store.h"
+#include <vector>
 
 class InsertProductPage: public wxFrame {
 public:

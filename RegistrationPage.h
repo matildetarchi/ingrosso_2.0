@@ -16,8 +16,7 @@
 #include "SelectionSubcategoryPage.h"
 #include "LogInPage.h"
 #include "HomePageProviders.h"
-#include "RegistrationPage.h"
-#include "HomePageClient.h"
+#include "dbCityManager.h"
 
 
 

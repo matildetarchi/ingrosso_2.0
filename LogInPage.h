@@ -5,6 +5,16 @@
 #include <wx/wx.h>
 #include "wx/wxhtml.h"
 #include <wx/hyperlink.h>
+#include "engine.h"
+#include "InitialPage.h"
+#include "ForgotPasswordPage.h"
+#include "GlobalVariables.h"
+#include "MyApp.h"
+#include "SelectionSubcategoryPage.h"
+#include "user.h"
+#include "HomePageClient.h"
+#include "HomePageProviders.h"
+
 #ifndef BUTTON_WXWIDGETS_NEWFRAME_H
 #define BUTTON_WXWIDGETS_NEWFRAME_H
 

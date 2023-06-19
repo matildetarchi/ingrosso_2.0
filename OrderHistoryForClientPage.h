@@ -9,6 +9,8 @@
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
 #include "orders.h"
+#include "GlobalVariables.h"
+#include "SingleOrderClientPage.h"
 
 class OrderHistoryForClientPage : public wxDialog{
 public:
