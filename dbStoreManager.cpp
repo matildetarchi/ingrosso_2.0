@@ -175,7 +175,7 @@ int dbStoreManager::select_count_for_client(const string &sub_name, const string
 
 }
 
-void dbStoreManager::select_for_prov(const string &username) {
+Store dbStoreManager::select_for_prov(const string &username) {
 
     //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
@@ -196,14 +196,15 @@ void dbStoreManager::select_for_prov(const string &username) {
     SQLite::Statement query(db,select);
 
 
-
+    Store *store1;
+    int i=0;
     while (query.executeStep()) {
         string desc_prod = query.getColumn(0).getText();
         double price = query.getColumn(1).getDouble();
         int quantity = query.getColumn(2).getInt();
         string subcategory= query.getColumn(3).getText();
-
-        Store *store1 =new Store(quantity,subcategory,price,desc_prod,username);
+        store1[i] =*new Store(quantity,subcategory,price,desc_prod,username);
     }
+    return *store1;
 
 }

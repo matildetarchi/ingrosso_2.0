@@ -55,7 +55,7 @@ void dbCartManager::remove_prod(int id) {
 }
 
 
-void dbCartManager::select(const string &username) {
+Cart dbCartManager::select(const string &username) {
 
     //metodo per prendere i valori dei prodotti nel carrello dell'utente
 
@@ -68,16 +68,18 @@ void dbCartManager::select(const string &username) {
     SQLite::Statement query(db,select);
 
     //inserisco i valori all'interno della matrice e la restituisco
+    Cart *cart_sel;
+    int i=0;
     while (query.executeStep()){
 
         string desc=query.getColumn(0).getText();
         double price=query.getColumn(1).getDouble();
         string username_prov=query.getColumn(2).getText();
         int quantity=query.getColumn(3).getInt();
-        Cart *cart_sel=new Cart(quantity,desc,price,username,username_prov);
-
+        cart_sel[i]=*new Cart(quantity,desc,price,username,username_prov);
+        i++;
     }
-
+    return *cart_sel;
 }
 
 

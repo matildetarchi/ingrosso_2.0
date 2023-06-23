@@ -65,6 +65,7 @@ public:
     }
 
 
+    std::string username;
 private:
     std::string type;
     string business_name;
@@ -72,7 +73,6 @@ private:
     std::string city;
     std::string email;
     std::string psw;
-    std::string username;
 };
 
 #endif //INGROSSO_ONLINE_USER_H

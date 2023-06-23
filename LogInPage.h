@@ -5,6 +5,7 @@
 #include <wx/wx.h>
 #include "wx/wxhtml.h"
 #include <wx/hyperlink.h>
+#include "engine.h"
 #ifndef BUTTON_WXWIDGETS_NEWFRAME_H
 #define BUTTON_WXWIDGETS_NEWFRAME_H
 

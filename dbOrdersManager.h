@@ -21,9 +21,9 @@ public:
 
     void cancel_order(const std::string &username, const std::string &cod_order, const string &us_prov);
 
-    void select_for_provider(const string &username);
+    Orders select_for_provider(const string &username);
 
-    void select_for_client(const string &username);
+    Orders select_for_client(const string &username);
 
     int select_id_last_order(const string &username_prov);
 

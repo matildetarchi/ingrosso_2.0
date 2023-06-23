@@ -19,7 +19,7 @@ public:
     //methods
     void add_to_db(Favourites *new_fav);
     void remove_prod(int id);
-    void select(const string &username);
+    Favourites select(const string &username);
 
 private:
     Favourites *fav;

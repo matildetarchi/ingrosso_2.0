@@ -22,7 +22,7 @@ public:
     void add_to_db(Cart *cart);
     void remove_all(const string &username);
     void remove_prod(int id);
-    void select(const string &username);
+    Cart select(const string &username);
 
 private:
     Cart *cart;

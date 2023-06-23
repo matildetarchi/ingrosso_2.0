@@ -37,7 +37,7 @@ void dbFavouritesManager::remove_prod(int id) {
 
 }
 
-void dbFavouritesManager::select(const string &username) {
+Favourites dbFavouritesManager::select(const string &username) {
 
     //metodo che prende i valori di tutti i prodotti
     // presenti nella lista dei favourites
@@ -52,13 +52,16 @@ void dbFavouritesManager::select(const string &username) {
 
     //inserisco i valori nella matrice e la restituisco
 
+    Favourites *fav_sel;
+    int i = 0;
     while (query.executeStep()){
 
         string desc=query.getColumn(0).getText();
         double price=query.getColumn(1).getDouble();
         string username_prov=query.getColumn(2).getText();
-        Favourites *fav_sel= new Favourites(desc,price,username,username_prov);
-
+        fav_sel[i]= *new Favourites(desc,price,username,username_prov);
+        i++;
     }
+    return *fav_sel ;
 
 }

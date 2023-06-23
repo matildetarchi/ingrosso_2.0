@@ -48,7 +48,7 @@ void dbOrdersManager::changeStatus(const string &username, const string &cod_ord
 }
 
 
-void dbOrdersManager::select_for_provider(const std::string &username) {
+Orders dbOrdersManager::select_for_provider(const std::string &username) {
 
     //metodo che restituisce una matrice di stringhe
     // contenente i dati generali degli ordini di un fornitore
@@ -65,7 +65,8 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
             to_string(id) + "";
 
     SQLite::Statement query(db, select);
-
+    Orders *order;
+    int i=0;
     while (query.executeStep()) {
         int id_sing_order = query.getColumn(0).getInt();
         string username_cust = query.getColumn(1).getText();
@@ -74,8 +75,10 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
         string desc_prod = query.getColumn(4).getText();
         double price = query.getColumn(5).getDouble();
         int quantity = query.getColumn(6).getInt();
-        Orders *order =new Orders(quantity,desc_prod,price,status,date_order,username,username_cust,id_sing_order);
+        order[i] = *new Orders(quantity,desc_prod,price,status,date_order,username,username_cust,id_sing_order);
+        i++;
     }
+    return *order;
 
 }
 
@@ -83,7 +86,7 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
 
 
 
-void dbOrdersManager::select_for_client(const string &username) {
+Orders dbOrdersManager::select_for_client(const string &username) {
 
     //matodo che prende i dati generali degli ordini di un cliente
 
@@ -95,7 +98,8 @@ void dbOrdersManager::select_for_client(const string &username) {
                    to_string(id) + "";
 
     SQLite::Statement query(db, select);
-
+    Orders *order;
+    int i=0;
     while (query.executeStep()) {
         int id_sing_order = query.getColumn(0).getInt();
         string username_prov = query.getColumn(1).getText();
@@ -104,8 +108,10 @@ void dbOrdersManager::select_for_client(const string &username) {
         string desc_prod = query.getColumn(4).getText();
         double price = query.getColumn(5).getDouble();
         int quantity = query.getColumn(6).getInt();
-        Orders *order =new Orders(quantity,desc_prod,price,status,date_order,username,username_prov,id_sing_order);
+        order[i] =*new Orders(quantity,desc_prod,price,status,date_order,username,username_prov,id_sing_order);
+        i++;
     }
+    return *order;
 
 
 }
