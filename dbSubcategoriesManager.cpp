@@ -3,7 +3,7 @@
 //
 
 #include "dbSubcategoriesManager.h"
-#include "database.h"
+#include "Database.h"
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>

@@ -6,7 +6,7 @@
 #define INGROSSO_ONLINE_DBSTOREMANAGER_H
 #include <iostream>
 #include "Store.h"
-#include "database.h"
+#include "Database.h"
 #include <vector>
 #include <string>
 #include <SQLiteCpp/Statement.h>

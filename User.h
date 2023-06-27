@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 #include "OrdersList.h"
-#include "cart.h"
-#include "favourites.h"
+#include "Cart.h"
+#include "Favourites.h"
 #include "Store.h"
 
 using namespace std;

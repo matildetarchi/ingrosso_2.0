@@ -2,10 +2,7 @@
 // Created by Matilde Tarchi on 02/08/22.
 //
 
-#include "favourites.h"
-#include <vector>
-#include <iostream>
-#include <string>
+#include "Favourites.h"
 using namespace std;
 
 Favourites::Favourites() {}

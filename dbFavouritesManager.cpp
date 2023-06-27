@@ -66,7 +66,6 @@ void dbFavouritesManager::select(const string username) {
     string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
     int id = db->execAndGet(query_user).getInt();
 
-    //TODO togliere id_prov = user.id
     //lancio la query di selezione
     string select="SELECT desc_prod, price_product, username FROM users,favourites,store WHERE favourites.id_prov=users.id AND id_store=store.id AND id_cust="+to_string(id) +" ORDER BY username;";
     SQLite::Statement query(*db,select);

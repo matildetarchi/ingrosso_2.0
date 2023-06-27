@@ -3,13 +3,6 @@
 //
 
 #include "dbUserManager.h"
-#include "user.h"
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include "database.h"
-#include <SQLiteCpp/Statement.h>
-#include <string>
 
 bool dbUserManager::access_reg(const string &email, const string &psw, int control) {
 

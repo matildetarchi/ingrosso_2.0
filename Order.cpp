@@ -12,6 +12,6 @@ Order::Order(Product* p, string s, string d, string u_o, int id_o){
     status=s;
     date_order=d;
     username_other=u_o;
-    id_order=id_o;
+    id_s_order=id_o;
 
 }

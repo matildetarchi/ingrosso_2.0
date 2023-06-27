@@ -5,10 +5,10 @@
 #ifndef INGROSSO_ONLINE_CLIENT_H
 #define INGROSSO_ONLINE_CLIENT_H
 
-#include "user.h"
+#include "User.h"
 #include "OrdersList.h"
-#include "favourites.h"
-#include "cart.h"
+#include "Favourites.h"
+#include "Cart.h"
 
 
 class Client:public User {
@@ -27,9 +27,15 @@ public:
         return cart;
     };
 
-    void set_order(OrdersList *ord) override;
-    void set_favourites(Favourites *f) override;
-    void set_cart(Cart *crt) override;
+    void set_order(OrdersList *ord) override {
+        order = ord;
+    }
+    void set_favourites(Favourites *f) override {
+        fav=f;
+    }
+    void set_cart(Cart *crt) override {
+        cart=crt;
+    }
 
 private:
     OrdersList *order;

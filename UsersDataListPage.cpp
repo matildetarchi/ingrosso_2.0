@@ -6,8 +6,8 @@
 #include "SelectionCityPage.h"
 #include "GlobalVariables.h"
 #include "favourite.h"
-#include "user.h"
-#include "cart.h"
+#include "User.h"
+#include "Cart.h"
 #include <wx/grid.h>
 #include <wx/app.h>
 #include <wx/spinctrl.h>

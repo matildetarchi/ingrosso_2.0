@@ -4,7 +4,7 @@
 
 #include "CartPage.h"
 #include "GlobalVariables.h"
-#include "cart.h"
+#include "Cart.h"
 #include "OrdersList.h"
 #include "wx/grid.h"
 

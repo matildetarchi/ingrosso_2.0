@@ -5,7 +5,7 @@
 #include "ManageProfilePage.h"
 #include "GlobalVariables.h"
 #include "dbCityManager.h"
-#include "user.h"
+#include "User.h"
 #include "wx/textctrl.h"
 
 

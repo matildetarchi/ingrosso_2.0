@@ -4,14 +4,14 @@
 
 #ifndef INGROSSO_ONLINE_ENGINE_H
 #define INGROSSO_ONLINE_ENGINE_H
-#include "user.h"
-#include "database.h"
+#include "User.h"
+#include "Database.h"
 #include "OrdersList.h"
 #include "Store.h"
-#include "favourites.h"
-#include "cart.h"
-#include "client.h"
-#include "provider.h"
+#include "Favourites.h"
+#include "Cart.h"
+#include "Client.h"
+#include "Provider.h"
 #include "dbCartManager.h"
 #include "dbFavouritesManager.h"
 #include "dbOrdersManager.h"

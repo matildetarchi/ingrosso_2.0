@@ -6,8 +6,8 @@
 #define INGROSSO_ONLINE_DBCARTMANAGER_H
 
 
-#include "database.h"
-#include "cart.h"
+#include "Database.h"
+#include "Cart.h"
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>

@@ -9,7 +9,7 @@
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
-#include "database.h"
+#include "Database.h"
 #include "OrdersList.h"
 #include "Order.h"
 

@@ -4,7 +4,7 @@
 
 #include "dbCityManager.h"
 #include <fstream>
-#include "database.h"
+#include "Database.h"
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
 #include <vector>

@@ -10,8 +10,8 @@
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
-#include "database.h"
-#include "user.h"
+#include "Database.h"
+#include "User.h"
 #define accesso 0
 #define registrazione 1
 

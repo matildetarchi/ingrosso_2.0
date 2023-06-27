@@ -6,8 +6,8 @@
 #define INGROSSO_ONLINE_DBFAVOURITESMANAGER_H
 
 
-#include "database.h"
-#include "favourites.h"
+#include "Database.h"
+#include "Favourites.h"
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>

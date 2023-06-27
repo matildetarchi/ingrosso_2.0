@@ -4,7 +4,7 @@
 
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
-#include "engine.h"
+#include "Engine.h"
 #ifndef BUTTON_WXWIDGETS_MYFRAME_H
 #define BUTTON_WXWIDGETS_MYFRAME_H
 

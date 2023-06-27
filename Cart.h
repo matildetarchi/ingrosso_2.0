@@ -10,6 +10,8 @@
 #include "Store.h"
 #include "Product.h"
 #include <vector>
+#define add 0
+#define cancel 1
 
 
 using namespace std;

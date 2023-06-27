@@ -5,7 +5,7 @@
 
 #include "wx/wx.h"
 #include "RegistrationPage.h"
-#include "user.h"
+#include "User.h"
 #include "dbCityManager.h"
 #include "InitialPage.h"
 

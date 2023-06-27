@@ -4,9 +4,7 @@
 //
 
 
-#include "cart.h"
-#define add 0
-#define cancel 1
+#include "Cart.h"
 
 using namespace std;
 

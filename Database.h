@@ -9,7 +9,6 @@
 #include <iostream>
 #include <SQLiteCpp/Statement.h>
 #include "sqlite3.h"
-#include "SqliteDB.h"
 
 //questa pagina contiene l'indirizzo del database sqlite su cui
 //lavorerà il programmaııı

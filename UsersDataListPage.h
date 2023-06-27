@@ -9,7 +9,7 @@
 #include "wx/wx.h"
 #include <string>
 #include <vector>
-#include "user.h"
+#include "User.h"
 #include <iostream>
 #include <fstream>
 #include "MyApp.h"

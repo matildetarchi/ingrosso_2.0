@@ -2,7 +2,7 @@
 // Created by dario on 16/06/2023.
 //
 
-#include "engine.h"
+#include "Engine.h"
 
 Engine::Engine() {
     database=new SQLite::Database("ingrossodb.sqlite");
