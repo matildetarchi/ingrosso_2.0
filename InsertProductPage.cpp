@@ -6,7 +6,7 @@
 #include "GlobalVariables.h"
 #include "dbSubcategoriesManager.h"
 #include "dbCategoriesManager.h"
-#include "store.h"
+#include "Store.h"
 #include <vector>
 #include <wx/spinctrl.h>
 

@@ -34,13 +34,13 @@ bool Engine::doLogin(const string &email, const string &psw) {
             db_fav->set_favourites(user->get_fav());
             db_fav->select(username);
             db_order->set_orders(user->get_order());
-            db_order->select(username);
+            db_order->select_for_client(username);
         } else {
-            ord_vect=db_order->select_for_provider(username);
-            store_vect=db_store->select_for_prov(username);
             user = new Provider(user->get_type(),user->get_bus_name(),user->get_address(),user->get_email(),user->get_psw(),user->get_username(),user->get_city());
-            user->setOrder(&ord_vect);
-            user->setStore(&store_vect);
+            db_store->set_store(user->get_store());
+            db_store->select_for_prov(username);
+            db_order->set_orders(user->get_order());
+            db_order->select_for_provider(username);
         }
         return true;
     } else

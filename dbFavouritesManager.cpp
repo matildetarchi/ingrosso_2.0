@@ -46,17 +46,18 @@ void dbFavouritesManager::remove_all(const string &username) {
     delete fav;
 }
 
-void dbFavouritesManager::remove_prod(int id) {
+void dbFavouritesManager::remove_prod(int id_store) {
 
     //metodo che rimuove un prodotto dalla lista
-    string query="DELETE FROM favourites WHERE id = "+ to_string(id)+"";
+    string query="DELETE FROM favourites WHERE id_store = "+ to_string(id_store)+"";
     db->exec(query);
 
-    fav->remove_one(id);
+
+    fav->remove_one(id_store);
 
 }
 
-void dbFavouritesManager::select(const string &username) {
+void dbFavouritesManager::select(const string username) {
 
     //metodo che prende i valori di tutti i prodotti
     // presenti nella lista dei favourites
@@ -65,18 +66,23 @@ void dbFavouritesManager::select(const string &username) {
     string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
     int id = db->execAndGet(query_user).getInt();
 
+    //TODO togliere id_prov = user.id
     //lancio la query di selezione
     string select="SELECT desc_prod, price_product, username FROM users,favourites,store WHERE favourites.id_prov=users.id AND id_store=store.id AND id_cust="+to_string(id) +" ORDER BY username;";
     SQLite::Statement query(*db,select);
 
     //inserisco i valori nella matrice e la restituisco
 
+
     while (query.executeStep()){
 
         string desc=query.getColumn(0).getText();
         double price=query.getColumn(1).getDouble();
         string username_prov=query.getColumn(2).getText();
-        fav->add_product(desc,price,username_prov);
+        prod->set_desc(desc);
+        prod->set_price(price);
+        prod->set_username_prov(username_prov);
+        fav->add_product(prod);
     }
 
 }

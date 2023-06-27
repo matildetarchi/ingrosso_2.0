@@ -7,7 +7,7 @@
 #define INGROSSO_ONLINE_CART_H
 
 #include <string>
-#include "store.h"
+#include "Store.h"
 #include "Product.h"
 #include <vector>
 
@@ -28,7 +28,7 @@ public:
     const int get_num_prod() const{
         return num_prod;
     }
-    void add_product(const string desc, double price, int quantity, const string username_prov);
+    void add_product(Product* prod);
 
     void update_num(int control);
 

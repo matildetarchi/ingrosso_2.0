@@ -7,7 +7,7 @@
 #include "user.h"
 #include "database.h"
 #include "OrdersList.h"
-#include "store.h"
+#include "Store.h"
 #include "favourites.h"
 #include "cart.h"
 #include "client.h"
@@ -34,10 +34,6 @@ public:
     }
 private:
     User *user;
-    Orders *order;
-    Store *store;
-    Favourites *favourite;
-    Cart *cart;
     dbCartManager *db_cart;
     dbOrdersManager *db_order;
     dbStoreManager *db_store;

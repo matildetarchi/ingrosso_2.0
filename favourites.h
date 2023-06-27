@@ -27,7 +27,7 @@ public:
         return num_prod;
     }
 
-    void add_product(const string desc, double price, const string username_prov);
+    void add_product(Product* prod);
     void update_num_prod(int control);
     void remove_all();
     void remove_one(int index);

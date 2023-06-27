@@ -12,7 +12,7 @@
 #include "OrdersList.h"
 #include "cart.h"
 #include "favourites.h"
-#include "store.h"
+#include "Store.h"
 
 using namespace std;
 class User {
@@ -22,14 +22,14 @@ public:
 
     virtual ~User() {}
 
-    virtual void setOrder(Orders *ord);
-    virtual void setFavourites(Favourites *fav);
-    virtual void setCart(Cart *crt);
-    virtual void setStore(Store *st);
+    virtual void set_order(OrdersList *ord);
+    virtual void set_favourites(Favourites *fav);
+    virtual void set_cart(Cart *crt);
+    virtual void set_store(Store *st);
 
     virtual Cart* get_cart();
     virtual Favourites* get_fav();
-    virtual Orders* get_order();
+    virtual OrdersList* get_order();
     virtual Store* get_store();
 
 

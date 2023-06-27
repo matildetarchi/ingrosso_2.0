@@ -14,19 +14,19 @@ Provider::~Provider() {
     if(store != nullptr)
         delete store;
 }
-const Orders* Provider::getOrder() {
+const OrdersList* Provider::get_order() {
     return order;
 }
 
-void Provider::setOrder(Orders *ord) {
+void Provider::set_order(OrdersList *ord) {
     order = ord;
 }
 
-const Store *Provider::getStore() {
+const Store *Provider::get_store() {
     return store;
 }
 
-void Provider::setStore(Store *st) {
+void Provider::set_store(Store *st) {
     store=st;
 }
 

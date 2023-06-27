@@ -28,9 +28,8 @@ void Favourites:: update_num_prod(int control) {
     }
 }
 
-void Favourites::add_product(const string desc, double price, const string username_prov){
-    Product* p=new Product(desc,price, 1, username_prov);
-    products.push_back(p);
+void Favourites::add_product(Product* prod){
+    products.push_back(prod);
     update_num_prod(add);
 }
 

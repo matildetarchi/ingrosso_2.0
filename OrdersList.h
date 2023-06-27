@@ -7,7 +7,7 @@
 
 #define add 0
 #define cancel 1
-#include "store.h"
+#include "Store.h"
 #include <string>
 #include <vector>
 #include "Order.h"

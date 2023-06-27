@@ -16,14 +16,14 @@ public:
     Provider( const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
     ~Provider() override;
 
-    const Orders *getOrder();
-    const Store *getStore();
+     OrdersList *get_order()override;
+     Store *get_store()override;
 
-    void setOrder(Orders *ord) override;
-    void setStore(Store *st) override;
+    void set_order(OrdersList *ord) override;
+    void set_store(Store *st) override;
 
 private:
-    Orders *order;
+    OrdersList *order;
     Store *store;
 };
 

@@ -17,22 +17,22 @@ public:
     Client( const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
     ~Client() override;
 
-    Orders *getOrder(){
+    OrdersList *get_order()override{
         return order;
     };
-    Favourites *getFavorites(){
+    Favourites *get_fav()override{
         return fav;
     };
-    Cart *getCart(){
+    Cart *get_cart()override{
         return cart;
     };
 
-    void setOrder(Orders *ord) override;
-    void setFavourites(Favourites *f) override;
-    void setCart(Cart *crt) override;
+    void set_order(OrdersList *ord) override;
+    void set_favourites(Favourites *f) override;
+    void set_cart(Cart *crt) override;
 
 private:
-    Orders *order;
+    OrdersList *order;
     Favourites *fav;
     Cart *cart;
 };

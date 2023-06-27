@@ -19,26 +19,16 @@ Client::~Client() {
 }
 
 
-Orders* Client::getOrder() {
-    return order;
-}
 
-void Client::setOrder(Orders *ord) {
+void Client::set_order(OrdersList *ord) {
     order = ord;
 }
 
-void Client::setCart(Cart *crt) {
+void Client::set_cart(Cart *crt) {
     cart=crt;
 }
 
-Cart *Client::getCart() {
-    return cart;
-}
 
-Favourites *Client::getFavorites() {
-    return fav;
-}
-
-void Client::setFavourites(Favourites *f) {
+void Client::set_favourites(Favourites *f) {
     fav=f;
 }

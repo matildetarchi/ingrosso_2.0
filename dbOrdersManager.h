@@ -4,7 +4,7 @@
 
 #ifndef INGROSSO_ONLINE_DBORDERSMANAGER_H
 #define INGROSSO_ONLINE_DBORDERSMANAGER_H
-#include "store.h"
+#include "Store.h"
 #include <string>
 #include <vector>
 #include <SQLiteCpp/Statement.h>

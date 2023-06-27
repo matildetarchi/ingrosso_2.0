@@ -49,14 +49,14 @@ void dbCartManager::remove_all(const string &username) {
     delete cart;
 }
 
-void dbCartManager::remove_prod(int id) {
+void dbCartManager::remove_prod(int id_s) {
 
     //metodo per eliminare un solo prodotto dal carrello
 
-    string query="DELETE FROM cart WHERE id = "+ to_string(id)+"";
+    string query="DELETE FROM cart WHERE id_store = "+ to_string(id_s)+"";
     db->exec(query);
 
-    cart->remove_one(id);
+    cart->remove_one(id_s);
 
 }
 
@@ -81,7 +81,11 @@ void dbCartManager::select(const string &username) {
         double price=query.getColumn(1).getDouble();
         string username_prov=query.getColumn(2).getText();
         int quantity=query.getColumn(3).getInt();
-        cart->add_product(desc,price,quantity,username_prov);
+        prod->set_desc(desc);
+        prod->set_price(price);
+        prod->set_quantity(quantity);
+        prod->set_username_prov(username_prov);
+        cart->add_product(prod);
     }
 
 }

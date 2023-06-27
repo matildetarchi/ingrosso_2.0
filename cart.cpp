@@ -28,9 +28,8 @@ void Cart::update_num(int control){
         num_prod=num_prod-1;
     }
 }
-void Cart::add_product(const string desc, double price, int quantity, const string username_prov){
-    Product* p=new Product(desc,price,quantity,username_prov);
-    products.push_back(p);
+void Cart::add_product(Product* prod){
+    products.push_back(prod);
     update_num(add);
 }
 

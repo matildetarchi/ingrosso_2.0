@@ -12,7 +12,7 @@ class Product {
 
 public:
 
-    Product(std::string desc, double price, int quant, const std::string u_p);
+    Product(std::string desc, double price, int quant, const std::string u_p, const std::string sub);
     ~Product(){};
 
     const std::string get_desc(){
@@ -42,11 +42,24 @@ public:
         return username_prov;
     }
 
+    std::string get_subcategory() {
+        return sub;
+    }
+
+    void set_subcategory(std::string sub) {
+        this->sub = sub;
+    }
+
+    void set_username_prov(std::string u_p) {
+        this->username_prov = u_p;
+    }
+
 private:
     std::string desc;
     double price;
     std::string username_prov;
     int quantity;
+    std::string sub;
 
 };
 
