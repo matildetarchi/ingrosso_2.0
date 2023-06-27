@@ -5,23 +5,35 @@
 
 
 #include "cart.h"
-#include <iostream>
-#include <string>
+#define add 0
+#define cancel 1
 
 using namespace std;
 
 Cart::Cart(){}
 
-Cart::Cart(int quant, const string &desc_product, double price, const string &client, const string &provider) {
+Cart::Cart(const string client) {
 
-    desc_prod.push_back(desc_product);
-    price_prod.push_back(price);
-    quantity.push_back(quant);
     username_client=client;
-    username_prov.push_back(provider);
-    update_num(add);
 
 }
+Cart::~Cart() {
+    remove_all();
+}
+
+void Cart::update_num(int control){
+    if (control==add) {
+        num_prod=num_prod+1;
+    } else if (control==cancel) {
+        num_prod=num_prod-1;
+    }
+}
+void Cart::add_product(const string desc, double price, int quantity, const string username_prov){
+    Product* p=new Product(desc,price,quantity,username_prov);
+    products.push_back(p);
+    update_num(add);
+}
+
 
 void Cart::remove_all() {
     for (int i=0;i<num_prod; i++) {
@@ -29,8 +41,7 @@ void Cart::remove_all() {
     }
 }
 void Cart::remove_one(int index) {
-    quantity.erase(quantity.begin()+index);
-    desc_prod.erase(desc_prod.begin()+index);
-    price_prod.erase(price_prod.begin()+index);
-    username_prov.erase(username_prov.begin()+index);
+   Product* p=products[index];
+   delete p;
+    update_num(cancel);
 }

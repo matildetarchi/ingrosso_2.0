@@ -3,6 +3,7 @@
 //
 
 #include "provider.h"
+
 Provider::Provider( const std::string &t, const std::string &bn,const std::string &a, const std::string &e,
                 const std::string &password, const std::string &us, const std::string &c) : User(t, bn, a, e, password, us, c), order(nullptr),store(nullptr){}
 
@@ -13,7 +14,7 @@ Provider::~Provider() {
     if(store != nullptr)
         delete store;
 }
-Orders* Provider::getOrder() {
+const Orders* Provider::getOrder() {
     return order;
 }
 
@@ -21,7 +22,7 @@ void Provider::setOrder(Orders *ord) {
     order = ord;
 }
 
-Store *Provider::getStore() {
+const Store *Provider::getStore() {
     return store;
 }
 

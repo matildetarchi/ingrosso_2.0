@@ -10,25 +10,35 @@
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
 #include "database.h"
-#include "orders.h"
+#include "OrdersList.h"
+#include "Order.h"
 
 class dbOrdersManager {
 
 public:
-    void add_to_db(Orders *orders);
+    dbOrdersManager(SQLite::Database* d);
 
-    void changeStatus(const string& username,const string &cod_order,const string &new_status);
+    void set_orders(OrdersList* o){
+        tab_order=o;
+    }
 
-    void cancel_order(const std::string &username, const std::string &cod_order, const string &us_prov);
+    void add_to_db();
 
-    Orders select_for_provider(const string &username);
+    void changeStatus(const string username,int cod_order,const string new_status);
 
-    Orders select_for_client(const string &username);
+    void cancel_order(const std::string username, int cod_order, const string us_prov);
 
-    int select_id_last_order(const string &username_prov);
+    void select_for_provider(const string username);
+
+    void select_for_client(const string username);
+
+    int select_id_last_order(const string username_prov);
 
 private:
-    Orders tab_order;
+    OrdersList *tab_order;
+    SQLite::Database *db;
+    Order *order;
+    Product* prod;
 };
 
 

@@ -5,7 +5,7 @@
 #include "CartPage.h"
 #include "GlobalVariables.h"
 #include "cart.h"
-#include "orders.h"
+#include "OrdersList.h"
 #include "wx/grid.h"
 
 #include <wx/spinctrl.h>

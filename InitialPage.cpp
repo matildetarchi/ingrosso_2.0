@@ -17,7 +17,7 @@ BEGIN_EVENT_TABLE (InitialPage, wxFrame)
 END_EVENT_TABLE() // The button is pressed
 
 
-InitialPage::InitialPage(const wxString &title, const wxPoint &pos, const wxSize
+InitialPage::InitialPage(Engine* engine, const wxString &title, const wxPoint &pos, const wxSize
 &size): wxFrame(NULL,  - 1, title, pos, size)
 
 {

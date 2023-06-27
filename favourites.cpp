@@ -10,19 +10,38 @@ using namespace std;
 
 Favourites::Favourites() {}
 
-Favourites::Favourites(const string &desc_product, double price, const string &client, const string &provider) {
+Favourites::Favourites( const string client) {
 
-    desc_prod[num_prod]=desc_product;
-    price_prod[num_prod]=price;
-    username_cust=client;
-    username_prov[num_prod]=provider;
+    username_client=client;
+}
+
+Favourites::~Favourites(){
+    remove_all();
+}
+
+
+void Favourites:: update_num_prod(int control) {
+    if (control==add) {
+        num_prod = num_prod + 1;
+    } else if (control==remove) {
+        num_prod=num_prod-1;
+    }
+}
+
+void Favourites::add_product(const string desc, double price, const string username_prov){
+    Product* p=new Product(desc,price, 1, username_prov);
+    products.push_back(p);
     update_num_prod(add);
+}
 
+void Favourites::remove_all() {
+    for (int i=0;i<num_prod; i++) {
+        remove_one(i);
+    }
 }
 
 void Favourites::remove_one(int index) {
-    desc_prod.erase(desc_prod.begin()+index);
-    price_prod.erase(price_prod.begin()+index);
-    username_prov.erase(username_prov.begin()+index);
+    Product* p=products[index];
+    delete p;
     update_num_prod(remove);
 }

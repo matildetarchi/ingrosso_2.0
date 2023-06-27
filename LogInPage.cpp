@@ -90,8 +90,9 @@ void LogInPage::Access(wxCommandEvent &event) {
         std::string e = tc1->GetValue().ToStdString();
         std::string p = m_passwordText->GetValue().ToStdString();
         int result;
-        Engine engine;
-        result = engine.doLogin(e,p);
+
+        result = engine->doLogin(e,p);
+        user = engine->get_user();
         if (!result) {
             wxLogMessage("Incorrect email or password");
         } else {

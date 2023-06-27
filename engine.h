@@ -6,7 +6,7 @@
 #define INGROSSO_ONLINE_ENGINE_H
 #include "user.h"
 #include "database.h"
-#include "orders.h"
+#include "OrdersList.h"
 #include "store.h"
 #include "favourites.h"
 #include "cart.h"
@@ -25,9 +25,13 @@
 class Engine {
 public:
     Engine();
+
     bool doRegistration(User *user);
     bool doLogin(const string &email, const string &psw);
 
+    User* get_user() {
+        return user;
+    }
 private:
     User *user;
     Orders *order;
@@ -39,6 +43,7 @@ private:
     dbStoreManager *db_store;
     dbFavouritesManager *db_fav;
     dbUserManager *db_user;
+    SQLite::Database *database;
 
 
 };

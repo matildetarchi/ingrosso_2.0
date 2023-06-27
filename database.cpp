@@ -4,4 +4,6 @@
 #include "database.h"
 
 
-SQLite::Database db("ingrossodb.sqlite");
+Database::Database(string db_name){
+    db=new SQLite::Database(db_name);
+}

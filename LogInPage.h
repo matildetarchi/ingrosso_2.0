@@ -32,6 +32,9 @@ private:
     wxButton *Back;
     wxTextCtrl *m_passwordText;
     wxTextCtrl *tc1;
+
+    Engine* engine;
+    User* user;
 };
 
 

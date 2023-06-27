@@ -6,7 +6,7 @@
 #define INGROSSO_ONLINE_PROVIDER_H
 
 #include "user.h"
-#include "orders.h"
+#include "OrdersList.h"
 #include "cart.h"
 
 
@@ -14,10 +14,10 @@ class Provider: public User {
 public:
     Provider();
     Provider( const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
-    virtual ~Provider();
+    ~Provider() override;
 
-    Orders *getOrder();
-    Store *getStore();
+    const Orders *getOrder();
+    const Store *getStore();
 
     void setOrder(Orders *ord) override;
     void setStore(Store *st) override;

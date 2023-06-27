@@ -4,7 +4,7 @@
 
 #include "FavouritesListPage.h"
 #include "GlobalVariables.h"
-#include "orders.h"
+#include "OrdersList.h"
 #include "favourite.h"
 #include "wx/grid.h"
 
