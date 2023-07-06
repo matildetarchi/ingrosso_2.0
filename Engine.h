@@ -34,12 +34,13 @@ public:
     }
 private:
     User *user;
+    SQLite::Database *database;
     dbCartManager *db_cart;
     dbOrdersManager *db_order;
     dbStoreManager *db_store;
     dbFavouritesManager *db_fav;
     dbUserManager *db_user;
-    SQLite::Database *database;
+
 
 
 };

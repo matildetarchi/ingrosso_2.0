@@ -3,19 +3,15 @@
 //
 
 #include "dbCategoriesManager.h"
-#include <fstream>
-#include "Database.h"
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <vector>
-#include <string>
+
 using namespace std;
 
-dbCategoriesManager::dbCategoriesManager() {
+dbCategoriesManager::dbCategoriesManager(SQLite::Database* d) {
+    db=d;
 
     //metodo per creare la tabella delle categorie di prodotti nel database
     string query="CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY autoincrement, name VARCHAR NOT NULL);";
-    db.exec(query);
+    db->exec(query);
 
 }
 
@@ -24,19 +20,19 @@ int dbCategoriesManager::number_of_cat(){
     //metodo per sapere il numero di categorie nel db
     int n;
     string query="SELECT count(*) FROM categories";
-    n = db.execAndGet(query);
+    n = db->execAndGet(query);
     return n;
 
 }
-std::vector<std::string> dbCategoriesManager::select() {
+vector<string> dbCategoriesManager::select() {
 
     //metodo per prendere i nomi delle categorie dal db
     string category;
-    std::vector<std::string> categories;
+    vector<string> categories;
 
     //lancio la query
     // e inserisco i valori in un vettore di stringheche poi restituisco
-    SQLite::Statement query(db, "SELECT name FROM categories");
+    SQLite::Statement query(*db, "SELECT name FROM categories");
     while (query.executeStep()) {
         category = query.getColumn(0).getString();
         categories.push_back(category);

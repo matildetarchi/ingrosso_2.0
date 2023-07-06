@@ -5,6 +5,7 @@
 #include "Engine.h"
 
 Engine::Engine() {
+
     database=new SQLite::Database("ingrossodb.sqlite");
     db_cart=new dbCartManager(database);
     db_store=new dbStoreManager(database);
@@ -15,7 +16,8 @@ Engine::Engine() {
 bool Engine::doRegistration(User *user) {
 
     if( db_user->access_reg(user->get_email(),user->get_psw(),1)){
-        db_user->add_to_db(user);
+        db_user->set_user(user);
+        db_user->add_to_db();
         return true;
     }else
         return false;

@@ -70,6 +70,9 @@ public:
     void set_username(const string &new_username) {
         username = new_username;
     }
+    void set_bus_name(const string &b_name){
+        business_name=b_name;
+    }
 
 
 

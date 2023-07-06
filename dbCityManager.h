@@ -9,11 +9,20 @@
 #include <string>
 #include "dbCityManager.h"
 #include <vector>
+#include <fstream>
+#include "Database.h"
+#include <SQLiteCpp/Statement.h>
+#include <iostream>
+
 class dbCityManager {
 public :
-    dbCityManager();
+
+    dbCityManager(SQLite::Database *d);
     int number_of_city();
     std::vector<std::string> select();
+
+private:
+    SQLite::Database* db;
 };
 
 
