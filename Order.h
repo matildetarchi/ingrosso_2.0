@@ -1,60 +1,71 @@
 //
-// Created by dario on 24/06/2023.
+// Created by Matilde Tarchi on 08/07/23.
 //
 
 #ifndef INGROSSO_ONLINE_ORDER_H
 #define INGROSSO_ONLINE_ORDER_H
-#include "Product.h"
 
-using namespace std;
+#include "OrderProduct.h"
 
 class Order {
-
 public:
 
-    Order(Product* p, string s, string d, string u_o, int id_s_o);
-    ~Order(){};
+    Order(const string &s, const string &d, const string &u_c, int id_s_p);
 
-    const string get_status(){
+    ~Order();
+
+    int get_id_s_prod() {
+        return id_s_product;
+    }
+
+    void set_id_s_prod(int id_s_p) {
+        this->id_s_product = id_s_p;
+    }
+
+    int get_num_prod() const{
+        return num_prod;
+    }
+
+    const string &get_status(){
         return status;
     }
-    Product* get_prod(){
+
+    void set_status(int id_s_p, const string &new_status){
+        if( get_id_s_prod()==id_s_p)
+            status = new_status;
+    }
+
+    Product* get_prod() {
         return prod;
     }
-    void set_prod(Product* p){
-        prod=p;
-    }
 
-    const int get_id_s_ord(){
-        return id_s_order;
-    }
-    void set_id_s_ord(int id_s_order){
-        this->id_s_order=id_s_order;
-    }
+    //TODO è da fare qui set prod?
 
-    const string get_date(){
+    const string &get_date() {
         return date_order;
     }
-    void set_date(string date_order){
-        this->date_order=date_order;
+
+    void set_date(string date_o) {
+        this->date_order=date_o;
     }
 
-    const string get_us_other(){
-        return username_other;
+    const string &get_us_client() {
+        return username_client;
     }
 
-    void set_status(int id_s_order, const string &new_status){
-        if( get_id_s_ord()==id_s_order)
-            status=new_status;
-    }
+    //TODO implementare funzione
+    double get_total(Order* o);
+
+    vector<OrderProduct*> order_p;
 
 private:
 
     Product* prod;
-    std::string status;
+    int num_prod;
+    int id_s_product;
+    string status;
     string date_order;
-    std::string username_other;
-    int id_s_order;
+    string username_client;
 
 };
 

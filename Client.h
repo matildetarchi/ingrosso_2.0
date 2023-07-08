@@ -9,35 +9,47 @@
 #include "OrdersList.h"
 #include "Favourites.h"
 #include "Cart.h"
+#include <memory>
 
+using namespace std;
 
-class Client:public User {
+class Client : public User {
 public:
-    Client();
-    Client( const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
+
+    Client(const string &t, const string &bn, const string &a, const string &e, const string &password,
+           const string &us, const string &c);
+
     ~Client() override;
 
-    OrdersList *get_order()override{
+    //TODO capire se serve davvero override, perche teoricamente servirebbe se la funzione è presente anche nella classe base
+    OrdersList *get_order() override {
         return order;
     };
-    Favourites *get_fav()override{
+
+    Favourites *get_fav() override {
         return fav;
     };
-    Cart *get_cart()override{
+
+    Cart *get_cart() override {
         return cart;
     };
 
     void set_order(OrdersList *ord) override {
         order = ord;
     }
+
     void set_favourites(Favourites *f) override {
-        fav=f;
-    }
-    void set_cart(Cart *crt) override {
-        cart=crt;
+        fav = f;
     }
 
+    void set_cart(Cart *crt) override {
+        cart = crt;
+    }
+
+    void do_order(OrdersList *ord);
+
 private:
+    //TODO vedere se va bene utilizzare unique pointer in questo punto
     OrdersList *order;
     Favourites *fav;
     Cart *cart;

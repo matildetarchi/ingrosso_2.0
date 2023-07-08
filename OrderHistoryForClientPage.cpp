@@ -20,8 +20,8 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(const wxString &title, int 
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
     ctrl=control;
     username=GlobalVariables::GetInstance().GetValueUsername();
-    wxStaticText *order_txt = new wxStaticText(this, -1, wxT("Order By"));
-    wxString myString[]={"Code Order", "Provider Name", "Date Order"};
+    wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
+    wxString myString[]={"Code OrderProduct", "Provider Name", "Date OrderProduct"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");
     choiceOrder->Append(3,myString);
@@ -64,7 +64,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(const wxString &title, int 
     grid->AutoSize();
 
 
-    Cancel=new wxButton (this,IdButtonCancel,_T ("Cancel Order"),wxDefaultPosition,wxDefaultSize,0);
+    Cancel=new wxButton (this,IdButtonCancel,_T ("Cancel OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
     View=new wxButton (this,IdButtonView,_T ("View"),wxDefaultPosition,wxDefaultSize,0);
 
     sizer = new wxBoxSizer(wxVERTICAL);

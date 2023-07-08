@@ -17,8 +17,7 @@
 using namespace std;
 class User {
 public:
-    User();
-    User(const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
+    User(const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
 
     virtual ~User() {}
 
@@ -34,42 +33,54 @@ public:
 
 
 
-    const string get_type() {
+    const string &get_type() {
         return type;
     }
-    const string get_bus_name() {
+
+    const string &get_bus_name() {
         return business_name;
     }
-    const string get_address() {
+
+    const string &get_address() {
         return address;
     }
-    const string get_city() {
+
+    const string &get_city() {
         return city;
     }
-    const string get_email() {
+
+    const string &get_email() {
         return email;
     }
-    const string get_psw() {
+
+    const string &get_psw() {
         return psw;
     }
-    const string get_username() {
+
+    const string &get_username() {
         return username;
     }
+
     void set_address(const string &new_addr) {
         address = new_addr;
     }
+
     void set_city(const string &new_city) {
         city = new_city;
     }
+
     void set_email(const string &new_email) {
         email = new_email;
     }
+
     void set_password(const string &new_psw) {
         psw= new_psw;
     }
+
     void set_username(const string &new_username) {
         username = new_username;
     }
+
     void set_bus_name(const string &b_name){
         business_name=b_name;
     }
@@ -77,13 +88,13 @@ public:
 
 
 private:
-    std::string type;
+    string type;
     string business_name;
-    std::string address;
-    std::string city;
-    std::string email;
-    std::string psw;
-    std::string username;
+    string address;
+    string city;
+    string email;
+    string psw;
+    string username;
 };
 
 #endif //INGROSSO_ONLINE_USER_H

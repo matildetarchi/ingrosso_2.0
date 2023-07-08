@@ -8,17 +8,19 @@
 #include "User.h"
 #include "OrdersList.h"
 #include "Cart.h"
+#include "OrderProduct.h"
 
-
+using namespace std;
 class Provider: public User {
 public:
-    Provider();
-    Provider( const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c);
+
+    Provider( const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 
-     OrdersList *get_order()override{
+     OrdersList *get_order()override {
            return order;
      }
+
      Store *get_store()override {
          return store;
      }
@@ -26,9 +28,15 @@ public:
     void set_order(OrdersList *ord) override {
         order = ord;
     }
+
     void set_store(Store *st) override {
         store=st;
     }
+
+    void accept_order(Order* o);
+
+    void deny_order(Order* o);
+
 private:
     OrdersList *order;
     Store *store;

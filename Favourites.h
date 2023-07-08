@@ -14,21 +14,24 @@ using namespace std;
 
 class Favourites{
 public:
-    Favourites();
-    Favourites(const string client);
+
+    explicit Favourites(const string &client);
 
     ~Favourites();
 
-    const string get_client(){
+    const string &get_client(){
         return username_client;
     }
 
-    const int get_num_prod() const{
+    int get_num_prod() const{
         return num_prod;
     }
 
+
     void add_product(Product* prod);
+
     void update_num_prod(int control);
+
     void remove_all();
     void remove_one(int index);
 

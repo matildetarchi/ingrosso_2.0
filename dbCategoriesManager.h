@@ -20,7 +20,7 @@ class dbCategoriesManager {
 public :
     dbCategoriesManager(SQLite::Database* d);
     int number_of_cat();
-    std::vector<std::string> select();
+    vector<string> select();
 private:
     SQLite::Database* db;
 };

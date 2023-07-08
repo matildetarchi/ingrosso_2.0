@@ -5,15 +5,16 @@
 #include "Store.h"
 using namespace std;
 
-Store::Store() {}
 
-Store::Store(const string provider){
+
+Store::Store(const string &provider) {
     username_prov = provider;
 }
 
 Store::~Store() {
     remove_all();
 }
+
 void Store::update_num(int control) {
     if (control==add) {
         num_prod=num_prod+1;

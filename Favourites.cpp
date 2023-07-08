@@ -5,9 +5,9 @@
 #include "Favourites.h"
 using namespace std;
 
-Favourites::Favourites() {}
 
-Favourites::Favourites( const string client) {
+
+Favourites::Favourites( const string &client) {
 
     username_client=client;
 }

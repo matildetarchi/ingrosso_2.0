@@ -31,7 +31,7 @@ FavouritesListPage::FavouritesListPage(const wxString &title):
     grid->SetColLabelValue(0, "Name Product");
     grid->SetColLabelValue(1, "Price");
     grid->SetColLabelValue(2, "Provider Name");
-    grid->SetColLabelValue(3, "Quantity to Order");
+    grid->SetColLabelValue(3, "Quantity to OrderProduct");
 
     mat_fav=fav.select(username);
 
@@ -48,7 +48,7 @@ FavouritesListPage::FavouritesListPage(const wxString &title):
     grid->AutoSize();
 
     Remove=new wxButton(this,IdButtonRemove,_T ("Remove"),wxDefaultPosition,wxDefaultSize,0);
-    Order=new wxButton(this,IdButtonOrder,_T ("Do Order"),wxDefaultPosition,wxDefaultSize,0);
+    Order=new wxButton(this,IdButtonOrder,_T ("Do OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(this,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
 
@@ -112,7 +112,7 @@ void FavouritesListPage::IsOrder(wxCommandEvent &event) {
         }
         while (i<row){
             quantity = grid->GetCellValue(i, 3).ToStdString();
-            OrderProduct *order = new OrderProduct(stoi(quantity),stoi(mat_fav[i][3]), "S",data,username,mat_fav[i][2],id_order[i]);
+            OrderProduct *order = new OrderProduct(stoi(quantity), stoi(mat_fav[i][3]), "S", data, username, mat_fav[i][2], id_order[i]);
             order->add();
             i++;
         }

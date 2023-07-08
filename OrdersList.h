@@ -17,21 +17,21 @@ using namespace std;
 
 class OrdersList{
 public:
-    OrdersList();
-    OrdersList(const string &user);
+
+    OrdersList(const string &user, int id_s_o);
 
     ~OrdersList();
 
 
-    int get_num_prod(){
+    int get_num_prod() const {
         return num_prod;
     }
 
-    const string get_username_user(){
+    const string &get_username_user() {
         return username_user;
     };
 
-    void add_order(Product* p, string status, string date_order, string username_other, int id_order);
+    void add_order(Product* p, const string &status, const string &date_order, const string &username_other, int id_order);
     void update_num(int control);
     void remove_one(int index);
     void remove_all();

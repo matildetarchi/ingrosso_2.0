@@ -15,15 +15,15 @@ OrdersList::~OrdersList(){
     remove_all();
 }
 
-void OrdersList::add_order(Product* p, string status, string date_order, string username_other, int id_order){
+void OrdersList::add_order(Product* p, const string &status, const string &date_order,const string &username_other, int id_order){
 
-    Order* o=new Order(p,status,date_order,username_other,id_order);
+    OrderProduct* o = new OrderProduct(p, status, date_order, username_other, id_order);
     orders.push_back(o);
     update_num(add);
 }
 
 void OrdersList::remove_one(int index) {
-    Order* o=orders[index];
+    OrderProduct* o=orders[index];
     delete o;
     update_num(cancel);
 }

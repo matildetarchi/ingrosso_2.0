@@ -16,7 +16,7 @@ using namespace std;
 
 class Database{
 public:
-    Database(string db_name);
+    explicit Database(string db_name);
     ~Database();
 
     SQLite::Database* get_db(){

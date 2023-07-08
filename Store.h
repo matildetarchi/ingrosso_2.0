@@ -14,17 +14,17 @@
 using namespace std;
 class Store{
 public:
-    Store();
-    Store(const string provider);
+
+    explicit Store(const string &provider);
 
     ~Store();
 
 
-    int get_num_prod() {
+    int get_num_prod() const {
         return num_prod;
     }
 
-    const string get_prov() {
+    const string &get_prov() {
         return username_prov;
     }
 
@@ -33,7 +33,7 @@ public:
     void remove_one(int index);
     void remove_all();
 
-    std::vector<Product*> store;
+    vector<Product*> store;
 
 private:
     string username_prov;

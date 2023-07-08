@@ -18,18 +18,22 @@ using namespace std;
 
 class Cart {
 public:
-    Cart();
-    Cart(const string client);
+
+    explicit Cart(const string &client);
     ~Cart();
 
 
-    const string get_client(){
+    const string &get_client() {
         return username_client;
     }
 
-    const int get_num_prod() const{
+    int get_num_prod() const{
         return num_prod;
     }
+
+    //TODO
+    int get_total();
+
     void add_product(Product* prod);
 
     void update_num(int control);
@@ -37,11 +41,11 @@ public:
     void remove_all();
     void remove_one(int index);
 
-    std::vector<Product*> products;
+    vector<Product*> products;
 
 private:
     string username_client;
     int num_prod;
 };
 
-#endif //INGR_ONLINE_CART_H
+#endif //INGROSSO_ONLINE_CART_H

@@ -32,7 +32,7 @@ CartPage::CartPage(const wxString &title):
     grid->SetColLabelValue(0, "Name Product");
     grid->SetColLabelValue(1, "Price");
     grid->SetColLabelValue(2, "Provider Name");
-    grid->SetColLabelValue(3, "Quantity to Order");
+    grid->SetColLabelValue(3, "Quantity to OrderProduct");
     mat_cart=cart.select(username);
     for (int i = 0; i < cart.select_count(username); i++) {
 
@@ -47,7 +47,7 @@ CartPage::CartPage(const wxString &title):
     grid->AutoSize();
 
     Remove=new wxButton(this,IdButtonRemove,_T ("Remove"),wxDefaultPosition,wxDefaultSize,0);
-    Order=new wxButton(this,IdButtonOrder,_T ("Do Order"),wxDefaultPosition,wxDefaultSize,0);
+    Order=new wxButton(this,IdButtonOrder,_T ("Do OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(this,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
     Help=new wxButton(this,IdButtonHelp,_T ("?"),wxDefaultPosition,wxDefaultSize,0);
 
@@ -102,7 +102,7 @@ void CartPage::IsOrder(wxCommandEvent &event) {
     }
     while (i<row){
         string new_quantity=grid->GetCellValue(i,3).ToStdString();
-        OrderProduct *order = new OrderProduct(stoi(new_quantity),stoi(mat_cart[i][4]),"S",data,username,mat_cart[i][2],id_order[i]);
+        OrderProduct *order = new OrderProduct(stoi(new_quantity), stoi(mat_cart[i][4]), "S", data, username, mat_cart[i][2], id_order[i]);
         order->add();
         i++;
     }

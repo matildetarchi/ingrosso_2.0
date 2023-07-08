@@ -11,7 +11,7 @@
 #include <iostream>
 #include "Database.h"
 #include "OrdersList.h"
-#include "Order.h"
+#include "OrderProduct.h"
 
 class dbOrdersManager {
 
@@ -37,7 +37,7 @@ public:
 private:
     OrdersList *tab_order;
     SQLite::Database *db;
-    Order *order;
+    OrderProduct *order;
     Product* prod;
 };
 

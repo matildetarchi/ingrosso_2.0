@@ -23,7 +23,7 @@ UsersDataListPage::UsersDataListPage(const wxString &title, const std::string &v
     city=var_city;
     type=GlobalVariables::GetInstance().GetValueType();
 
-    wxStaticText *order = new wxStaticText(this, -1, wxT("Order By"));
+    wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     choiceOrder = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
     if (city=="All") {
         wxString myString[] = {"Business Name", "Username", "Email", "Address", "City"};

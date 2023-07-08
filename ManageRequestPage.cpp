@@ -21,8 +21,8 @@ ManageRequestPage::ManageRequestPage(const wxString &title, int control):
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
     ctrl=control;
     username=GlobalVariables::GetInstance().GetValueUsername();
-    wxStaticText *order_txt = new wxStaticText(this, -1, wxT("Order By"));
-    wxString myString[]={"Code Order", "Customer Name", "Date Order"};
+    wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
+    wxString myString[]={"Code OrderProduct", "Customer Name", "Date OrderProduct"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");
     choiceOrder->Append(3,myString);
@@ -65,8 +65,8 @@ ManageRequestPage::ManageRequestPage(const wxString &title, int control):
     grid->AutoSize();
 
 
-    Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm Order"),wxDefaultPosition,wxDefaultSize,0);
-    Deny=new wxButton (this,IdButtonDeny,_T ("Deny Order"),wxDefaultPosition,wxDefaultSize,0);
+    Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
+    Deny=new wxButton (this,IdButtonDeny,_T ("Deny OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
     View=new wxButton (this,IdButtonView,_T ("View"),wxDefaultPosition,wxDefaultSize,0);
 
     sizer = new wxBoxSizer(wxVERTICAL);

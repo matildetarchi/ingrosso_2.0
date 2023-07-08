@@ -7,3 +7,7 @@
 Database::Database(string db_name){
     db=new SQLite::Database(db_name);
 }
+//TODO è ok?
+Database::~Database() {
+    delete db;
+}

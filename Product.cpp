@@ -4,14 +4,14 @@
 
 #include "Product.h"
 
+using namespace std;
+Product::Product(const string &d, double p, int q, const string &u_p, const string &s) {
 
-Product::Product(std::string d, double p,int q, const std::string u_p, std::string s) {
-
-    desc=d;
-    price=p;
-    quantity=q;
-    username_prov=u_p;
-    sub = s;
+    description = d;
+    price = p;
+    quantity = q;
+    username_prov = u_p;
+    subcategory = s;
 
 }
 
