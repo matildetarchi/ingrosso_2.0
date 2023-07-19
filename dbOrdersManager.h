@@ -11,7 +11,8 @@
 #include <iostream>
 #include "Database.h"
 #include "OrdersList.h"
-#include "OrderProduct.h"
+#include "Product.h"
+#include <memory>
 
 class dbOrdersManager {
 
@@ -24,21 +25,21 @@ public:
 
     void add_to_db();
 
-    void changeStatus(const string username,int cod_order,const string new_status);
+    void changeStatus(const string &username,int id_single_order,const string &new_status);
 
-    void cancel_order(const std::string username, int cod_order, const string us_prov);
+    void cancel_order(const string &username, int id_single_order, const string &us_prov);
 
-    void select_for_provider(const string username);
+    void select_for_provider(const string &username);
 
-    void select_for_client(const string username);
+    void select_for_client(const string &username);
 
-    int select_id_last_order(const string username_prov);
+    int select_id_last_order(const string &username_prov);
 
 private:
     OrdersList *tab_order;
     SQLite::Database *db;
-    OrderProduct *order;
     Product* prod;
+    Order *order;
 };
 
 

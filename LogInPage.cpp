@@ -98,11 +98,10 @@ void LogInPage::Access(wxCommandEvent &event) {
         } else {
             Close();
             std::string TypeUser;
-            dbUserManager user;
-            TypeUser = user.select_type(e);
-            std::string username=user.select_username(e);
+            TypeUser=user->get_type();
+            /*std::string username=user.select_username(e);
             GlobalVariables::GetInstance().SetValueUsername(username);
-            GlobalVariables::GetInstance().SetValueType(TypeUser);
+            GlobalVariables::GetInstance().SetValueType(TypeUser);*/
             if (TypeUser == "F") {
                 HomePageProviders *ProvidersWin = new HomePageProviders(_T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ProvidersWin->Show(TRUE);

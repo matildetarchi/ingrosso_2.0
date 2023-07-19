@@ -18,6 +18,7 @@ using namespace std;
 
 class dbCategoriesManager {
 public :
+
     dbCategoriesManager(SQLite::Database* d);
     int number_of_cat();
     vector<string> select();

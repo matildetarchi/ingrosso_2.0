@@ -5,23 +5,25 @@
 #ifndef INGROSSO_ONLINE_ORDER_H
 #define INGROSSO_ONLINE_ORDER_H
 
-#include "OrderProduct.h"
+#include "Product.h"
 #include "Date.h"
+#include <memory>
+#include <vector>
 
+
+
+using namespace std;
 class Order {
 public:
 
-    Order(const string &s, Date* d, const string &u_c, int id_s_p);
+    Order(string s, string u_client, int id_s_p);
 
     ~Order();
 
-    int get_id_s_prod() {
+    int get_id_s_prod() const {
         return id_s_product;
     }
 
-    void set_id_s_prod(int id_s_p) {
-        this->id_s_product = id_s_p;
-    }
 
     int get_num_prod() const{
         return num_prod;
@@ -40,14 +42,17 @@ public:
         return prod;
     }
 
-    //TODO è da fare qui set prod?
+    void set_product(Product* p){
+        prod=p;
+    }
+
 
     Date* get_date() {
         return date;
     }
 
-    void set_date(Date d) {
-        date = &d;
+    void set_date(Date *d) {
+        date = d;
     }
 
     const string &get_us_client() {
@@ -57,7 +62,15 @@ public:
     //TODO implementare funzione
     double get_total(Order* o);
 
-    vector<OrderProduct*> order_p;
+    void add_order(unique_ptr<Product*> p){
+        order_p.push_back(std::move(p));
+    };
+
+    void update_num(int control);
+    void remove_one(int index);
+    void remove_all();
+
+
 
 private:
 
@@ -67,7 +80,7 @@ private:
     int id_s_product;
     string status;
     string username_client;
-
+    vector<unique_ptr<Product*>> order_p;
 };
 
 

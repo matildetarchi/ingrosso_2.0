@@ -18,7 +18,7 @@ using namespace std;
 class OrdersList{
 public:
 
-    OrdersList(const string &user, int id_s_o);
+    OrdersList(const string &user);
 
     ~OrdersList();
 
@@ -31,16 +31,21 @@ public:
         return username_user;
     };
 
-    void add_order(Product* p, const string &status, const string &date_order, const string &username_other, int id_order);
+    void add_order( const string &status, Date *date_order, const string &username_other, int id_s_order);
     void update_num(int control);
     void remove_one(int index);
     void remove_all();
 
-    vector<Order*> orders;
+    vector<Order*> get_orders(){
+        return orders;
+    };
+
 
 private:
     string username_user;
-    int num_prod;
+    int num_prod{};
+    vector<Order*> orders;
+
 };
 
 #endif // INGROSSO_ONLINE_ORDERSLIST_H
