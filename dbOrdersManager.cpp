@@ -147,8 +147,9 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
         // faccio una query al databse per prendere i prodotti relativi a quell'ordine
         for (Order *ord: orders) {
             int id_ord_db = ord->get_id_s_prod();
-            string select =
-                    "SELECT  desc_prod, price_product, quantity, name, store.id FROM users, orders, store, subcategories WHERE  id_cust=" +
+
+            string select = "SELECT  desc_prod, price_product, quantity, name, store.id FROM users, orders, store, subcategories WHERE  id_cust=" +
+
                     to_string(id) + " AND id_single_order=" + to_string(id_ord_db) + "";
 
             SQLite::Statement query(*db, select);
@@ -168,43 +169,45 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
             }
 
 
-            void dbOrdersManager::cancel_order(const string &username, int id_single_order, const string &us_prov) {
 
-                //metodo che permette a un utente di annullare il proprio ordine
+    void dbOrdersManager::cancel_order(const string &username, int id_single_order, const string &us_prov) {
 
-                //prendo l'id dell'utente che sta usando il programma
-                string query_user = "SELECT id FROM users WHERE username ='" + username + "'";
-                int id = db->execAndGet(query_user).getInt();
+        //metodo che permette a un utente di annullare il proprio ordine
 
-                //prendo l'id del fornitore al quale è stato inviato l'ordine
-                string query_prov = "SELECT id FROM users WHERE username ='" + us_prov + "'";
-                int id_prov = db->execAndGet(query_prov).getInt();
+        //prendo l'id dell'utente che sta usando il programma
+        string query_user = "SELECT id FROM users WHERE username ='" + username + "'";
+        int id = db->execAndGet(query_user).getInt();
 
-                //lancio la query delete
+        //prendo l'id del fornitore al quale è stato inviato l'ordine
+        string query_prov = "SELECT id FROM users WHERE username ='" + us_prov + "'";
+        int id_prov = db->execAndGet(query_prov).getInt();
 
-                string query_cancel =
-                        "DELETE FROM orders WHERE id_single_order=" + to_string(id_single_order) + " AND id_cust=" +
-                        to_string(id) + " AND id_prov=" + to_string(id_prov) + "";
-                db->exec(query_cancel);
+        //lancio la query delete
 
-                tab_order->remove_one(id_single_order);
+        string query_cancel =
+                "DELETE FROM orders WHERE id_single_order=" + to_string(id_single_order) + " AND id_cust=" +
+                to_string(id) + " AND id_prov=" + to_string(id_prov) + "";
+        db->exec(query_cancel);
 
-            }
+        tab_order->remove_one(id_single_order);
 
-            int dbOrdersManager::select_id_last_order(const string &username_prov) {
-                //metodo per ottenere il codice dell'ultimo ordine fatto a un fornitore
+    }
 
-                //prendo l'id del fornitore
-                string query_user = "SELECT id FROM users WHERE username ='" + username_prov + "'";
-                int id_prov = db->execAndGet(query_user).getInt();
+    int dbOrdersManager::select_id_last_order(const string &username_prov) {
+        //metodo per ottenere il codice dell'ultimo ordine fatto a un fornitore
 
-                //lancio la select del MAX(id) e ritorno il risultato
-                string query_id = "SELECT MAX(id_single_order) FROM orders WHERE id_prov=" + to_string(id_prov) + "";
-                int id_single_order = db->execAndGet(query_id).getInt();
+        //prendo l'id del fornitore
+        string query_user = "SELECT id FROM users WHERE username ='" + username_prov + "'";
+        int id_prov = db->execAndGet(query_user).getInt();
 
-                return id_single_order;
+        //lancio la select del MAX(id) e ritorno il risultato
+        string query_id = "SELECT MAX(id_single_order) FROM orders WHERE id_prov=" + to_string(id_prov) + "";
+        int id_single_order = db->execAndGet(query_id).getInt();
 
-            }
+        return id_single_order;
+
+    }
+
 
 
         }
