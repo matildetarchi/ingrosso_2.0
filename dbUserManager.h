@@ -10,11 +10,20 @@
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
-#include "database.h"
-#include "user.h"
+#include "Database.h"
+#include "User.h"
+#define accesso 0
+#define registrazione 1
 
 class dbUserManager {
 public:
+
+    dbUserManager(SQLite::Database* d);
+
+    void set_user(User* us){
+        user=us;
+    }
+
     void add_to_db();
     bool access_reg(const string &email, const string &psw, int control);
     bool remove_from_db(const string &username, const string &type);
@@ -26,8 +35,8 @@ public:
     vector<vector<string>> select_data_all_users(const string &type, const string &city, const string &control="users.id");
     int select_count_users(const string &type, const string &city);
 private:
-    User user;
-
+    User* user;
+    SQLite::Database *db;
 };
 
 

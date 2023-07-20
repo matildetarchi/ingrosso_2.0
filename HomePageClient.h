@@ -1,22 +1,13 @@
 //
 // Created by dario on 09/12/2022.
 //
+
+
+#include <wx/wx.h>
+
 #ifndef INGROSSO_ONLINE_CLIENTFRAME_H
 #define INGROSSO_ONLINE_CLIENTFRAME_H
-
-#include <wx/wx.h>
-#include <wx/wx.h>
-#include "HomePageClient.h"
-#include "SelectionSubcategoryPage.h"
 #include "InitialPage.h"
-#include "ChooseStatusPage.h"
-#include "SelectionCityPage.h"
-#include "ManageProfilePage.h"
-#include "FavouritesListPage.h"
-#include "GlobalVariables.h"
-#include "CartPage.h"
-
-
 class HomePageClient: public wxFrame {
 public:
     HomePageClient(const wxString& title, const wxPoint& pos, const wxSize& size);

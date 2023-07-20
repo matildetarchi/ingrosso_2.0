@@ -5,6 +5,7 @@
 
 #include "wx/wx.h"
 #include "RegistrationPage.h"
+#include "User.h"
 #include "dbCityManager.h"
 #include "InitialPage.h"
 
@@ -130,6 +131,7 @@ void RegistrationPage::Register(wxCommandEvent &event) {
         std::string b_n = tcB_n->GetValue().ToStdString();
         std::string a = tcA->GetValue().ToStdString();
         int id_city = choiceC->GetSelection();
+        string city_name=choiceC->GetString(id_city).ToStdString();
         std::string u = tcU->GetValue().ToStdString();
         std::string em = tcEm->GetValue().ToStdString();
         std::string psw = m_passwordText->GetValue().ToStdString();
@@ -145,13 +147,10 @@ void RegistrationPage::Register(wxCommandEvent &event) {
             }
         }
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
-            User user;
-            int numResult;
-            numResult = user.access_reg(em, psw, 1);
 
-            if (numResult) {
-                User *user = new User(t, b_n, a, em, psw, u, id_city);
-                user->add();
+            Engine *engine;
+            User *user = new User(t, b_n, a, em, psw, u, city_name);
+            if (engine->doRegistration(user)) {
                 Close();
                 InitialPage *home = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
                 home->Show(TRUE);

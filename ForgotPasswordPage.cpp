@@ -10,7 +10,7 @@
 #include "wx/wx.h"
 #include "MyApp.h"
 #include "SelectionSubcategoryPage.h"
-#include "user.h"
+#include "User.h"
 #include "HomePageClient.h"
 
 

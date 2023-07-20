@@ -5,6 +5,8 @@
 #ifndef INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 #define INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 
+
+
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
@@ -12,8 +14,6 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "orders.h"
-#include "GlobalVariables.h"
 
 class SingleOrderClientPage: public wxDialog {
 public:

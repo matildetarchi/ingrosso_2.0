@@ -7,7 +7,7 @@
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
-#include "store.h"
+#include "Store.h"
 
 class ProviderStorePage: public wxDialog{
 public:

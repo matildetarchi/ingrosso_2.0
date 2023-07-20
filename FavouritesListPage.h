@@ -19,10 +19,6 @@
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
 #include "wx/grid.h"
-#include "GlobalVariables.h"
-#include "orders.h"
-#include "favourites.h"
-#include <wx/spinctrl.h>
 
 
 

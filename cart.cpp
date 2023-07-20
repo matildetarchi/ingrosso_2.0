@@ -4,33 +4,42 @@
 //
 
 
-#include "cart.h"
-#include <iostream>
-#include <string>
+#include "Cart.h"
 
 using namespace std;
 
-Cart::Cart(){}
+Cart::Cart(const string &client) {
 
-Cart::Cart(int quant, const string &desc_product, double price, const string &client, const string &provider) {
-
-    desc_prod.push_back(desc_product);
-    price_prod.push_back(price);
-    quantity.push_back(quant);
-    username_client=client;
-    username_prov.push_back(provider);
-    update_num(add);
+    username_client = client;
 
 }
 
+Cart::~Cart() {
+    remove_all();
+}
+
+void Cart::update_num(int control) {
+    if (control == add) {
+        num_prod = num_prod + 1;
+    } else if (control == cancel) {
+        num_prod = num_prod - 1;
+    }
+}
+
+void Cart::add_product(Product *prod) {
+    products.push_back(prod);
+    update_num(add);
+}
+
+
 void Cart::remove_all() {
-    for (int i=0;i<num_prod; i++) {
+    for (int i = 0; i < num_prod; i++) {
         remove_one(i);
     }
 }
+
 void Cart::remove_one(int index) {
-    quantity.erase(quantity.begin()+index);
-    desc_prod.erase(desc_prod.begin()+index);
-    price_prod.erase(price_prod.begin()+index);
-    username_prov.erase(username_prov.begin()+index);
+    Product *p = products[index];
+    delete p;
+    update_num(cancel);
 }

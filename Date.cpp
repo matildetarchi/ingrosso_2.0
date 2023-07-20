@@ -6,10 +6,23 @@
 
 using namespace std;
 
-Date::Date(int y, int m, int d) {
 
-    day = d;
-    month = m;
-    year = y;
+
+Date::Date(int day, int month, int year) {
+
 
 }
+
+void Date::set_date() {
+    time_t now = time(0);
+
+    tm* localTime = localtime(&now);
+
+    year = 1900+localTime->tm_year;
+    month = 1+localTime->tm_mon;
+    day = localTime->tm_mday;
+
+}
+
+
+

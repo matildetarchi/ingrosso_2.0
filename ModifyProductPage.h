@@ -13,9 +13,6 @@
 #include <string>
 #include "HomePageProviders.h"
 #include "dbCategoriesManager.h"
-#include "GlobalVariables.h"
-#include "store.h"
-
 
 
 

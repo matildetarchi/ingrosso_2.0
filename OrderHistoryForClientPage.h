@@ -8,7 +8,7 @@
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
-#include "orders.h"
+#include "OrdersList.h"
 
 class OrderHistoryForClientPage : public wxDialog{
 public:

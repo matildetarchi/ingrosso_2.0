@@ -11,10 +11,6 @@
 #include <string>
 #include "HomePageProviders.h"
 #include "dbCategoriesManager.h"
-#include "GlobalVariables.h"
-#include "dbCityManager.h"
-#include "user.h"
-#include "wx/textctrl.h"
 
 
 

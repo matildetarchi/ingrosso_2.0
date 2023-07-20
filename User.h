@@ -21,8 +21,8 @@ public:
 
     virtual ~User() {}
 
-    virtual void set_order(OrdersList *ord);
-    virtual void set_favourites(Favourites *fav);
+    virtual void set_order(OrdersList *ord) ;
+    virtual void set_favourites(std::unique_ptr<Favourites> f);
     virtual void set_cart(Cart *crt);
     virtual void set_store(Store *st);
 

@@ -2,7 +2,8 @@
 // Created by Andrea Lipperi on 21/04/23.
 //
 #include "ManageRequestPage.h"
-
+#include "GlobalVariables.h"
+#include "SingleOrderProviderPage.h"
 
 
 const long ManageRequestPage::IdButtonConfirm =::wxNewId();

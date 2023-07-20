@@ -5,6 +5,7 @@
 #include <wx/wx.h>
 #include "wx/wxhtml.h"
 #include <wx/hyperlink.h>
+#include "Engine.h"
 #ifndef BUTTON_WXWIDGETS_NEWFRAME_H
 #define BUTTON_WXWIDGETS_NEWFRAME_H
 
@@ -31,6 +32,9 @@ private:
     wxButton *Back;
     wxTextCtrl *m_passwordText;
     wxTextCtrl *tc1;
+
+    Engine* engine;
+    User* user;
 };
 
 

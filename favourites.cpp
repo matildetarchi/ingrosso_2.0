@@ -2,27 +2,42 @@
 // Created by Matilde Tarchi on 02/08/22.
 //
 
-#include "favourites.h"
-#include <vector>
-#include <iostream>
-#include <string>
+#include "Favourites.h"
 using namespace std;
 
-Favourites::Favourites() {}
 
-Favourites::Favourites(const string &desc_product, double price, const string &client, const string &provider) {
 
-    desc_prod[num_prod]=desc_product;
-    price_prod[num_prod]=price;
-    username_cust=client;
-    username_prov[num_prod]=provider;
+Favourites::Favourites( const string &client) {
+
+    username_client=client;
+}
+
+Favourites::~Favourites(){
+    remove_all();
+}
+
+
+void Favourites:: update_num_prod(int control) {
+    if (control==add) {
+        num_prod = num_prod + 1;
+    } else if (control==remove) {
+        num_prod=num_prod-1;
+    }
+}
+
+void Favourites::add_product(Product* prod){
+    products.push_back(prod);
     update_num_prod(add);
+}
 
+void Favourites::remove_all() {
+    for (int i=0;i<num_prod; i++) {
+        remove_one(i);
+    }
 }
 
 void Favourites::remove_one(int index) {
-    desc_prod.erase(desc_prod.begin()+index);
-    price_prod.erase(price_prod.begin()+index);
-    username_prov.erase(username_prov.begin()+index);
+    Product* p=products[index];
+    delete p;
     update_num_prod(remove);
 }

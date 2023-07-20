@@ -8,7 +8,7 @@
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
 #include <string>
-#include "user.h"
+#include "User.h"
 #include <iostream>
 #include <fstream>
 #include "MyApp.h"
@@ -18,6 +18,7 @@
 #include "HomePageProviders.h"
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
+#include "Engine.h"
 
 
 

@@ -6,8 +6,8 @@
 #include "SelectionCityPage.h"
 #include "GlobalVariables.h"
 #include "favourite.h"
-#include "user.h"
-#include "cart.h"
+#include "User.h"
+#include "Cart.h"
 #include <wx/grid.h>
 #include <wx/app.h>
 #include <wx/spinctrl.h>
@@ -23,7 +23,7 @@ UsersDataListPage::UsersDataListPage(const wxString &title, const std::string &v
     city=var_city;
     type=GlobalVariables::GetInstance().GetValueType();
 
-    wxStaticText *order = new wxStaticText(this, -1, wxT("Order By"));
+    wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     choiceOrder = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
     if (city=="All") {
         wxString myString[] = {"Business Name", "Username", "Email", "Address", "City"};

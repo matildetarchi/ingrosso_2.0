@@ -3,7 +3,8 @@
 //
 
 #include "OrderHistoryForClientPage.h"
-
+#include "GlobalVariables.h"
+#include "SingleOrderClientPage.h"
 
 
 const long OrderHistoryForClientPage::IdButtonCancel =::wxNewId();

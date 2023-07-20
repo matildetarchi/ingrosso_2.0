@@ -6,7 +6,7 @@
 #include "SelectionSubcategoryPage.h"
 #include "GlobalVariables.h"
 #include "favourite.h"
-#include "cart.h"
+#include "Cart.h"
 #include <wx/grid.h>
 #include <wx/app.h>
 #include <wx/spinctrl.h>
@@ -27,7 +27,7 @@ ProductListPage::ProductListPage(const wxString &title, const std::string &sub, 
     disponibility=disp;
     username=GlobalVariables::GetInstance().GetValueUsername();
 
-    wxStaticText *order = new wxStaticText(this, -1, wxT("Order By"));
+    wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Name Product", "Price", "Provider Name"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");

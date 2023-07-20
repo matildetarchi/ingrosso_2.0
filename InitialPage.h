@@ -4,6 +4,7 @@
 
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
+#include "Engine.h"
 #ifndef BUTTON_WXWIDGETS_MYFRAME_H
 #define BUTTON_WXWIDGETS_MYFRAME_H
 
@@ -13,7 +14,7 @@ class InitialPage: public wxFrame// MainFrame is the class for our window,
 {
     // It contains the window and all objects in it
 public:
-    InitialPage(const wxString &title, const wxPoint &pos, const wxSize &size );
+    InitialPage(Engine* engine,const wxString &title, const wxPoint &pos, const wxSize &size );
 
     static const long IdButtonAccess;
     static const long IdButtonRegister;

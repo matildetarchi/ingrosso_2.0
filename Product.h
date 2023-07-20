@@ -12,7 +12,7 @@ class Product {
 
 public:
 
-    Product(const string &desc, double price, int quant, const string &u_p, const string &sub);
+    Product(const string &desc, double price, int quant, const string &u_p, const string &sub, int id_st);
     ~Product(){};
 
     const string &get_desc(){
@@ -27,7 +27,7 @@ public:
         return price;
     }
 
-    void set_price(double p) {
+    void set_price(double p){
         this->price = p;
     }
 
@@ -55,12 +55,22 @@ public:
         this->username_prov = u_p;
     }
 
+    /*int &get_id_db() {
+        return id_db_prod;
+    }
+
+    int get_id_store() const {
+        return id_store;
+    }*/
+
 private:
+    //int id_db_prod; //Variabile per memorizzare l'id che il prodotto ha nel database
     string description;
     double price;
     string username_prov;
     int quantity;
     string subcategory;
+    int id_store;
 
 };
 

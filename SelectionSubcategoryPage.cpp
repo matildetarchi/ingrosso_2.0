@@ -3,6 +3,11 @@
 //
 
 #include "SelectionSubcategoryPage.h"
+#include "dbCategoriesManager.h"
+#include "dbSubcategoriesManager.h"
+#include "ProductListPage.h"
+#include <string>
+#include <vector>
 
 using namespace std;
 

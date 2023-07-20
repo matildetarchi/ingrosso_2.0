@@ -9,7 +9,7 @@
 #include "GlobalVariables.h"
 #include "ManageProfilePage.h"
 #include "InitialPage.h"
-#include "user.h"
+#include "User.h"
 
 const long HomePageProviders::IdButtonStore =::wxNewId();
 const long HomePageProviders::IdButtonProfile =::wxNewId();

@@ -2,18 +2,10 @@
 // Created by dario on 12/11/2022.
 //
 
-
-#ifndef BUTTON_WXWIDGETS_FRAME_H
-#define BUTTON_WXWIDGETS_FRAME_H
-
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
-#include "dbCategoriesManager.h"
-#include "dbSubcategoriesManager.h"
-#include "ProductListPage.h"
-#include <string>
-#include <vector>
-
+#ifndef BUTTON_WXWIDGETS_FRAME_H
+#define BUTTON_WXWIDGETS_FRAME_H
 class SelectionSubcategoryPage: public wxFrame {
 public:
     SelectionSubcategoryPage(const wxString &title);

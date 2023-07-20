@@ -19,7 +19,7 @@ public:
     Client(const string &t, const string &bn, const string &a, const string &e, const string &password,
            const string &us, const string &c);
 
-    ~Client() override;
+    ~Client() override ;
 
     //TODO capire se serve davvero override, perche teoricamente servirebbe se la funzione è presente anche nella classe base
     OrdersList *get_order() override {
@@ -38,7 +38,7 @@ public:
         order = ord;
     }
 
-    void set_favourites(Favourites *f) override {
+    void set_favourites( std::unique_ptr<Favourites> f) override {
         fav = f;
     }
 
@@ -50,9 +50,9 @@ public:
 
 private:
     //TODO vedere se va bene utilizzare unique pointer in questo punto
-    OrdersList *order;
-    Favourites *fav;
-    Cart *cart;
+    unique_ptr<OrdersList> order;
+    unique_ptr<Favourites> fav;
+    unique_ptr<Cart> cart;
 };
 
 

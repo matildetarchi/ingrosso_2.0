@@ -4,7 +4,7 @@
 
 #include "ModifyProductPage.h"
 #include "GlobalVariables.h"
-#include "store.h"
+#include "Store.h"
 
 
 const long ModifyProductPage::IdButtonConfirm =::wxNewId();

@@ -13,7 +13,7 @@
 #include "LogInPage.h"
 #include "MyApp.h"
 #include "SelectionSubcategoryPage.h"
-#include "user.h"
+#include "User.h"
 #include "HomePageClient.h"
 #include "HomePageProviders.h"
 
@@ -90,17 +90,18 @@ void LogInPage::Access(wxCommandEvent &event) {
         std::string e = tc1->GetValue().ToStdString();
         std::string p = m_passwordText->GetValue().ToStdString();
         int result;
-        User user;
-        result = user.access_reg(e, p, 0);
+
+        result = engine->doLogin(e,p);
+        user = engine->get_user();
         if (!result) {
             wxLogMessage("Incorrect email or password");
         } else {
             Close();
             std::string TypeUser;
-            TypeUser = user.select_type(e);
-            std::string username=user.select_username(e);
+            TypeUser=user->get_type();
+            /*std::string username=user.select_username(e);
             GlobalVariables::GetInstance().SetValueUsername(username);
-            GlobalVariables::GetInstance().SetValueType(TypeUser);
+            GlobalVariables::GetInstance().SetValueType(TypeUser);*/
             if (TypeUser == "F") {
                 HomePageProviders *ProvidersWin = new HomePageProviders(_T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ProvidersWin->Show(TRUE);

@@ -2,11 +2,11 @@
 // Created by Andrea Lipperi on 14/11/22.
 //
 
-#include "user.h"
-#include <string>
+#include "User.h"
 using namespace std;
 
-User::User(const std::string &t, const std::string &bn,const std::string &a, const std::string &e, const std::string &password, const std::string &us, const std::string &c){
+User::User(const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c) {
+
     type = t;
     business_name= bn;
     address = a;

@@ -6,46 +6,41 @@
 #define INGROSSO_ONLINE_FAVOURITES_H
 
 #include <string>
+#include <vector>
+#include "Product.h"
 #define add 0
 #define remove 1
 using namespace std;
+
 class Favourites{
 public:
-    Favourites();
-    Favourites(const string &desc_product, double price, const string &client, const string &provider);
 
-    virtual ~Favourites() {}
-    const string get_prod(int index){
-        return desc_prod[index];
+    explicit Favourites(const string &client);
+
+    ~Favourites();
+
+    const string &get_client(){
+        return username_client;
     }
-    double get_price(int index){
-        return price_prod[index];
-    }
-    string get_cust(){
-        return username_cust;
-    }
-    string get_prov(int index){
-        return username_prov[index];
-    }
-    int get_num_prod(){
+
+    int get_num_prod() const{
         return num_prod;
     }
-    void update_num_prod(int control) {
-        if (control==add) {
-            num_prod = num_prod + 1;
-        } else if (control==remove) {
-            num_prod=num_prod-1;
-        }
-    }
 
+
+    void add_product(Product* prod);
+
+    void update_num_prod(int control);
+
+    void remove_all();
     void remove_one(int index);
+
+
+    vector<Product*> products;
 
 private :
 
-    std::vector<string> desc_prod;
-    std::vector<double> price_prod;
-    string username_cust;
-    vector<string> username_prov;
+    string username_client;
     int num_prod;
 
 };
