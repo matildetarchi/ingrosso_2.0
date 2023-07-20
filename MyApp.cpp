@@ -7,8 +7,8 @@
 bool MyApp::OnInit()
 {
     // Create an instance of our frame, or window
-
-    InitialPage *MainWin = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
+    Engine* e=new Engine();
+    InitialPage *MainWin = new InitialPage(e,_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
     MainWin->Show(TRUE); // show the window
     SetTopWindow(MainWin); // and finally, set it as the main window
 

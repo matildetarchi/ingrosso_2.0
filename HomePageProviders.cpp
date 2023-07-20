@@ -3,7 +3,13 @@
 //
 
 #include "HomePageProviders.h"
-
+#include "ChooseStatusPage.h"
+#include "ProviderStorePage.h"
+#include "SelectionCityPage.h"
+#include "GlobalVariables.h"
+#include "ManageProfilePage.h"
+#include "InitialPage.h"
+#include "user.h"
 
 const long HomePageProviders::IdButtonStore =::wxNewId();
 const long HomePageProviders::IdButtonProfile =::wxNewId();

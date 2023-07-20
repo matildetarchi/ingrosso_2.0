@@ -8,8 +8,6 @@
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
 #include "store.h"
-#include "GlobalVariables.h"
-#include "ModifyProductPage.h"
 
 class ProviderStorePage: public wxDialog{
 public:

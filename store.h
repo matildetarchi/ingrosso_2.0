@@ -7,13 +7,8 @@
 
 #define add 0
 #define cancel 1
-
 #include <string>
 #include <vector>
-#include <SQLiteCpp/Statement.h>
-#include "database.h"
-#include <iostream>
-
 
 using namespace std;
 class Store{

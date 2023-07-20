@@ -9,8 +9,6 @@
 #define remove 1
 #include <string>
 #include "store.h"
-#include <iostream>
-
 using namespace std;
 class Cart {
 public:

@@ -3,6 +3,13 @@
 //
 
 #include "ProductListPage.h"
+#include "SelectionSubcategoryPage.h"
+#include "GlobalVariables.h"
+#include "favourite.h"
+#include "cart.h"
+#include <wx/grid.h>
+#include <wx/app.h>
+#include <wx/spinctrl.h>
 
 const long ProductListPage::IdButtonFav =::wxNewId();
 const long ProductListPage::IdButtonCart =::wxNewId();

@@ -3,8 +3,10 @@
 //
 
 
+#include "wx/wx.h"
 #include "RegistrationPage.h"
-
+#include "dbCityManager.h"
+#include "InitialPage.h"
 
 const long RegistrationPage::IdButtonConfirm =::wxNewId();
 const long RegistrationPage::IdButtonProvider =::wxNewId();

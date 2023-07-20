@@ -4,6 +4,7 @@
 
 #include "GlobalVariables.h"
 
+using namespace std;
 GlobalVariables::GlobalVariables() : value_username(""), value_type("") {}
 
 GlobalVariables& GlobalVariables::GetInstance() {
@@ -11,16 +12,16 @@ GlobalVariables& GlobalVariables::GetInstance() {
     return instance;
 }
 
-std::string GlobalVariables::GetValueUsername() {
+string GlobalVariables::GetValueUsername() {
     return value_username;
 }
-std::string GlobalVariables::GetValueType() {
+string GlobalVariables::GetValueType() {
     return value_type;
 }
 
-void GlobalVariables::SetValueUsername(std::string value_u) {
+void GlobalVariables::SetValueUsername(string value_u) {
     value_username = value_u;
 }
-void GlobalVariables::SetValueType(std::string value_t) {
+void GlobalVariables::SetValueType(string value_t) {
     value_type = value_t;
 }

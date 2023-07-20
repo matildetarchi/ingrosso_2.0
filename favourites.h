@@ -5,15 +5,9 @@
 #ifndef INGROSSO_ONLINE_FAVOURITES_H
 #define INGROSSO_ONLINE_FAVOURITES_H
 
-#include "favourites.h"
-#include <vector>
-#include <iostream>
 #include <string>
-#include <string>
-
 #define add 0
 #define remove 1
-
 using namespace std;
 class Favourites{
 public:

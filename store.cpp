@@ -3,7 +3,11 @@
 //
 
 #include "store.h"
-
+#include <SQLiteCpp/Statement.h>
+#include "database.h"
+#include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
 Store::Store() {}

@@ -6,9 +6,26 @@
 #define INGROSSO_ONLINE_DATABASE_H
 
 #include <SQLiteCpp/SQLiteCpp.h>
+#include <iostream>
+#include <SQLiteCpp/Statement.h>
+#include "sqlite3.h"
 
 //questa pagina contiene l'indirizzo del database sqlite su cui
 //lavorerà il programmaııı
-extern SQLite::Database db;
+using namespace std;
+
+class Database{
+public:
+    explicit Database(string db_name);
+    ~Database();
+
+    SQLite::Database* get_db(){
+        return db;
+    }
+
+private:
+    SQLite::Database* db;
+};
+
 
 #endif //INGROSSO_ONLINE_DATABASE_H

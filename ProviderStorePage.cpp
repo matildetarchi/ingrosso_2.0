@@ -22,7 +22,7 @@ ProviderStorePage::ProviderStorePage(const wxString &title):
 
     username=GlobalVariables::GetInstance().GetValueUsername();
 
-    wxStaticText *order = new wxStaticText(this, -1, wxT("Order By"));
+    wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Name Product", "Price", "Quantity Available"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");

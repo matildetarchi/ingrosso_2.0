@@ -3,6 +3,12 @@
 //
 
 #include "CartPage.h"
+#include "GlobalVariables.h"
+#include "cart.h"
+#include "orders.h"
+#include "wx/grid.h"
+
+#include <wx/spinctrl.h>
 
 const long CartPage::IdButtonRemove =::wxNewId();
 const long CartPage::IdButtonOrder =::wxNewId();

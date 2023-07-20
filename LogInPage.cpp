@@ -6,7 +6,17 @@
 // Created by dario on 16/11/2022.
 //
 
+#include "InitialPage.h"
+#include "ForgotPasswordPage.h"
+#include "GlobalVariables.h"
+#include "wx/wx.h"
 #include "LogInPage.h"
+#include "MyApp.h"
+#include "SelectionSubcategoryPage.h"
+#include "user.h"
+#include "HomePageClient.h"
+#include "HomePageProviders.h"
+
 
 
 const long LogInPage::IdButtonConfirm =::wxNewId();
@@ -80,16 +90,15 @@ void LogInPage::Access(wxCommandEvent &event) {
         std::string e = tc1->GetValue().ToStdString();
         std::string p = m_passwordText->GetValue().ToStdString();
         int result;
-        Engine engine;
-        result = engine.doLogin(e,p);
+        User user;
+        result = user.access_reg(e, p, 0);
         if (!result) {
             wxLogMessage("Incorrect email or password");
         } else {
             Close();
             std::string TypeUser;
-            dbUserManager user_db;
-            TypeUser = user_db.select_type(e);
-            std::string username=user_db.select_username(e);
+            TypeUser = user.select_type(e);
+            std::string username=user.select_username(e);
             GlobalVariables::GetInstance().SetValueUsername(username);
             GlobalVariables::GetInstance().SetValueType(TypeUser);
             if (TypeUser == "F") {

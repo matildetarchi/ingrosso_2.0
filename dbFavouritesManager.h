@@ -6,8 +6,8 @@
 #define INGROSSO_ONLINE_DBFAVOURITESMANAGER_H
 
 
-#include "database.h"
-#include "favourites.h"
+#include "Database.h"
+#include "Favourites.h"
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
@@ -16,13 +16,22 @@
 using namespace std;
 class dbFavouritesManager {
 public:
-    //methods
-    void add_to_db(Favourites *new_fav);
+
+    dbFavouritesManager(SQLite::Database* d);
+
+
+    void set_favourites(Favourites* f){
+        fav=f;
+    }
+    void add_to_db();
+    void remove_all(const string &username);
     void remove_prod(int id);
-    void select(const string &username);
+    void select(const string username);
 
 private:
     Favourites *fav;
+    SQLite::Database *db;
+    Product* prod;
 };
 
 

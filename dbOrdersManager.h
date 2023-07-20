@@ -4,31 +4,41 @@
 
 #ifndef INGROSSO_ONLINE_DBORDERSMANAGER_H
 #define INGROSSO_ONLINE_DBORDERSMANAGER_H
-#include "store.h"
+#include "Store.h"
 #include <string>
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
-#include "database.h"
-#include "orders.h"
+#include "Database.h"
+#include "OrdersList.h"
+#include "OrderProduct.h"
 
 class dbOrdersManager {
 
 public:
-    void add_to_db(Orders *orders);
+    dbOrdersManager(SQLite::Database* d);
 
-    void changeStatus(const string& username,const string &cod_order,const string &new_status);
+    void set_orders(OrdersList* o){
+        tab_order=o;
+    }
 
-    void cancel_order(const std::string &username, const std::string &cod_order, const string &us_prov);
+    void add_to_db();
 
-    void select_for_provider(const string &username, int control);
+    void changeStatus(const string username,int cod_order,const string new_status);
 
-    void select_for_client(const string &username, int control);
+    void cancel_order(const std::string username, int cod_order, const string us_prov);
 
-    int select_id_last_order(const string &username_prov);
+    void select_for_provider(const string username);
+
+    void select_for_client(const string username);
+
+    int select_id_last_order(const string username_prov);
 
 private:
-    Orders tab_order;
+    OrdersList *tab_order;
+    SQLite::Database *db;
+    OrderProduct *order;
+    Product* prod;
 };
 
 

@@ -12,10 +12,6 @@
 #include <iostream>
 #include "database.h"
 #include "user.h"
-#include <fstream>
-
-
-
 
 class dbUserManager {
 public:
