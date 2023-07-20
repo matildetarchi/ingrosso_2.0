@@ -147,7 +147,9 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
         // faccio una query al databse per prendere i prodotti relativi a quell'ordine
         for (Order *ord: orders) {
             int id_ord_db = ord->get_id_s_prod();
+
             string select = "SELECT  desc_prod, price_product, quantity, name, store.id FROM users, orders, store, subcategories WHERE  id_cust=" +
+
                     to_string(id) + " AND id_single_order=" + to_string(id_ord_db) + "";
 
             SQLite::Statement query(*db, select);
@@ -165,6 +167,7 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
                 ord->add_order(std::move(product));
 
             }
+
 
 
     void dbOrdersManager::cancel_order(const string &username, int id_single_order, const string &us_prov) {
@@ -206,3 +209,6 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
     }
 
 
+
+        }
+    }
