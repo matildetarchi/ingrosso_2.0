@@ -13,6 +13,7 @@
 #include "Cart.h"
 #include "Favourites.h"
 #include "Store.h"
+#include <memory>
 
 using namespace std;
 class User {
@@ -26,10 +27,10 @@ public:
     virtual void set_cart(Cart *crt);
     virtual void set_store(Store *st);
 
-    virtual Cart* get_cart();
-    virtual Favourites* get_fav();
-    virtual OrdersList* get_order();
-    virtual Store* get_store();
+    virtual shared_ptr<Cart> get_cart();
+    virtual shared_ptr<Favourites> get_fav();
+    virtual shared_ptr<OrdersList> get_order();
+    virtual shared_ptr<Store> get_store();
 
 
 

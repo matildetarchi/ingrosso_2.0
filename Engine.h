@@ -20,6 +20,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 
 class Engine {
@@ -33,13 +34,13 @@ public:
         return user;
     }
 private:
-    User *user;
+    unique_ptr<User> user;
     SQLite::Database *database;
-    dbCartManager *db_cart;
-    dbOrdersManager *db_order;
-    dbStoreManager *db_store;
-    dbFavouritesManager *db_fav;
-    dbUserManager *db_user;
+    unique_ptr<dbCartManager> db_cart;
+    unique_ptr<dbOrdersManager> db_order;
+    unique_ptr<dbStoreManager> db_store;
+    unique_ptr<dbFavouritesManager> db_fav;
+    unique_ptr<dbUserManager> db_user;
 
 
 

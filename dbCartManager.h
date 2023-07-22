@@ -12,6 +12,7 @@
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
 #include <string>
+#include <memory>
 
 
 using namespace std;
@@ -21,8 +22,8 @@ public:
     dbCartManager(SQLite::Database* d);
 
 
-    void set_cart(Cart* c){
-        cart=c;
+    void set_cart(shared_ptr<Cart> c){
+        cart = c;
     }
 
     void add_to_db();
@@ -31,9 +32,9 @@ public:
     void select(const string &username);
 
 private:
-    Cart *cart;
+    shared_ptr<Cart> cart;
     SQLite::Database *db;
-    Product* prod;
+    unique_ptr<Product> prod;
 };
 
 

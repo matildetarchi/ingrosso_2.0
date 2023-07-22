@@ -10,6 +10,7 @@
 #include "Store.h"
 #include "Product.h"
 #include <vector>
+#include <memory>
 #define add 0
 #define cancel 1
 
@@ -30,6 +31,10 @@ public:
     int get_num_prod() const{
         return num_prod;
     }
+
+    //nuovo
+    void setProduct(unique_ptr<Product> prd);
+
     void add_product(Product* prod);
 
     void update_num(int control);
@@ -37,11 +42,13 @@ public:
     void remove_all();
     void remove_one(int index);
 
-    std::vector<Product*> products;
+    vector<Product*> products;
 
 private:
     string username_client;
     int num_prod;
+    //nuovo
+    unique_ptr<Product> prod;
 };
 
 #endif //INGROSSO_ONLINE_CART_H

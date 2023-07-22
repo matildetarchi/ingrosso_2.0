@@ -38,7 +38,8 @@ public:
 private:
     string username_prov;
     int num_prod;
-    Product* prod;
+    vector<unique_ptr<Product*>> order_p;
+
 
 };
 

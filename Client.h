@@ -21,16 +21,15 @@ public:
 
     ~Client() override ;
 
-    //TODO capire se serve davvero override, perche teoricamente servirebbe se la funzione è presente anche nella classe base
-    OrdersList *get_order() override {
+    shared_ptr<OrdersList> get_order() override {
         return order;
     };
 
-    Favourites *get_fav() override {
+    shared_ptr<Favourites> get_fav() override {
         return fav;
     };
 
-    Cart *get_cart() override {
+    shared_ptr<Cart> get_cart() override {
         return cart;
     };
 
@@ -46,13 +45,15 @@ public:
         cart = crt;
     }
 
+    //TODO implementa
     void do_order(OrdersList *ord);
 
 private:
-    //TODO vedere se va bene utilizzare unique pointer in questo punto
-    unique_ptr<OrdersList> order;
-    unique_ptr<Favourites> fav;
-    unique_ptr<Cart> cart;
+    shared_ptr<OrdersList> order;
+    shared_ptr<Favourites> fav;
+    shared_ptr<Cart> cart;
+
+    //unique_ptr<Product> prod;
 };
 
 

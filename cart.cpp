@@ -26,6 +26,11 @@ void Cart::update_num(int control) {
     }
 }
 
+//nuovo
+void Cart::setProduct(unique_ptr <Product> prd) {
+    prod = std::move(prd);
+}
+
 void Cart::add_product(Product *prod) {
     products.push_back(prod);
     update_num(add);

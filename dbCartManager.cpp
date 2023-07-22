@@ -4,16 +4,17 @@
 
 #include "dbCartManager.h"
 
+using namespace std;
 
 dbCartManager::dbCartManager(SQLite::Database *d) {
-    db=d;
+    db = d;
 }
 
 void dbCartManager::add_to_db() {
 
     //metodo per aggiungere al carrello un nuovo prodotto
     int index=cart->get_num_prod()-1;
-    prod=cart->products[index];
+    prod = cart->products[index];
     //prendo l'id dell'utente che sta usando il programma e
     // del fornitore del prodotto che sto mettendo nel carrello
     string query_user="SELECT id FROM users WHERE username='"+cart->get_client()+"'";
@@ -53,8 +54,8 @@ void dbCartManager::remove_prod(int id_s) {
 
     //metodo per eliminare un solo prodotto dal carrello
 
-    string query="DELETE FROM cart WHERE id_store = "+ to_string(id_s)+"";
-    db->exec(query);
+    string query = "DELETE FROM cart WHERE id_store = "+ to_string(id_s)+"";
+    id_s = db->exec(query);
 
     cart->remove_one(id_s);
 
@@ -85,7 +86,8 @@ void dbCartManager::select(const string &username) {
         prod->set_price(price);
         prod->set_quantity(quantity);
         prod->set_username_prov(username_prov);
-        cart->add_product(prod);
+
+        cart->add_product(std::move(prod));
     }
 
 }

@@ -62,7 +62,11 @@ void dbOrdersManager::changeStatus(const string &username, int id_single_order, 
 
 void dbOrdersManager::select_for_provider(const std::string &username) {
 
-    //metodo che restituisce un vettore
+    string select =
+            "SELECT  desc_prod, price_product, quantity, name FROM users, orders, subcategories WHERE id_cust=users.id AND id_prov=" +
+            to_string(id) + " AND id =" + to_string(id_gen_ord) + "";
+
+    /*//metodo che restituisce un vettore
     // contenente i dati generali degli ordini di un fornitore
 
     //prendo il valore dell'id dell'utente che sta usando il programma
@@ -74,7 +78,7 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
     //poi quindi creo le colonne della matrice
     //lancio la query e popolo la matrice per poi lanciarla
     string select =
-            "SELECT id_single_order, username, date_order, status FROM users, orders, store WHERE id_cust=users.id AND id_store=store.id AND id_prov=" +
+            "SELECT username, date_order, status FROM users, orders, store WHERE id_cust = users.id AND id_store = store.id AND id_prov=" +
             to_string(id) + "";
 
     SQLite::Statement query(*db, select);
@@ -93,12 +97,16 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
     // Ciclo su tutti gli elementi in orders e per ognuno di questi
     // faccio una query al databse per prendere i prodotti relativi a quell'ordine
     for (Order *ord: orders) {
+        //sarebbe che while sto analizzando il solito ordine e quindi con il solito id chiave, faccio quello che c'è dentro
+        string query_order = "SELECT id FROM orders WHERE non lo soooo**** ='" + username + "'";
+        int id_gen_ord = db->execAndGet(query_user).getInt();
         int id_ord_db = ord->get_id_s_prod();
         string select =
                 "SELECT  desc_prod, price_product, quantity, name, store.id FROM users, orders, store,subcategories WHERE id_cust=users.id AND id_prov=" +
-                to_string(id) + " AND id_single_order=" + to_string(id_ord_db) + "";
+                to_string(id) + " AND id =" + to_string(id_gen_ord) + ""; //dovrebbe essere id_ordine = id che hopreso prima per fare il ciclo
 
         SQLite::Statement query(*db, select);
+
         while (query.executeStep()) {
             // Per ogni prodotto trovato creo un oggetto prodotto e chiamo la addOrderProduct
             int id_store = query.getColumn(4).getInt();
@@ -111,10 +119,11 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
             *product = new Product(desc_prod, price_prod, quantity, username, subcategories, id_store);
 
             ord->add_order(std::move(product));
+            //qui finisce il ciclo che ho iniziato sopra
 
         }
 
-    }
+    }*/
 }
 
 

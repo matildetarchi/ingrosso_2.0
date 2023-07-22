@@ -7,7 +7,11 @@
 using namespace std;
 
 Provider::Provider( const string &t, const string &bn,const string &a, const string &e,
-                const string &password, const string &us, const string &c) : User(t, bn, a, e, password, us, c), order(nullptr),store(nullptr){}
+                const string &password, const string &us, const string &c) : User(t, bn, a, e, password, us, c){
+
+    store = make_shared<Store>(const string &provider);
+    order = make_shared<OrdersList>(const string &user);
+}
 
 Provider::~Provider() {
     if(order != nullptr)
