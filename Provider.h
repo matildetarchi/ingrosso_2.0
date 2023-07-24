@@ -18,13 +18,14 @@ public:
     Provider( const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 
-    shared_ptr<OrdersList> get_order()override {
+    shared_ptr<OrdersList> get_orderList()override {
            return order;
-     }
+    }
+
 
     shared_ptr<Store> get_store()override {
          return store;
-     }
+    }
 
     void set_order(OrdersList *ord) override {
         order = ord;
@@ -34,9 +35,10 @@ public:
         store=st;
     }
     //TODO implementa
-    void accept_order(Order* o);
+    void accept_order(int index);
+    //dentro prendo l'ordine all'index passato
 
-    void deny_order(Order* o);
+    void delete_order(int index);
 
 private:
     shared_ptr<OrdersList> order;

@@ -26,7 +26,7 @@ void accept_order(Order* o) {
     o->set_status(id, "A");
 }
 
-void deny_order(Order* o) {
+void delete_order(Order* o) {
     int id = 0;
     o->set_status(id, "D");
 }

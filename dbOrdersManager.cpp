@@ -62,9 +62,16 @@ void dbOrdersManager::changeStatus(const string &username, int id_single_order, 
 
 void dbOrdersManager::select_for_provider(const std::string &username) {
 
-    string select =
-            "SELECT  desc_prod, price_product, quantity, name FROM users, orders, subcategories WHERE id_cust=users.id AND id_prov=" +
-            to_string(id) + " AND id =" + to_string(id_gen_ord) + "";
+    string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
+    int id = db->execAndGet(query_user).getInt();
+
+    string select_id_store = "SELECT id FROM store WHERE id_prov=" + to_string(id) + "";
+    int id_store = db->execAndGet(query_user).getInt();
+
+    //deve fare il ciclo su id_store, quindi finche non sono finiti gli id_store continua a controllare quali sono uguali
+    while (query.executeStep()) {
+        string select_products = "SELECT desc_prod, quantity, status, date_order FROM orders, orders_details, store WHERE id_order = orders.id AND id_product =" + to_string(id_store) + "";
+    }
 
     /*//metodo che restituisce un vettore
     // contenente i dati generali degli ordini di un fornitore

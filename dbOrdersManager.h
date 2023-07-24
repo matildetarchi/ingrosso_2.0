@@ -20,7 +20,7 @@ public:
     dbOrdersManager(SQLite::Database* d);
 
     void set_orders(OrdersList* o){
-        tab_order=o;
+        tab_order = o;
     }
 
     void add_to_db();
@@ -36,10 +36,10 @@ public:
     int select_id_last_order(const string &username_prov);
 
 private:
-    OrdersList *tab_order;
+    shared_ptr<OrdersList> tab_order;
     SQLite::Database *db;
-    Product* prod;
-    Order *order;
+    unique_ptr<Product> prod;
+    shared_ptr<Order> order;
 };
 
 

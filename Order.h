@@ -39,13 +39,9 @@ public:
     }
 
     Product* get_prod() {
+        // con index
         return prod;
     }
-
-    void set_product(Product* p){
-        prod=p;
-    }
-
 
     Date* get_date() {
         return date;
@@ -62,11 +58,14 @@ public:
     //TODO implementare funzione
     double get_total(Order* o);
 
-    void add_order(unique_ptr<Product*> p){
+    //nel carrello
+    void add_to_order(unique_ptr<Product> p){
         order_p.push_back(std::move(p));
     };
 
     void update_num(int control);
+
+    //nel carrello
     void remove_one(int index);
     void remove_all();
 
@@ -75,12 +74,11 @@ public:
 private:
 
     Date* date;
-    Product* prod;
     int num_prod;
     int id_s_product;
     string status;
     string username_client;
-    vector<unique_ptr<Product*>> order_p;
+    vector<unique_ptr<Product>> order_p;
 };
 
 

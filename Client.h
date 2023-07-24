@@ -33,7 +33,7 @@ public:
         return cart;
     };
 
-    void set_order(OrdersList *ord) override {
+    void set_order( std::unique_ptr<OrdersList> ord) override {
         order = ord;
     }
 
@@ -41,19 +41,22 @@ public:
         fav = f;
     }
 
-    void set_cart(Cart *crt) override {
+    void set_cart( std::unique_ptr<Cart> crt) override {
         cart = crt;
     }
 
     //TODO implementa
     void do_order(OrdersList *ord);
+    void add_to_cart();
+    void add_to_fav();
 
 private:
+
     shared_ptr<OrdersList> order;
     shared_ptr<Favourites> fav;
     shared_ptr<Cart> cart;
 
-    //unique_ptr<Product> prod;
+    shared_ptr<Product> prod;
 };
 
 
