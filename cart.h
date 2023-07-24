@@ -42,13 +42,14 @@ public:
     void remove_all();
     void remove_one(int index);
 
-    vector<Product*> products;
 
 private:
     string username_client;
     int num_prod;
     //nuovo
     unique_ptr<Product> prod;
+    //da rivedere, prima era nel public
+    vector<Product*> products;
 };
 
 #endif //INGROSSO_ONLINE_CART_H
