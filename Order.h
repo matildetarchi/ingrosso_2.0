@@ -38,9 +38,8 @@ public:
             status = new_status;
     }
 
-    Product* get_prod() {
-        // con index
-        return prod;
+    shared_ptr<Product> get_prod(int index) {
+        return order_p[index];
     }
 
     Date* get_date() {
@@ -55,20 +54,14 @@ public:
         return username_client;
     }
 
-    //TODO implementare funzione
-    double get_total(Order* o);
+    double get_total(unique_ptr<Order> o);
 
-    //nel carrello
-    void add_to_order(unique_ptr<Product> p){
-        order_p.push_back(std::move(p));
-    };
 
     void update_num(int control);
 
-    //nel carrello
-    void remove_one(int index);
-    void remove_all();
 
+    void remove_all();
+    void remove_one(int index);
 
 
 private:
@@ -78,7 +71,7 @@ private:
     int id_s_product;
     string status;
     string username_client;
-    vector<unique_ptr<Product>> order_p;
+    vector<shared_ptr<Product>> order_p;
 };
 
 

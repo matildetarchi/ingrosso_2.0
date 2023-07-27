@@ -37,6 +37,10 @@ public:
 
     void add_product(Product* prod);
 
+    void add_to_order(unique_ptr<Product> p){
+        products.push_back(std::move(p));
+    };
+
     void update_num(int control);
 
     void remove_all();
@@ -46,10 +50,9 @@ public:
 private:
     string username_client;
     int num_prod;
-    //nuovo
     unique_ptr<Product> prod;
     //da rivedere, prima era nel public
-    vector<Product*> products;
+    vector<unique_ptr<Product>> products;
 };
 
 #endif //INGROSSO_ONLINE_CART_H

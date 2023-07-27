@@ -15,8 +15,12 @@ Order::~Order() {
     remove_all();
 }
 
-double Order::get_total(Order *o) {
-    return 0;
+double Order::get_total(unique_ptr<Order> o) {
+    int s = 0;
+    for(int i = 0; i<o->num_prod; i++) {
+        shared_ptr<Product> p = o->get_prod(i);
+        s += p->get_price();
+    }
 };
 
 

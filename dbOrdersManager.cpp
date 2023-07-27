@@ -180,7 +180,7 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
                 std::unique_ptr<Product *> product = std::make_unique<Product *>();// Qui passate i paraemtri che servono a OrderProduct
                 *product = new Product(desc_prod, price_prod, quantity, username, subcategories, id_store);
 
-                ord->add_order(std::move(product));
+                ord->add_to_order(std::move(product));
 
             }
 
