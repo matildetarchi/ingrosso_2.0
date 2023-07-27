@@ -12,6 +12,7 @@
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
 #include <string>
+#include <memory>
 
 using namespace std;
 class dbFavouritesManager {
@@ -20,7 +21,7 @@ public:
     dbFavouritesManager(SQLite::Database* d);
 
 
-    void set_favourites(Favourites* f){
+    void set_favourites(std::shared_ptr<Favourites> f){
         fav=f;
     }
     void add_to_db();
@@ -29,7 +30,7 @@ public:
     void select(const string username);
 
 private:
-    Favourites *fav;
+    std::shared_ptr<Favourites> fav;
     SQLite::Database *db;
     Product* prod;
 };

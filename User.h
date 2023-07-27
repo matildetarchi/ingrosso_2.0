@@ -22,10 +22,10 @@ public:
 
     virtual ~User() {}
 
-    virtual void set_order(OrdersList *ord) ;
-    virtual void set_favourites(std::unique_ptr<Favourites> f);
-    virtual void set_cart(Cart *crt);
-    virtual void set_store(Store *st);
+    virtual void set_order(std::shared_ptr<OrdersList> ord) ;
+    virtual void set_favourites(std::shared_ptr<Favourites> f);
+    virtual void set_cart(std::shared_ptr<Cart> crt);
+    virtual void set_store(std::shared_ptr<Store> str);
 
     virtual shared_ptr<Cart> get_cart();
     virtual shared_ptr<Favourites> get_fav();

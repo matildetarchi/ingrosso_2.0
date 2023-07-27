@@ -27,12 +27,10 @@ class Engine {
 public:
     Engine();
 
-    bool doRegistration(User *user);
+    bool doRegistration(unique_ptr<User> user);
     bool doLogin(const string &email, const string &psw);
 
-    User* get_user() {
-        return user;
-    }
+
 private:
     unique_ptr<User> user;
     SQLite::Database *database;

@@ -17,7 +17,7 @@ class dbStoreManager {
 public:
     dbStoreManager(SQLite::Database* d);
 
-    void set_store(Store* s) {
+    void set_store(std::shared_ptr<Store> s) {
         st = s;
     }
 
@@ -29,7 +29,7 @@ public:
     int select_count_for_client(const string sub_name, const string disp);
     int select_count_for_prov(const string &username);
 private:
-    Store* st;
+    std::shared_ptr<Store> st;
     SQLite::Database* db;
     Product* prod;
     dbFavouritesManager* fav;

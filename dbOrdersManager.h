@@ -19,7 +19,7 @@ class dbOrdersManager {
 public:
     dbOrdersManager(SQLite::Database* d);
 
-    void set_orders(OrdersList* o){
+    void set_orders(std::shared_ptr<OrdersList> o){
         tab_order = o;
     }
 

@@ -25,8 +25,8 @@ void Favourites:: update_num_prod(int control) {
     }
 }
 
-void Favourites::add_product(Product* prod){
-    products.push_back(prod);
+void Favourites::add_product( std::shared_ptr<Product> prod){
+    products.push_back(std::move(prod));
     update_num_prod(add);
 }
 

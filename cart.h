@@ -32,23 +32,23 @@ public:
         return num_prod;
     }
 
-    //nuovo
-    void setProduct(unique_ptr<Product> prd);
+    vector<unique_ptr<Product>> get_product(){
+        return products;
+    };
 
-    void add_product(Product* prod);
+    void add_product(unique_ptr<Product> prod);
 
     void update_num(int control);
 
     void remove_all();
     void remove_one(int index);
 
-    vector<Product*> products;
+
 
 private:
     string username_client;
     int num_prod;
-    //nuovo
-    unique_ptr<Product> prod;
+    vector<unique_ptr<Product>> products;
 };
 
 #endif //INGROSSO_ONLINE_CART_H

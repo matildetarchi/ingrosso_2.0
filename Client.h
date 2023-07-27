@@ -33,15 +33,15 @@ public:
         return cart;
     };
 
-    void set_order( std::unique_ptr<OrdersList> ord) override {
+    void set_order( std::shared_ptr<OrdersList> ord) override {
         order = ord;
     }
 
-    void set_favourites( std::unique_ptr<Favourites> f) override {
+    void set_favourites( std::shared_ptr<Favourites> f) override {
         fav = f;
     }
 
-    void set_cart( std::unique_ptr<Cart> crt) override {
+    void set_cart( std::shared_ptr<Cart> crt) override {
         cart = crt;
     }
 

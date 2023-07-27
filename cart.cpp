@@ -26,13 +26,11 @@ void Cart::update_num(int control) {
     }
 }
 
-//nuovo
-void Cart::setProduct(unique_ptr <Product> prd) {
-    prod = std::move(prd);
-}
 
-void Cart::add_product(Product *prod) {
-    products.push_back(prod);
+
+
+void Cart::add_product(std::unique_ptr<Product> prod) {
+    products.push_back(std::move(prod));
     update_num(add);
 }
 
@@ -44,7 +42,7 @@ void Cart::remove_all() {
 }
 
 void Cart::remove_one(int index) {
-    Product *p = products[index];
+    Product p = products[index];
     delete p;
     update_num(cancel);
 }

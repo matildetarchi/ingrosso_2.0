@@ -64,7 +64,7 @@ public:
     }*/
 
 private:
-    //int id_db_prod; //Variabile per memorizzare l'id che il prodotto ha nel database
+
     string description;
     double price;
     string username_prov;

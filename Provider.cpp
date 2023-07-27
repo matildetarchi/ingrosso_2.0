@@ -21,12 +21,12 @@ Provider::~Provider() {
         delete store;
 }
 
-void accept_order(Order* o) {
+void accept_order(std::shared_ptr<Order> o) {
     int id = 0;
     o->set_status(id, "A");
 }
 
-void delete_order(Order* o) {
+void denied_order(std::shared_ptr<Order> o) {
     int id = 0;
     o->set_status(id, "D");
 }

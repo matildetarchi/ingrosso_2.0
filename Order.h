@@ -38,9 +38,8 @@ public:
             status = new_status;
     }
 
-    Product* get_prod() {
-        // con index
-        return prod;
+    vector<unique_ptr<Product>> get_prod() {
+        return order_p;
     }
 
     Date* get_date() {

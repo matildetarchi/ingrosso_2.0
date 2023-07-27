@@ -16,9 +16,9 @@ OrdersList::~OrdersList(){
 
 void OrdersList::add_order( const string &status, Date *date_order, const string &username_other, int id_s_order){
 
-    Order* o = new Order(status,username_other, id_s_order);
+    std::shared_ptr<Order> o = std::make_shared<Order>(status,username_other, id_s_order);
     o->set_date(date_order);
-    orders.push_back(o);
+    orders.push_back(std::move(o));
     update_num(add);
 }
 
@@ -29,14 +29,14 @@ void OrdersList::remove_one(int index) {
 }
 
 void OrdersList::remove_all() {
-    for (int i=0;i<num_prod; i++) {
+    for (int i=0;i<num_order; i++) {
         remove_one(i);
     }
 }
 void OrdersList::update_num(int control) {
     if (control==add) {
-        num_prod=num_prod+1;
+        num_order=num_order+1;
     } else {
-        num_prod=num_prod-1;
+        num_order=num_order-1;
     }
 }
