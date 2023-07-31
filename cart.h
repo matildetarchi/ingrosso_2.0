@@ -32,14 +32,11 @@ public:
         return num_prod;
     }
 
-    //nuovo
-    void setProduct(unique_ptr<Product> prd);
-
-    void add_product(Product* prod);
-
-    void add_to_order(unique_ptr<Product> p){
-        products.push_back(std::move(p));
+    vector<unique_ptr<Product>> get_product(){
+        return products;
     };
+
+    void add_product(unique_ptr<Product> prod);
 
     void update_num(int control);
 
@@ -47,11 +44,10 @@ public:
     void remove_one(int index);
 
 
+
 private:
     string username_client;
     int num_prod;
-    unique_ptr<Product> prod;
-    //da rivedere, prima era nel public
     vector<unique_ptr<Product>> products;
 };
 

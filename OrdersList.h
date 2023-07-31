@@ -31,12 +31,12 @@ public:
         return username_user;
     };
 
-    void add_order( const string &status, Date *date_order, const string &username_other, int id_s_order);
+    void add_order( const string &status, Date *date_order, const string &username);
     void update_num(int control);
     void remove_one(int index);
     void remove_all();
 
-    vector<Order*> get_orders(){
+    vector<shared_ptr<OrdersList>> get_orders(){
         return orders;
     };
 
@@ -44,7 +44,7 @@ public:
 private:
     string username_user;
     int num_prod{};
-    vector<Order*> orders;
+    vector<shared_ptr<OrdersList>> orders;
 
 };
 

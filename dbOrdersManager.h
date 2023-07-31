@@ -25,7 +25,7 @@ public:
 
     void add_to_db();
 
-    void changeStatus(const string &username,int id_single_order,const string &new_status);
+    void changeStatus(const string &username,const string &new_status);
 
     void cancel_order(const string &username, int id_single_order, const string &us_prov);
 
@@ -38,7 +38,7 @@ public:
 private:
     shared_ptr<OrdersList> tab_order;
     SQLite::Database *db;
-    unique_ptr<Product> prod;
+    shared_ptr<Product> prod;
     shared_ptr<Order> order;
 };
 

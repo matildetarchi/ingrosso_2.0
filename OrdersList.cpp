@@ -14,16 +14,16 @@ OrdersList::~OrdersList(){
     remove_all();
 }
 
-void OrdersList::add_order( const string &status, Date *date_order, const string &username_other, int id_s_order){
+void OrdersList::add_order( const string &status, Date *date_order, const string &username){
 
-    Order* o = new Order(status,username_other, id_s_order);
+    Order* o = new Order(status,username);
     o->set_date(date_order);
     orders.push_back(o);
     update_num(add);
 }
 
 void OrdersList::remove_one(int index) {
-    Order* o=orders[index];
+    Order* o = orders[index];
     delete o;
     update_num(cancel);
 }

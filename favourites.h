@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "Product.h"
+#include <memory>
 #define add 0
 #define remove 1
 using namespace std;
@@ -27,8 +28,11 @@ public:
         return num_prod;
     }
 
+    vector <std::shared_ptr<Product>> get_products() {
+        return products;
+    }
 
-    void add_product(Product* prod);
+    void add_product( std::shared_ptr<Product> prod);
 
     void update_num_prod(int control);
 
@@ -36,12 +40,12 @@ public:
     void remove_one(int index);
 
 
-    vector<Product*> products;
 
 private :
 
     string username_client;
     int num_prod;
+    vector<std::shared_ptr<Product> products;
 
 };
 

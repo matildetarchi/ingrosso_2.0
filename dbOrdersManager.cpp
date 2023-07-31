@@ -12,15 +12,10 @@ void dbOrdersManager::add_to_db() {
 
     //metodo che aggiunge un ordine al database
     int index= tab_order->get_num_prod()-1;
-    vector<Order*> orders= tab_order->get_orders();
-    order= orders[index];
-    //seleziono i valori id dell'utente che usa il programma
-    // e del fornitore a cui sarà inviato l'ordine
-    prod=order->get_prod();
-    string query_prov="SELECT id FROM users WHERE username='"+prod->get_username_prov()+"'";
-    int id_prov=db->execAndGet(query_prov);
+    vector<shared_ptr<OrdersList>> orders = tab_order->get_orders();
+    order = orders[index];
 
-    string query_cust="SELECT id FROM users WHERE username='"+tab_order->get_username_user()+"'";
+    string query_cust="SELECT id FROM users WHERE username='"+order->get_us_client()+"'";
     int id_cust=db->execAndGet(query_cust);
 
    // cast per convertire l'oggetto data in una stringa
@@ -29,18 +24,30 @@ void dbOrdersManager::add_to_db() {
     ss << data;
     std::string dataString = ss.str();
 
-    string query_id_store = "SELECT id FROM store WHERE desc_prod ='"+prod->get_desc()+"' AND id_prov =" + to_string(id_prov) + ";";
-    int id_store=db->execAndGet(query_id_store);
-    //lancio la query che inserisce l'ordine
-    string query_insert="INSERT INTO orders (quantity,status, date_order, id_store, id_cust, id_prov, id_single_order) VALUES (" + to_string(prod->get_quantity()) + ",'S','"+ dataString +"', " + to_string(id_store) + ","+
-                        to_string(id_cust)+","+
-                        to_string(id_prov)+","+ to_string(index)+");";
+    //lancio le query che inseriscono l'ordine
+    string query_insert_ord="INSERT INTO orders (status, date_order,id_client) VALUES ('S','"+ dataString +"', "+
+                        to_string(id_cust)+");";
 
-    db->exec(query_insert);
+    db->exec(query_insert_ord);
+
+    for(int i = 0; i<order->get_num_prod(); i++) {
+
+        //seleziono i valori id dei fornitori a cui sarà inviato l'ordine
+        prod = order->get_prod(i);
+        string query_prov="SELECT id FROM users WHERE username='"+prod->get_username_prov()+"'";
+        int id_provider = db->execAndGet(query_prov);
+        string query_id_store = "SELECT id FROM store WHERE id_prov = 'id_provider'";
+        int id_store = db->execAndGet(query_id_store);
+        //**************order->get_id()
+        string query_insert_ord_detail="INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(prod->get_quantity())+"'"+ to_string(order->get_id()) +"', "+
+                                       to_string(id_store)+");";
+
+        db->exec(query_insert_ord_detail);
+    }
 
 }
 
-void dbOrdersManager::changeStatus(const string &username, int id_single_order, const string &new_status) {
+void dbOrdersManager::changeStatus(const string &username, const string &new_status) {
 
     //metodo che cambia lo status dell'ordine da sospeso(S) a approvato(A) o rifiutato(D)
 
@@ -48,19 +55,16 @@ void dbOrdersManager::changeStatus(const string &username, int id_single_order, 
     string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
     int id = db->execAndGet(query_user).getInt();
 
-    vector<Order*> orders= tab_order->get_orders();
-    order=orders[id_single_order];
-
     //lancio la query di modifica
-    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id_single_order = " + to_string(id_single_order) + " AND id_prov = " +to_string(id) + ";";
+    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = " + to_string(da interfaccia) + ";";
     db->exec(query);
 
-    order->set_status(id_single_order,new_status);
+    order->set_status(id, new_status);
 
 }
 
 
-void dbOrdersManager::select_for_provider(const std::string &username) {
+void dbOrdersManager::select_for_provider(const string &username) {
 
     string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
     int id = db->execAndGet(query_user).getInt();
@@ -68,25 +72,23 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
     string select_id_store = "SELECT id FROM store WHERE id_prov=" + to_string(id) + "";
     int id_store = db->execAndGet(query_user).getInt();
 
+    (SQLite::Statement(*db, select_id_store));
     //deve fare il ciclo su id_store, quindi finche non sono finiti gli id_store continua a controllare quali sono uguali
     while (query.executeStep()) {
         string select_products = "SELECT desc_prod, quantity, status, date_order FROM orders, orders_details, store WHERE id_order = orders.id AND id_product =" + to_string(id_store) + "";
     }
 
-    /*//metodo che restituisce un vettore
-    // contenente i dati generali degli ordini di un fornitore
-
     //prendo il valore dell'id dell'utente che sta usando il programma
-    string query_user = "SELECT id FROM users WHERE username ='" + username + "'";
-    int id = db->execAndGet(query_user).getInt();
+    string query_id_user = "SELECT id FROM users WHERE username ='" + username + "'";
+    int id_us = db->execAndGet(query_id_user).getInt();
 
     //controllo di quali tipo di ordini si vuole sapere i dati
     //only_pending=0 solo in sospeso
     //poi quindi creo le colonne della matrice
     //lancio la query e popolo la matrice per poi lanciarla
     string select =
-            "SELECT username, date_order, status FROM users, orders, store WHERE id_cust = users.id AND id_store = store.id AND id_prov=" +
-            to_string(id) + "";
+            "SELECT username, date_order, status FROM users, orders, store WHERE id_client = users.id AND id_store = store.id AND id_prov=" +
+            to_string(id_us) + "";
 
     SQLite::Statement query(*db, select);
 
@@ -130,7 +132,7 @@ void dbOrdersManager::select_for_provider(const std::string &username) {
 
         }
 
-    }*/
+    }
 }
 
 
