@@ -5,7 +5,8 @@
 #include "User.h"
 using namespace std;
 
-User::User(const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c) {
+User::User(){}
+User::User(const int &id, const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c) {
 
     type = t;
     business_name= bn;
@@ -14,5 +15,6 @@ User::User(const string &t, const string &bn,const string &a, const string &e, c
     email = e;
     psw = password;
     username = us;
+    db_id = id;
 }
 

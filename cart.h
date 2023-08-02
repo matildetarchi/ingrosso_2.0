@@ -32,8 +32,8 @@ public:
         return num_prod;
     }
 
-    vector<unique_ptr<Product>> get_product(){
-        return products;
+    vector<unique_ptr<Product>>* get_product(){
+        return &products;
     };
 
     void add_product(unique_ptr<Product> prod);

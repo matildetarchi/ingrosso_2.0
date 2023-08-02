@@ -20,7 +20,7 @@ public:
 
     dbUserManager(SQLite::Database* d);
 
-    void set_user(User* us){
+    void set_user(shared_ptr<User> us){
         user=us;
     }
 
@@ -35,7 +35,7 @@ public:
     vector<vector<string>> select_data_all_users(const string &type, const string &city, const string &control="users.id");
     int select_count_users(const string &type, const string &city);
 private:
-    User* user;
+    shared_ptr<User> user;
     SQLite::Database *db;
 };
 

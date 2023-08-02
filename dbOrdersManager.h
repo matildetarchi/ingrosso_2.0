@@ -12,6 +12,7 @@
 #include "Database.h"
 #include "OrdersList.h"
 #include "Product.h"
+#include "User.h"
 #include <memory>
 
 class dbOrdersManager {
@@ -19,19 +20,19 @@ class dbOrdersManager {
 public:
     dbOrdersManager(SQLite::Database* d);
 
-    void set_orders(OrdersList* o){
-        tab_order = o;
+    void set_user(shared_ptr<User> o){
+        user = o;
     }
 
     void add_to_db();
 
-    void changeStatus(const string &username,const string &new_status);
+    void changeStatus(const string &username,const string &new_status, int id_order);
 
     void cancel_order(const string &username, int id_single_order, const string &us_prov);
 
-    void select_for_provider(const string &username);
+    void select_for_provider();
 
-    void select_for_client(const string &username);
+    void select_for_client();
 
     int select_id_last_order(const string &username_prov);
 
@@ -39,7 +40,7 @@ private:
     shared_ptr<OrdersList> tab_order;
     SQLite::Database *db;
     shared_ptr<Product> prod;
-    shared_ptr<Order> order;
+    shared_ptr<User> user;
 };
 
 

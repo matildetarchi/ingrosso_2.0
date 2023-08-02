@@ -20,7 +20,7 @@ public:
     dbFavouritesManager(SQLite::Database* d);
 
 
-    void set_favourites(Favourites* f){
+    void set_favourites(shared_ptr<Favourites> f){
         fav=f;
     }
     void add_to_db();
@@ -29,7 +29,7 @@ public:
     void select(const string username);
 
 private:
-    Favourites *fav;
+    shared_ptr<Favourites> fav;
     SQLite::Database *db;
     Product* prod;
 };

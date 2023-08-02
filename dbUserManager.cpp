@@ -179,7 +179,7 @@ void dbUserManager::select_data(const string &username) {
     //lancio la query
     //popolo la matrice
     //restituisco la matrice
-    string select="SELECT address, id_city, email, password, business_name FROM users WHERE username='"+username+"';";
+    string select="SELECT id, address, id_city, email, password, business_name FROM users WHERE username='"+username+"';";
     SQLite::Statement query(*db,select);
     int id_city=query.getColumn(1).getInt();
     string select_city_name="SELECT name FROM city WHERE id="+to_string(id_city)+"";
@@ -188,10 +188,12 @@ void dbUserManager::select_data(const string &username) {
     string type=db->execAndGet(select_type).getString();
 
 
-    string address=query.getColumn(0).getText();
+    int dbId = query.getColumn(0).getInt();
+    string address=query.getColumn(1).getText();
     string email=query.getColumn(2).getText();
     string psw=query.getColumn(3).getText();
     string bus_name=query.getColumn(4).getText();
+    user->set_id_db(dbId);
     user->set_city(select_city_name);
     user->set_password(psw);
     user->set_email(email);

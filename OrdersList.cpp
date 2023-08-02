@@ -14,14 +14,11 @@ OrdersList::~OrdersList(){
     remove_all();
 }
 
-void OrdersList::add_order( const string &status, Date *date_order, const string &username){
 
-    Order* o = new Order(status,username);
-    o->set_date(date_order);
-    orders.push_back(o);
-    update_num(add);
+void add_order( shared_ptr<Order> ord)
+{
+    //TODO aggiungere nella lista
 }
-
 void OrdersList::remove_one(int index) {
     Order* o = orders[index];
     delete o;

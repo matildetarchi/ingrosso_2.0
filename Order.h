@@ -59,7 +59,7 @@ public:
 
     void update_num(int control);
 
-
+    void add_order( shared_ptr<Order> ord);
     void remove_all();
     void remove_one(int index);
 

@@ -10,69 +10,110 @@ dbOrdersManager::dbOrdersManager(SQLite::Database* d) {
 
 void dbOrdersManager::add_to_db() {
 
-    //metodo che aggiunge un ordine al database
-    int index= tab_order->get_num_prod()-1;
-    vector<shared_ptr<OrdersList>> orders = tab_order->get_orders();
-    order = orders[index];
-
-    string query_cust="SELECT id FROM users WHERE username='"+order->get_us_client()+"'";
-    int id_cust=db->execAndGet(query_cust);
 
    // cast per convertire l'oggetto data in una stringa
-    Date* data= order->get_date();
+
+    time_t t = std::time(nullptr);
+    tm* now = std::localtime(&t);
+    Date date(now->tm_mday, (now->tm_mon + 1), (now->tm_year + 1900)); //TODO prendere data di oggi
     std::stringstream ss;
-    ss << data;
+    ss << date;
     std::string dataString = ss.str();
 
+    int id_cust = user->get_db_id();
+    string username = user->get_username();
     //lancio le query che inseriscono l'ordine
     string query_insert_ord="INSERT INTO orders (status, date_order,id_client) VALUES ('S','"+ dataString +"', "+
                         to_string(id_cust)+");";
 
     db->exec(query_insert_ord);
 
-    for(int i = 0; i<order->get_num_prod(); i++) {
+    //prendo id ordine inserito (sel max)
 
-        //seleziono i valori id dei fornitori a cui sarà inviato l'ordine
-        prod = order->get_prod(i);
-        string query_prov="SELECT id FROM users WHERE username='"+prod->get_username_prov()+"'";
-        int id_provider = db->execAndGet(query_prov);
-        string query_id_store = "SELECT id FROM store WHERE id_prov = 'id_provider'";
-        int id_store = db->execAndGet(query_id_store);
-        //**************order->get_id()
-        string query_insert_ord_detail="INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(prod->get_quantity())+"'"+ to_string(order->get_id()) +"', "+
-                                       to_string(id_store)+");";
+    string select_id_last_order = "SELECT MAX(id) FROM orders";
+
+    int id_last_ord = db->execAndGet(select_id_last_order).getInt();
+
+    shared_ptr<Cart> cart = user->get_cart();
+    vector<unique_ptr<Product>> products = cart->get_product();
+    for_each(unique_ptr<Product> prod, products) {
+        string query_insert_ord_detail="INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(prod->get_quantity())+"'"+ to_string(id_last_ord) +"', "+
+                                       to_string(prod->get_id_store())+");";
 
         db->exec(query_insert_ord_detail);
     }
 
+
+    string select_last_order_products = "SELECT  desc_prod, price_product, quantity, name, id_product FROM users, orders, orders_details, store, subcategories WHERE id_sub = subcategories.id AND id_client = " + to_string(id_cust) + " AND id_prov=" +
+            to_string(id) + " AND id_order =" + to_string(id_last_ord) + "";
+
+    SQLite::Statement query(*db, select_last_order_products);
+
+    shared_ptr<Order *> ord = make_shared<Order*>();
+    *ord = new Order('S', to_string(id_cust));
+
+    while (query.executeStep()) {
+        // Per ogni prodotto trovato creo un oggetto prodotto e chiamo la addOrderProduct
+        int id_store = query.getColumn(4).getInt();
+        string subcategories = query.getColumn(3).getText();
+        int quantity = query.getColumn(2).getInt();
+        int price_prod = query.getColumn(1).getInt();
+        string desc_prod = query.getColumn(0).getText();
+
+        std::unique_ptr<Product *> product = std::make_unique<Product *>();// Qui passate i paraemtri che servono a OrderProduct
+        *product = new Product(desc_prod, price_prod, quantity, username, subcategories, id_store);
+
+
+        ord->add_order(std::move(product));
+
+    }
+    shared_ptr<OrdersList> order = make_shared<OrdersList*>();
+    *order = new OrdersList(username);
+    order->add_order(std::move(ord));
 }
 
-void dbOrdersManager::changeStatus(const string &username, const string &new_status) {
+void dbOrdersManager::changeStatus(const string &username, const string &new_status, int id_order) {
 
     //metodo che cambia lo status dell'ordine da sospeso(S) a approvato(A) o rifiutato(D)
 
-    //prendo l'id dell'utente che sta usando il programma
-    string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
-    int id = db->execAndGet(query_user).getInt();
+    int id_cust = user->get_db_id();
 
     //lancio la query di modifica
-    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = " + to_string(da interfaccia) + ";";
+    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = id_order AND id = " + to_string(id_cust) + ";";
     db->exec(query);
 
-    order->set_status(id, new_status);
+
+    //TODO fare in modo che si prenda l'ordine con l'id che vogliamo cambiare
+    shared_ptr<Order> order_s = user->get_order();
+    order_s->set_status(id_order, new_status);
 
 }
 
 
-void dbOrdersManager::select_for_provider(const string &username) {
+void dbOrdersManager::select_for_provider() {
 
-    string query_user="SELECT id FROM users WHERE username ='"+ username+"'";
-    int id = db->execAndGet(query_user).getInt();
+    int id_prov = user->get_db_id();
 
-    string select_id_store = "SELECT id FROM store WHERE id_prov=" + to_string(id) + "";
-    int id_store = db->execAndGet(query_user).getInt();
+    string select_id_store = "SELECT id FROM store WHERE id_prov=" + to_string(id_prov) + "";
+    SQLite::Statement query_store_id(*db, select_id_store);
 
-    (SQLite::Statement(*db, select_id_store));
+    while (query_store_id.executeStep()) {
+        int id = query_store_id.getColumn(0);
+
+        string select_product = "SELECT desc_prod, quantity, status, date_order FROM orders, orders_details, store WHERE id_order = orders.id AND id_product = store.id  AND id_product =" + to_string(id) + "";
+        SQLite::Statement query(*db, select_product);
+
+        int desc_prod = query.getColumn(0).getInt();
+        int quantity = query.getColumn(1).getInt();
+        string status = query.getColumn(2).getText();
+        Date date = query.getColumn(3).getDate();
+
+        //TODO riguarda e correggi (set order è di ordersList)
+        unique_ptr<OrdersList > o = make_unique<OrdersList *>();// Qui passate i paraemtri che servono a OrderProduct
+        *o = new OrdersList(desc_prod, quantity, status, date);
+        user->set_order(o);
+    }
+
     //deve fare il ciclo su id_store, quindi finche non sono finiti gli id_store continua a controllare quali sono uguali
     while (query.executeStep()) {
         string select_products = "SELECT desc_prod, quantity, status, date_order FROM orders, orders_details, store WHERE id_order = orders.id AND id_product =" + to_string(id_store) + "";
@@ -102,10 +143,10 @@ void dbOrdersManager::select_for_provider(const string &username) {
         tab_order->add_order(status, date_order, username_cust, id_sing_order);
     }
     // Prendo il vector con gli Order che ho appena messo in tab_order
-    vector<Order *> orders = tab_order->get_orders();
+    vector<shared_ptr<Order>> orders = tab_order->get_orders();
     // Ciclo su tutti gli elementi in orders e per ognuno di questi
     // faccio una query al databse per prendere i prodotti relativi a quell'ordine
-    for (Order *ord: orders) {
+    for (shared_ptr<Order> ord: orders) {
         //sarebbe che while sto analizzando il solito ordine e quindi con il solito id chiave, faccio quello che c'è dentro
         string query_order = "SELECT id FROM orders WHERE non lo soooo**** ='" + username + "'";
         int id_gen_ord = db->execAndGet(query_user).getInt();
@@ -132,21 +173,20 @@ void dbOrdersManager::select_for_provider(const string &username) {
 
         }
 
+        // TODO: ora va messo nella OrderList
+
     }
 }
 
 
-    void dbOrdersManager::select_for_client(const string &username) {
+    void dbOrdersManager::select_for_client() {
 
         //matodo che prende i dati generali degli ordini di un cliente
-
-        //prendo il valore dell'id dell'utente che sta usando il programma
-        string query_user = "SELECT id FROM users WHERE username ='" + username + "'";
-        int id = db->execAndGet(query_user).getInt();
+        int id_cust = user->get_db_id();
 
         string select =
                 "SELECT id_single_order, username, date_order, status, FROM users, orders, store WHERE id_prov=users.id AND id_store=store.id AND id_cust=" +
-                to_string(id) + "";
+                to_string(id_cust) + "";
 
         SQLite::Statement query(*db, select);
 
