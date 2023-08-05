@@ -25,10 +25,9 @@ public:
     void add_to_db();
     bool remove_from_db(int id_store);
     void changeData(int index, const string desc_prod, double price, int quantity);
-    vector<vector<string>> select_for_client(const string sub_name, const string disp, const string order="store.id");
-    void select_for_prov(const string username);
-    int select_count_for_client(const string sub_name, const string disp);
-    int select_count_for_prov(const string &username);
+    vector<vector<string>> select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
+    void select_for_prov(const string &username);
+    int select_count_for_client(const string &sub_name, const string &disp);
 private:
     Store* st;
     SQLite::Database* db;
