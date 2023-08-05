@@ -21,12 +21,12 @@ public:
     User();
     User(const int &id, const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
 
-    virtual ~User() {}
+    virtual ~User() = default;
 
-    virtual void set_order(OrdersList *ord) ;
-    virtual void set_favourites(std::unique_ptr<Favourites> f);
-    virtual void set_cart(Cart *crt);
-    virtual void set_store(Store *st);
+    virtual void set_order(shared_ptr<OrdersList> ord) ;
+    virtual void set_favourites(shared_ptr<Favourites> fav);
+    virtual void set_cart(shared_ptr<Cart> crt);
+    virtual void set_store(shared_ptr<Store> st);
 
     virtual shared_ptr<Cart> get_cart();
     virtual shared_ptr<Favourites> get_fav();
@@ -63,7 +63,7 @@ public:
         return username;
     }
 
-    const int &get_db_id() {
+    const int &get_db_id() const {
         return db_id;
     }
 

@@ -32,7 +32,6 @@ public:
     void select_data(const string &username);
     const string select_type(const string &email);
     const string select_username(const string &email);
-    vector<vector<string>> select_data_all_users(const string &type, const string &city, const string &control="users.id");
     int select_count_users(const string &type, const string &city);
 private:
     shared_ptr<User> user;

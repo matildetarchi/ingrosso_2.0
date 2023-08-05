@@ -13,7 +13,7 @@ Engine::Engine() {
     db_fav = make_unique<dbFavouritesManager>(database);
 }
 
-bool Engine::doRegistration(User *user) {
+bool Engine::doRegistration(shared_ptr<User> user) {
 
     if( db_user->access_reg(user->get_email(),user->get_psw(),1)){
         db_user->set_user(user);
@@ -37,22 +37,22 @@ bool Engine::doLogin(const string &email, const string &psw) {
             // cambiare set_cart in set_user e passare user
             // così anche per set_favourites
             // vedi db_order
-            db_cart->set_cart(user->get_cart());
+            db_cart->set_user(user);
             db_cart->select(username);
 
-            db_fav->set_favourites(user->get_fav());
+            db_fav->set_user(user);
             db_fav->select(username);
 
             db_order->set_user(user);
-            db_order->select_for_client(username);
+            db_order->select_for_client();
         } else {
-            user = make_unique<Provider>(user->get_type(),user->get_bus_name(),user->get_address(),user->get_email(),user->get_psw(),user->get_username(),user->get_city());
+            user = make_unique<Provider>(user->get_db_id(), user->get_type(),user->get_bus_name(),user->get_address(),user->get_email(),user->get_psw(),user->get_username(),user->get_city());
 
-            db_store->set_store(user->get_store());
+            db_store->set_user(user);
             db_store->select_for_prov(username);
 
-            db_order->set_orders(user->get_order());
-            db_order->select_for_provider(username);
+            db_order->set_user(user);
+            db_order->select_for_provider();
         }
         return true;
     } else

@@ -228,7 +228,7 @@ void dbOrdersManager::select_for_provider() {
 
 
 
-    void dbOrdersManager::cancel_order(const string &username, int id_single_order, const string &us_prov) {
+    void dbOrdersManager::cancel_order(const string &username, const string &us_prov) {
 
         //metodo che permette a un utente di annullare il proprio ordine
 

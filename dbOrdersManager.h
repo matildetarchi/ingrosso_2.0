@@ -28,7 +28,7 @@ public:
 
     void changeStatus(const string &username,const string &new_status, int id_order);
 
-    void cancel_order(const string &username, int id_single_order, const string &us_prov);
+    void cancel_order(const string &username, const string &us_prov);
 
     void select_for_provider();
 

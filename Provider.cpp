@@ -6,19 +6,15 @@
 
 using namespace std;
 
-Provider::Provider( const string &t, const string &bn,const string &a, const string &e,
-                const string &password, const string &us, const string &c) : User(t, bn, a, e, password, us, c){
+Provider::Provider(int id, const string &t, const string &bn,const string &a, const string &e,
+                const string &password, const string &us, const string &c) : User(id, t, bn, a, e, password, us, c){
 
-    store = make_shared<Store>(const string &provider);
-    order = make_shared<OrdersList>(const string &user);
+    order = make_unique<OrdersList>(us);
+    store = make_unique<Store>(us);
 }
 
 Provider::~Provider() {
-    if(order != nullptr)
-        delete order;
 
-    if(store != nullptr)
-        delete store;
 }
 
 void accept_order(Order* o) {

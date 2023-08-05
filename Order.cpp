@@ -19,6 +19,7 @@ void add_order( shared_ptr<Order> ord)
 {
     //TODO aggiungere nella lista
 }
+
 double Order::get_total(unique_ptr<Order> o) {
     int s = 0;
     for(int i = 0; i<o->num_prod; i++) {

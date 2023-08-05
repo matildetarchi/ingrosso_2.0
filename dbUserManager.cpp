@@ -10,9 +10,7 @@ dbUserManager::dbUserManager(SQLite::Database *d) {
 }
 
 bool dbUserManager::access_reg(const string &email, const string &psw, int control) {
-
     //funzione per l'accesso o la registrazione al programma
-
     //control = 0 accesso normale
     //control = 1 per controllo se utente già esistente in caso di registrazione
 
@@ -60,19 +58,16 @@ void dbUserManager::add_to_db() {
 
 }
 bool dbUserManager::remove_from_db(const string &username, const string &type) {
-
     //funzione per rimuovere l'utente
 
     //seleziono l'id dell'utente che vuole essere cancellato
-    string query_select_id="SELECT id FROM users WHERE username='"+username+"'";
-    int id=db->execAndGet(query_select_id).getInt();
+    int id = user->get_db_id();
 
     //controllo il tipo di utente
     //'F' fornitore, 'C' cliente
     if (type=="F") {
         //controllo che il fornitore non abbia ordini in sospeso
-        //se li ha ritorno 0
-        //non gli permetto di cancellarsi
+        //se li ha ritorno 0 e non gli permetto di cancellarsi
         string query_count_orders="SELECT count(*) FROM orders WHERE status='S' AND id_prov="+to_string(id)+"";
         int count_ord = db->execAndGet(query_count_orders).getInt();
         if (count_ord > 0) {
@@ -99,7 +94,7 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
             return false;
         }
 
-        //se il fornitore non è presente da nessuna
+        //se il fornitore non è presente da nessuna parte
         //elimino i dati degli ordini di quell'utente
         string query_del_ord="DELETE FROM orders WHERE id_prov = "+to_string(id)+"";
         db->exec(query_del_ord);
@@ -137,7 +132,7 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
         db->exec(query_del_fav);
 
         //elimino i dati degli ordini di quell'utente
-        string query_del_ord="DELETE FROM orders WHERE id_cust = "+to_string(id)+"";
+        string query_del_ord="DELETE FROM orders WHERE id_client = "+to_string(id)+"";
         db->exec(query_del_ord);
 
         //infine elimino l'utente stesso
@@ -154,14 +149,13 @@ void dbUserManager::changeData(const string &username_old, const string &new_add
     //funzione per cambiare i dati dell'utente
 
     //prendo i valore dell'id dell'utente che vuole modificare i suoi dati
-    string query_id="Select id FROM users WHERE username='"+username_old+"'";
-    int i=db->execAndGet(query_id).getInt();
+    int id = user->get_db_id();
 
     string query_city_id ="SELECT id FROM cities WHERE name='"+new_city+"'";
     int id_city=db->execAndGet(query_city_id).getInt();
 
     //lancio la query di update dei dati
-    string query="UPDATE users SET address='"+new_address+"', id_city="+to_string(id_city)+", email='"+new_email+"', password = '"+new_psw+"', username='"+new_username+"' WHERE id = "+ to_string(i)+"";
+    string query="UPDATE users SET address='"+new_address+"', id_city="+to_string(id_city)+", email='"+new_email+"', password = '"+new_psw+"', username='"+new_username+"' WHERE id = "+ to_string(id)+"";
     db->exec(query);
 
     user->set_address(new_address);
@@ -233,62 +227,3 @@ void dbUserManager::changePsw(const std::string &email, const std::string &new_p
 
 }
 
-/* vector<vector<string>> dbUserManager::select_data_all_users(const string &type, const string &city, const string &control) {
-
-    //metodo per prendere i dati di tutti i clienti se fatto da un fornitore
-    //o di tutti i fornitore se fatto da un cliente
-
-    //creo la matrice di stringhe che conterrà i dati degli utenti
-    vector<vector<string>> mat;
-
-    //controllo il tipo di ordinamento richiesto
-    string order;
-    if (control=="Business Name") {
-        order = "business_name";
-    } else if (control=="Username") {
-        order = "username";
-    } else if (control=="Email") {
-        order = "email";
-    } else if (control=="Address") {
-        order = "address";
-    } else if (control=="City") {
-        order = "name";
-    } else {
-        order = control;
-    }
-    //controllo se si vuole sapere tutti gli utenti o di una particolare città
-    //lancio la query
-    //popolo la matrice
-    //restituisco la matrice
-    string select;
-    if (city=="All") {
-
-        select = "SELECT business_name, username, email, address, name FROM users, cities WHERE cities.id=id_city AND type!='" + type + "' ORDER BY "+order+";";
-
-    } else {
-        //prendo il valore dell'id della città scelta
-        string select_city="SELECT id FROM cities WHERE name='"+city+"'";
-        int id=db->execAndGet(select_city).getInt();
-
-        select = "SELECT business_name, username, email, address, name FROM users, cities WHERE cities.id=id_city AND type!='" + type + "' AND id_city="+to_string(id)+" ORDER BY "+order+";";
-
-    }
-    SQLite::Statement query(*db, select);
-    vector<string> vector;
-    string data;
-    int m = 0;
-    int n = 0;
-    while (query.executeStep()) {
-        while (n < 5) {
-            data = query.getColumn(n).getText();
-            vector.push_back(data);
-            n++;
-        }
-        mat.push_back(vector);
-        vector.clear();
-        n = 0;
-        m++;
-    }
-    return mat;
-
-} */

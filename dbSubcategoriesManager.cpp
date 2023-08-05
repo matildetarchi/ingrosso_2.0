@@ -7,7 +7,7 @@
 using namespace std;
 
 dbSubcategoriesManager::dbSubcategoriesManager(SQLite::Database *d) {
-    db=d;
+    db = d;
 }
 
 vector<string> dbSubcategoriesManager::select(const string &categories_name) {

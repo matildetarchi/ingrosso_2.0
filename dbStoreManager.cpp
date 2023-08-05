@@ -13,15 +13,14 @@ dbStoreManager::dbStoreManager(SQLite::Database *d) {
 void dbStoreManager::changeData(int index, const string desc_prod, double price, int quantity){
 
     //metodo per cambiare i valori di un prodotto del proprio magazzino
-
     //lancio la query
     string query="UPDATE store SET desc_prod = '"+ desc_prod +"', price_product="+ to_string(price) +", available_quantity="+to_string(quantity)+" WHERE id = "+to_string(index)+"";
     db->exec(query);
 
-    string query_id_intern="SELECT id_intern FROM store WHERE id = "+to_string(index)+"";
-    int id_intern = db->execAndGet(query_id_intern).getInt();
+    string query_id="SELECT id FROM store WHERE id = "+to_string(index)+"";
+    int id = db->execAndGet(query_id).getInt();
 
-    prod = st->store[id_intern];
+    prod = st->store[id];
 
     prod->set_desc(desc_prod);
     prod->set_price(price);
@@ -34,16 +33,16 @@ void dbStoreManager::add_to_db() {
     int index = st->get_num_prod()-1;
     //prendo l'id della sottocategoria alla quale appartiene il prodotto
     prod = st->store[index];
-    string query_sub="SELECT id FROM subcategories WHERE name='"+prod->get_subcategory()+"'";
-    int id_sub=db->execAndGet(query_sub);
+    string query_sub = "SELECT id FROM subcategories WHERE name='"+prod->get_subcategory()+"'";
+    int id_sub = db->execAndGet(query_sub);
 
     //prendo l'id del fornitore proprietario di questo prodotto
-    string query_prov="SELECT id FROM users WHERE username = '"+st->get_prov()+"'";
-    int id_prov=db->execAndGet(query_prov).getInt();
+    string query_prov = "SELECT id FROM users WHERE username = '"+st->get_prov()+"'";
+    int id_prov = db->execAndGet(query_prov).getInt();
 
     //prendo il massimo id dei prodotti che ha il fornitore nel suo magazzino
-    std::string query_id_inter="SELECT MAX(id_intern) FROM store WHERE id_prov="+ to_string(id_prov)+"";
-    int id_intern=db->execAndGet(query_id_inter).getInt();
+    string query_id_inter = "SELECT MAX(id) FROM store WHERE id_prov="+ to_string(id_prov)+"";
+    int id_intern = db->execAndGet(query_id_inter).getInt();
 
     //lancio la query di inserimento nel db
     string query_insert="INSERT INTO store (available_quantity, price_product, desc_prod,id_sub, id_prov, id_intern) VALUES (" +
@@ -60,8 +59,8 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
     // della lista dei preferiti di qualche utente
     //in caso sia presente lo elimino
 
-    string query_count_in_fav="SELECT count(*) FROM favourites WHERE id_store="+ to_string(id_intern)+"";
-    int count_fav=db->execAndGet(query_count_in_fav);
+    string query_count_in_fav = "SELECT count(*) FROM favourites WHERE id_store="+ to_string(id_intern)+"";
+    int count_fav = db->execAndGet(query_count_in_fav);
     if (count_fav>0) {
         fav->remove_prod(id_intern);
     }
@@ -69,7 +68,7 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
     //controllo che il prodotto non sia presente in qualche ordine in sopeso
     //in caso sia presente ritorno 0
     //non permettendo all'utente di cancellare il prodotto
-    string query_count_in_ord="SELECT count(*) FROM orders WHERE id_store="+ to_string(id_intern)+" AND status='S'";
+    string query_count_in_ord = "SELECT count(*) FROM orders WHERE id_product ="+ to_string(id_intern)+" AND status='S'";
     int count_orders=db->execAndGet(query_count_in_ord);
     if (count_orders>0) {
         return false;
@@ -78,7 +77,7 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
     //controllo che il prodotto non sia all'interno del carrello di qualche utente
     //in caso sia presente ritorno 0
     //non permetteno all'utente di cancellare il prodotto
-    string query_count_in_cart="SELECT count(*) FROM cart WHERE id_store="+ to_string(id_intern)+"";
+    string query_count_in_cart = "SELECT count(*) FROM cart WHERE id_store="+ to_string(id_intern)+"";
     int count_cart=db->execAndGet(query_count_in_cart);
     if (count_cart>0) {
         cart->remove_prod(id_intern);
@@ -87,7 +86,7 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
     //se il prodotto non è presente da nessuna parte
     //lo elimino da tutti gli ordini già accettati o rifiutati
     //per evitare futuri conflitti tra le tabelle
-    string query_del_from_ord="DELETE FROM orders WHERE id_store = "+ to_string(id_intern)+"";
+    string query_del_from_ord="DELETE FROM orders WHERE id_product = "+ to_string(id_intern)+"";
     db->exec(query_del_from_ord);
 
     //se il prodotto non è presente da nessuna parte
@@ -114,11 +113,11 @@ vector<vector<string>> dbStoreManager::select_for_client(const string sub_name, 
     //controllo il tipo di disponibilità
     //della quale l'utente vuole vedere i prodotti
     //solo disponibili o tutti quanti
-    int n_disp;
+    int n_dispo;
     if (disp=="Only Available") {
-        n_disp=1;
+        n_dispo = 1;
     } else {
-        n_disp=0;
+        n_dispo = 0;
     }
 
     //controllo i tipo di ordinamento che l'utente
@@ -138,7 +137,7 @@ vector<vector<string>> dbStoreManager::select_for_client(const string sub_name, 
     //popolo la matrice
     //restituisco la matrice
     string select="SELECT desc_prod, price_product, username, CASE WHEN (available_quantity>0) THEN 'Available ('||available_quantity||')' ELSE 'Not Available' END,store.id FROM users,store WHERE id_prov=users.id AND id_sub="+
-                  to_string(i)+" AND available_quantity>="+ to_string(n_disp)+" ORDER BY "+str_order+";";
+                  to_string(i)+" AND available_quantity>="+ to_string(n_dispo)+" ORDER BY "+str_order+";";
 
     SQLite::Statement query(*db,select);
     vector<string> vector;
@@ -173,15 +172,15 @@ int dbStoreManager::select_count_for_client(const string sub_name, const string 
     //controllo il tipo di disponibilità
     //della quale l'utente vuole vedere i prodotti
     //solo disponibili o tutti quanti
-    int n_disp;
+    int n_dispo;
     if (disp=="Only Available") {
-        n_disp=1;
+        n_dispo = 1;
     } else {
-        n_disp=0;
+        n_dispo = 0;
     }
 
     //lancio la query e restituisco il valore
-    string query_select_count="SELECT count(*) FROM store WHERE id_sub ="+ to_string(i)+" AND available_quantity>="+to_string(n_disp)+"";
+    string query_select_count="SELECT count(*) FROM store WHERE id_sub ="+ to_string(i)+" AND available_quantity>="+to_string(n_dispo)+"";
     int count = db->execAndGet(query_select_count).getInt();
     return count;
 
@@ -192,8 +191,7 @@ void dbStoreManager::select_for_prov(const string username) {
     //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
     //seleziono l'id del fornitore che sta usando il programma
-    string query_select_prov="SELECT id FROM users WHERE username='"+username+"'";
-    int id_prov=db->execAndGet(query_select_prov).getInt();
+    int id_prov = user->get_db_id();
 
     //prendo la quantità di prodotti presenti
     string query_select_count="SELECT count(*) FROM store WHERE id_prov ="+ to_string(id_prov)+"";

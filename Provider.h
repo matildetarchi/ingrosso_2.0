@@ -8,17 +8,16 @@
 #include "User.h"
 #include "OrdersList.h"
 #include "Cart.h"
-#include "OrderProduct.h"
 #include <memory>
 
 using namespace std;
 class Provider: public User {
 public:
 
-    Provider( const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
+    Provider(int id, const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 
-    shared_ptr<OrdersList> get_orderList()override {
+    shared_ptr<OrdersList> get_order()override {
            return order;
     }
 
@@ -27,12 +26,12 @@ public:
          return store;
     }
 
-    void set_order(OrdersList *ord) override {
+    void set_order(shared_ptr<OrdersList> ord) override {
         order = ord;
     }
 
-    void set_store(Store *st) override {
-        store=st;
+    void set_store(shared_ptr<Store> st) override {
+        store = st;
     }
     //TODO implementa
     void accept_order(int index);

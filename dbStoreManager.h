@@ -12,13 +12,14 @@
 #include <SQLiteCpp/Statement.h>
 #include "dbCartManager.h"
 #include "dbFavouritesManager.h"
+#include "User.h"
 
 class dbStoreManager {
 public:
     dbStoreManager(SQLite::Database* d);
 
-    void set_store(Store* s) {
-        st = s;
+    void set_user(shared_ptr<User> o){
+        user = o;
     }
 
     void add_to_db();
@@ -34,6 +35,7 @@ private:
     Product* prod;
     dbFavouritesManager* fav;
     dbCartManager* cart;
+    shared_ptr<User> user;
 };
 
 

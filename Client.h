@@ -17,7 +17,7 @@ class Client : public User {
 public:
 
     Client();
-    Client(const string &t, const string &bn, const string &a, const string &e, const string &password,
+    Client(int id, const string &t, const string &bn, const string &a, const string &e, const string &password,
            const string &us, const string &c);
 
     ~Client() override ;
@@ -34,15 +34,15 @@ public:
         return cart;
     };
 
-    void set_order( std::unique_ptr<OrdersList> ord) override {
+    void set_order( shared_ptr<OrdersList> ord) override {
         order = ord;
     }
 
-    void set_favourites( std::unique_ptr<Favourites> f) override {
+    void set_favourites( shared_ptr<Favourites> f) override {
         fav = f;
     }
 
-    void set_cart( std::unique_ptr<Cart> crt) override {
+    void set_cart( shared_ptr<Cart> crt) override {
         cart = crt;
     }
 

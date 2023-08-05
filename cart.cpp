@@ -46,8 +46,9 @@ void Cart::remove_all() {
     }
 }
 
-void Cart::remove_one(int index) {
+//TODO fare con smart_ptr
+/*void Cart::remove_one(int index) {
     Product p = products[index];
     delete p;
     update_num(cancel);
-}
+}*/

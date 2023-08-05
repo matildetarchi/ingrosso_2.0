@@ -48,7 +48,7 @@ public:
 private:
     string username_client;
     int num_prod;
-    vector<unique_ptr<Product>> products;
+    vector<shared_ptr<Product>> products;
 };
 
 #endif //INGROSSO_ONLINE_CART_H

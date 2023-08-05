@@ -15,15 +15,17 @@ OrdersList::~OrdersList(){
 }
 
 
-void add_order( shared_ptr<Order> ord)
+void OrdersList::add_order( shared_ptr<Order> ord)
 {
     //TODO aggiungere nella lista
 }
-void OrdersList::remove_one(int index) {
+
+//TODO da fare con smart_ptr
+/*void OrdersList::remove_one(int index) {
     Order* o = orders[index];
     delete o;
     update_num(cancel);
-}
+}*/
 
 void OrdersList::remove_all() {
     for (int i=0;i<num_prod; i++) {
