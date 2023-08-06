@@ -13,7 +13,7 @@ dbCartManager::dbCartManager(SQLite::Database *d) {
 void dbCartManager::add_to_db() {
 
     //metodo per aggiungere al carrello un nuovo prodotto
-    int index=cart->get_num_prod()-1;
+    int index = cart->get_num_prod()-1;
     prod = cart->products[index];
     //prendo l'id dell'utente che sta usando il programma e
     // del fornitore del prodotto che sto mettendo nel carrello
@@ -23,17 +23,17 @@ void dbCartManager::add_to_db() {
     string query_prov = "SELECT id FROM users WHERE username='"+prod->get_username_prov()+"'";
     int id_prov = db->execAndGet(query_prov);
 
-    string query_store = "SELECT id FROM store WHERE desc_prod='"+prod->get_desc()+"' AND id_prov="+ to_string(id_prov)+"";
+    string query_store = "SELECT id FROM store WHERE desc_prod='"+prod->get_desc()+"' AND id_prov = '"+ to_string(id_prov)+"'";
     int id_store = db->execAndGet(query_store);
 
     //inserisco i dati nel db
-    string query_insert = "INSERT INTO cart (quantity, id_store,id_user, id_prov) VALUES (" + to_string(prod->get_quantity()) + ", " + to_string(id_store) + ","+ to_string(id_user)+","+to_string(id_prov)+")";
+    string query_insert = "INSERT INTO cart (quantity, id_store,id_user, id_prov) VALUES ('" + to_string(prod->get_quantity()) + "', '" + to_string(id_store) + "', '"+ to_string(id_user)+"', '"+to_string(id_prov)+"')";
 
     db->exec(query_insert);
 
 }
 
-void dbCartManager::remove_all(const string &username) {
+void dbCartManager::remove_all() {
 
     //metodo per rimuovere tutti i prodotti dal carello
     // una volta effettuato l'ordine da quest'ultimo
@@ -42,7 +42,7 @@ void dbCartManager::remove_all(const string &username) {
     int id = user->get_db_id();
 
     //lancio la query di delete dal db
-    string query = "DELETE FROM cart WHERE id_user = "+ to_string(id)+"";
+    string query = "DELETE FROM cart WHERE id_user = '"+ to_string(id)+"'";
     db->exec(query);
 
     //cart->remove_all();
@@ -52,14 +52,14 @@ void dbCartManager::remove_prod(int id_s) {
 
     //metodo per eliminare un solo prodotto dal carrello
 
-    string query = "DELETE FROM cart WHERE id_store = "+ to_string(id_s)+"";
+    string query = "DELETE FROM cart WHERE id_store = '"+ to_string(id_s)+"'";
     id_s = db->exec(query);
 
     cart->remove_one(id_s);
 }
 
 
-void dbCartManager::select(const string &username) {
+void dbCartManager::select() {
 
     //metodo per prendere i valori dei prodotti nel carrello dell'utente
 
@@ -67,7 +67,7 @@ void dbCartManager::select(const string &username) {
     int id = user->get_db_id();
 
     //lancio la query che prende i valori dal db
-    string select="SELECT desc_prod, price_product, username, quantity FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user="+to_string(id) +" ORDER BY username;";
+    string select = "SELECT desc_prod, price_product, username, quantity FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='"+to_string(id) +"' ORDER BY username;";
     SQLite::Statement query(*db,select);
 
     //inserisco i valori all'interno del vettore e la restituisco

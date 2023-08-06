@@ -29,9 +29,9 @@ public:
 
 
     void add_to_db();
-    void remove_all(const string &username);
+    void remove_all();
     void remove_prod(int id);
-    void select(const string &username);
+    void select();
 
 private:
 

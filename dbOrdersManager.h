@@ -26,9 +26,9 @@ public:
 
     void add_to_db();
 
-    void changeStatus(const string &username,const string &new_status, int id_order);
+    void changeStatus(const string &new_status, int id_order);
 
-    void cancel_order(const string &username, const string &us_prov);
+    void cancel_order(int id_order);
 
     void select_for_provider();
 
