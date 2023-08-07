@@ -26,15 +26,8 @@ void Cart::update_num(int control) {
     }
 }
 
-//nuovo
-void Cart::setProduct(unique_ptr <Product> prd) {
-    prod = std::move(prd);
-}
-
-
-
-
-void Cart::add_product(std::unique_ptr<Product> prod) {
+//prende da Cart.h con C grande
+void Cart::add_product(std::shared_ptr<Product> prod) {
     products.push_back(std::move(prod));
     update_num(add);
 }

@@ -12,7 +12,9 @@ void dbFavouritesManager::add_to_db() {
 
     //metodo che aggiunge un prodotto alla lista dei favourites
     int index = fav->get_num_prod()-1;
-    prod = fav->products[index];
+    vector<std::shared_ptr<Product>> prod_list;
+    prod_list = fav->get_products();
+    prod = prod_list[index];
     //prendo da db i valori di id dell'utente che sta usando il programma
     // e del fornitore del prodotto da inserire
     string query_cust = "SELECT id FROM users WHERE username='"+fav->get_client()+"'";
@@ -74,7 +76,7 @@ void dbFavouritesManager::select() {
         prod->set_desc(desc);
         prod->set_price(price);
         prod->set_username_prov(username_prov);
-        fav->add_product(prod);
+        fav->add_product(std::move(prod));
     }
 
 }

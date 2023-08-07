@@ -29,9 +29,9 @@ public:
     void select_for_prov(const string &username);
     int select_count_for_client(const string &sub_name, const string &disp);
 private:
-    Store* st;
+    shared_ptr<Store> st;
     SQLite::Database* db;
-    Product* prod;
+    shared_ptr<Product> prod;
     dbFavouritesManager* fav;
     dbCartManager* cart;
     shared_ptr<User> user;

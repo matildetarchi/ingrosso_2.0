@@ -19,6 +19,10 @@ public:
 
     ~Store();
 
+    vector <std::shared_ptr<Product>> get_products() {
+        return store;
+    }
+
 
     int get_num_prod() const {
         return num_prod;
@@ -28,17 +32,16 @@ public:
         return username_prov;
     }
 
-    void add_to_store(Product* product);
+    void add_to_store(shared_ptr<Product> product);
     void update_num(int control);
     void remove_one(int index);
     void remove_all();
 
-    vector<Product*> store;
 
 private:
     string username_prov;
     int num_prod;
-    vector<unique_ptr<Product*>> order_p;
+    vector<std::shared_ptr<Product>> store;
 
 
 };

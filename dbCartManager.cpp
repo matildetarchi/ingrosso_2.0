@@ -14,7 +14,9 @@ void dbCartManager::add_to_db() {
 
     //metodo per aggiungere al carrello un nuovo prodotto
     int index = cart->get_num_prod()-1;
-    prod = cart->products[index];
+    vector<std::shared_ptr<Product>> prod_list;
+    prod_list = cart->get_products();
+    prod = prod_list[index];
     //prendo l'id dell'utente che sta usando il programma e
     // del fornitore del prodotto che sto mettendo nel carrello
     string query_user = "SELECT id FROM users WHERE username='"+cart->get_client()+"'";

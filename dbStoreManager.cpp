@@ -20,7 +20,9 @@ void dbStoreManager::changeData(int index, const string desc_prod, double price,
     string query_id = "SELECT id FROM store WHERE id = '"+to_string(index)+"'";
     int id = db->execAndGet(query_id).getInt();
 
-    prod = st->store[id];
+    vector<std::shared_ptr<Product>> prod_list;
+    prod_list = st->get_products();
+    prod = prod_list[id];
 
     prod->set_desc(desc_prod);
     prod->set_price(price);
@@ -32,7 +34,9 @@ void dbStoreManager::add_to_db() {
     //metodo per aggiungere un nuovo prodotto al magazzino
     int index = st->get_num_prod()-1;
     //prendo l'id della sottocategoria alla quale appartiene il prodotto
-    prod = st->store[index];
+    vector<std::shared_ptr<Product>> prod_list;
+    prod_list = st->get_products();
+    prod = prod_list[index];
     string query_sub = "SELECT id FROM subcategories WHERE name='"+prod->get_subcategory()+"'";
     int id_sub = db->execAndGet(query_sub);
 
@@ -219,7 +223,7 @@ void dbStoreManager::select_for_prov(const string &username) {
             prod->set_price(price);
             prod->set_desc(desc_prod);
             prod->set_subcategory(subcategory);
-            st->add_to_store(prod);
+            st->add_to_store(std::move(prod));
         }
 
     }
