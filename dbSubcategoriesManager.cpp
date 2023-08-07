@@ -7,7 +7,7 @@
 using namespace std;
 
 dbSubcategoriesManager::dbSubcategoriesManager(SQLite::Database *d) {
-    db=d;
+    db = d;
 }
 
 vector<string> dbSubcategoriesManager::select(const string &categories_name) {
@@ -32,7 +32,7 @@ vector<string> dbSubcategoriesManager::select(const string &categories_name) {
     //lancio la query per prendere le sottocategorie
     //popolo i vettore che conterrà i dati
     //restituisco il vettore
-    SQLite::Statement query(*db, "SELECT name FROM subcategories WHERE id_cat="+ to_string(id)+"");
+    SQLite::Statement query(*db, "SELECT name FROM subcategories WHERE id_cat = '"+ to_string(id)+"'");
     while (query.executeStep()) {
         subcategory = query.getColumn(0).getString();
         subcategories.push_back(subcategory);

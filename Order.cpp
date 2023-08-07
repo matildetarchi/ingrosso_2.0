@@ -8,11 +8,16 @@
 #define add 1
 #define cancel 0
 
-Order::Order(string s, string u_c, int id_p): status(std::move(s)), username_client(std::move(u_c)), id_s_product(id_p), date(nullptr), prod(nullptr){
+Order::Order(string s, string u_c): status(std::move(s)), username_client(std::move(u_c)),  date(nullptr){
 }
 
 Order::~Order() {
     remove_all();
+}
+
+void add_order( shared_ptr<Order> ord)
+{
+    //TODO aggiungere nella lista
 }
 
 double Order::get_total(unique_ptr<Order> o) {

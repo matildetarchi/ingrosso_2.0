@@ -12,28 +12,33 @@
 #include <SQLiteCpp/Statement.h>
 #include "dbCartManager.h"
 #include "dbFavouritesManager.h"
+#include "User.h"
 
 class dbStoreManager {
 public:
     dbStoreManager(SQLite::Database* d);
 
-    void set_store(std::shared_ptr<Store> s) {
-        st = s;
+
+    void set_user(shared_ptr<User> o){
+        user = o;
+
     }
 
     void add_to_db();
     bool remove_from_db(int id_store);
     void changeData(int index, const string desc_prod, double price, int quantity);
-    vector<vector<string>> select_for_client(const string sub_name, const string disp, const string order="store.id");
-    void select_for_prov(const string username);
-    int select_count_for_client(const string sub_name, const string disp);
-    int select_count_for_prov(const string &username);
+    vector<vector<string>> select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
+    void select_for_prov(const string &username);
+    int select_count_for_client(const string &sub_name, const string &disp);
 private:
-    std::shared_ptr<Store> st;
+
+    shared_ptr<Store> st;
+
     SQLite::Database* db;
-    Product* prod;
+    shared_ptr<Product> prod;
     dbFavouritesManager* fav;
     dbCartManager* cart;
+    shared_ptr<User> user;
 };
 
 

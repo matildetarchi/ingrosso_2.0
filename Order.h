@@ -16,14 +16,14 @@ using namespace std;
 class Order {
 public:
 
-    Order(string s, string u_client, int id_s_p);
+    Order(string s, string u_client);
 
     ~Order();
 
-    int get_id_s_prod() const {
-        return id_s_product;
-    }
 
+    int get_id() const {
+        return id;
+    }
 
     int get_num_prod() const{
         return num_prod;
@@ -33,8 +33,8 @@ public:
         return status;
     }
 
-    void set_status(int id_s_p, const string &new_status){
-        if( get_id_s_prod()==id_s_p)
+    void set_status(int id_order, const string &new_status){
+        if( get_id()==id_order)
             status = new_status;
     }
 
@@ -64,7 +64,10 @@ public:
 
     void update_num(int control);
 
-    //nel carrello
+
+    void add_order( shared_ptr<Order> ord);
+    void remove_all();
+
     void remove_one(int index);
     void remove_all();
 
@@ -74,7 +77,7 @@ private:
 
     Date* date;
     int num_prod;
-    int id_s_product;
+    int id;
     string status;
     string username_client;
     vector<unique_ptr<Product>> order_p;

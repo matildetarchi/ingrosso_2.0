@@ -57,11 +57,11 @@ public:
 
     /*int &get_id_db() {
         return id_db_prod;
-    }
+    }*/
 
     int get_id_store() const {
         return id_store;
-    }*/
+    }
 
 private:
 

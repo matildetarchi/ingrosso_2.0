@@ -18,14 +18,17 @@
 using namespace std;
 class User {
 public:
-    User(const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
+    User();
+    User(const int &id, const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
 
-    virtual ~User() {}
+    virtual ~User() = default;
 
-    virtual void set_order(std::shared_ptr<OrdersList> ord) ;
-    virtual void set_favourites(std::shared_ptr<Favourites> f);
-    virtual void set_cart(std::shared_ptr<Cart> crt);
-    virtual void set_store(std::shared_ptr<Store> str);
+
+    virtual void set_order(shared_ptr<OrdersList> ord) ;
+    virtual void set_favourites(shared_ptr<Favourites> fav);
+    virtual void set_cart(shared_ptr<Cart> crt);
+    virtual void set_store(shared_ptr<Store> st);
+
 
     virtual shared_ptr<Cart> get_cart();
     virtual shared_ptr<Favourites> get_fav();
@@ -62,6 +65,10 @@ public:
         return username;
     }
 
+    const int &get_db_id() const {
+        return db_id;
+    }
+
     void set_address(const string &new_addr) {
         address = new_addr;
     }
@@ -86,7 +93,9 @@ public:
         business_name=b_name;
     }
 
-
+    void set_id_db(const int &id){
+        db_id=id;
+    }
 
 private:
     string type;
@@ -96,6 +105,7 @@ private:
     string email;
     string psw;
     string username;
+    int db_id;
 };
 
 #endif //INGROSSO_ONLINE_USER_H

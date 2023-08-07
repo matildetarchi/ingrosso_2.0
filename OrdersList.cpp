@@ -14,19 +14,20 @@ OrdersList::~OrdersList(){
     remove_all();
 }
 
-void OrdersList::add_order( const string &status, Date *date_order, const string &username_other, int id_s_order){
 
-    std::shared_ptr<Order> o = std::make_shared<Order>(status,username_other, id_s_order);
-    o->set_date(date_order);
-    orders.push_back(std::move(o));
-    update_num(add);
+
+void OrdersList::add_order( shared_ptr<Order> ord)
+{
+    //TODO aggiungere nella lista
+
 }
 
-void OrdersList::remove_one(int index) {
-    Order* o=orders[index];
+//TODO da fare con smart_ptr
+/*void OrdersList::remove_one(int index) {
+    Order* o = orders[index];
     delete o;
     update_num(cancel);
-}
+}*/
 
 void OrdersList::remove_all() {
     for (int i=0;i<num_order; i++) {

@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include "User.h"
 
 
 using namespace std;
@@ -22,21 +23,23 @@ public:
     dbCartManager(SQLite::Database* d);
 
 
-    void set_cart(shared_ptr<Cart> c){
-        cart = c;
+    void set_user(shared_ptr<User> o){
+        user = o;
     }
 
 
     void add_to_db();
-    void remove_all(const string &username);
+    void remove_all();
     void remove_prod(int id);
-    void select(const string &username);
+    void select();
 
 private:
 
     shared_ptr<Cart> cart;
     SQLite::Database *db;
-    unique_ptr<Product> prod;
+    shared_ptr<Product> prod;
+    shared_ptr<User> user;
+
 };
 
 

@@ -31,20 +31,25 @@ public:
         return username_user;
     };
 
-    void add_order( const string &status, Date *date_order, const string &username_other, int id_s_order);
+    void add_order( shared_ptr<Order> ord);
+
     void update_num(int control);
     void remove_one(int index);
     void remove_all();
 
-    vector<std::shared_ptr<Order>> get_orders(){
+
+    vector<shared_ptr<Order>> get_orders(){
+
         return orders;
     };
 
 
 private:
     string username_user;
-    int num_order{};
-    vector<std::shared_ptr<Order>> orders;
+
+    int num_prod{};
+    vector<shared_ptr<Order>> orders;
+
 
 };
 

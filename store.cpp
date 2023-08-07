@@ -23,15 +23,14 @@ void Store::update_num(int control) {
     }
 }
 
-void Store::add_to_store(Product* prod) {
+void Store::add_to_store(shared_ptr<Product> prod) {
     store.push_back(prod);
     update_num(add);
 }
 
 void Store::remove_one(int index) {
 
-    Product* p = store[index];
-    delete p;
+    shared_ptr<Product> p = store[index];
     update_num(cancel);
 
 }

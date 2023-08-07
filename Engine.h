@@ -27,12 +27,15 @@ class Engine {
 public:
     Engine();
 
-    bool doRegistration(unique_ptr<User> user);
+
+    bool doRegistration(shared_ptr <User> user);
     bool doLogin(const string &email, const string &psw);
 
-
+    shared_ptr<User> get_user() {
+        return user;
+    }
 private:
-    unique_ptr<User> user;
+    shared_ptr<User> user;
     SQLite::Database *database;
     unique_ptr<dbCartManager> db_cart;
     unique_ptr<dbOrdersManager> db_order;
