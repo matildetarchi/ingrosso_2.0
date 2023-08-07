@@ -15,9 +15,11 @@ OrdersList::~OrdersList(){
 }
 
 
+
 void OrdersList::add_order( shared_ptr<Order> ord)
 {
     //TODO aggiungere nella lista
+
 }
 
 //TODO da fare con smart_ptr
@@ -28,14 +30,14 @@ void OrdersList::add_order( shared_ptr<Order> ord)
 }*/
 
 void OrdersList::remove_all() {
-    for (int i=0;i<num_prod; i++) {
+    for (int i=0;i<num_order; i++) {
         remove_one(i);
     }
 }
 void OrdersList::update_num(int control) {
     if (control==add) {
-        num_prod=num_prod+1;
+        num_order=num_order+1;
     } else {
-        num_prod=num_prod-1;
+        num_order=num_order-1;
     }
 }

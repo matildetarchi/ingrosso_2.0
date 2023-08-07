@@ -7,6 +7,7 @@
 Engine::Engine() {
 
     database=new SQLite::Database("ingrossodb.sqlite");
+
     db_cart = make_unique<dbCartManager>(database);
     db_store = make_unique<dbStoreManager>(database);
     db_order = make_unique<dbOrdersManager>(database);
@@ -26,6 +27,7 @@ bool Engine::doRegistration(shared_ptr<User> user) {
 bool Engine::doLogin(const string &email, const string &psw) {
     if(db_user->access_reg(email, psw, 0)) {
         string username = db_user->select_username(email);
+
         string type = db_user->select_type(email);
 
         if(type == "C") {
@@ -45,14 +47,17 @@ bool Engine::doLogin(const string &email, const string &psw) {
 
             db_order->set_user(user);
             db_order->select_for_client();
+
         } else {
             user = make_unique<Provider>(user->get_db_id(), user->get_type(),user->get_bus_name(),user->get_address(),user->get_email(),user->get_psw(),user->get_username(),user->get_city());
+
 
             db_store->set_user(user);
             db_store->select_for_prov(username);
 
             db_order->set_user(user);
             db_order->select_for_provider();
+
         }
         return true;
     } else

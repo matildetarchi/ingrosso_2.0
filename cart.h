@@ -32,11 +32,15 @@ public:
         return num_prod;
     }
 
+
     vector <std::shared_ptr<Product>> get_products() {
         return products;
     }
 
     void add_product(shared_ptr<Product> prod);
+
+
+    void add_product(unique_ptr<Product> prod);
 
     void update_num(int control);
 
@@ -48,7 +52,9 @@ public:
 private:
     string username_client;
     int num_prod;
+
     vector<std::shared_ptr<Product>> products;
+
 };
 
 #endif //INGROSSO_ONLINE_CART_H

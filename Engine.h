@@ -27,6 +27,7 @@ class Engine {
 public:
     Engine();
 
+
     bool doRegistration(shared_ptr <User> user);
     bool doLogin(const string &email, const string &psw);
 

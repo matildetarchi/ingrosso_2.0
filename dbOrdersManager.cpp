@@ -9,12 +9,14 @@ dbOrdersManager::dbOrdersManager(SQLite::Database* d) {
 }
 
 void dbOrdersManager::add_to_db() {
+
    // cast per convertire l'oggetto data in una stringa
 
     time_t t = std::time(nullptr);
     tm* now = std::localtime(&t);
     Date date(now->tm_mday, (now->tm_mon + 1), (now->tm_year + 1900));
     std::stringstream ss;
+
     ss << date;
     std::string dataString = ss.str();
 
@@ -27,6 +29,7 @@ void dbOrdersManager::add_to_db() {
     db->exec(query_insert_ord);
 
     //prendo id ordine inserito (sel max)
+
 
     string select_id_last_order = "SELECT MAX(id) FROM orders";
 

@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Database.h"
 #include "User.h"
+#include <memory>
 #define accesso 0
 #define registrazione 1
 
@@ -20,9 +21,14 @@ public:
 
     dbUserManager(SQLite::Database* d);
 
+
     void set_user(shared_ptr<User> us){
+
         user=us;
-    }
+    };
+    unique_ptr<User> get_user() {
+        return user;
+    };
 
     void add_to_db();
     bool access_reg(const string &email, const string &psw, int control);
@@ -32,9 +38,11 @@ public:
     void select_data(const string &username);
     const string select_type(const string &email);
     const string select_username(const string &email);
+
     int select_count_users(const string &type, const string &city);
 private:
     shared_ptr<User> user;
+
     SQLite::Database *db;
 };
 

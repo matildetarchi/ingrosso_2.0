@@ -23,8 +23,8 @@ public:
     ~OrdersList();
 
 
-    int get_num_prod() const {
-        return num_prod;
+    int get_num_order() const {
+        return num_order;
     }
 
     const string &get_username_user() {
@@ -37,15 +37,19 @@ public:
     void remove_one(int index);
     void remove_all();
 
+
     vector<shared_ptr<Order>> get_orders(){
+
         return orders;
     };
 
 
 private:
     string username_user;
+
     int num_prod{};
     vector<shared_ptr<Order>> orders;
+
 
 };
 

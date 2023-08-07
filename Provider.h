@@ -8,6 +8,7 @@
 #include "User.h"
 #include "OrdersList.h"
 #include "Cart.h"
+
 #include <memory>
 
 using namespace std;
@@ -17,7 +18,9 @@ public:
     Provider(int id, const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 
+
     shared_ptr<OrdersList> get_order()override {
+
            return order;
     }
 
@@ -26,18 +29,20 @@ public:
          return store;
     }
 
+
     void set_order(shared_ptr<OrdersList> ord) override {
         order = ord;
     }
 
     void set_store(shared_ptr<Store> st) override {
         store = st;
-    }
-    //TODO implementa
-    void accept_order(int index);
-    //dentro prendo l'ordine all'index passato
 
-    void delete_order(int index);
+    }
+
+    void accept_order(std::shared_ptr<Order> o);
+
+
+    void denied_order(std::shared_ptr<Order> o);
 
 private:
     shared_ptr<OrdersList> order;

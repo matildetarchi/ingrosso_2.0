@@ -20,8 +20,10 @@ class dbOrdersManager {
 public:
     dbOrdersManager(SQLite::Database* d);
 
+
     void set_user(shared_ptr<User> o){
         user = o;
+
     }
 
     void add_to_db();
