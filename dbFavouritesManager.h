@@ -7,7 +7,7 @@
 
 
 #include "Database.h"
-#include "Favourites.h"
+#include "favourites.h"
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>

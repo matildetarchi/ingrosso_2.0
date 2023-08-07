@@ -2,7 +2,7 @@
 // Created by Andrea Lipperi on 14/11/22.
 //
 
-#include "Store.h"
+#include "store.h"
 using namespace std;
 
 

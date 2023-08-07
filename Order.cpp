@@ -15,15 +15,11 @@ Order::~Order() {
     remove_all();
 }
 
-void add_order( shared_ptr<Order> ord)
-{
-    //TODO aggiungere nella lista
-}
-
 double Order::get_total(unique_ptr<Order> o) {
     int s = 0;
+    vector<shared_ptr<Product>> products = o->get_order_prod();
     for(int i = 0; i<o->num_prod; i++) {
-        shared_ptr<Product> p = o->get_prod(i);
+        shared_ptr<Product> p = products[i];
         s += p->get_price();
     }
 };

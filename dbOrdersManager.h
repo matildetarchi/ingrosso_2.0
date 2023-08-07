@@ -11,6 +11,7 @@
 #include <iostream>
 #include "Database.h"
 #include "OrdersList.h"
+#include "Order.h"
 #include "Product.h"
 #include "User.h"
 #include <memory>

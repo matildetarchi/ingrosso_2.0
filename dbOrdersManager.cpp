@@ -29,15 +29,13 @@ void dbOrdersManager::add_to_db() {
     db->exec(query_insert_ord);
 
     //prendo id ordine inserito (sel max)
-
-
     string select_id_last_order = "SELECT MAX(id) FROM orders";
 
     int id_last_ord = db->execAndGet(select_id_last_order).getInt();
 
     shared_ptr<Cart> cart = user->get_cart();
-    vector<unique_ptr<Product>> products = cart->get_product();
-    for_each(unique_ptr<Product> prod, products) {
+    vector<shared_ptr<Product>> products = cart->get_products();
+    for( const shared_ptr<Product>& prod: products) {
         string query_insert_ord_detail = "INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(prod->get_quantity())+"', '"+ to_string(id_last_ord) +"', '"+
                                        to_string(prod->get_id_store())+"');";
 
@@ -45,13 +43,13 @@ void dbOrdersManager::add_to_db() {
     }
 
 
-    string select_last_order_products = "SELECT  desc_prod, price_product, quantity, name, id_product FROM users, orders, orders_details, store, subcategories WHERE orders.id = id_order AND id_product = store.id AND id_sub = subcategories.id AND id_client = '" + to_string(id_client) + "' AND id_prov ='" +
-                                        to_string(id) + "' AND id_order ='" + to_string(id_last_ord) + "'";
+    string select_last_order_products = "SELECT  desc_prod, price_product, quantity, name, id_product FROM users, orders, orders_details, store, subcategories WHERE orders.id = id_order AND id_product = store.id AND id_sub = subcategories.id AND id_client = '" + to_string(id_client) + "' AND id_order ='" + to_string(id_last_ord) + "'";
 
     SQLite::Statement query(*db, select_last_order_products);
 
-    shared_ptr<Order *> ord = make_shared<Order*>();
-    *ord = new Order('S', to_string(id_client));
+    std::shared_ptr<Order*> ord = std::make_shared<Order*>();// Qui passate i paraemtri che servono a OrderProduct
+    *ord = new Order("S", username);
+
 
     while (query.executeStep()) {
         // Per ogni prodotto trovato creo un oggetto prodotto e chiamo la addOrderProduct
@@ -61,11 +59,11 @@ void dbOrdersManager::add_to_db() {
         int price_prod = query.getColumn(1).getInt();
         string desc_prod = query.getColumn(0).getText();
 
-        std::unique_ptr<Product *> product = std::make_unique<Product *>();// Qui passate i paraemtri che servono a OrderProduct
+        std::shared_ptr<Product *> product = std::make_shared<Product *>();// Qui passate i paraemtri che servono a OrderProduct
         *product = new Product(desc_prod, price_prod, quantity, username, subcategories, id_store);
 
 
-        ord->add_order(std::move(product));
+        ord->add_to_order(std::move(product));
 
     }
     shared_ptr<OrdersList> order = make_shared<OrdersList*>();

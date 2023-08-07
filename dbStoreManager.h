@@ -5,7 +5,7 @@
 #ifndef INGROSSO_ONLINE_DBSTOREMANAGER_H
 #define INGROSSO_ONLINE_DBSTOREMANAGER_H
 #include <iostream>
-#include "Store.h"
+#include "store.h"
 #include "Database.h"
 #include <vector>
 #include <string>

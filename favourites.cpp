@@ -2,7 +2,7 @@
 // Created by Matilde Tarchi on 02/08/22.
 //
 
-#include "Favourites.h"
+#include "favourites.h"
 using namespace std;
 
 

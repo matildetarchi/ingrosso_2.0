@@ -7,7 +7,7 @@
 
 
 #include "Database.h"
-#include "Cart.h"
+#include "cart.h"
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
