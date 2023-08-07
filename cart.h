@@ -7,8 +7,8 @@
 #define INGROSSO_ONLINE_CART_H
 
 #include <string>
-#include "Store.h"
-#include "Product.h"
+#include "store.h"
+#include "product.h"
 #include <vector>
 #include <memory>
 #define add 0

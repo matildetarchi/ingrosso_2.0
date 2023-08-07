@@ -1,7 +1,7 @@
 //
 // Created by dario on 30/11/2022.
 //
-
+/*
 #include "HomePageProviders.h"
 #include "ChooseStatusPage.h"
 #include "ProviderStorePage.h"
@@ -118,3 +118,4 @@ void HomePageProviders::ViewClients(wxCommandEvent &event) {
     SelectionCityPage *sel_c = new SelectionCityPage(_T("SELECT CITY"));
     sel_c->Show(TRUE);
 }
+ */

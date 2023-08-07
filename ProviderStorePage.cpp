@@ -2,7 +2,7 @@
 // Created by Andrea Lipperi on 02/05/23.
 //
 
-
+/*
 #include "ProviderStorePage.h"
 #include "GlobalVariables.h"
 #include "ModifyProductPage.h"
@@ -123,3 +123,4 @@ void ProviderStorePage::OnChoice(wxCommandEvent& event) {
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 }
+ */

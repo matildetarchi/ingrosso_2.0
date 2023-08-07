@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 22/03/23.
 //
-
+/*
 #include "ProductListPage.h"
 #include "SelectionSubcategoryPage.h"
 #include "GlobalVariables.h"
@@ -136,3 +136,4 @@ void ProductListPage::IsInsert(wxCommandEvent &event) {
         cart->add();
     }
 }
+*/

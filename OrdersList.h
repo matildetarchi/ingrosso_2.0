@@ -36,18 +36,18 @@ public:
     void update_num(int control);
     void remove_one(int index);
     void remove_all();
+    bool modify_status(int id_order, const string &new_status);
 
 
     vector<shared_ptr<Order>> get_orders(){
-
         return orders;
     };
 
 
+
 private:
     string username_user;
-
-    int num_prod{};
+    int num_order;
     vector<shared_ptr<Order>> orders;
 
 

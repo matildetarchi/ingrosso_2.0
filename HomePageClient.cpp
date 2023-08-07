@@ -1,19 +1,10 @@
 //
 // Created by dario on 09/12/2022.
 //
-#include <wx/wx.h>
+/*
 #include "HomePageClient.h"
-//
-// Created by dario on 30/11/2022.
-//
-#include "SelectionSubcategoryPage.h"
-#include "InitialPage.h"
-#include "ChooseStatusPage.h"
-#include "SelectionCityPage.h"
-#include "ManageProfilePage.h"
-#include "FavouritesListPage.h"
-#include "GlobalVariables.h"
-#include "CartPage.h"
+
+
 
 
 const long HomePageClient::IdButtonCart =::wxNewId();
@@ -42,7 +33,7 @@ BEGIN_EVENT_TABLE (HomePageClient, wxFrame)
 END_EVENT_TABLE()
 
 
-HomePageClient::HomePageClient(const wxString& title, const wxPoint& pos, const wxSize& size)
+HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPoint& pos, const wxSize& size)
         : wxFrame(NULL, wxID_ANY, title, pos, size){
     username=GlobalVariables::GetInstance().GetValueUsername();
     type=GlobalVariables::GetInstance().GetValueType();
@@ -143,3 +134,4 @@ void HomePageClient::ViewProviders(wxCommandEvent &event) {
     SelectionCityPage *sel_c = new SelectionCityPage(_T("SELECT CITY"));
     sel_c->Show(TRUE);
 }
+*/

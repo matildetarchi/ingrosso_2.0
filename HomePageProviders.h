@@ -2,7 +2,7 @@
 // Created by dario on 30/11/2022.
 //
 
-
+/*
 #ifndef INGROSSO_ONLINE_STOCKISTFRAME_H
 #define INGROSSO_ONLINE_STOCKISTFRAME_H
 #include "wx/wxhtml.h"
@@ -45,3 +45,4 @@ private:
 
 
 #endif //INGROSSO_ONLINE_STOCKISTFRAME_H
+ */

@@ -1,7 +1,7 @@
 //
 // Created by dario on 05/12/2022.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_INSERTPRODUCTPAGE_H
 #define INGROSSO_ONLINE_INSERTPRODUCTPAGE_H
 
@@ -40,3 +40,4 @@ private:
 };
 
 #endif //INGROSSO_ONLINE_INSERTPRODUCTPAGE_H
+ */

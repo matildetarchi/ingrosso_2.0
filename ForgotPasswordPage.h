@@ -1,16 +1,24 @@
 //
 // Created by Andrea Lipperi on 06/05/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_FORGOTPASSWORDPAGE_H
 #define INGROSSO_ONLINE_FORGOTPASSWORDPAGE_H
 
 #include <wx/wx.h>
 #include "wx/wxhtml.h"
+#include "InitialPage.h"
+#include <wx/hyperlink.h>
+#include "LogInPage.h"
+#include "MyApp.h"
+#include "SelectionSubcategoryPage.h"
+#include "User.h"
+#include "HomePageClient.h"
+#include "Engine.h"
 
 class ForgotPasswordPage : public wxFrame{
 public:
-    ForgotPasswordPage(const wxString& title);
+    ForgotPasswordPage(Engine *engine, const wxString& title);
     static const long IdButtonConfirm;
     static const long IdButtonChange;
     static const long IdButtonBack;
@@ -46,3 +54,4 @@ private:
 
 
 #endif //INGROSSO_ONLINE_FORGOTPASSWORDPAGE_H
+*/

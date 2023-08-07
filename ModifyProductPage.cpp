@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-
+/*
 #include "ModifyProductPage.h"
 #include "GlobalVariables.h"
 #include "Store.h"
@@ -55,3 +55,4 @@ void ModifyProductPage::OnConfirm(wxCommandEvent &event) {
     store->changeData(id);
 
 }
+*/

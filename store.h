@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include "Product.h"
+#include <memory>
 
 using namespace std;
 class Store{

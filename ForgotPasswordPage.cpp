@@ -1,17 +1,9 @@
 //
 // Created by Andrea Lipperi on 06/05/23.
 //
-
+/*
 #include "ForgotPasswordPage.h"
-#include "InitialPage.h"
-#include <wx/hyperlink.h>
-#include "GlobalVariables.h"
-#include "LogInPage.h"
-#include "wx/wx.h"
-#include "MyApp.h"
-#include "SelectionSubcategoryPage.h"
-#include "User.h"
-#include "HomePageClient.h"
+
 
 
 
@@ -29,12 +21,12 @@ BEGIN_EVENT_TABLE (ForgotPasswordPage, wxFrame)
 END_EVENT_TABLE() // The button is pressed
 
 
-ForgotPasswordPage::ForgotPasswordPage(const wxString &title)
+ForgotPasswordPage::ForgotPasswordPage(Engine *engine, const wxString &title)
         : wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
-       wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+        wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
 
-       fgs2 = new wxFlexGridSizer(3, 2, 12, 5);
+        fgs2 = new wxFlexGridSizer(3, 2, 12, 5);
         fgs = new wxFlexGridSizer(9, 1, 12, -5);
 
         messageError="Password Not Equal";
@@ -69,8 +61,8 @@ void ForgotPasswordPage::Insert(wxCommandEvent &event){
     } else {
         std::string e = tc1->GetValue().ToStdString();
         int result;
-        User user;
-        result = user.access_reg(e, "", 1);
+
+        result = engine->access_reg(e, "", 1);
         if (!result) {
             wxLogMessage("There is no account with this email");
         } else {
@@ -196,3 +188,4 @@ void ForgotPasswordPage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +1;
     SetSize(newWidth, newHeight);
 }
+*/

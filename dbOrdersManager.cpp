@@ -47,8 +47,7 @@ void dbOrdersManager::add_to_db() {
 
     SQLite::Statement query(*db, select_last_order_products);
 
-    std::shared_ptr<Order*> ord = std::make_shared<Order*>();// Qui passate i paraemtri che servono a OrderProduct
-    *ord = new Order("S", username);
+    std::shared_ptr<Order> ord = std::make_shared<Order>("S", username);// Qui passate i paraemtri che servono a OrderProduct
 
 
     while (query.executeStep()) {
@@ -59,15 +58,15 @@ void dbOrdersManager::add_to_db() {
         int price_prod = query.getColumn(1).getInt();
         string desc_prod = query.getColumn(0).getText();
 
-        std::shared_ptr<Product *> product = std::make_shared<Product *>();// Qui passate i paraemtri che servono a OrderProduct
-        *product = new Product(desc_prod, price_prod, quantity, username, subcategories, id_store);
+        std::shared_ptr<Product> product = std::make_shared<Product>(desc_prod, price_prod, quantity, username, subcategories, id_store);// Qui passate i paraemtri che servono a OrderProduct
+
 
 
         ord->add_to_order(std::move(product));
 
     }
-    shared_ptr<OrdersList> order = make_shared<OrdersList*>();
-    *order = new OrdersList(username);
+    shared_ptr<OrdersList> order = make_shared<OrdersList>(username);
+
     order->add_order(std::move(ord));
 }
 
@@ -80,9 +79,8 @@ void dbOrdersManager::changeStatus( const string &new_status, int id_order) {
     string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = '" + to_string(id_order) +"' AND id_client = '" + to_string(id_client) + "';";
     db->exec(query);
 
-    //todo deve prendere l'ordine che sto cambiando
-    shared_ptr<Order> order_s = user->get_order();
-    order_s->set_status(id_order, new_status);
+    shared_ptr<OrdersList> order_s = user->get_order_list();
+    order_s->modify_status(id_order, new_status);
 
 }
 
@@ -106,8 +104,8 @@ void dbOrdersManager::select_for_provider() {
         Date date = query.getColumn(3).getText();
 
         //TODO riguarda e correggi (set order è di ordersList)
-        unique_ptr<OrdersList > o = make_unique<OrdersList *>();// Qui passate i paraemtri che servono a OrderProduct
-        *o = new OrdersList(desc_prod, quantity, status, date);
+        unique_ptr<OrdersList> o = make_unique<OrdersList>(desc_prod, quantity, status, date);// Qui passate i paraemtri che servono a OrderProduct
+
         user->set_order(o);
     }
 

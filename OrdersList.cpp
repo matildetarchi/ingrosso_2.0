@@ -18,16 +18,20 @@ OrdersList::~OrdersList(){
 
 void OrdersList::add_order( shared_ptr<Order> ord)
 {
-    //TODO aggiungere nella lista
+   orders.push_back(std::move(ord));
 
 }
 
-//TODO da fare con smart_ptr
-/*void OrdersList::remove_one(int index) {
-    Order* o = orders[index];
-    delete o;
-    update_num(cancel);
-}*/
+
+void OrdersList::remove_one(int index) {
+    if(index<orders.size()){
+        auto iteretor_to_remove=orders.begin()+index;
+        orders.erase(iteretor_to_remove);
+        update_num(cancel);
+    }
+    else
+        std::cout<<"Invalid index provided."<< std::endl;
+}
 
 void OrdersList::remove_all() {
     for (int i=0;i<num_order; i++) {
@@ -40,4 +44,19 @@ void OrdersList::update_num(int control) {
     } else {
         num_order=num_order-1;
     }
+}
+
+bool OrdersList::modify_status(int id_order, const string &new_status){
+
+    bool result;
+    for (const shared_ptr<Order>& order : orders) {
+        if (order->get_id() == id_order) {
+            order->set_status(new_status);
+            result = true;
+            break;
+        }
+        else
+            result = false;
+    }
+    return result;
 }

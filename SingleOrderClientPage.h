@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 #define INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 
@@ -36,3 +36,4 @@ private:
     std::vector<std::vector<std::string>> mat_order;
 };
 #endif //INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
+*/

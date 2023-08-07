@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 20/04/23.
 //
-
+/*
 #include "CartPage.h"
 #include "GlobalVariables.h"
 #include "Cart.h"
@@ -118,3 +118,4 @@ void CartPage::ComeBack(wxCommandEvent &event) {
 void CartPage::IsHelp(wxCommandEvent &event) {
     wxMessageBox("You can change the quantity to order directly in the grid", "Help", wxICON_ERROR);
 }
+ */

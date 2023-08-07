@@ -22,7 +22,7 @@ public:
 
     ~Client() override ;
 
-    shared_ptr<OrdersList> get_order() override {
+    shared_ptr<OrdersList> get_order_list() override {
         return order;
     };
 

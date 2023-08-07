@@ -19,7 +19,7 @@ public:
     ~Provider() override;
 
 
-    shared_ptr<OrdersList> get_order()override {
+    shared_ptr<OrdersList> get_order_list()override {
 
            return order;
     }
@@ -39,10 +39,10 @@ public:
 
     }
 
-    void accept_order(std::shared_ptr<Order> o);
+    void accept_order(int id_order);
 
 
-    void denied_order(std::shared_ptr<Order> o);
+    void denied_order(int id_order);
 
 private:
     shared_ptr<OrdersList> order;

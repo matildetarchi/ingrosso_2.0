@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 03/04/23.
 //
-
+/*
 #include "FavouritesListPage.h"
 #include "GlobalVariables.h"
 #include "OrdersList.h"
@@ -124,3 +124,4 @@ void FavouritesListPage::IsOrder(wxCommandEvent &event) {
 void FavouritesListPage::ComeBack(wxCommandEvent &event) {
     Close();
 }
+ */

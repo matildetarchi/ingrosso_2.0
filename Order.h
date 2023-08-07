@@ -33,8 +33,7 @@ public:
         return status;
     }
 
-    void set_status(int id_order, const string &new_status){
-        if( get_id()==id_order)
+    void set_status(const string &new_status){
             status = new_status;
     }
 

@@ -17,13 +17,12 @@ Provider::~Provider() {
 
 }
 
-void accept_order(std::shared_ptr<Order> o) {
-    int id = 0;
-    o->set_status(id, "A");
+void Provider::accept_order(int id_order) {
+
+    order->modify_status(id_order, "A");
 }
 
-void denied_order(std::shared_ptr<Order> o) {
-    int id = 0;
-    o->set_status(id, "D");
+void Provider::denied_order(int id_order) {
+    order->modify_status(id_order, "D");
 }
 

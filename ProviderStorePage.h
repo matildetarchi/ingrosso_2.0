@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 02/05/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
 #define INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
 #include "wx/wx.h"
@@ -41,3 +41,4 @@ private:
 };
 
 #endif //INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
+*/

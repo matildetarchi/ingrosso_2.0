@@ -30,8 +30,14 @@ void Store::add_to_store(shared_ptr<Product> prod) {
 
 void Store::remove_one(int index) {
 
-    shared_ptr<Product> p = store[index];
-    update_num(cancel);
+    if(index<store.size()){
+        auto iteretor_to_remove= store.begin()+index;
+        store.erase(iteretor_to_remove);
+        update_num(cancel);
+    }
+    else
+        std::cout<<"Invalid index provided."<< std::endl;
+}
 
 }
 

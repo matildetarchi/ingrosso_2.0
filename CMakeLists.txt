@@ -3,9 +3,9 @@ project(ingrosso_online)
 
 set(CMAKE_CXX_STANDARD 17)
 
-enable_testing()
-add_subdirectory(test)
-add_subdirectory(SQLiteCpp)
+#enable_testing()
+#add_subdirectory(test)
+#add_subdirectory(SQLiteCpp)
 
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /CLionProjects/ingrosso/SQLiteCpp)
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /CLionProjects/ingrosso/SQLiteCpp/include)

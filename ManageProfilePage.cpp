@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-
+/*
 #include "ManageProfilePage.h"
 #include "GlobalVariables.h"
 #include "dbCityManager.h"
@@ -176,3 +176,4 @@ void ManageProfilePage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
 }
+ */

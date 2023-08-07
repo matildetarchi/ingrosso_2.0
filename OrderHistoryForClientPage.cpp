@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-
+/*
 #include "OrderHistoryForClientPage.h"
 #include "GlobalVariables.h"
 #include "SingleOrderClientPage.h"
@@ -134,3 +134,4 @@ void OrderHistoryForClientPage::OnChoice(wxCommandEvent& event) {
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 }
+ */

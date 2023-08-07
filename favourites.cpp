@@ -36,9 +36,12 @@ void Favourites::remove_all() {
     }
 }
 
-//TODO fare con smart_ptr
-/*void Favourites::remove_one(int index) {
-    Product* p=products[index];
-    delete p;
-    update_num_prod(remove);
-}*/
+void Favourites::remove_one(int index) {
+   if(index<products.size()){
+        auto iteretor_to_remove = products.begin()+index;
+        products.erase(iteretor_to_remove);
+        update_num_prod(remove);
+    }
+    else
+        std::cout<<"Invalid index provided."<< std::endl;
+}

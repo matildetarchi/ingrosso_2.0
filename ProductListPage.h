@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 22/03/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_PRODUCTLISTPAGE_H
 #define INGROSSO_ONLINE_PRODUCTLISTPAGE_H
 #include "wx/wxhtml.h"
@@ -55,3 +55,4 @@ private:
 };
 
 #endif //INGROSSO_ONLINE_PRODUCTLISTPAGE_H
+*/

@@ -1,7 +1,7 @@
 //
 // Created by dario on 05/12/2022.
 //
-
+/*
 #include "SelectionSubcategoryPage.h"
 #include "dbCategoriesManager.h"
 #include "dbSubcategoriesManager.h"
@@ -136,3 +136,4 @@ void SelectionSubcategoryPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
+ */

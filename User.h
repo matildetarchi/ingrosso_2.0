@@ -32,7 +32,7 @@ public:
 
     virtual shared_ptr<Cart> get_cart();
     virtual shared_ptr<Favourites> get_fav();
-    virtual shared_ptr<OrdersList> get_order();
+    virtual shared_ptr<OrdersList> get_order_list();
     virtual shared_ptr<Store> get_store();
 
 

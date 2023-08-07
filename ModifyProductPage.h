@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 02/05/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_MODIFYPRODUCTPAGE_H
 #define INGROSSO_ONLINE_MODIFYPRODUCTPAGE_H
 
@@ -39,3 +39,4 @@ private:
 };
 
 #endif //INGROSSO_ONLINE_MODIFYPRODUCTPAGE_H
+*/

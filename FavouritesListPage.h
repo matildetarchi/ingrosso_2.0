@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 03/04/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_FAVOURITESLISTPAGE_H
 #define INGROSSO_ONLINE_FAVOURITESLISTPAGE_H
 
@@ -53,3 +53,4 @@ private:
 
 
 #endif //INGROSSO_ONLINE_FAVOURITESLISTPAGE_H
+*/

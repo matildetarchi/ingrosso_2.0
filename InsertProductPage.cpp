@@ -1,7 +1,7 @@
 //
 // Created by dario on 05/12/2022.
 //
-
+/*
 #include "InsertProductPage.h"
 #include "GlobalVariables.h"
 #include "dbSubcategoriesManager.h"
@@ -126,3 +126,4 @@ void InsertProductPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
+ */

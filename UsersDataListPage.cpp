@@ -1,11 +1,10 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-
+/*
 #include "UsersDataListPage.h"
 #include "SelectionCityPage.h"
-#include "GlobalVariables.h"
-#include "favourite.h"
+#include "favourites.h"
 #include "User.h"
 #include "Cart.h"
 #include <wx/grid.h>
@@ -90,3 +89,4 @@ void UsersDataListPage::OnChoice(wxCommandEvent& event) {
 void UsersDataListPage::ComeBack(wxCommandEvent &event) {
    Close();
 }
+*/

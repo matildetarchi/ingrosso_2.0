@@ -26,11 +26,15 @@ double Order::get_total(unique_ptr<Order> o) {
 
 
 
-/*void Order::remove_one(int index) {
-    Product* o=order_p[index];
-    delete o;
-    update_num(cancel);
-}*/
+void Order::remove_one(int index) {
+    if(index<order_p.size()){
+        auto iteretor_to_remove=order_p.begin()+index;
+        order_p.erase(iteretor_to_remove);
+        update_num(cancel);
+    }
+    else
+        std::cout<<"Invalid index provided."<< std::endl;
+}
 
 void Order::remove_all() {
     for (int i=0;i<num_prod; i++) {

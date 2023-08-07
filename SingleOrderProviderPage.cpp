@@ -1,7 +1,7 @@
 //
 // Created by dario on 20/04/2023.
 //
-
+/*
 #include "SingleOrderProviderPage.h"
 #include "GlobalVariables.h"
 
@@ -58,3 +58,4 @@ void SingleOrderProviderPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
+ */
