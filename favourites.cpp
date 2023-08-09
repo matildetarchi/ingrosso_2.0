@@ -16,23 +16,16 @@ Favourites::~Favourites(){
     remove_all();
 }
 
-
-void Favourites:: update_num_prod(int control) {
-    if (control==add) {
-        num_prod = num_prod + 1;
-    } else if (control==remove) {
-        num_prod=num_prod-1;
-    }
-}
-
 void Favourites::add_product( std::shared_ptr<Product> prod){
     products.push_back(std::move(prod));
-    update_num_prod(add);
+    update_num_prod(put_in);
 }
 
-void Favourites::remove_all() {
-    for (int i=0;i<num_prod; i++) {
-        remove_one(i);
+void Favourites:: update_num_prod(int control) {
+    if (control==put_in) {
+        num_prod = num_prod + 1;
+    } else if (control==cancel) {
+        num_prod=num_prod-1;
     }
 }
 
@@ -40,8 +33,14 @@ void Favourites::remove_one(int index) {
    if(index<products.size()){
         auto iteretor_to_remove = products.begin()+index;
         products.erase(iteretor_to_remove);
-        update_num_prod(remove);
+        update_num_prod(cancel);
     }
     else
         std::cout<<"Invalid index provided."<< std::endl;
+}
+
+void Favourites::remove_all() {
+    for (int i=0;i<num_prod; i++) {
+        remove_one(i);
+    }
 }

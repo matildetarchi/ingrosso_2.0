@@ -7,9 +7,9 @@
 #include "User.h"
 #include "Database.h"
 #include "OrdersList.h"
-#include "Store.h"
-#include "Favourites.h"
-#include "Cart.h"
+#include "store.h"
+#include "favourites.h"
+#include "cart.h"
 #include "Client.h"
 #include "Provider.h"
 #include "dbCartManager.h"
@@ -34,6 +34,7 @@ public:
     shared_ptr<User> get_user() {
         return user;
     }
+
 private:
     shared_ptr<User> user;
     SQLite::Database *database;

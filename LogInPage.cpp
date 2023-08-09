@@ -6,9 +6,8 @@
 // Created by dario on 16/11/2022.
 //
 
-#include "InitialPage.h"
+/*#include "InitialPage.h"
 #include "ForgotPasswordPage.h"
-#include "GlobalVariables.h"
 #include "wx/wx.h"
 #include "LogInPage.h"
 #include "MyApp.h"
@@ -101,7 +100,7 @@ void LogInPage::Access(wxCommandEvent &event) {
             TypeUser=user->get_type();
             /*std::string username=user.select_username(e);
             GlobalVariables::GetInstance().SetValueUsername(username);
-            GlobalVariables::GetInstance().SetValueType(TypeUser);*/
+            GlobalVariables::GetInstance().SetValueType(TypeUser);
             if (TypeUser == "F") {
                 HomePageProviders *ProvidersWin = new HomePageProviders(_T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ProvidersWin->Show(TRUE);
@@ -158,3 +157,4 @@ void LogInPage::ViewPass(wxCommandEvent &event) {
     SetSize(newWidth, newHeight);
 
 }
+*/

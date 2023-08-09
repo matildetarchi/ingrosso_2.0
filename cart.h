@@ -8,10 +8,10 @@
 
 #include <string>
 #include "store.h"
-#include "product.h"
+#include "Product.h"
 #include <vector>
 #include <memory>
-#define add 0
+#define put_in 0
 #define cancel 1
 
 
@@ -39,13 +39,10 @@ public:
 
     void add_product(shared_ptr<Product> prod);
 
-
-    void add_product(unique_ptr<Product> prod);
-
     void update_num(int control);
 
-    void remove_all();
     void remove_one(int index);
+    void remove_all();
 
 
 

@@ -6,7 +6,7 @@
 
 
 dbUserManager::dbUserManager(SQLite::Database *d) {
-    db=d;
+    db = d;
 }
 
 bool dbUserManager::access_reg(const string &email, const string &psw, int control) {
@@ -19,6 +19,7 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
     //controllo cosa deve fare il programma
     SQLite::Statement query(*db, "SELECT * FROM users");
     query.reset();
+    cout<< "us"<<endl;
     if (control==accesso) {
         //controllo se la mail e la password sono corretti
         //se si restituisco true altrimenti false

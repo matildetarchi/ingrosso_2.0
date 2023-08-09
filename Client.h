@@ -7,8 +7,8 @@
 
 #include "User.h"
 #include "OrdersList.h"
-#include "Favourites.h"
-#include "Cart.h"
+#include "favourites.h"
+#include "cart.h"
 #include <memory>
 
 using namespace std;
@@ -22,20 +22,20 @@ public:
 
     ~Client() override ;
 
-    shared_ptr<OrdersList> get_order_list() override {
+    /*shared_ptr<OrdersList> get_order_list() override {
         return order;
-    };
+    }
 
     shared_ptr<Favourites> get_fav() override {
         return fav;
-    };
+    }
 
     shared_ptr<Cart> get_cart() override {
         return cart;
-    };
+    }
 
 
-    void set_order( shared_ptr<OrdersList> ord) override {
+    /*void set_order( shared_ptr<OrdersList> ord) override {
         order = ord;
     }
 
@@ -45,12 +45,12 @@ public:
 
     void set_cart( shared_ptr<Cart> crt) override {
         cart = crt;
-    }
+    }*/
 
-    //TODO implementa
-    void do_order(OrdersList *ord);
-    void add_to_cart();
-    void add_to_fav();
+
+    void do_order(shared_ptr<Order> o);
+    void add_to_cart(shared_ptr<Product> p);
+    void add_to_fav(shared_ptr<Product> p);
 
 private:
 

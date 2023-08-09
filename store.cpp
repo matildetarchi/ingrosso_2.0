@@ -15,17 +15,18 @@ Store::~Store() {
     remove_all();
 }
 
+
+void Store::add_to_store(shared_ptr<Product> prod) {
+    store.push_back(prod);
+    update_num(put_in);
+}
+
 void Store::update_num(int control) {
-    if (control==add) {
+    if (control==put_in) {
         num_prod=num_prod+1;
     } else {
         num_prod=num_prod-1;
     }
-}
-
-void Store::add_to_store(shared_ptr<Product> prod) {
-    store.push_back(prod);
-    update_num(add);
 }
 
 void Store::remove_one(int index) {
@@ -39,7 +40,7 @@ void Store::remove_one(int index) {
         std::cout<<"Invalid index provided."<< std::endl;
 }
 
-}
+
 
 void Store::remove_all() {
     for( int i = 0; i<num_prod; i++)

@@ -19,6 +19,16 @@ Client::~Client() {
 
 }
 
-void Client::do_order(OrdersList *order) {
-
+void Client::do_order(shared_ptr<Order> o) {
+    order->add_order(o);
 }
+
+void Client::add_to_cart(shared_ptr<Product> p) {
+    cart->add_product(p);
+}
+
+void Client::add_to_fav(shared_ptr<Product> p) {
+    fav->add_product(p);
+}
+
+

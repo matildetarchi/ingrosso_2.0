@@ -3,7 +3,7 @@
 //
 
 
-#include "wx/wx.h"
+/*#include "wx/wx.h"
 #include "RegistrationPage.h"
 #include "User.h"
 #include "dbCityManager.h"
@@ -226,4 +226,4 @@ void RegistrationPage::OnTextChange(wxCommandEvent &event) {
     int newWidth = currentSize.GetWidth() +1;
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
-}
+}*/

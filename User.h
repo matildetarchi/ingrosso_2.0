@@ -5,14 +5,12 @@
 #ifndef INGROSSO_ONLINE_USER_H
 #define INGROSSO_ONLINE_USER_H
 
-#define add 0
-#define cancel 1
 #include <string>
 #include <vector>
 #include "OrdersList.h"
-#include "Cart.h"
-#include "Favourites.h"
-#include "Store.h"
+#include "cart.h"
+#include "favourites.h"
+#include "store.h"
 #include <memory>
 
 using namespace std;
@@ -23,19 +21,17 @@ public:
 
     virtual ~User() = default;
 
+    shared_ptr<Cart> get_cart()  {
+        return cart;
+    }    //virtual shared_ptr<Favourites> get_fav();
+    shared_ptr<OrdersList> get_order_list() {
+        return order;
+    }    //virtual shared_ptr<Store> get_store();
 
-    virtual void set_order(shared_ptr<OrdersList> ord) ;
+    /*virtual void set_order(shared_ptr<OrdersList> ord);
     virtual void set_favourites(shared_ptr<Favourites> fav);
     virtual void set_cart(shared_ptr<Cart> crt);
-    virtual void set_store(shared_ptr<Store> st);
-
-
-    virtual shared_ptr<Cart> get_cart();
-    virtual shared_ptr<Favourites> get_fav();
-    virtual shared_ptr<OrdersList> get_order_list();
-    virtual shared_ptr<Store> get_store();
-
-
+    virtual void set_store(shared_ptr<Store> st);*/
 
     const string &get_type() {
         return type;
@@ -106,6 +102,8 @@ private:
     string psw;
     string username;
     int db_id;
+    shared_ptr <OrdersList> order;
+    shared_ptr <Cart> cart;
 };
 
 #endif //INGROSSO_ONLINE_USER_H

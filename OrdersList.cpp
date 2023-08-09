@@ -16,12 +16,18 @@ OrdersList::~OrdersList(){
 
 
 
-void OrdersList::add_order( shared_ptr<Order> ord)
-{
+void OrdersList::add_order( shared_ptr<Order> ord) {
    orders.push_back(std::move(ord));
-
+    update_num(put_in);
 }
 
+void OrdersList::update_num(int control) {
+    if (control==put_in) {
+        num_order=num_order+1;
+    } else {
+        num_order=num_order-1;
+    }
+}
 
 void OrdersList::remove_one(int index) {
     if(index<orders.size()){
@@ -36,13 +42,6 @@ void OrdersList::remove_one(int index) {
 void OrdersList::remove_all() {
     for (int i=0;i<num_order; i++) {
         remove_one(i);
-    }
-}
-void OrdersList::update_num(int control) {
-    if (control==add) {
-        num_order=num_order+1;
-    } else {
-        num_order=num_order-1;
     }
 }
 

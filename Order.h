@@ -33,10 +33,6 @@ public:
         return status;
     }
 
-    void set_status(const string &new_status){
-            status = new_status;
-    }
-
     vector<shared_ptr<Product>> get_order_prod() {
         return order_p;
     }
@@ -44,22 +40,23 @@ public:
     Date* get_date() {
         return date;
     }
+    const string &get_us_client() {
+        return username_client;
+    }
+
+    void set_status(const string &new_status){
+            status = new_status;
+    }
 
     void set_date(Date *d) {
         date = d;
     }
 
-    const string &get_us_client() {
-        return username_client;
-    }
 
-    //TODO implementare funzione
     double get_total(unique_ptr<Order> o);
 
-    //nel carrello
-    void add_to_order(shared_ptr<Product> p){
-        order_p.push_back(std::move(p));
-    };
+
+    void add_to_order(shared_ptr<Product> p);
 
     void update_num(int control);
 

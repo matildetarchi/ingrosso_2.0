@@ -5,9 +5,9 @@
 #ifndef INGROSSO_ONLINE_ORDERSLIST_H
 #define INGROSSO_ONLINE_ORDERSLIST_H
 
-#define add 0
+#define put_in 0
 #define cancel 1
-#include "Store.h"
+#include "store.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -29,7 +29,11 @@ public:
 
     const string &get_username_user() {
         return username_user;
-    };
+    }
+
+    vector<shared_ptr<Order>> get_orders(){
+        return orders;
+    }
 
     void add_order( shared_ptr<Order> ord);
 
@@ -37,12 +41,6 @@ public:
     void remove_one(int index);
     void remove_all();
     bool modify_status(int id_order, const string &new_status);
-
-
-    vector<shared_ptr<Order>> get_orders(){
-        return orders;
-    };
-
 
 
 private:

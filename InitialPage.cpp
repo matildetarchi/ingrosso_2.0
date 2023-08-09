@@ -2,7 +2,7 @@
 // Created by dario on 16/11/2022.
 //
 
-#include "InitialPage.h"
+/*#include "InitialPage.h"
 #include "wx/wx.h"
 #include "LogInPage.h"
 #include "MyApp.h"
@@ -49,3 +49,4 @@ void InitialPage::OnRegister(wxCommandEvent& event){
     RegistrationPage *MainWin3 = new RegistrationPage(_T("REGISTRATION"));
     MainWin3->Show(TRUE);
 }
+*/

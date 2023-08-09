@@ -4,7 +4,7 @@
 
 #ifndef INGROSSO_ONLINE_DBORDERSMANAGER_H
 #define INGROSSO_ONLINE_DBORDERSMANAGER_H
-#include "Store.h"
+#include "store.h"
 #include <string>
 #include <vector>
 #include <SQLiteCpp/Statement.h>
@@ -29,7 +29,7 @@ public:
 
     void add_to_db();
 
-    void changeStatus(const string &new_status, int id_order);
+    void change_status(const string &new_status, int id_order);
 
     void cancel_order(int id_order);
 
@@ -44,6 +44,7 @@ private:
     SQLite::Database *db;
     shared_ptr<Product> prod;
     shared_ptr<User> user;
+    shared_ptr<Order> order;
 };
 
 

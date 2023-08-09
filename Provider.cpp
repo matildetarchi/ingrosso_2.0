@@ -18,11 +18,10 @@ Provider::~Provider() {
 }
 
 void Provider::accept_order(int id_order) {
-
-    order->modify_status(id_order, "A");
+    db_order->change_status("A", id_order);
 }
 
 void Provider::denied_order(int id_order) {
-    order->modify_status(id_order, "D");
+    db_order->change_status("D", id_order);
 }
 

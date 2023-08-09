@@ -7,7 +7,8 @@
 
 #include "User.h"
 #include "OrdersList.h"
-#include "Cart.h"
+#include "cart.h"
+#include "dbOrdersManager.h"
 
 #include <memory>
 
@@ -19,9 +20,8 @@ public:
     ~Provider() override;
 
 
-    shared_ptr<OrdersList> get_order_list()override {
-
-           return order;
+    /*shared_ptr<OrdersList> get_order_list() override {
+        return order;
     }
 
 
@@ -37,16 +37,16 @@ public:
     void set_store(shared_ptr<Store> st) override {
         store = st;
 
-    }
+    }*/
 
     void accept_order(int id_order);
-
 
     void denied_order(int id_order);
 
 private:
     shared_ptr<OrdersList> order;
     shared_ptr<Store> store;
+    unique_ptr<dbOrdersManager> db_order;
 };
 
 

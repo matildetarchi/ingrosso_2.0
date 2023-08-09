@@ -5,7 +5,7 @@
 #ifndef INGROSSO_ONLINE_STORE_H
 #define INGROSSO_ONLINE_STORE_H
 
-#define add 0
+#define put_in 0
 #define cancel 1
 #include <string>
 #include <vector>

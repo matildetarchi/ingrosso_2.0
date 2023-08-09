@@ -9,8 +9,8 @@
 #include <vector>
 #include "Product.h"
 #include <memory>
-#define add 0
-#define remove 1
+#define put_in 0
+#define cancel 1
 using namespace std;
 
 class Favourites{
@@ -36,8 +36,8 @@ public:
 
     void update_num_prod(int control);
 
-    void remove_all();
     void remove_one(int index);
+    void remove_all();
 
 
 

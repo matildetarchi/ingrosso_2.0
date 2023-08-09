@@ -25,10 +25,10 @@ public:
     void set_user(shared_ptr<User> us){
 
         user=us;
-    };
-    unique_ptr<User> get_user() {
+    }
+    shared_ptr<User> get_user() {
         return user;
-    };
+    }
 
     void add_to_db();
     bool access_reg(const string &email, const string &psw, int control);
