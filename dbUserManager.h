@@ -10,7 +10,7 @@
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include "User.h"
 #include <memory>
 #define accesso 0
@@ -19,12 +19,11 @@
 class dbUserManager {
 public:
 
-    dbUserManager(SQLite::Database* d);
+    explicit dbUserManager(SQLite::Database* d);
 
 
     void set_user(shared_ptr<User> us){
-
-        user=us;
+        user=std::move(us);
     }
     shared_ptr<User> get_user() {
         return user;

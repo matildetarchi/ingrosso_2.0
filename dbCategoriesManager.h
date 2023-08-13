@@ -9,7 +9,7 @@
 #include <vector>
 #include "dbCategoriesManager.h"
 #include <fstream>
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
 
@@ -19,7 +19,7 @@ using namespace std;
 class dbCategoriesManager {
 public :
 
-    dbCategoriesManager(SQLite::Database* d);
+    explicit dbCategoriesManager(SQLite::Database* d);
     int number_of_cat();
     vector<string> select();
 private:

@@ -6,10 +6,11 @@
 #define INGROSSO_ONLINE_DBORDERSMANAGER_H
 #include "store.h"
 #include <string>
+#include <utility>
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include "OrdersList.h"
 #include "Order.h"
 #include "Product.h"
@@ -19,11 +20,11 @@
 class dbOrdersManager {
 
 public:
-    dbOrdersManager(SQLite::Database* d);
+    explicit dbOrdersManager(SQLite::Database* d);
 
 
     void set_user(shared_ptr<User> o){
-        user = o;
+        user = std::move(o);
 
     }
 

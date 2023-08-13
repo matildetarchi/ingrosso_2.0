@@ -18,6 +18,7 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
     //lancio la query di selezione di tutti gli utenti dal db
     //controllo cosa deve fare il programma
     SQLite::Statement query(*db, "SELECT * FROM users");
+    cout<<"bb"<<endl;
     query.reset();
     cout<< "us"<<endl;
     if (control==accesso) {

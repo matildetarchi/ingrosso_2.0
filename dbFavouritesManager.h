@@ -6,8 +6,9 @@
 #define INGROSSO_ONLINE_DBFAVOURITESMANAGER_H
 
 
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include "favourites.h"
+#include <utility>
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
@@ -20,12 +21,12 @@ using namespace std;
 class dbFavouritesManager {
 public:
 
-    dbFavouritesManager(SQLite::Database* d);
+    explicit dbFavouritesManager(SQLite::Database* d);
 
 
 
     void set_user(shared_ptr<User> o){
-        user = o;
+        user = std::move(o);
 
     }
     void add_to_db();

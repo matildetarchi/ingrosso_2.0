@@ -6,13 +6,23 @@
 
 Engine::Engine() {
 
-    database = new SQLite::Database("ingrossodb.sqlite");
+        // Specifica il percorso del tuo database SQLite
+        const std::string dbPath = "C:/Users/dario/CLionProjects/ingrosso_online/ingrossodb.sqlite";
 
-    db_cart = make_unique<dbCartManager>(database);
-    db_store = make_unique<dbStoreManager>(database);
-    db_order = make_unique<dbOrdersManager>(database);
-    db_fav = make_unique<dbFavouritesManager>(database);
-    db_user = make_unique<dbUserManager>(database);
+        // Apri il database
+        SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+
+        std::cout << "Database aperto con successo." << std::endl;
+
+        // Esegui le operazioni sul database qui
+
+
+
+    db_cart = make_unique<dbCartManager>(&database);
+    db_store = make_unique<dbStoreManager>(&database);
+    db_order = make_unique<dbOrdersManager>(&database);
+    db_fav = make_unique<dbFavouritesManager>(&database);
+    db_user = make_unique<dbUserManager>(&database);
 }
 
 bool Engine::doRegistration(shared_ptr<User> user) {
@@ -33,7 +43,7 @@ bool Engine::doLogin(const string &email, const string &psw) {
 
         string type = db_user->select_type(email);
 
-        /*if(type == "C") {
+        if(type == "C") {
 
             user = make_shared<Client>();
             db_user->set_user(user);
@@ -51,7 +61,7 @@ bool Engine::doLogin(const string &email, const string &psw) {
             db_order->set_user(user);
             db_order->select_for_client();
 
-        } else {*/
+        } else {
             user = make_unique<Provider>(user->get_db_id(), user->get_type(),user->get_bus_name(),user->get_address(),user->get_email(),user->get_psw(),user->get_username(),user->get_city());
 
 
@@ -63,8 +73,8 @@ bool Engine::doLogin(const string &email, const string &psw) {
 
         }
         return true;
-    //} else
-        //return false;
+    } else
+        return false;
 }
 
 

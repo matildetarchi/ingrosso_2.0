@@ -5,7 +5,6 @@
 #ifndef INGROSSO_ONLINE_ENGINE_H
 #define INGROSSO_ONLINE_ENGINE_H
 #include "User.h"
-#include "Database.h"
 #include "OrdersList.h"
 #include "store.h"
 #include "favourites.h"
@@ -21,6 +20,7 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <SQLiteCpp/Database.h>
 
 
 class Engine {
@@ -37,7 +37,6 @@ public:
 
 private:
     shared_ptr<User> user;
-    SQLite::Database *database;
     unique_ptr<dbCartManager> db_cart;
     unique_ptr<dbOrdersManager> db_order;
     unique_ptr<dbStoreManager> db_store;

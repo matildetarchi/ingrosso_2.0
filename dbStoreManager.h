@@ -6,7 +6,7 @@
 #define INGROSSO_ONLINE_DBSTOREMANAGER_H
 #include <iostream>
 #include "store.h"
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include <vector>
 #include <string>
 #include <SQLiteCpp/Statement.h>
@@ -16,11 +16,11 @@
 
 class dbStoreManager {
 public:
-    dbStoreManager(SQLite::Database* d);
+    explicit dbStoreManager(SQLite::Database* d);
 
 
     void set_user(shared_ptr<User> o){
-        user = o;
+        user = std::move(o);
 
     }
 

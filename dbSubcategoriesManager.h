@@ -7,7 +7,7 @@
 
 #include "dbCategoriesManager.h"
 #include <string>
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
@@ -15,7 +15,7 @@
 using namespace std;
 class dbSubcategoriesManager{
 public:
-    dbSubcategoriesManager(SQLite::Database *d);
+    explicit dbSubcategoriesManager(SQLite::Database *d);
 
     vector<string> select(const string &categories_name);
 

@@ -6,8 +6,9 @@
 #define INGROSSO_ONLINE_DBCARTMANAGER_H
 
 
-#include "Database.h"
+#include <SQLiteCpp/Database.h>
 #include "cart.h"
+#include <utility>
 #include <vector>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
@@ -20,11 +21,11 @@ using namespace std;
 
 class dbCartManager {
 public:
-    dbCartManager(SQLite::Database* d);
+    explicit dbCartManager(SQLite::Database *d);
 
 
     void set_user(shared_ptr<User> o){
-        user = o;
+        user = std::move(o);
     }
 
 
