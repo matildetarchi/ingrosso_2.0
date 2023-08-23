@@ -1,10 +1,9 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #include "SingleOrderClientPage.h"
 #include "OrdersList.h"
-#include "GlobalVariables.h"
 
 const long SingleOrderClientPage::IdButtonBack =::wxNewId();
 
@@ -12,18 +11,20 @@ const long SingleOrderClientPage::IdButtonBack =::wxNewId();
 BEGIN_EVENT_TABLE (SingleOrderClientPage, wxDialog)
                 EVT_BUTTON(IdButtonBack, SingleOrderClientPage::ComeBack)
 
-
 END_EVENT_TABLE()
 
-SingleOrderClientPage::SingleOrderClientPage(const wxString &title, const std::string &code_order, const std::string &us_prov):
+SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, const std::string &code_order, const std::string &us_prov): engine(e), id_order(code_order), u_prov(us_prov),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
-    order=code_order;
-    prov=us_prov;
-    username=GlobalVariables::GetInstance().GetValueUsername();
 
-    Orders orders;
-    int row = orders.select_count_single_order_for_client(username, order, prov);
 
+    user= e->get_user();
+    username= user->get_username();
+
+    db_order->select_for_client();
+    orders_list= user->get_order_list();
+    order= orders_list->get_orders();
+
+    int row = order
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row, 3);
     grid->SetColLabelValue(0, "Quantity Requested");
@@ -59,4 +60,3 @@ void SingleOrderClientPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
- */

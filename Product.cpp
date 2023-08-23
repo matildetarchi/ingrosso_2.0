@@ -5,7 +5,7 @@
 #include "Product.h"
 
 using namespace std;
-Product::Product( const string &d, double p, int q, const string &u_p, const string &s, int id_st) {
+Product::Product( const string &d, double p, int q, int q_a, const string &u_p, const string &s, int id_st) {
 
     description = d;
     price = p;
@@ -13,6 +13,7 @@ Product::Product( const string &d, double p, int q, const string &u_p, const str
     username_prov = u_p;
     subcategory = s;
     id_store=id_st;
+    q_available=q_a;
 
 }
 

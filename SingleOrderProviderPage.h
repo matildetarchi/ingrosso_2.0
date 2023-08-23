@@ -1,7 +1,6 @@
 //
 // Created by Andrea Lipperi on 26/04/23.
 //
-/*
 #ifndef INGROSSO_ONLINE_SINGLEORDERPROVIDERPAGE_H
 #define INGROSSO_ONLINE_SINGLEORDERPROVIDERPAGE_H
 
@@ -13,10 +12,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include "Engine.h"
+#include "User.h"
 
 class SingleOrderProviderPage: public wxDialog {
 public:
-    SingleOrderProviderPage(const wxString& title, const std::string &code_order);
+    SingleOrderProviderPage(Engine *e, const wxString& title, const std::string &code_order);
 
     static const long IdButtonBack;
 
@@ -35,11 +36,16 @@ private:
     wxBoxSizer *sizer;
     wxSpinCtrl* spinCtrl;
     wxGrid *grid;
-    std::string order;
+    std::string id_order;
     std::string username;
-    std::vector<std::vector<std::string>> mat_order;
+    shared_ptr<User> user;
+    Engine *engine;
+    shared_ptr <OrdersList> orders_list;
+    std::vector<shared_ptr<Order>> orders;
+    shared_ptr<Order> order;
+    std::vector<shared_ptr<Product>> order_p;
+
 };
 
 
 #endif //INGROSSO_ONLINE_SINGLEORDERPROVIDERPAGE_H
-*/

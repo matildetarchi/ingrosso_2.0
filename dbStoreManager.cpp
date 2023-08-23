@@ -10,11 +10,11 @@ dbStoreManager::dbStoreManager(SQLite::Database *d) {
 
 
 
-void dbStoreManager::changeData(int index, const string desc_prod, double price, int quantity){
+void dbStoreManager::changeData(int index, const string desc_prod, double price, int available_quantity){
 
     //metodo per cambiare i valori di un prodotto del proprio magazzino
     //lancio la query
-    string query = "UPDATE store SET desc_prod = '"+ desc_prod +"', price_product ='"+ to_string(price) +"', available_quantity ='"+to_string(quantity)+"' WHERE id = '"+to_string(index)+"'";
+    string query = "UPDATE store SET desc_prod = '"+ desc_prod +"', price_product ='"+ to_string(price) +"', available_quantity ='"+to_string(available_quantity)+"' WHERE id = '"+to_string(index)+"'";
     db->exec(query);
 
     string query_id = "SELECT id FROM store WHERE id = '"+to_string(index)+"'";
@@ -26,7 +26,7 @@ void dbStoreManager::changeData(int index, const string desc_prod, double price,
 
     prod->set_desc(desc_prod);
     prod->set_price(price);
-    prod->set_quantity(quantity);
+    prod->set_available_quantity(available_quantity);
 }
 
 void dbStoreManager::add_to_db() {

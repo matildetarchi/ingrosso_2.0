@@ -121,6 +121,7 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
         string query = "DELETE FROM users WHERE id = '"+ to_string(id)+"'";
         db->exec(query);
 
+
         return true;
 
     } else if (type=="C") {

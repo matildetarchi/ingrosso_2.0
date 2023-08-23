@@ -6,7 +6,6 @@
 
 
 
-
 const long ForgotPasswordPage::IdButtonConfirm =::wxNewId();
 const long ForgotPasswordPage::IdButtonChange =::wxNewId();
 const long ForgotPasswordPage::IdButtonBack =::wxNewId();

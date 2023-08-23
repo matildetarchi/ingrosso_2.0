@@ -2,19 +2,8 @@
 // Created by dario on 09/12/2022.
 //
 
-//
-// Created by dario on 16/11/2022.
-//
 
-/*#include "InitialPage.h"
-#include "ForgotPasswordPage.h"
-#include "wx/wx.h"
 #include "LogInPage.h"
-#include "MyApp.h"
-#include "SelectionSubcategoryPage.h"
-#include "User.h"
-#include "HomePageClient.h"
-#include "HomePageProviders.h"
 
 
 
@@ -32,8 +21,8 @@ BEGIN_EVENT_TABLE (LogInPage, wxFrame)
 END_EVENT_TABLE() // The button is pressed
 
 
-LogInPage::LogInPage(const wxString &title)
-        : wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 350)){
+LogInPage::LogInPage(Engine *e, const wxString &title)
+        :engine(e), wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 350)){
 
     wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
 
@@ -88,7 +77,7 @@ void LogInPage::Access(wxCommandEvent &event) {
     } else {
         std::string e = tc1->GetValue().ToStdString();
         std::string p = m_passwordText->GetValue().ToStdString();
-        int result;
+        bool result;
 
         result = engine->doLogin(e,p);
         user = engine->get_user();
@@ -98,14 +87,12 @@ void LogInPage::Access(wxCommandEvent &event) {
             Close();
             std::string TypeUser;
             TypeUser=user->get_type();
-            /*std::string username=user.select_username(e);
-            GlobalVariables::GetInstance().SetValueUsername(username);
-            GlobalVariables::GetInstance().SetValueType(TypeUser);
+
             if (TypeUser == "F") {
-                HomePageProviders *ProvidersWin = new HomePageProviders(_T("HOME"), wxPoint(50, 20), wxSize(500, 350));
+                HomePageProviders *ProvidersWin = new HomePageProviders(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ProvidersWin->Show(TRUE);
             } else {
-                HomePageClient *ClientWin = new HomePageClient(_T("HOME"), wxPoint(50, 20), wxSize(500, 350));
+                HomePageClient *ClientWin = new HomePageClient(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ClientWin->Show(TRUE);
             }
         }
@@ -114,16 +101,16 @@ void LogInPage::Access(wxCommandEvent &event) {
 
 void LogInPage::ComeBack(wxCommandEvent &event) {
     Close();
-    InitialPage *home = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 350));
+    InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 350));
     home->Show(TRUE);
 }
 
-void LogInPage::ForgotPassword(wxCommandEvent &event) {
+/*void LogInPage::ForgotPassword(wxCommandEvent &event) {
     Close();
-    ForgotPasswordPage *forpsw = new ForgotPasswordPage(_T("FORGOT PASSWORD"));
+    ForgotPasswordPage *forpsw = new ForgotPasswordPage(engine, _T("FORGOT PASSWORD"));
     forpsw->Show(TRUE);
 }
-
+*/
 void LogInPage::ViewPass(wxCommandEvent &event) {
     fgs->Hide(m_passwordText);
     fgs->Hide(ViewP);
@@ -157,4 +144,4 @@ void LogInPage::ViewPass(wxCommandEvent &event) {
     SetSize(newWidth, newHeight);
 
 }
-*/
+

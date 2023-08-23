@@ -1,15 +1,9 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-/*
+
 #include "UsersDataListPage.h"
-#include "SelectionCityPage.h"
-#include "favourites.h"
-#include "User.h"
-#include "Cart.h"
-#include <wx/grid.h>
-#include <wx/app.h>
-#include <wx/spinctrl.h>
+
 
 const long UsersDataListPage::IdButtonBack =::wxNewId();
 
@@ -17,10 +11,12 @@ BEGIN_EVENT_TABLE (UsersDataListPage, wxFrame)
                 EVT_BUTTON(IdButtonBack, UsersDataListPage::ComeBack)
 END_EVENT_TABLE()
 
-UsersDataListPage::UsersDataListPage(const wxString &title, const std::string &var_city):
+UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std::string &var_city): engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
+    user=engine->get_user();
+    db_user->set_user(user);
     city=var_city;
-    type=GlobalVariables::GetInstance().GetValueType();
+    type=user->get_type();
 
     wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     choiceOrder = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
@@ -37,7 +33,7 @@ UsersDataListPage::UsersDataListPage(const wxString &title, const std::string &v
     choiceOrder->Bind(wxEVT_CHOICE, &UsersDataListPage::OnChoice, this);
 
     User users;
-    int row = users.select_count_users(type,city);
+    int row = db_user->select_count_users(type,city);
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row, 5);
@@ -89,4 +85,3 @@ void UsersDataListPage::OnChoice(wxCommandEvent& event) {
 void UsersDataListPage::ComeBack(wxCommandEvent &event) {
    Close();
 }
-*/

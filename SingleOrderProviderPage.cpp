@@ -1,9 +1,9 @@
 //
 // Created by dario on 20/04/2023.
 //
-/*
+
 #include "SingleOrderProviderPage.h"
-#include "GlobalVariables.h"
+
 
 const long SingleOrderProviderPage::IdButtonBack =::wxNewId();
 
@@ -14,30 +14,49 @@ BEGIN_EVENT_TABLE (SingleOrderProviderPage, wxDialog)
 
 END_EVENT_TABLE()
 
-SingleOrderProviderPage::SingleOrderProviderPage(const wxString &title, const std::string &code_order):
+SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, const std::string &code_order): engine(e),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
-    order=code_order;
-    username=GlobalVariables::GetInstance().GetValueUsername();
+    id_order=code_order;
+    user=engine->get_user();
+    username= user->get_username();
 
-    Orders orders;
-    int row = orders.select_count_single_order_for_provider(username, order);
+    orders_list= user->get_order_list();
+    orders= orders_list->get_orders();
+
+    int num_order = orders_list->get_num_order();
+    int i=0;
+    while(orders[i]->get_id()==id_order){
+        i++;
+    }
+    order=orders[i];
+    order_p=order->get_order_prod();
+    int row=order->get_num_prod();
 
     grid = new wxGrid(this, wxID_ANY);
-    grid->CreateGrid(row, 4);
-    grid->SetColLabelValue(0, "Quantity Requested");
-    grid->SetColLabelValue(1, "Total Price");
-    grid->SetColLabelValue(2, "Product");
-    grid->SetColLabelValue(3, "Quantity Available In Store");
+    grid->CreateGrid(row+1, 4);
+    grid->SetColLabelValue(0, "Product");
+    grid->SetColLabelValue(1, "Quantity Requested");
+    grid->SetColLabelValue(2, "Quantity Available In Store");
+    grid->SetColLabelValue(3, "Total Price");
 
-    mat_order = orders.select_single_order_for_provider(username, order);
+    double t_p= order->get_total(order);
+    string total_price(to_string(t_p));
 
-    for (int i = 0; i < orders.select_count_single_order_for_provider(username, order); i++) {
+    for (int i = 0; i < row; i++) {
+        int q= order_p[i]->get_quantity();
+        string quantity(to_string(q));
+        int a_q= order_p[i]->get_q_available();
+        string available_q(to_string(a_q));
+        string desc= order_p[i]->get_desc();
 
-        for (int col = 0; col < 4; col++) {
-            grid->SetReadOnly(i, col, true);
-            grid->SetCellValue(i, col, mat_order[i][col]);
-        }
+        grid->SetReadOnly(i, 0, true);
+        grid->SetCellValue(i, 0, desc);
+        grid->SetReadOnly(i, 1, true);
+        grid->SetCellValue(i, 1, quantity);
+        grid->SetReadOnly(i, 2, true);
+        grid->SetCellValue(i, 2, available_q);
     }
+    grid->SetCellValue(row+1,3, total_price );
     grid->AutoSize();
 
 
@@ -58,4 +77,3 @@ void SingleOrderProviderPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
- */

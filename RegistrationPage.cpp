@@ -3,11 +3,7 @@
 //
 
 
-/*#include "wx/wx.h"
 #include "RegistrationPage.h"
-#include "User.h"
-#include "dbCityManager.h"
-#include "InitialPage.h"
 
 const long RegistrationPage::IdButtonConfirm =::wxNewId();
 const long RegistrationPage::IdButtonProvider =::wxNewId();
@@ -23,8 +19,10 @@ BEGIN_EVENT_TABLE (RegistrationPage, wxFrame)
         EVT_BUTTON(IdButtonVP, RegistrationPage::ViewPass)
 END_EVENT_TABLE()
 
-RegistrationPage::RegistrationPage(const wxString &title):
+RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 700)) {
+
+
     messageError="Password Not Equal";
     messageCorrect="Password Equal";
     wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
@@ -33,16 +31,16 @@ RegistrationPage::RegistrationPage(const wxString &title):
 
     fgs = new wxFlexGridSizer(20, 1, 12, -5);
 
-    dbCityManager table;
+    dbCityManager *table;
     std::vector<std::string> cities;
 
-    cities=table.select();
+    cities=table->select();
     wxVector<string> choices;
-    for (int k=0; k<table.number_of_city(); k++){
+    for (int k=0; k<table->number_of_city(); k++){
         choices.push_back(cities[k]);
     }
-    wxString myString[table.number_of_city()];
-    for (int i=0;i<table.number_of_city();i++) {
+    wxString myString[table->number_of_city()];
+    for (int i=0;i<table->number_of_city();i++) {
         myString[i].Append(choices[i]);
     }
     cities.clear();
@@ -50,7 +48,7 @@ RegistrationPage::RegistrationPage(const wxString &title):
 
     choiceC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
-    choiceC->Append(table.number_of_city(),myString);
+    choiceC->Append(table->number_of_city(),myString);
 
     wxStaticText *type = new wxStaticText(this, -1, wxT("Type"));
     wxStaticText *business_name = new wxStaticText(this, -1, wxT("Business name"));
@@ -148,11 +146,11 @@ void RegistrationPage::Register(wxCommandEvent &event) {
         }
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
 
-            Engine *engine;
-            User *user = new User(t, b_n, a, em, psw, u, city_name);
+
+            shared_ptr<User> user = std::make_shared<User> (NULL, t, b_n, a, em, psw, u, city_name);
             if (engine->doRegistration(user)) {
                 Close();
-                InitialPage *home = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
+                InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
                 home->Show(TRUE);
             } else {
                 wxLogMessage("There is already an account with this email");
@@ -167,7 +165,7 @@ void RegistrationPage::Register(wxCommandEvent &event) {
 }
 void RegistrationPage::ComeBack(wxCommandEvent &event) {
     Close();
-    InitialPage *home = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
+    InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
     home->Show(TRUE);
 }
 void RegistrationPage::ViewPass(wxCommandEvent &event) {
@@ -226,4 +224,4 @@ void RegistrationPage::OnTextChange(wxCommandEvent &event) {
     int newWidth = currentSize.GetWidth() +1;
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
-}*/
+}

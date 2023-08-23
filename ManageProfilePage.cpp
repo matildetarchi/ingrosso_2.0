@@ -1,12 +1,10 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-/*
+
 #include "ManageProfilePage.h"
-#include "GlobalVariables.h"
-#include "dbCityManager.h"
-#include "User.h"
-#include "wx/textctrl.h"
+
+
 
 
 const long ManageProfilePage::IdButtonConfirm =::wxNewId();
@@ -17,10 +15,12 @@ BEGIN_EVENT_TABLE (ManageProfilePage, wxFrame)
                 EVT_BUTTON(IdButtonVP, ManageProfilePage::ViewPass)
 END_EVENT_TABLE()
 
-ManageProfilePage::ManageProfilePage(const wxString &title):
+ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 400)) {
-    username=GlobalVariables::GetInstance().GetValueUsername();
-    type=GlobalVariables::GetInstance().GetValueType();
+    user = engine->get_user();
+    db_user->set_user(user);
+    username = user->get_username();
+    type= user->get_type();
 
     messageError="Password Not Equal";
     messageCorrect="Password Equal";
@@ -31,16 +31,16 @@ ManageProfilePage::ManageProfilePage(const wxString &title):
     wxStaticText *usernameText = new wxStaticText(this, -1, wxT("Username"));
     wxStaticText *email=new wxStaticText(this, -1, wxT("Email"));
 
-    City table_city;
+
     std::vector<std::string> cities;
 
-    cities=table_city.select();
+    cities=table_city->select();
     wxVector<string> choices;
-    for (int k=0; k<table_city.number_of_city(); k++){
+    for (int k=0; k<table_city->number_of_city(); k++){
         choices.push_back(cities[k]);
     }
-    wxString myString[table_city.number_of_city()];
-    for (int i=0;i<table_city.number_of_city();i++) {
+    wxString myString[table_city->number_of_city()];
+    for (int i=0;i<table_city->number_of_city();i++) {
         myString[i].Append(choices[i]);
     }
     cities.clear();
@@ -48,17 +48,15 @@ ManageProfilePage::ManageProfilePage(const wxString &title):
 
     choiceC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
-    choiceC->Append(table_city.number_of_city(),myString);
+    choiceC->Append(table_city->number_of_city(),myString);
 
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
     ViewP=new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
-    User user;
 
-    data_user=user.select_data(username);
 
-    tcA = new wxTextCtrl(this, wxID_ANY,data_user[0]);
+    tcA = new wxTextCtrl(this, wxID_ANY,user->get_address());
     tcU= new wxTextCtrl(this, wxID_ANY,username);
-    tcEm=new wxTextCtrl(this, wxID_ANY,data_user[2]);
+    tcEm=new wxTextCtrl(this, wxID_ANY,user->get_email());
     txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
     m_passwordText = new wxTextCtrl(this, wxID_ANY, data_user[3], wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
     m_passwordConf = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(120, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
@@ -95,9 +93,11 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
     } else if (m_passwordConf->IsEmpty()) {
         wxMessageBox("Insert Confirm Password", "Error", wxICON_ERROR);
     } else {
-        std::string b_n = data_user[4];
+        std::string b_n = user->get_bus_name();
+        int id_user= user->get_db_id();
         std::string new_address = tcA->GetValue().ToStdString();
-        int id_city = choiceC->GetSelection();
+        int id_c = choiceC->GetSelection();
+        string id_city(to_string(id_c));
         std::string new_username = tcU->GetValue().ToStdString();
         std::string new_email = tcEm->GetValue().ToStdString();
         std::string new_pass = m_passwordText->GetValue().ToStdString();
@@ -114,9 +114,8 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
         }
         if (control_digit>0 && new_pass.length()>=8 && control_upper>0 && new_pass==new_pass_conf) {
             Close();
-            User *user = new User(type, b_n, new_address, new_email, new_pass, new_username, id_city);
-            user->changeData(username);
-            GlobalVariables::GetInstance().SetValueUsername(user->get_username());
+            db_user->changeData(new_address , id_city , new_pass , new_email , new_username);
+
         } else if(new_pass!=new_pass_conf) {
             wxLogMessage("The password and The confirm password must be equal");
         } else {
@@ -176,4 +175,3 @@ void ManageProfilePage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
 }
- */

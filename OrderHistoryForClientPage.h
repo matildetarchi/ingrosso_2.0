@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_ORDERHISTORYFORCLIENTPAGE_H
 #define INGROSSO_ONLINE_ORDERHISTORYFORCLIENTPAGE_H
 
@@ -9,10 +9,16 @@
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
 #include "OrdersList.h"
+#include "Engine.h"
+#include "User.h"
+#include "dbOrdersManager.h"
+#include "OrdersList.h"
+#include "Order.h"
+#include "Date.h"
 
 class OrderHistoryForClientPage : public wxDialog{
 public:
-    OrderHistoryForClientPage(const wxString& title, int control);
+    OrderHistoryForClientPage(Engine *e, const wxString& title, int control);
 
     static const long IdButtonCancel;
     static const long IdButtonView;
@@ -38,8 +44,12 @@ private:
     wxChoice* choiceOrder;
     std::vector<std::vector<std::string>> mat_order;
     int ctrl;
+    Engine *engine;
+    shared_ptr<User> user;
+    std::vector<shared_ptr<Order>> order;
+    dbOrdersManager *db_order;
+    shared_ptr <OrdersList> orders_list;
 };
 
 
 #endif //INGROSSO_ONLINE_ORDERHISTORYFORCLIENTPAGE_H
-*/

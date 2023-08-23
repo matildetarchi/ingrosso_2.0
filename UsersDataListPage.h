@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_USERSDATALISTPAGE_H
 #define INGROSSO_ONLINE_USERSDATALISTPAGE_H
 
@@ -20,10 +20,16 @@
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
 #include "wx/grid.h"
+#include "SelectionCityPage.h"
+#include "favourites.h"
+#include "cart.h"
+#include <wx/app.h>
+#include <wx/spinctrl.h>
+#include "Engine.h"
 
 class UsersDataListPage : public wxFrame {
 public:
-    UsersDataListPage(const wxString &title, const std::string &var_city);
+    UsersDataListPage(Engine *e, const wxString &title, const std::string &var_city);
     static const long IdButtonBack;
     DECLARE_EVENT_TABLE()
 
@@ -39,7 +45,9 @@ private:
     std::string username;
     wxChoice* choiceOrder;
     vector<vector<string>> mat_users;
+    Engine *engine;
+    shared_ptr<User> user;
+    dbUserManager *db_user;
 };
 
 #endif //INGROSSO_ONLINE_USERSDATALISTPAGE_H
-*/

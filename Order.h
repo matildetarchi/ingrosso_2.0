@@ -53,7 +53,7 @@ public:
     }
 
 
-    double get_total(unique_ptr<Order> o);
+    double get_total(shared_ptr<Order> o);
 
 
     void add_to_order(shared_ptr<Product> p);

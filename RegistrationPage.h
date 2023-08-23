@@ -3,7 +3,7 @@
 // Created by dario on 23/11/2022.
 //
 
-/*#ifndef BUTTON_WXWIDGETS_REGISTERFRAME_H
+#ifndef BUTTON_WXWIDGETS_REGISTERFRAME_H
 #define BUTTON_WXWIDGETS_REGISTERFRAME_H
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
@@ -19,13 +19,14 @@
 #include "RegistrationPage.h"
 #include "HomePageClient.h"
 #include "Engine.h"
+#include "dbCityManager.h"
 
 
 
 
 class RegistrationPage : public wxFrame{
 public:
-    RegistrationPage(const wxString& title);
+    RegistrationPage(Engine* e, const wxString& title);
 
     static const long IdButtonConfirm;
     static const long IdButtonBack;
@@ -62,9 +63,9 @@ private:
     wxStaticText *txt_message;
     wxTextCtrl *m_passwordConf;
     wxStaticText *txt_conf_psw;
+    Engine *engine;
 
 };
 
 
 #endif //BUTTON_WXWIDGETS_REGISTERFRAME_H
-*/

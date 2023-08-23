@@ -34,9 +34,9 @@ public:
 
     void cancel_order(int id_order);
 
-    void select_for_provider();
+    int select_for_provider();
 
-    void select_for_client();
+    int select_for_client();
 
     int select_id_last_order(const string &username_prov);
 

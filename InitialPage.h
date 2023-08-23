@@ -2,12 +2,16 @@
 // Created by dario on 12/11/2022.
 //
 
-/*#include "wx/wx.h"
-#include "wx/wxhtml.h"
-#include "Engine.h"
+
 #ifndef BUTTON_WXWIDGETS_MYFRAME_H
 #define BUTTON_WXWIDGETS_MYFRAME_H
-
+#include "wx/wx.h"
+#include "wx/wxhtml.h"
+#include "Engine.h"
+#include "LogInPage.h"
+#include "MyApp.h"
+#include "SelectionSubcategoryPage.h"
+#include "RegistrationPage.h"
 
 
 class InitialPage: public wxFrame// MainFrame is the class for our window,
@@ -26,6 +30,7 @@ private:
     wxButton *HelloWorld;
     wxButton *Register;
     static std::string username_actual_user;
+    Engine *e;
 };
 
 enum
@@ -34,4 +39,3 @@ enum
 };
 
 #endif
-*/

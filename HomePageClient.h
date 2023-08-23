@@ -2,7 +2,7 @@
 // Created by dario on 09/12/2022.
 //
 
-/*
+
 #include <wx/wx.h>
 
 #ifndef INGROSSO_ONLINE_CLIENTFRAME_H
@@ -16,7 +16,7 @@
 #include "ManageProfilePage.h"
 #include "FavouritesListPage.h"
 #include "CartPage.h"
-
+#include "User.h"
 
 class HomePageClient: public wxFrame {
 public:
@@ -52,6 +52,8 @@ private:
     wxButton *Back;
     std::string username;
     std::string type;
+    shared_ptr<User> user;
+    Engine *eng;
 
 
 
@@ -61,4 +63,3 @@ private:
 #endif //INGROSSO_ONLINE_CLIENTFRAME_H
 
 
-*/

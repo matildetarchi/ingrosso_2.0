@@ -1,9 +1,9 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #include "OrderHistoryForClientPage.h"
-#include "GlobalVariables.h"
+
 #include "SingleOrderClientPage.h"
 
 
@@ -16,10 +16,14 @@ BEGIN_EVENT_TABLE (OrderHistoryForClientPage, wxDialog)
 
 END_EVENT_TABLE()
 
-OrderHistoryForClientPage::OrderHistoryForClientPage(const wxString &title, int control):
+OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &title, int control): engine(e),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
-    ctrl=control;
-    username=GlobalVariables::GetInstance().GetValueUsername();
+
+
+    ctrl = control;
+    user = engine->get_user();
+    username = user->get_username();
+
     wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Code OrderProduct", "Provider Name", "Date OrderProduct"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
@@ -27,8 +31,8 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(const wxString &title, int 
     choiceOrder->Append(3,myString);
     choiceOrder->Bind(wxEVT_CHOICE, &OrderHistoryForClientPage::OnChoice, this);
 
-    OrderProduct order;
-    int row = order.select_count_for_client(username, ctrl);
+
+    int row = db_order->select_for_client();
 
     grid = new wxGrid(this, wxID_ANY);
     if (ctrl==0) {
@@ -45,21 +49,37 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(const wxString &title, int 
         grid->SetColLabelValue(3, "Status");
 
     }
-    mat_order=order.select_for_client(username,ctrl);
+    orders_list= user->get_order_list();
+    order= orders_list->get_orders();
 
-    for (int i = 0; i < order.select_count_for_client(username,ctrl); i++) {
+    for (int i = 0; i < row; i++) {
+        Date *d= order[i]->get_date();
+        std::string date = d->to_string("%d/%m/%Y");
+        string status= order[i]->get_status();
+        string us_client= order[i]->get_us_client();
+        int id_o= order[i]->get_id();
+        string id_order(to_string(id_o));
+
         if (ctrl==0) {
-            for (int col = 0; col < 3; col++) {
-                grid->SetReadOnly(i, col, true);
-                grid->SetCellValue(i, col, mat_order[i][col]);
-            }
-        } else {
-            for (int col = 0; col < 4; col++) {
-                grid->SetReadOnly(i, col, true);
-                grid->SetCellValue(i, col, mat_order[i][col]);
+            grid->SetReadOnly(i, 0, true);
+            grid->SetCellValue(i, 0, id_order);
+            grid->SetReadOnly(i, 1, true);
+            grid->SetCellValue(i, 1, us_client);
+            grid->SetReadOnly(i, 2, true);
+            grid->SetCellValue(i, 2, date);
+        }
+         else {
+            grid->SetReadOnly(i, 0, true);
+            grid->SetCellValue(i,0, id_order);
+            grid->SetReadOnly(i, 1, true);
+            grid->SetCellValue(i,1, us_client);
+            grid->SetReadOnly(i, 2, true);
+            grid->SetCellValue(i,2, date);
+            grid->SetReadOnly(i, 3, true);
+            grid->SetCellValue(i,3, status);
             }
         }
-    }
+
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 
@@ -84,21 +104,26 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(const wxString &title, int 
 void OrderHistoryForClientPage::CancelOrder(wxCommandEvent &event) {
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
-    for (size_t i = 0; i < selectedRows.GetCount(); i++) {
-        row = selectedRows[i];
+    size_t i = 0;
+    while (i == selectedRows.GetCount()) {
+        i++;
     }
-    if (grid->GetSelectedRows() == 0) {
+    row = selectedRows[i];
+    string status =order[row]->get_status();
+    int id_order= order[row]->get_id();
+
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
-    } else if (ctrl==1 && mat_order[row][3]!="Pending") {
+    } else if (ctrl==1 && status!="Pending") {
         wxMessageBox("The one you choosed it's already confirmed or denied, you can't cancel it", "Error", wxICON_ERROR);
     } else {
-        OrderProduct table;
-        table.cancel_order(username,mat_order[row][0],mat_order[row][1]);
+
+        db_order->cancel_order(id_order);
         grid->DeleteRows(row);
     }
 }
-void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
-    if (grid->GetSelectedRows() == 0) {
+/*void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
     } else {
         std::string code;
@@ -108,16 +133,16 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
             row = selectedRows[i];
         }
         code = mat_order[row][0];
-        SingleOrderClientPage *view = new SingleOrderClientPage(_T("ORDER LIST"), code, mat_order[row][1]);
+        SingleOrderClientPage *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), code, mat_order[row][1]);
         view->Show(TRUE);
     }
 
 }
-
+/*
 void OrderHistoryForClientPage::OnChoice(wxCommandEvent& event) {
-    OrderProduct table;
+
     string order_choice=event.GetString().ToStdString();
-    mat_order=table.select_for_client(username,ctrl,order_choice);
+    mat_order=db_order->select_for_client();
     for (int i = 0; i < table.select_count_for_client(username,ctrl); i++) {
         if (ctrl==0) {
             for (int col = 0; col < 3; col++) {
@@ -134,4 +159,4 @@ void OrderHistoryForClientPage::OnChoice(wxCommandEvent& event) {
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 }
- */
+*/

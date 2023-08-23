@@ -1,9 +1,8 @@
 //
 // Created by dario on 09/12/2022.
 //
-/*
-#include "HomePageClient.h"
 
+#include "HomePageClient.h"
 
 
 
@@ -33,10 +32,13 @@ BEGIN_EVENT_TABLE (HomePageClient, wxFrame)
 END_EVENT_TABLE()
 
 
-HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPoint& pos, const wxSize& size)
-        : wxFrame(NULL, wxID_ANY, title, pos, size){
-    username=GlobalVariables::GetInstance().GetValueUsername();
-    type=GlobalVariables::GetInstance().GetValueType();
+HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPoint& pos, const wxSize& size): eng(engine),
+         wxFrame(NULL, wxID_ANY, title, pos, size){
+
+    user=eng->get_user();
+
+    username=user->get_username();
+    type= user->get_type();
 
 
     wxPanel *panelHome = new wxPanel(this, -1);
@@ -82,7 +84,7 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
     Centre();
 
 }
-
+/*
 void HomePageClient::OpenProductsList(wxCommandEvent &event) {
     SelectionSubcategoryPage *List = new SelectionSubcategoryPage (_T("SELECT SUBCATEGORY"));
     List->Show(TRUE);

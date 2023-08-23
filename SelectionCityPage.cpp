@@ -2,13 +2,8 @@
 // Created by Andrea Lipperi on 08/05/23.
 //
 
-/*#include "SelectionCityPage.h"
-#include "dbCityManager.h"
-#include "UsersDataListPage.h"
-#include "dbCategoriesManager.h"
-#include "ProductListPage.h"
-#include <string>
-#include <vector>
+#include "SelectionCityPage.h"
+
 
 using namespace std;
 
@@ -23,7 +18,7 @@ BEGIN_EVENT_TABLE (SelectionCityPage, wxFrame)
 
 END_EVENT_TABLE()
 
-SelectionCityPage::SelectionCityPage(const wxString &title) :
+SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
 
@@ -95,7 +90,7 @@ void SelectionCityPage::InsertCity(wxCommandEvent &event) {
         int Id_city = choiceC->GetSelection();
         string city = choiceC->GetString(Id_city).ToStdString();
         Close();
-        UsersDataListPage *view= new UsersDataListPage(_T("USERS"), city);
+        UsersDataListPage *view= new UsersDataListPage(engine, _T("USERS"), city);
         view->Show(TRUE);
     }
 }
@@ -105,4 +100,3 @@ void SelectionCityPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
-*/

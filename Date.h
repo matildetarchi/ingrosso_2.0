@@ -9,36 +9,25 @@
 
 class Date {
 public:
-    Date(int day, int month, int year);
+    Date(int year, int month, int day);
 
     int get_day() const {
-        return day;
+        return date_.tm_mday;
     }
 
     int get_month() const {
-        return month;
+        return date_.tm_mon;
     }
 
     int get_year() const {
-        return year;
+        return date_.tm_year;
     }
-    Date *get_date(){
-        return date;
-    }
-    void set_date();
 
-    // Sovrascrittura dell'operatore <<
-    friend std::ostream& operator<<(std::ostream& os, const Date& data) {
-        os << data.day << "/" << data.month << "/" << data.year;
-        return os;
-    }
+    string to_string(const std::string &format) const;
+
 
 private:
-    int day;
-    int month;
-    int year;
-    Date* date;
-
+    std::tm date_;
 };
 
 

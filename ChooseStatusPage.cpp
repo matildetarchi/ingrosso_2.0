@@ -1,15 +1,8 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #include "ChooseStatusPage.h"
-#include "OrderHistoryForClientPage.h"
-#include "ManageRequestPage.h"
-#include "GlobalVariables.h"
-#include "dbCategoriesManager.h"
-#include "ProductListPage.h"
-#include <string>
-#include <vector>
 
 using namespace std;
 
@@ -18,15 +11,15 @@ const long ChooseStatusPage::IdButtonInsert =::wxNewId();
 const long ChooseStatusPage::IdButtonComeBack =::wxNewId();
 
 BEGIN_EVENT_TABLE (ChooseStatusPage, wxFrame)
-
                 EVT_BUTTON(IdButtonInsert, ChooseStatusPage::InsertProduct)
                 EVT_BUTTON(IdButtonComeBack, ChooseStatusPage::ComeBack)
-
 END_EVENT_TABLE()
 
-ChooseStatusPage::ChooseStatusPage(const wxString &title) :
+ChooseStatusPage::ChooseStatusPage(Engine* e, const wxString &title) :engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
-    type=GlobalVariables::GetInstance().GetValueType();
+
+    user= e->get_user();
+    type=user->get_type();
 
     wxStaticText *txt = new wxStaticText(this, -1, wxT("CHOOSE STATUS OF THE ORDERS YOU WANT TO SEE"));
 
@@ -57,11 +50,11 @@ void ChooseStatusPage::InsertProduct(wxCommandEvent &event) {
     } else {
         int Id_choice = choice->GetSelection()-1;
         if (type=="F") {
-            ManageRequestPage *req = new ManageRequestPage(_T("YOUR REQUESTS"), Id_choice);
+            ManageRequestPage *req = new ManageRequestPage(engine, _T("YOUR REQUESTS"), Id_choice);
             // Passa la stringa alla classe wxFrame di destinazione.
             req->Show(TRUE);
         } else {
-            OrderHistoryForClientPage *ord = new OrderHistoryForClientPage(_T("YOUR ORDERS"), Id_choice);
+            OrderHistoryForClientPage *ord = new OrderHistoryForClientPage(engine,_T("YOUR ORDERS"), Id_choice);
             // Passa la stringa alla classe wxFrame di destinazione.
             ord->Show(TRUE);
         }
@@ -74,4 +67,3 @@ void ChooseStatusPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
- */

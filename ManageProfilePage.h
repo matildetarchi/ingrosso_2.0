@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
 #define INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
 
@@ -11,12 +11,15 @@
 #include <string>
 #include "HomePageProviders.h"
 #include "dbCategoriesManager.h"
-
+#include "Engine.h"
+#include "dbCityManager.h"
+#include "User.h"
+#include "wx/textctrl.h"
 
 
 class ManageProfilePage : public wxFrame{
 public:
-    ManageProfilePage(const wxString& title);
+    ManageProfilePage(Engine *e, const wxString& title);
 
     static const long IdButtonConfirm;
     static const long IdButtonVP;
@@ -44,9 +47,12 @@ private:
     wxStaticText *txt_message;
     wxTextCtrl *m_passwordConf;
     wxStaticText *txt_conf_psw;
+    Engine *engine;
+    shared_ptr<User> user;
+    shared_ptr<dbCityManager> table_city;
+    dbUserManager *db_user;
 
 };
 
 
 #endif //INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
-*/

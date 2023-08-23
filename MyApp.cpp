@@ -1,9 +1,9 @@
-/*#include "wx/wx.h"
+//
+// Created by dario on 16/11/2022.
+//
+
 #include"MyApp.h"
-#include "InitialPage.h"
-#include "SelectionSubcategoryPage.h"
-#include "LogInPage.h"
-#include "RegistrationPage.h"
+
 
 bool MyApp::OnInit()
 {
@@ -15,6 +15,3 @@ bool MyApp::OnInit()
 
     return TRUE;
 }
-//
-// Created by dario on 16/11/2022.
-//*/

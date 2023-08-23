@@ -2,16 +2,17 @@
 // Created by dario on 30/11/2022.
 //
 
-/*
+
 #ifndef INGROSSO_ONLINE_STOCKISTFRAME_H
 #define INGROSSO_ONLINE_STOCKISTFRAME_H
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
 #include "InsertProductPage.h"
+#include "Engine.h"
 
 class HomePageProviders: public wxFrame {
 public:
-    HomePageProviders(const wxString& title, const wxPoint& pos, const wxSize& size);
+    HomePageProviders(Engine *e, const wxString& title, const wxPoint& pos, const wxSize& size);
 
     static const long IdButtonRequests;
     static const long IdButtonProfile;
@@ -38,11 +39,13 @@ private:
     wxButton *InsProd;
     wxButton *Remove;
     wxButton *Back;
+    shared_ptr<User> user;
     std::string username;
     std::string type;
+    Engine* engine;
+    dbUserManager *db_u;
 
 };
 
 
 #endif //INGROSSO_ONLINE_STOCKISTFRAME_H
- */

@@ -12,7 +12,7 @@ class Product {
 
 public:
 
-    Product(const string &desc, double price, int quant, const string &u_p, const string &sub, int id_st);
+    Product(const string &desc, double price, int quantity, int q_available, const string &u_p, const string &sub, int id_st);
     ~Product(){};
 
     const string &get_desc(){
@@ -22,7 +22,9 @@ public:
     double &get_price(){
         return price;
     }
-
+    int get_q_available()const{
+        return q_available;
+    }
     int get_quantity() const {
         return quantity;
     }
@@ -50,7 +52,9 @@ public:
     void set_quantity(int q) {
         this->quantity = q;
     }
-
+    void set_available_quantity(int a_q) {
+        this->q_available = a_q;
+    }
     void set_subcategory(const string &sub) {
         this->subcategory = sub;
     }
@@ -67,6 +71,7 @@ private:
     int quantity;
     string subcategory;
     int id_store;
+    int q_available;
 
 };
 
