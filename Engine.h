@@ -28,20 +28,35 @@ public:
     Engine();
 
 
-    bool doRegistration(shared_ptr <User> user);
-    bool doLogin(const string &email, const string &psw);
+    bool do_registration(shared_ptr <User> user);
+    bool do_login(const string &email, const string &psw);
 
     shared_ptr<User> get_user() {
         return user;
     }
-
+    shared_ptr<dbCartManager> get_db_cart() {
+        return db_cart;
+    }
+    shared_ptr<dbOrdersManager> get_db_order() {
+        return db_order;
+    }
+    shared_ptr<dbStoreManager> get_db_store() {
+        return db_store;
+    }
+    shared_ptr<dbFavouritesManager> get_db_fav() {
+        return db_fav;
+    }
+    shared_ptr<dbUserManager> get_db_user() {
+        return db_user;
+    }
 private:
     shared_ptr<User> user;
-    unique_ptr<dbCartManager> db_cart;
-    unique_ptr<dbOrdersManager> db_order;
-    unique_ptr<dbStoreManager> db_store;
-    unique_ptr<dbFavouritesManager> db_fav;
-    unique_ptr<dbUserManager> db_user;
+    shared_ptr<dbCartManager> db_cart;
+    shared_ptr<dbOrdersManager> db_order;
+    shared_ptr<dbStoreManager> db_store;
+    shared_ptr<dbFavouritesManager> db_fav;
+    shared_ptr<dbUserManager> db_user;
+    SQLite::Database *database;
 
 
 

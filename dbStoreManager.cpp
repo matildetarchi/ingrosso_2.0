@@ -6,11 +6,13 @@
 
 dbStoreManager::dbStoreManager(SQLite::Database *d) {
     db = d;
+    prod=make_shared<Product>();
+    st= make_shared<Store>();
 }
 
 
 
-void dbStoreManager::changeData(int index, const string desc_prod, double price, int available_quantity){
+void dbStoreManager::change_data(int index, const string desc_prod, double price, int available_quantity){
 
     //metodo per cambiare i valori di un prodotto del proprio magazzino
     //lancio la query
@@ -193,7 +195,8 @@ int dbStoreManager::select_count_for_client(const string &sub_name, const string
 
 }
 
-void dbStoreManager::select_for_prov(const string &username) {
+int dbStoreManager::select_for_prov(const string &username) {
+
 
     //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
@@ -209,7 +212,7 @@ void dbStoreManager::select_for_prov(const string &username) {
     //popolo la matrice
     //restituisco la matrice
     if(count > 0) {
-        string select = "SELECT desc_prod, price_product, available_quantity,subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
+        string select = "SELECT desc_prod, price_product, available_quantity, subcategories.name, store.id FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
                         to_string(id_prov) + "';";
         SQLite::Statement query(*db,select);
 
@@ -217,15 +220,20 @@ void dbStoreManager::select_for_prov(const string &username) {
         while (query.executeStep()) {
             string desc_prod = query.getColumn(0).getText();
             double price = query.getColumn(1).getDouble();
-            int quantity = query.getColumn(2).getInt();
+            int quantity = query.getColumn(2);
             string subcategory = query.getColumn(3).getText();
-            prod->set_quantity(quantity);
+            int id_store = query.getColumn(4);
+            prod->set_available_quantity(quantity);
             prod->set_price(price);
             prod->set_desc(desc_prod);
             prod->set_subcategory(subcategory);
-            st->add_to_store(std::move(prod));
+            prod->set_username_prov(username);
+            prod->set_quantity(0);
+            prod->set_id_store(id_store);
+            st->add_to_store(prod);
         }
 
     }
+    return count;
 
 }

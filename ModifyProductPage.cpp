@@ -3,8 +3,8 @@
 //
 /*
 #include "ModifyProductPage.h"
-#include "GlobalVariables.h"
-#include "Store.h"
+
+
 
 
 const long ModifyProductPage::IdButtonConfirm =::wxNewId();
@@ -13,16 +13,16 @@ BEGIN_EVENT_TABLE (ModifyProductPage, wxDialog)
                 EVT_BUTTON(IdButtonConfirm, ModifyProductPage::OnConfirm)
 END_EVENT_TABLE()
 
-ModifyProductPage::ModifyProductPage(const wxString &title, int id_store):
+ModifyProductPage::ModifyProductPage(Engine *e, const wxString &title, int id_store):engine(e), id(id_store),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
-    id=id_store;
+
 
     wxStaticText *desc = new wxStaticText(this, -1, wxT("Name Product"));
     wxStaticText *price = new wxStaticText(this, -1, wxT("Price"));
     wxStaticText *quant = new wxStaticText(this, -1, wxT("Available Quantity"));
 
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
-    StoreProduct store;
+
 
     data_store=store.select_to_modify(id);
     tcD = new wxTextCtrl(this, wxID_ANY,data_store[0]);
@@ -51,8 +51,7 @@ void ModifyProductPage::OnConfirm(wxCommandEvent &event) {
     std::string new_desc=tcD->GetValue().ToStdString();
     double new_price = tcP->GetValue();
     int new_quant= tcQ->GetValue();
-    StoreProduct *store= new StoreProduct(new_quant,"",new_price,new_desc,"");
-    store->changeData(id);
+    db_store.change_data(id, new_desc, new_price, new_quant);
 
 }
 */

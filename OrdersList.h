@@ -17,7 +17,7 @@ using namespace std;
 
 class OrdersList{
 public:
-
+    OrdersList();
     OrdersList(const string &user);
 
     ~OrdersList();
@@ -35,7 +35,7 @@ public:
         return orders;
     }
 
-    void add_order( shared_ptr<Order> ord);
+    void add_order( const shared_ptr<Order>& ord);
 
     void update_num(int control);
     void remove_one(int index);

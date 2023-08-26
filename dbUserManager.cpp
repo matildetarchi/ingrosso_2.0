@@ -18,9 +18,8 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
     //lancio la query di selezione di tutti gli utenti dal db
     //controllo cosa deve fare il programma
     SQLite::Statement query(*db, "SELECT * FROM users");
-    cout<<"bb"<<endl;
     query.reset();
-    cout<< "us"<<endl;
+
     if (control==accesso) {
         //controllo se la mail e la password sono corretti
         //se si restituisco true altrimenti false
@@ -188,27 +187,32 @@ void dbUserManager::select_data(const string &username) {
     //lancio la query
     //popolo la matrice
     //restituisco la matrice
-    string select = "SELECT id, address, id_city, email, password, business_name FROM users WHERE username='"+username+"';";
+    string select = "SELECT id, address, id_city, email, password, business_name FROM users WHERE username='"+username+"'";
     SQLite::Statement query(*db,select);
-    int id_city = query.getColumn(1).getInt();
-    string select_city_name = "SELECT name FROM cities WHERE id = '"+to_string(id_city)+"'";
-    string city_name = db->execAndGet(select_city_name).getString();
-    string select_type = "SELECT type FROM users WHERE username = '"+username+"'";
-    string type=db->execAndGet(select_type).getString();
+    if(query.executeStep()) {
+        int id_city = query.getColumn(2);
+        string select_city_name = "SELECT name FROM cities WHERE id = '" + to_string(id_city) + "'";
+        string city_name = db->execAndGet(select_city_name).getString();
+        string select_type = "SELECT type FROM users WHERE username = '" + username + "'";
+        string type = db->execAndGet(select_type).getString();
 
 
-    int dbId = query.getColumn(0).getInt();
-    string address=query.getColumn(1).getText();
-    string email=query.getColumn(2).getText();
-    string psw=query.getColumn(3).getText();
-    string bus_name=query.getColumn(4).getText();
-    user->set_id_db(dbId);
-    user->set_city(select_city_name);
-    user->set_password(psw);
-    user->set_email(email);
-    user->set_address(address);
-    user->set_bus_name(bus_name);
-
+        int dbId = query.getColumn(0).getInt();
+        string address = query.getColumn(1).getText();
+        string email = query.getColumn(3).getText();
+        string psw = query.getColumn(4).getText();
+        string bus_name = query.getColumn(5).getText();
+        user->set_id_db(dbId);
+        user->set_city(select_city_name);
+        user->set_password(psw);
+        user->set_email(email);
+        user->set_address(address);
+        user->set_bus_name(bus_name);
+        user->set_username(username);
+    }
+    else {
+        std::cout << "Nessun risultato trovato." << std::endl;
+    }
 
 }
 const string dbUserManager::select_type(const string &email) {

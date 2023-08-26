@@ -7,7 +7,9 @@
 
 using namespace std;
 
-OrdersList::OrdersList(const string &user): username_user(user){
+OrdersList::OrdersList(){};
+
+OrdersList::OrdersList(const string &user): username_user(user), num_order(0){
 }
 
 OrdersList::~OrdersList(){
@@ -16,9 +18,9 @@ OrdersList::~OrdersList(){
 
 
 
-void OrdersList::add_order( shared_ptr<Order> ord) {
-   orders.push_back(std::move(ord));
-    update_num(put_in);
+void OrdersList::add_order( const shared_ptr<Order>& ord) {
+   orders.push_back(ord);
+   update_num(put_in);
 }
 
 void OrdersList::update_num(int control) {

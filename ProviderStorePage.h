@@ -8,10 +8,15 @@
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
 #include "Store.h"
+#include "ModifyProductPage.h"
+#include "Engine.h"
+#include "User.h"
+#include "dbStoreManager.h"
+#include "Product.h"
 
 class ProviderStorePage: public wxDialog{
 public:
-    ProviderStorePage(const wxString& title);
+    ProviderStorePage(Engine *e, const wxString& title);
 
     static const long IdButtonDelete;
     static const long IdButtonBack;
@@ -29,15 +34,16 @@ private:
     wxButton *Delete;
     wxButton *Modify;
     wxButton *Back;
-
     wxBoxSizer *sizer;
-
     wxGrid *grid;
     std::string username;
-
     wxChoice* choiceOrder;
+    Engine *engine;
+    shared_ptr<User> user;
+    dbStoreManager *db_store;
+    vector<shared_ptr<Product>> prod_list;
+    shared_ptr<Store> store;
 
-    std::vector<std::vector<std::string>> mat_store;
 };
 
 #endif //INGROSSO_ONLINE_PROVIDERSTOREPAGE_H

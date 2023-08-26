@@ -1,7 +1,7 @@
 //
 // Created by dario on 09/12/2022.
 //
-
+/*
 
 #include <wx/wx.h>
 
@@ -62,4 +62,4 @@ private:
 
 #endif //INGROSSO_ONLINE_CLIENTFRAME_H
 
-
+*/

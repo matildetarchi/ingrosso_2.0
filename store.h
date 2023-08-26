@@ -16,6 +16,7 @@ using namespace std;
 class Store{
 public:
 
+    Store();
     explicit Store(const string &provider);
 
     ~Store();
@@ -33,7 +34,7 @@ public:
         return username_prov;
     }
 
-    void add_to_store(shared_ptr<Product> product);
+    void add_to_store(const shared_ptr<Product>& product);
     void update_num(int control);
     void remove_one(int index);
     void remove_all();

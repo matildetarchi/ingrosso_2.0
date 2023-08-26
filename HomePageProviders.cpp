@@ -1,7 +1,7 @@
 //
 // Created by dario on 30/11/2022.
 //
-
+/*
 #include "HomePageProviders.h"
 #include "ChooseStatusPage.h"
 #include "ProviderStorePage.h"
@@ -84,7 +84,7 @@ void HomePageProviders::OpenProfile(wxCommandEvent &event) {
 }
 
 void HomePageProviders::OpenStore(wxCommandEvent &event) {
-    ProviderStorePage *store = new ProviderStorePage(_T("STORE"));
+    ProviderStorePage *store = new ProviderStorePage(engine, _T("STORE"));
     store->Show(TRUE);
 }
 
@@ -113,3 +113,4 @@ void HomePageProviders::ViewClients(wxCommandEvent &event) {
     SelectionCityPage *sel_c = new SelectionCityPage(_T("SELECT CITY"));
     sel_c->Show(TRUE);
 }
+ */

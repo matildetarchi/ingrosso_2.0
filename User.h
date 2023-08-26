@@ -21,12 +21,20 @@ public:
 
     virtual ~User() = default;
 
-    shared_ptr<Cart> get_cart()  {
+     shared_ptr<Cart> get_cart(){
         return cart;
-    }    //virtual shared_ptr<Favourites> get_fav();
-    shared_ptr<OrdersList> get_order_list() {
+    };
+
+     shared_ptr<Favourites> get_fav(){
+        return fav;
+    };
+     shared_ptr<OrdersList> get_order_list(){
         return order;
-    }    //virtual shared_ptr<Store> get_store();
+    };
+     shared_ptr<Store> get_store() {
+        return store;
+    };
+
 
     /*virtual void set_order(shared_ptr<OrdersList> ord);
     virtual void set_favourites(shared_ptr<Favourites> fav);
@@ -104,6 +112,8 @@ private:
     int db_id;
     shared_ptr <OrdersList> order;
     shared_ptr <Cart> cart;
+    shared_ptr <Favourites> fav;
+    shared_ptr <Store> store;
 };
 
 #endif //INGROSSO_ONLINE_USER_H

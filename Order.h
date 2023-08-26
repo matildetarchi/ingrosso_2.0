@@ -16,7 +16,7 @@ using namespace std;
 class Order {
 public:
 
-    Order(string s, string u_client);
+    Order(int id, string s, string u_client);
 
     ~Order();
 
@@ -37,7 +37,7 @@ public:
         return order_p;
     }
 
-    Date* get_date() {
+    shared_ptr<Date> get_date() {
         return date;
     }
     const string &get_us_client() {
@@ -48,12 +48,12 @@ public:
             status = new_status;
     }
 
-    void set_date(Date *d) {
-        date = d;
+    void set_date(shared_ptr<Date> d) {
+        date = std::move(d);
     }
 
 
-    double get_total(shared_ptr<Order> o);
+    double get_total(const shared_ptr<Order>& o);
 
 
     void add_to_order(shared_ptr<Product> p);
@@ -67,7 +67,7 @@ public:
 
 private:
 
-    Date* date;
+    shared_ptr<Date> date;
     int num_prod;
     int id;
     string status;

@@ -1,7 +1,7 @@
 //
 // Created by dario on 09/12/2022.
 //
-
+/*
 
 #include "LogInPage.h"
 
@@ -110,7 +110,7 @@ void LogInPage::ComeBack(wxCommandEvent &event) {
     ForgotPasswordPage *forpsw = new ForgotPasswordPage(engine, _T("FORGOT PASSWORD"));
     forpsw->Show(TRUE);
 }
-*/
+
 void LogInPage::ViewPass(wxCommandEvent &event) {
     fgs->Hide(m_passwordText);
     fgs->Hide(ViewP);
@@ -145,3 +145,4 @@ void LogInPage::ViewPass(wxCommandEvent &event) {
 
 }
 
+*/

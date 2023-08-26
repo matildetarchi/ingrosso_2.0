@@ -6,6 +6,10 @@
 #define INGROSSO_ONLINE_DATE_H
 #include <ctime>
 #include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <ctime>
+#include <memory>
 
 class Date {
 public:
@@ -23,8 +27,9 @@ public:
         return date_.tm_year;
     }
 
-    string to_string(const std::string &format) const;
+    std::string to_string(const std::string &format) const;
 
+    static std::shared_ptr<Date> string_to_date_converter(const std::string &date);
 
 private:
     std::tm date_;

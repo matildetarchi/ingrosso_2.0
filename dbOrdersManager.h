@@ -20,12 +20,13 @@
 class dbOrdersManager {
 
 public:
+
+
     explicit dbOrdersManager(SQLite::Database* d);
 
 
     void set_user(shared_ptr<User> o){
         user = std::move(o);
-
     }
 
     void add_to_db();
@@ -46,6 +47,7 @@ private:
     shared_ptr<Product> prod;
     shared_ptr<User> user;
     shared_ptr<Order> order;
+    shared_ptr<Date> date;
 };
 
 

@@ -12,6 +12,7 @@ class Product {
 
 public:
 
+    Product();
     Product(const string &desc, double price, int quantity, int q_available, const string &u_p, const string &sub, int id_st);
     ~Product(){};
 
@@ -42,27 +43,30 @@ public:
     }
 
     void set_desc(const string &desc) {
-        this->description = desc;
+        description = desc;
     }
 
     void set_price(double p){
-        this->price = p;
+        price = p;
     }
 
     void set_quantity(int q) {
-        this->quantity = q;
+        quantity = q;
     }
     void set_available_quantity(int a_q) {
-        this->q_available = a_q;
+        q_available = a_q;
     }
     void set_subcategory(const string &sub) {
-        this->subcategory = sub;
+        subcategory = sub;
     }
 
     void set_username_prov(const string &u_p) {
-        this->username_prov = u_p;
+        username_prov = u_p;
     }
 
+    void set_id_store(int id_s) {
+        id_store=id_s;
+    }
 private:
 
     string description;

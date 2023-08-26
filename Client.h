@@ -22,17 +22,9 @@ public:
 
     ~Client() override ;
 
-    /*shared_ptr<OrdersList> get_order_list() override {
-        return order;
-    }
 
-    shared_ptr<Favourites> get_fav() override {
-        return fav;
-    }
 
-    shared_ptr<Cart> get_cart() override {
-        return cart;
-    }
+
 
 
     /*void set_order( shared_ptr<OrdersList> ord) override {

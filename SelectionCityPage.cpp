@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-
+/*
 #include "SelectionCityPage.h"
 
 
@@ -100,3 +100,4 @@ void SelectionCityPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
+*/

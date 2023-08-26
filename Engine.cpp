@@ -6,26 +6,27 @@
 
 Engine::Engine() {
 
-        // Specifica il percorso del tuo database SQLite
-        const std::string dbPath = "C:/Users/dario/CLionProjects/ingrosso_online/ingrossodb.sqlite";
+    // Specifica il percorso del tuo database SQLite
+    const std::string dbPath = "C:/Users/dario/CLionProjects/ingrosso_online/ingrossodb.sqlite";
 
-        // Apri il database
-        SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    // Apri il database
+    //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    database = new SQLite::Database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 
-        std::cout << "Database aperto con successo." << std::endl;
+    std::cout << "Database aperto con successo." << std::endl;
 
-        // Esegui le operazioni sul database qui
+    // Esegui le operazioni sul database qui
 
 
 
-    db_cart = make_unique<dbCartManager>(&database);
-    db_store = make_unique<dbStoreManager>(&database);
-    db_order = make_unique<dbOrdersManager>(&database);
-    db_fav = make_unique<dbFavouritesManager>(&database);
-    db_user = make_unique<dbUserManager>(&database);
+    db_cart = make_shared<dbCartManager>(database);
+    db_store = make_shared<dbStoreManager>(database);
+    db_order = make_shared<dbOrdersManager>(database);
+    db_fav = make_shared<dbFavouritesManager>(database);
+    db_user = make_shared<dbUserManager>(database);
 }
 
-bool Engine::doRegistration(shared_ptr<User> user) {
+bool Engine::do_registration(shared_ptr<User> user) {
 
     if( db_user->access_reg(user->get_email(),user->get_psw(),1)){
         db_user->set_user(user);
@@ -35,10 +36,10 @@ bool Engine::doRegistration(shared_ptr<User> user) {
         return false;
 }
 
-bool Engine::doLogin(const string &email, const string &psw) {
-    cout<< "ciao"<<endl;
+bool Engine::do_login(const string &email, const string &psw) {
+
     if(db_user->access_reg(email, psw, 0)) {
-        cout<< "username"<<endl;
+
         string username = db_user->select_username(email);
 
         string type = db_user->select_type(email);
@@ -62,7 +63,9 @@ bool Engine::doLogin(const string &email, const string &psw) {
             db_order->select_for_client();
 
         } else {
-            user = make_unique<Provider>(user->get_db_id(), user->get_type(),user->get_bus_name(),user->get_address(),user->get_email(),user->get_psw(),user->get_username(),user->get_city());
+            user = make_shared<Provider>();
+            db_user->set_user(user);
+            db_user->select_data(username);
 
 
             db_store->set_user(user);
@@ -76,5 +79,3 @@ bool Engine::doLogin(const string &email, const string &psw) {
     } else
         return false;
 }
-
-

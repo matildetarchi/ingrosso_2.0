@@ -4,8 +4,11 @@
 #define only_pending 0
 #include "dbOrdersManager.h"
 
+
+
 dbOrdersManager::dbOrdersManager(SQLite::Database* d) {
         db = d;
+
 }
 
 void dbOrdersManager::add_to_db() {
@@ -44,7 +47,7 @@ void dbOrdersManager::add_to_db() {
 
     SQLite::Statement query(*db, select_last_order_products);
 
-    std::shared_ptr<Order> ord = std::make_shared<Order>("S", username);
+    std::shared_ptr<Order> ord = std::make_shared<Order>(id_last_ord, "S", username);
 
     while (query.executeStep()) {
         // Per ogni prodotto trovato creo un oggetto prodotto e chiamo la addOrderProduct
@@ -83,32 +86,46 @@ void dbOrdersManager::change_status( const string &new_status, int id_order) {
 int dbOrdersManager::select_for_provider() {
     int id_user = user->get_db_id();
     string username = user->get_username();
-
+    tab_order= make_shared<OrdersList>(username);
     string select_id_store = "SELECT id FROM store WHERE id_prov = '" + to_string(id_user) +"'";
     int id_store = db->execAndGet(select_id_store).getInt();
-    SQLite::Statement query(*db, select_id_store);
+
 
     string select_orders = "SELECT orders.id, date_order, status, id_client FROM orders, orders_details, users, store WHERE orders.id = id_order AND id_product = store.id AND id_client = users.id GROUP BY date_order";
-    SQLite::Statement query1(*db, select_orders);
+    SQLite::Statement query_ord(*db, select_orders);
     int num_orders_of_provider=0;
-    while(query1.executeStep()) {
+
+    while(query_ord.executeStep()) {
         //mettere dettagli ordine da poi usare nella query dopo
-        int id_order = query.getColumn(0).getInt();
-        string date = query.getColumn(1).getText();
-        string status = query.getColumn(2).getText();
+        int id_order = query_ord.getColumn(0);
+        string date_string = query_ord.getColumn(1).getText();
+        string status = query_ord.getColumn(2).getText();
+        int id_client= query_ord.getColumn(3);
+
+        //prendo username cliente
+        string select_us_cl = "SELECT username FROM users WHERE  id= '" + to_string(id_client) +"'";
+        string username_client = db->execAndGet(select_us_cl);
+
+
+        // trasformo la stringa data in un oggetto Date
+        date = date->string_to_date_converter(date_string);
+
+        order= make_shared<Order>(id_order, status, username_client);
+        order->set_date(date);
         num_orders_of_provider ++;
         string select_products = "SELECT desc_prod, price_product, quantity, id_sub, available_quantity FROM store, orders_details WHERE id_product = store.id AND id_order = '" + to_string(id_order) +"'AND id_prov = '" + to_string(id_user) +"'";
-        while (query.executeStep()) {
+        SQLite::Statement query_prod(*db, select_products);
+        while (query_prod.executeStep()) {
 
-            int q_available= query.getColumn(4).getInt();
-            string subcategories = query.getColumn(3).getText();
-            int quantity = query.getColumn(2).getInt();
-            int price_prod = query.getColumn(1).getInt();
-            string desc_prod = query.getColumn(0).getText();
+            int q_available= query_prod.getColumn(4);
+            string subcategories = query_prod.getColumn(3).getText();
+            int quantity = query_prod.getColumn(2);
+            double price_prod = query_prod.getColumn(1);
+            string desc_prod = query_prod.getColumn(0).getText();
 
-            std::shared_ptr<Product> product = std::make_shared <Product>(desc_prod, price_prod, quantity,q_available, username, subcategories, id_store);
+            std::shared_ptr<Product> product = std::make_shared <Product>(desc_prod, price_prod, quantity, q_available, username, subcategories, id_store);
 
-            order->add_to_order(std::move(product));
+            order->add_to_order(product);
 
         }
 

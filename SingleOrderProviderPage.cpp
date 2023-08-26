@@ -1,7 +1,7 @@
 //
 // Created by dario on 20/04/2023.
 //
-
+/*
 #include "SingleOrderProviderPage.h"
 
 
@@ -77,3 +77,4 @@ void SingleOrderProviderPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
+*/

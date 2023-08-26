@@ -6,6 +6,8 @@
 
 using namespace std;
 
+Provider::Provider():User(){};
+
 Provider::Provider(int id, const string &t, const string &bn,const string &a, const string &e,
                 const string &password, const string &us, const string &c) : User(id, t, bn, a, e, password, us, c){
 

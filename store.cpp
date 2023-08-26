@@ -6,9 +6,10 @@
 using namespace std;
 
 
-
+Store::Store(){};
 Store::Store(const string &provider) {
     username_prov = provider;
+    num_prod = 0;
 }
 
 Store::~Store() {
@@ -16,9 +17,9 @@ Store::~Store() {
 }
 
 
-void Store::add_to_store(shared_ptr<Product> prod) {
+void Store::add_to_store(const shared_ptr<Product>& prod) {
     store.push_back(prod);
-    update_num(put_in);
+    update_num(0);
 }
 
 void Store::update_num(int control) {

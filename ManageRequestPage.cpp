@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 21/04/23.
 //
-
+/*
 #include "ManageRequestPage.h"
 
 
@@ -21,6 +21,8 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
 
 
     user= e->get_user();
+    db_order->set_user(user);
+
     wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Code OrderProduct", "Customer Name", "Date OrderProduct"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
@@ -188,3 +190,4 @@ void ManageRequestPage::OnChoice(wxCommandEvent& event) {
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 }
+*/

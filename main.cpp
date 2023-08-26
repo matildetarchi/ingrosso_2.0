@@ -5,20 +5,17 @@
 #include "SQLiteCpp/Database.h"
 using namespace std;
 
-IMPLEMENT_APP(MyApp)
+//IMPLEMENT_APP(MyApp)
 
 //TODO riguardare quantity e quantity_available
-/*
+
 int main() {
 
 
-
-
     Engine e;
-    e.doLogin("andrea.lipperi@icloud.com", "Forzaroma02");
-    //cout<< "ciao"<<endl;
+    e.do_login("andrea.lipperi@icloud.com", "Forzaroma02");
+
 
     return 0;
 
 }
-*/

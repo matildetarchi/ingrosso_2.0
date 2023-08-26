@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_SELECTIONCITYPAGE_H
 #define INGROSSO_ONLINE_SELECTIONCITYPAGE_H
 
@@ -34,3 +34,4 @@ private:
 };
 
 #endif //INGROSSO_ONLINE_SELECTIONCITYPAGE_H
+*/

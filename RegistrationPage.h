@@ -2,7 +2,7 @@
 //
 // Created by dario on 23/11/2022.
 //
-
+/*
 #ifndef BUTTON_WXWIDGETS_REGISTERFRAME_H
 #define BUTTON_WXWIDGETS_REGISTERFRAME_H
 #include "wx/wxhtml.h"
@@ -69,3 +69,4 @@ private:
 
 
 #endif //BUTTON_WXWIDGETS_REGISTERFRAME_H
+*/

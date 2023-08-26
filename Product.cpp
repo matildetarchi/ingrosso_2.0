@@ -5,6 +5,9 @@
 #include "Product.h"
 
 using namespace std;
+
+Product::Product(){};
+
 Product::Product( const string &d, double p, int q, int q_a, const string &u_p, const string &s, int id_st) {
 
     description = d;

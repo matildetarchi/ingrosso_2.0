@@ -1,12 +1,10 @@
 //
 // Created by Andrea Lipperi on 02/05/23.
 //
-
 /*
 #include "ProviderStorePage.h"
-#include "GlobalVariables.h"
-#include "ModifyProductPage.h"
 #define colonne 4
+
 const long ProviderStorePage::IdButtonDelete =::wxNewId();
 const long ProviderStorePage::IdButtonBack =::wxNewId();
 const long ProviderStorePage::IdButtonModify =::wxNewId();
@@ -15,23 +13,23 @@ BEGIN_EVENT_TABLE (ProviderStorePage, wxDialog)
                 EVT_BUTTON(IdButtonDelete, ProviderStorePage::DeleteProduct)
                 EVT_BUTTON(IdButtonModify, ProviderStorePage::ModifyProduct)
                 EVT_BUTTON(IdButtonBack, ProviderStorePage::ComeBack)
-
 END_EVENT_TABLE()
 
-ProviderStorePage::ProviderStorePage(const wxString &title):
+ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
-    username=GlobalVariables::GetInstance().GetValueUsername();
+    user = engine->get_user();
+    username = user->get_username();
 
     wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Name Product", "Price", "Quantity Available"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");
     choiceOrder->Append(3,myString);
-    choiceOrder->Bind(wxEVT_CHOICE, &ProviderStorePage::OnChoice, this);
+    //choiceOrder->Bind(wxEVT_CHOICE, &ProviderStorePage::OnChoice, this);
 
-    StoreProduct store;
-    int row = store.select_count_for_prov(username);
+
+    int row = db_store->select_for_prov(username);
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row, 3);
@@ -39,13 +37,23 @@ ProviderStorePage::ProviderStorePage(const wxString &title):
     grid->SetColLabelValue(1, "Price");
     grid->SetColLabelValue(2, "Quantity Available");
 
-    mat_store=store.select_for_prov(username);
+    store = user->get_store();
+    prod_list = store->get_products();
 
-    for (int i = 0; i < store.select_count_for_prov(username); i++) {
-        for (int col = 0; col < 3; col++) {
-            grid->SetReadOnly(i, col, true);
-            grid->SetCellValue(i, col,  mat_store[i][col]);
-        }
+
+    for (int i = 0; i < row ; i++) {
+      string name_prod= prod_list[i]->get_desc();
+      int p= prod_list[i]->get_price();
+      string price(to_string(p));
+      int a_q= prod_list[i]->get_q_available();
+      string available_q(to_string(a_q));
+
+        grid->SetReadOnly(i, 0, true);
+        grid->SetCellValue(i, 0, name_prod);
+        grid->SetReadOnly(i, 1, true);
+        grid->SetCellValue(i, 1, price);
+        grid->SetReadOnly(i, 2, true);
+        grid->SetCellValue(i, 2, available_q);
     }
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
@@ -76,16 +84,19 @@ void ProviderStorePage::ComeBack(wxCommandEvent &event) {
 }
 
 void ProviderStorePage::DeleteProduct(wxCommandEvent &event) {
-    if (grid->GetSelectedRows() == 0) {
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a product", "Error", wxICON_ERROR);
     } else {
-        StoreProduct store;
+
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
-        for (size_t i = 0; i < selectedRows.GetCount(); i++) {
-            row = selectedRows[i];
+        size_t i = 0;
+        while (i == selectedRows.GetCount()) {
+            i++;
         }
-        if (!store.remove(stoi(mat_store[row][3]))) {
+        row = selectedRows[i];
+        int id_prod= prod_list[i]->get_id_store();
+        if (!db_store->remove_from_db(id_prod)) {
             wxMessageBox("You can't remove this product from your store because is in someone's cart or favourites list or not accepted/denied order", "Error", wxICON_ERROR);
         } else {
             grid->DeleteRows(row);
@@ -93,28 +104,30 @@ void ProviderStorePage::DeleteProduct(wxCommandEvent &event) {
     }
 }
 void ProviderStorePage::ModifyProduct(wxCommandEvent &event) {
-    if (grid->GetSelectedRows() == 0) {
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a product", "Error", wxICON_ERROR);
     } else {
-        StoreProduct store;
+
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
-        for (size_t i = 0; i < selectedRows.GetCount(); i++) {
-            row = selectedRows[i];
+        size_t i = 0;
+        while (i == selectedRows.GetCount()) {
+            i++;
         }
-        ModifyProductPage *mod = new ModifyProductPage(_T("MODIFY PRODUCT"), stoi(mat_store[row][3]));
+        row = selectedRows[i];
+        int id_prod= prod_list[i]->get_id_store();
+        ModifyProductPage *mod = new ModifyProductPage(engine, _T("MODIFY PRODUCT"), id_prod);
         mod->Show(TRUE);
     }
 }
 
 void ProviderStorePage::OnChoice(wxCommandEvent& event) {
-    StoreProduct store;
 
     string order=event.GetString().ToStdString();
 
-    mat_store=store.select_for_prov(username, order);
+    int row= db_store->select_for_prov(username);
 
-    for (int i = 0; i < store.select_count_for_prov(username); i++) {
+    for (int i = 0; i < row; i++) {
         for (int col = 0; col < 3; col++) {
             grid->SetReadOnly(i, col, true);
             grid->SetCellValue(i, col,  mat_store[i][col]);

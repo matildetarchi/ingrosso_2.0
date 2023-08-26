@@ -13,12 +13,14 @@
 #include <string>
 #include "HomePageProviders.h"
 #include "dbCategoriesManager.h"
-
+#include "Store.h"
+#include "Engine.h"
+#include "dbStoreManager.h"
 
 
 class ModifyProductPage : public wxDialog{
 public:
-    ModifyProductPage(const wxString& title, int id_store);
+    ModifyProductPage(Engine *e, const wxString& title, int id_store);
 
     static const long IdButtonConfirm;
 DECLARE_EVENT_TABLE()
@@ -35,6 +37,8 @@ private:
     wxTextCtrl *tcD;
     wxSpinCtrlDouble *tcP;
     wxSpinCtrl *tcQ;
+    Engine* engine;
+    dbStoreManager db_store;
 
 };
 

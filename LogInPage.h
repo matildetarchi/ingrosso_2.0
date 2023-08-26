@@ -2,7 +2,7 @@
 // Created by dario on 16/11/2022.
 //
 
-
+/*
 #ifndef BUTTON_WXWIDGETS_NEWFRAME_H
 #define BUTTON_WXWIDGETS_NEWFRAME_H
 #include "SelectionSubcategoryPage.h"
@@ -47,3 +47,4 @@ private:
 
 
 #endif //BUTTON_WXWIDGETS_NEWFRAME_H
+ */

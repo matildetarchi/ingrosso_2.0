@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 21/04/23.
 //
-
+/*
 #ifndef INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
 #define INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
 
@@ -62,3 +62,4 @@ private:
 
 
 #endif //INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
+*/

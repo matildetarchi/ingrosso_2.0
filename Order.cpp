@@ -3,12 +3,12 @@
 //
 
 #include "Order.h"
-
 #include <utility>
+
 #define put_in 1
 #define cancel 0
 
-Order::Order(string s, string u_c): status(std::move(s)), username_client(std::move(u_c)),  date(nullptr){
+Order::Order(int id, string s, string u_c):id(id),  status(std::move(s)), username_client(std::move(u_c)),  date(nullptr), num_prod(0){
 }
 
 Order::~Order() {
@@ -29,7 +29,7 @@ void Order::update_num(int control) {
     }
 }
 
-double Order::get_total(shared_ptr<Order> o) {
+double Order::get_total(const shared_ptr<Order>& o) {
     int s = 0;
     vector<shared_ptr<Product>> products = o->get_order_prod();
     for(int i = 0; i<o->num_prod; i++) {

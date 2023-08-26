@@ -2,7 +2,7 @@
 // Created by dario on 23/11/2022.
 //
 
-
+/*
 #include "RegistrationPage.h"
 
 const long RegistrationPage::IdButtonConfirm =::wxNewId();
@@ -225,3 +225,4 @@ void RegistrationPage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
 }
+ */

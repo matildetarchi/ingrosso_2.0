@@ -3,10 +3,7 @@
 //
 
 #include "Date.h"
-#include <iostream>
-#include <iomanip>
-#include <ctime>
-#include <sstream>
+
 using namespace std;
 
 
@@ -20,13 +17,27 @@ using namespace std;
         date_.tm_isdst = -1; // Calcola l'ora legale
  }
 
- string Date::to_string(const std::string& format) const {
+ std::string Date::to_string(const std::string& format) const {
         std::stringstream ss;
         char buffer[80];
         strftime(buffer, sizeof(buffer), format.c_str(), &date_);
         ss << buffer;
         return ss.str();
  }
+
+std::shared_ptr<Date> Date::string_to_date_converter(const std::string &date) {
+    int year, month, day;
+
+    // Creiamo uno stream di input dalla stringa
+    std::istringstream iss(date);
+
+    // Estrai i componenti della data dalla stringa
+    char delimiter;
+    iss >> year >> delimiter >> month >> delimiter >> day;
+    std::shared_ptr<Date> dateObject = make_shared<Date>(year, month, day);
+
+    return dateObject;
+}
 
 
 
