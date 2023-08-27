@@ -11,11 +11,11 @@ Engine::Engine() {
 
     // Apri il database
     //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
-    database = new SQLite::Database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    database = make_shared <Database>(dbPath);
 
-    std::cout << "Database aperto con successo." << std::endl;
 
-    // Esegui le operazioni sul database qui
+
+
 
 
 
@@ -24,9 +24,12 @@ Engine::Engine() {
     db_order = make_shared<dbOrdersManager>(database);
     db_fav = make_shared<dbFavouritesManager>(database);
     db_user = make_shared<dbUserManager>(database);
+    db_cate = make_shared<dbCategoriesManager>(database);
+    db_subc = make_shared<dbSubcategoriesManager>(database);
+    db_city = make_shared<dbCityManager>(database);
 }
 
-bool Engine::do_registration(shared_ptr<User> user) {
+bool Engine::do_registration(const shared_ptr<User>& user) {
 
     string psw=user->get_psw();
     string email=user->get_email();

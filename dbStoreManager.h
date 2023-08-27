@@ -13,10 +13,12 @@
 #include "dbCartManager.h"
 #include "dbFavouritesManager.h"
 #include "User.h"
+#include <memory>
+#include "Database.h"
 
 class dbStoreManager {
 public:
-    explicit dbStoreManager(SQLite::Database* d);
+    explicit dbStoreManager(shared_ptr<Database> d);
 
 
     void set_user(shared_ptr<User> o){
@@ -33,7 +35,7 @@ private:
 
     shared_ptr<Store> st;
 
-    SQLite::Database* db;
+    shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
     dbFavouritesManager* fav;
     dbCartManager* cart;

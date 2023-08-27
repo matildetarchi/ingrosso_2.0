@@ -4,8 +4,10 @@
 
 #include "dbFavouritesManager.h"
 
-dbFavouritesManager::dbFavouritesManager(SQLite::Database *d) {
-    db = d;
+#include <utility>
+
+dbFavouritesManager::dbFavouritesManager(shared_ptr<Database> d) {
+    db = d->get_db();
     prod=make_shared<Product>();
 }
 

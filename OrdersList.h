@@ -18,7 +18,7 @@ using namespace std;
 class OrdersList{
 public:
     OrdersList();
-    OrdersList(const string &user);
+    explicit OrdersList(const string &user);
 
     ~OrdersList();
 

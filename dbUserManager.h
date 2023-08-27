@@ -13,13 +13,15 @@
 #include <SQLiteCpp/Database.h>
 #include "User.h"
 #include <memory>
+#include "Database.h"
+
 #define accesso 0
 #define registrazione 1
 
 class dbUserManager {
 public:
 
-    explicit dbUserManager(SQLite::Database* d);
+    explicit dbUserManager(shared_ptr<Database> d);
 
 
     void set_user(shared_ptr<User> us){
@@ -42,7 +44,7 @@ public:
 private:
     shared_ptr<User> user;
 
-    SQLite::Database *db;
+    shared_ptr<SQLite::Database> db;
 };
 
 

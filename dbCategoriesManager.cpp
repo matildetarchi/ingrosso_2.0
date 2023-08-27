@@ -4,11 +4,13 @@
 
 #include "dbCategoriesManager.h"
 
+#include <utility>
+
 using namespace std;
 
-dbCategoriesManager::dbCategoriesManager(SQLite::Database* d) {
-    db=d;
+dbCategoriesManager::dbCategoriesManager(const shared_ptr<Database>& d) {
 
+    db=d->get_db();
     //metodo per creare la tabella delle categorie di prodotti nel database
     string query="CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY autoincrement, name VARCHAR NOT NULL);";
     db->exec(query);

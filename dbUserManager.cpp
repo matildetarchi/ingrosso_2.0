@@ -4,9 +4,11 @@
 
 #include "dbUserManager.h"
 
+#include <utility>
 
-dbUserManager::dbUserManager(SQLite::Database *d) {
-    db = d;
+
+dbUserManager::dbUserManager(shared_ptr<Database> d) {
+    db = d->get_db();
 }
 
 bool dbUserManager::access_reg(const string &email, const string &psw, int control) {

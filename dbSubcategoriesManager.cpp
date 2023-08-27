@@ -4,10 +4,12 @@
 
 #include "dbSubcategoriesManager.h"
 
+#include <utility>
+
 using namespace std;
 
-dbSubcategoriesManager::dbSubcategoriesManager(SQLite::Database *d) {
-    db = d;
+dbSubcategoriesManager::dbSubcategoriesManager(shared_ptr<Database> d) {
+    db = d->get_db();
 }
 
 vector<string> dbSubcategoriesManager::select(const string &categories_name) {

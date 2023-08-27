@@ -16,13 +16,14 @@
 #include "Product.h"
 #include "User.h"
 #include <memory>
+#include "Database.h"
 
 class dbOrdersManager {
 
 public:
 
 
-    explicit dbOrdersManager(SQLite::Database* d);
+    explicit dbOrdersManager(shared_ptr<Database> d);
 
 
     void set_user(shared_ptr<User> o){
@@ -43,7 +44,7 @@ public:
 
 private:
     shared_ptr<OrdersList> tab_order;
-    SQLite::Database *db;
+    shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
     shared_ptr<User> user;
     shared_ptr<Order> order;
