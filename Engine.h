@@ -16,11 +16,14 @@
 #include "dbOrdersManager.h"
 #include "dbStoreManager.h"
 #include "dbUserManager.h"
+#include "dbCategoriesManager.h"
+#include "dbSubcategoriesManager.h"
+#include "dbCityManager.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <memory>
-#include <SQLiteCpp/Database.h>
+#include "Database.h"
 
 
 class Engine {
@@ -28,7 +31,7 @@ public:
     Engine();
 
 
-    bool do_registration(shared_ptr <User> user);
+    bool do_registration(const shared_ptr <User>& user);
     bool do_login(const string &email, const string &psw);
 
     shared_ptr<User> get_user() {
@@ -56,8 +59,10 @@ private:
     shared_ptr<dbStoreManager> db_store;
     shared_ptr<dbFavouritesManager> db_fav;
     shared_ptr<dbUserManager> db_user;
-    SQLite::Database *database;
-
+    shared_ptr<Database> database;
+    shared_ptr<dbCategoriesManager> db_cate;
+    shared_ptr<dbSubcategoriesManager> db_subc;
+    shared_ptr<dbCityManager> db_city;
 
 
 };

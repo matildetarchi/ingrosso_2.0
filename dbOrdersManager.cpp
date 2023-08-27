@@ -6,9 +6,8 @@
 
 
 
-dbOrdersManager::dbOrdersManager(SQLite::Database* d) {
-        db = d;
-
+dbOrdersManager::dbOrdersManager(shared_ptr<Database> d) {
+        db = d->get_db();
 }
 
 void dbOrdersManager::add_to_db() {

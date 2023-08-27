@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 17/03/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_DATABASE_H
 #define INGROSSO_ONLINE_DATABASE_H
 
@@ -17,17 +17,16 @@ using namespace std;
 
 class Database{
 public:
-    explicit Database(string db_name);
-    ~Database();
+    explicit Database(const string &db_name);
 
-    SQLite::Database* get_db(){
+
+   shared_ptr<SQLite::Database> get_db(){
         return db;
     }
 
 private:
-    SQLite::Database* db;
+    shared_ptr<SQLite::Database> db;
 };
 
 
 #endif //INGROSSO_ONLINE_DATABASE_H
-*/

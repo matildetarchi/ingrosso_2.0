@@ -7,23 +7,24 @@
 
 
 #include <string>
-#include "dbCityManager.h"
 #include <vector>
 #include <fstream>
-#include <SQLiteCpp/Database.h>
+#include "Database.h"
+#include "SQLiteCpp/Database.h"
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 class dbCityManager {
 public :
 
-    explicit dbCityManager(SQLite::Database *d);
+    explicit dbCityManager(shared_ptr<Database> d);
     int number_of_city();
     vector<string> select();
 
 private:
-    SQLite::Database* db;
+    shared_ptr<SQLite::Database> db;
 };
 
 

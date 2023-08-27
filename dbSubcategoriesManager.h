@@ -11,16 +11,18 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
+#include <memory>
+#include "Database.h"
 
 using namespace std;
 class dbSubcategoriesManager{
 public:
-    explicit dbSubcategoriesManager(SQLite::Database *d);
+    explicit dbSubcategoriesManager(shared_ptr<Database> d);
 
     vector<string> select(const string &categories_name);
 
 private:
-    SQLite::Database* db;
+    shared_ptr<SQLite::Database> db;
 };
 
 #endif //INGROSSO_ONLINE_DBSUBCATEGORIESMANAGER_H

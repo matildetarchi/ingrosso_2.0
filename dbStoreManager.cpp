@@ -4,10 +4,11 @@
 
 #include "dbStoreManager.h"
 
-dbStoreManager::dbStoreManager(SQLite::Database *d) {
-    db = d;
+#include <utility>
+
+dbStoreManager::dbStoreManager(shared_ptr<Database> d) {
+    db = d->get_db();
     prod=make_shared<Product>();
-    st= make_shared<Store>();
 }
 
 
@@ -197,7 +198,7 @@ int dbStoreManager::select_count_for_client(const string &sub_name, const string
 
 int dbStoreManager::select_for_prov(const string &username) {
 
-
+    st= make_shared<Store>(username);
     //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
     //seleziono l'id del fornitore che sta usando il programma

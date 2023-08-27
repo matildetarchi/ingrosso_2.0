@@ -4,10 +4,12 @@
 
 #include "dbCartManager.h"
 
+#include <utility>
+
 using namespace std;
 
-dbCartManager::dbCartManager(SQLite::Database *d) {
-    db = d;
+dbCartManager::dbCartManager(const shared_ptr<Database>& d) {
+    db = d->get_db();
     prod=make_shared<Product>();
 
 }

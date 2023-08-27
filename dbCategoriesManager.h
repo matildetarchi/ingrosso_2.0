@@ -7,23 +7,26 @@
 
 #include <string>
 #include <vector>
-#include "dbCategoriesManager.h"
 #include <fstream>
-#include <SQLiteCpp/Database.h>
+#include "Database.h"
+#include "SQLiteCpp/Database.h"
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
+#include <memory>
 
 
 using namespace std;
 
 class dbCategoriesManager {
 public :
+    explicit dbCategoriesManager(const shared_ptr<Database>& d);
 
-    explicit dbCategoriesManager(SQLite::Database* d);
     int number_of_cat();
+
     vector<string> select();
+
 private:
-    SQLite::Database* db;
+    shared_ptr<SQLite::Database> db;
 };
 
 #endif // INGROSSO_ONLINE_DBCATEGORIESMANAGER_H

@@ -4,10 +4,12 @@
 
 #include "dbCityManager.h"
 
+#include <utility>
+
 using namespace std;
 
-dbCityManager::dbCityManager(SQLite::Database* d) {
-    db = d;
+dbCityManager::dbCityManager(shared_ptr<Database> d) {
+    db = d->get_db();
 
     //metodo per creare la tabella delle categorie di prodotti nel database
     string query="CREATE TABLE IF NOT EXISTS cities (id INTEGER PRIMARY KEY autoincrement, name VARCHAR NOT NULL);";
