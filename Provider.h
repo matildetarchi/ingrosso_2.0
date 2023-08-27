@@ -16,7 +16,7 @@ using namespace std;
 class Provider: public User {
 public:
     Provider();
-    Provider(int id, const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
+    Provider( const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 
 

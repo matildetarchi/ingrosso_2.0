@@ -8,6 +8,8 @@ using namespace std;
 
 dbCartManager::dbCartManager(SQLite::Database *d) {
     db = d;
+    prod=make_shared<Product>();
+
 }
 
 void dbCartManager::add_to_db() {
@@ -67,9 +69,11 @@ void dbCartManager::select() {
 
     //prendo l'id dell'utente che sta usando il programma
     int id = user->get_db_id();
+    string us_client= user->get_username();
+    cart=make_shared<Cart>(us_client);
 
     //lancio la query che prende i valori dal db
-    string select = "SELECT desc_prod, price_product, username, quantity FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='"+to_string(id) +"' ORDER BY username;";
+    string select = "SELECT desc_prod, price_product, username, quantity, available_quantity, id_sub, store.id FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='"+to_string(id) +"' ORDER BY username;";
     SQLite::Statement query(*db,select);
 
     //inserisco i valori all'interno del vettore e la restituisco
@@ -79,11 +83,22 @@ void dbCartManager::select() {
         string desc=query.getColumn(0).getText();
         double price=query.getColumn(1).getDouble();
         string username_prov=query.getColumn(2).getText();
-        int quantity=query.getColumn(3).getInt();
+        int quantity=query.getColumn(3);
+        int available_q= query.getColumn(4);
+        int id_sub= query.getColumn(5);
+        int id_store=query.getColumn(6);
+
+        string select_sub_name= "SELECT name FROM subcategories WHERE id = '"+to_string(id_sub) +"'";
+        string sub_name=db->execAndGet(select_sub_name);
+
         prod->set_desc(desc);
         prod->set_price(price);
         prod->set_quantity(quantity);
         prod->set_username_prov(username_prov);
+        prod->set_id_store(id_store);
+        prod->set_available_quantity(available_q);
+        prod->set_subcategory(sub_name);
+
 
         cart->add_product(std::move(prod));
     }

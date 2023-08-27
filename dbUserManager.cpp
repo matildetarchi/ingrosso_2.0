@@ -38,25 +38,23 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
         //se si restituisco false almtrimenti true
         while (query.executeStep()){
             if (query.getColumn(4).getText() == email) {
-                num_found++;
+                return false;
             }
-        }
-        if (num_found == 0) {
-            return true;
-        } else {
-            return false;
         }
     }
     return true;
 }
+
 void dbUserManager::add_to_db() {
 
     //funzione che aggiunge un nuovo utente al database
 
     //lancio la query di insert
-    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', " + user->get_city() + ", '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "');";
+    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" + user->get_city() + "', '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "')";
     db->exec(query);
-
+    string i_u= "SELECT id FROM users WHERE email= '" + user->get_email() + "'";
+    int id_user=db->execAndGet(i_u);
+    user->set_id_db(id_user);
 }
 bool dbUserManager::remove_from_db(const string &username, const string &type) {
     //funzione per rimuovere l'utente

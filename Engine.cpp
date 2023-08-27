@@ -28,9 +28,12 @@ Engine::Engine() {
 
 bool Engine::do_registration(shared_ptr<User> user) {
 
-    if( db_user->access_reg(user->get_email(),user->get_psw(),1)){
+    string psw=user->get_psw();
+    string email=user->get_email();
+    if( db_user->access_reg(email,psw,1)){
         db_user->set_user(user);
         db_user->add_to_db();
+
         return true;
     }else
         return false;

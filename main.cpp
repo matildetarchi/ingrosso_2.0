@@ -11,10 +11,9 @@ using namespace std;
 
 int main() {
 
-
+    shared_ptr<User> user= make_shared<User>("C","05550649455", "via.rossi 365", "filippo.nespe@gmail.com", "mare62", "Filippo s.r.l", "Roma" );
     Engine e;
-    e.do_login("andrea.lipperi@icloud.com", "Forzaroma02");
-
+    e.do_registration(user);
 
     return 0;
 

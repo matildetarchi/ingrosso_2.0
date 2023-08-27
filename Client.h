@@ -17,7 +17,7 @@ class Client : public User {
 public:
 
     Client();
-    Client(int id, const string &t, const string &bn, const string &a, const string &e, const string &password,
+    Client(const string &t, const string &bn, const string &a, const string &e, const string &password,
            const string &us, const string &c);
 
     ~Client() override ;
