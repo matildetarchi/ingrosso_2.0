@@ -16,7 +16,7 @@ BEGIN_EVENT_TABLE (InsertProductPage, wxFrame)
 
 END_EVENT_TABLE()
 
-InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : enghine(e),
+InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 400)){
 
     db_categories = e->get_db_cate();

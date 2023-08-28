@@ -209,6 +209,7 @@ void dbUserManager::select_data(const string &username) {
         user->set_address(address);
         user->set_bus_name(bus_name);
         user->set_username(username);
+        user->set_type(type);
     }
     else {
         std::cout << "Nessun risultato trovato." << std::endl;
