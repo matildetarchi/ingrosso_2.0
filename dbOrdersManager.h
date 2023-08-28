@@ -17,6 +17,8 @@
 #include "User.h"
 #include <memory>
 #include "Database.h"
+#include <stdexcept>
+
 
 class dbOrdersManager {
 
@@ -36,11 +38,14 @@ public:
 
     void cancel_order(int id_order);
 
-    int select_for_provider();
+    void select_for_provider();
 
-    int select_for_client();
+    void select_for_client();
 
     int select_id_last_order(const string &username_prov);
+    int select_count_for_provider();
+    int select_count_for_client();
+
 
 private:
     shared_ptr<OrdersList> tab_order;
@@ -49,6 +54,7 @@ private:
     shared_ptr<User> user;
     shared_ptr<Order> order;
     shared_ptr<Date> date;
+    vector<shared_ptr<Order>> ord_list;
 };
 
 

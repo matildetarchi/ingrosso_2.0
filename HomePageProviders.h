@@ -1,7 +1,7 @@
 //
 // Created by dario on 30/11/2022.
 //
-/*
+
 
 #ifndef INGROSSO_ONLINE_STOCKISTFRAME_H
 #define INGROSSO_ONLINE_STOCKISTFRAME_H
@@ -9,6 +9,12 @@
 #include "wx/wx.h"
 #include "InsertProductPage.h"
 #include "Engine.h"
+#include "ChooseStatusPage.h"
+#include "ProviderStorePage.h"
+#include "SelectionCityPage.h"
+#include "ManageProfilePage.h"
+#include "InitialPage.h"
+#include "User.h"
 
 class HomePageProviders: public wxFrame {
 public:
@@ -49,4 +55,3 @@ private:
 
 
 #endif //INGROSSO_ONLINE_STOCKISTFRAME_H
-*/

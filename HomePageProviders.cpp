@@ -1,14 +1,9 @@
 //
 // Created by dario on 30/11/2022.
 //
-/*
+
 #include "HomePageProviders.h"
-#include "ChooseStatusPage.h"
-#include "ProviderStorePage.h"
-#include "SelectionCityPage.h"
-#include "ManageProfilePage.h"
-#include "InitialPage.h"
-#include "User.h"
+
 
 const long HomePageProviders::IdButtonStore =::wxNewId();
 const long HomePageProviders::IdButtonProfile =::wxNewId();
@@ -89,7 +84,7 @@ void HomePageProviders::OpenStore(wxCommandEvent &event) {
 }
 
 void HomePageProviders::OpenInsProd(wxCommandEvent &event) {
-    InsertProductPage *EnterWin = new InsertProductPage (_T("NEW PRODUCT"));
+    InsertProductPage *EnterWin = new InsertProductPage (engine, _T("NEW PRODUCT"));
     EnterWin->Show(TRUE);
 }
 void HomePageProviders::ComeBack(wxCommandEvent &event) {
@@ -110,7 +105,6 @@ void HomePageProviders::RemoveUser(wxCommandEvent &event)  {
 }
 
 void HomePageProviders::ViewClients(wxCommandEvent &event) {
-    SelectionCityPage *sel_c = new SelectionCityPage(_T("SELECT CITY"));
+    SelectionCityPage *sel_c = new SelectionCityPage(engine, _T("SELECT CITY"));
     sel_c->Show(TRUE);
 }
- */

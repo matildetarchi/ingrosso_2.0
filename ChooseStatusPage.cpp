@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #include "ChooseStatusPage.h"
 
 using namespace std;
@@ -67,4 +67,3 @@ void ChooseStatusPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
-*/

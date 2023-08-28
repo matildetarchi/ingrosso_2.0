@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 02/05/23.
 //
-/*
+
 #include "ProviderStorePage.h"
 #define colonne 4
 
@@ -21,15 +21,15 @@ ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e
     user = engine->get_user();
     username = user->get_username();
 
-    wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
+    /*wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Name Product", "Price", "Quantity Available"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");
     choiceOrder->Append(3,myString);
-    //choiceOrder->Bind(wxEVT_CHOICE, &ProviderStorePage::OnChoice, this);
+    choiceOrder->Bind(wxEVT_CHOICE, &ProviderStorePage::OnChoice, this);*/
 
-
-    int row = db_store->select_for_prov(username);
+    db_store= engine->get_db_store();
+    int row = db_store->select_count_for_provider();
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row, 3);
@@ -65,7 +65,7 @@ ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(order);
+    //sizer->Add(order);
     sizer->Add(choiceOrder, 0, wxALL, 5);
     sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
     sizer->Add(Delete, 1, wxEXPAND | wxALL, 5);
@@ -115,13 +115,13 @@ void ProviderStorePage::ModifyProduct(wxCommandEvent &event) {
             i++;
         }
         row = selectedRows[i];
-        int id_prod= prod_list[i]->get_id_store();
+        int id_prod= prod_list[row]->get_id_store();
         ModifyProductPage *mod = new ModifyProductPage(engine, _T("MODIFY PRODUCT"), id_prod);
         mod->Show(TRUE);
     }
 }
 
-void ProviderStorePage::OnChoice(wxCommandEvent& event) {
+/*void ProviderStorePage::OnChoice(wxCommandEvent& event) {
 
     string order=event.GetString().ToStdString();
 
@@ -136,4 +136,4 @@ void ProviderStorePage::OnChoice(wxCommandEvent& event) {
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 }
- */
+*/

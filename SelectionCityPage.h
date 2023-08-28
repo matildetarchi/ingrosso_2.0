@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_SELECTIONCITYPAGE_H
 #define INGROSSO_ONLINE_SELECTIONCITYPAGE_H
 
@@ -9,8 +9,6 @@
 #include "wx/wx.h"
 #include "dbCityManager.h"
 #include "UsersDataListPage.h"
-#include "dbCategoriesManager.h"
-#include "ProductListPage.h"
 #include <string>
 #include <vector>
 #include "Engine.h"
@@ -31,7 +29,7 @@ private:
     wxButton *Back;
     wxChoice* choiceC;
     Engine *engine;
+    shared_ptr<dbCityManager> db_table;
 };
 
 #endif //INGROSSO_ONLINE_SELECTIONCITYPAGE_H
-*/

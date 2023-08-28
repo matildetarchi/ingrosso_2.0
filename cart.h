@@ -2,7 +2,6 @@
 // Created by Matilde Tarchi on 29/07/22.
 //
 
-
 #ifndef INGROSSO_ONLINE_CART_H
 #define INGROSSO_ONLINE_CART_H
 
@@ -20,7 +19,7 @@ using namespace std;
 class Cart {
 public:
 
-   explicit Cart(const string &client);
+    explicit Cart(const string &client);
     ~Cart();
 
 

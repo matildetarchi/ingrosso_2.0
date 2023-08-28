@@ -17,4 +17,3 @@ User::User( const string &t, const string &bn,const string &a, const string &e, 
     username = us;
 
 }
-

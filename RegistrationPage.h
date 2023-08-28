@@ -2,7 +2,7 @@
 //
 // Created by dario on 23/11/2022.
 //
-/*
+
 #ifndef BUTTON_WXWIDGETS_REGISTERFRAME_H
 #define BUTTON_WXWIDGETS_REGISTERFRAME_H
 #include "wx/wxhtml.h"
@@ -11,13 +11,8 @@
 #include "User.h"
 #include <iostream>
 #include <fstream>
-#include "MyApp.h"
 #include "InitialPage.h"
-#include "SelectionSubcategoryPage.h"
 #include "LogInPage.h"
-#include "HomePageProviders.h"
-#include "RegistrationPage.h"
-#include "HomePageClient.h"
 #include "Engine.h"
 #include "dbCityManager.h"
 
@@ -69,4 +64,3 @@ private:
 
 
 #endif //BUTTON_WXWIDGETS_REGISTERFRAME_H
-*/

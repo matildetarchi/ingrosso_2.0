@@ -2,10 +2,10 @@
 // Created by dario on 16/11/2022.
 //
 
-/*
+
 #ifndef BUTTON_WXWIDGETS_NEWFRAME_H
 #define BUTTON_WXWIDGETS_NEWFRAME_H
-#include "SelectionSubcategoryPage.h"
+
 #include "User.h"
 #include "HomePageClient.h"
 #include "HomePageProviders.h"
@@ -20,6 +20,7 @@
 class LogInPage : public wxFrame{
 public:
     LogInPage(Engine* e, const wxString& title);
+
     static const long IdButtonConfirm;
     static const long IdButtonBack;
     static const long IdButtonForPsw;
@@ -47,4 +48,3 @@ private:
 
 
 #endif //BUTTON_WXWIDGETS_NEWFRAME_H
- */

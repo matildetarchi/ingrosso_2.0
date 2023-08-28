@@ -1,14 +1,9 @@
 //
 // Created by dario on 05/12/2022.
 //
-/*
+
 #include "InsertProductPage.h"
-#include "GlobalVariables.h"
-#include "dbSubcategoriesManager.h"
-#include "dbCategoriesManager.h"
-#include "Store.h"
-#include <vector>
-#include <wx/spinctrl.h>
+
 
 
 const long InsertProductPage::IdButtonInsert =::wxNewId();
@@ -21,20 +16,20 @@ BEGIN_EVENT_TABLE (InsertProductPage, wxFrame)
 
 END_EVENT_TABLE()
 
-InsertProductPage::InsertProductPage(const wxString &title) :
+InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : enghine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 400)){
 
-    Categories *table_cat;
-
+    db_categories = e->get_db_cate();
+    user= e->get_user();
     std::vector<std::string> categories;
 
-    categories=table_cat->select();
+    categories=db_categories->select();
     wxVector<string> choices;
-    for (int k=0; k<table_cat->number_of_cat(); k++){
+    for (int k=0; k< db_categories->number_of_cat(); k++){
         choices.push_back(categories[k]);
     }
-    wxString myString[table_cat->number_of_cat()];
-    for (int i=0;i<table_cat->number_of_cat();i++) {
+    wxString myString[db_categories->number_of_cat()];
+    for (int i=0;i<db_categories->number_of_cat();i++) {
         myString[i].Append(choices[i]);
     }
 
@@ -52,7 +47,7 @@ InsertProductPage::InsertProductPage(const wxString &title) :
 
     choiceC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
-    choiceC->Append(table_cat->number_of_cat(),myString);
+    choiceC->Append(db_categories->number_of_cat(),myString);
 
     choiceC->Bind(wxEVT_CHOICE, &InsertProductPage::OnChoice, this);
 
@@ -85,13 +80,15 @@ InsertProductPage::InsertProductPage(const wxString &title) :
 
 }
 void InsertProductPage::OnChoice(wxCommandEvent& event) {
+
+
     choiceSubC->Clear();
     choiceSubC->Append("Select");
     wxVector<string> choices2;
-    Subcategories sub;
+
     std::vector<std::string> subcategories;
     string cat=event.GetString().ToStdString();
-    subcategories = sub.select(cat);
+    subcategories = db_subcategories->select(cat);
     for (int k=0; k<subcategories.size(); k++){
         choices2.push_back(subcategories[k]);
     }
@@ -103,22 +100,25 @@ void InsertProductPage::OnChoice(wxCommandEvent& event) {
     subcategories.clear();
     choices2.clear();
 }
+
 void InsertProductPage::InsertProduct(wxCommandEvent &event) {
 
     if (choiceC->GetSelection() == wxNOT_FOUND || choiceSubC->GetSelection() < 1 || tcName->IsEmpty() || tcQ->GetValue()==0||
         tcC->GetValue()==0.00) {
         wxMessageBox("Inset Every Value", "Error", wxICON_ERROR);
     } else {
-        int Id_subcategory = choiceSubC->GetSelection();
-        std::string Sub_category = choiceSubC->GetString(Id_subcategory).ToStdString();
-        int Id_category = choiceC->GetSelection();
-        std::string Category = choiceC->GetString(Id_category).ToStdString();
-        std::string Name = tcName->GetValue().ToStdString();
-        int Quantity = tcQ->GetValue();
-        double Price = tcC->GetValue();
-        std::string username = GlobalVariables::GetInstance().GetValueUsername();
-        StoreProduct *store = new StoreProduct(Quantity, Sub_category, Price, Name, username);
-        store->add();
+        int id_subcategory = choiceSubC->GetSelection();
+        std::string sub_category = choiceSubC->GetString(id_subcategory).ToStdString();
+        int id_category = choiceC->GetSelection();
+        std::string category = choiceC->GetString(id_category).ToStdString();
+        std::string name_prod = tcName->GetValue().ToStdString();
+        int a_quantity = tcQ->GetValue();
+        double price = tcC->GetValue();
+        string username_prov = user->get_username();
+        shared_ptr<Product> prod = make_shared<Product> (name_prod, price, 0, a_quantity, username_prov, sub_category);
+        store->add_to_store(prod);
+        db_store= engine->get_db_store();
+        db_store->add_to_db();
     }
 }
 void InsertProductPage::ComeBack(wxCommandEvent &event) {
@@ -126,4 +126,3 @@ void InsertProductPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
- */

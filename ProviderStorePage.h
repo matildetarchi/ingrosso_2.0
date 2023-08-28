@@ -1,13 +1,13 @@
 //
 // Created by Andrea Lipperi on 02/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
 #define INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
-#include "Store.h"
+#include "store.h"
 #include "ModifyProductPage.h"
 #include "Engine.h"
 #include "User.h"
@@ -40,11 +40,10 @@ private:
     wxChoice* choiceOrder;
     Engine *engine;
     shared_ptr<User> user;
-    dbStoreManager *db_store;
+    shared_ptr<dbStoreManager> db_store;
     vector<shared_ptr<Product>> prod_list;
     shared_ptr<Store> store;
 
 };
 
 #endif //INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
-*/

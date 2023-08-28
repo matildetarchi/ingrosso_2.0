@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_CHOOSESTATUSPAGE_H
 #define INGROSSO_ONLINE_CHOOSESTATUSPAGE_H
 
@@ -13,10 +13,9 @@
 #include "OrderHistoryForClientPage.h"
 #include "ManageRequestPage.h"
 #include "Engine.h"
-#include "dbCategoriesManager.h"
-#include "ProductListPage.h"
 #include <string>
 #include <vector>
+#include "User.h"
 
 class ChooseStatusPage : public wxFrame {
 public:
@@ -41,4 +40,3 @@ private:
 };
 
 #endif //INGROSSO_ONLINE_CHOOSESTATUSPAGE_H
-*/

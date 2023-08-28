@@ -2,15 +2,12 @@
 // Created by dario on 12/11/2022.
 //
 
-/*
 #ifndef BUTTON_WXWIDGETS_MYFRAME_H
 #define BUTTON_WXWIDGETS_MYFRAME_H
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "Engine.h"
 #include "LogInPage.h"
-#include "MyApp.h"
-#include "SelectionSubcategoryPage.h"
 #include "RegistrationPage.h"
 
 
@@ -39,4 +36,3 @@ enum
 };
 
 #endif
-*/

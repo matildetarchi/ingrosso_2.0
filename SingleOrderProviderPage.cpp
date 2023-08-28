@@ -1,7 +1,7 @@
 //
 // Created by dario on 20/04/2023.
 //
-/*
+
 #include "SingleOrderProviderPage.h"
 
 
@@ -14,22 +14,22 @@ BEGIN_EVENT_TABLE (SingleOrderProviderPage, wxDialog)
 
 END_EVENT_TABLE()
 
-SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, const std::string &code_order): engine(e),
+SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, const std::string &code_order): engine(e), id_order(code_order),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
-    id_order=code_order;
-    user=engine->get_user();
-    username= user->get_username();
+
+    user = engine->get_user();
+
 
     orders_list= user->get_order_list();
     orders= orders_list->get_orders();
 
-    int num_order = orders_list->get_num_order();
-    int i=0;
+
+    int i = 0;
     while(orders[i]->get_id()==id_order){
         i++;
     }
-    order=orders[i];
-    order_p=order->get_order_prod();
+    order = orders[i];
+    order_p = order->get_order_prod();
     int row=order->get_num_prod();
 
     grid = new wxGrid(this, wxID_ANY);
@@ -42,7 +42,7 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
     double t_p= order->get_total(order);
     string total_price(to_string(t_p));
 
-    for (int i = 0; i < row; i++) {
+    for ( i = 0; i < row; i++) {
         int q= order_p[i]->get_quantity();
         string quantity(to_string(q));
         int a_q= order_p[i]->get_q_available();
@@ -77,4 +77,3 @@ void SingleOrderProviderPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
-*/

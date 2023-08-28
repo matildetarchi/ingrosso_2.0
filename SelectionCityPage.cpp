@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-/*
+
 #include "SelectionCityPage.h"
 
 
@@ -29,17 +29,17 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
 
     wxFlexGridSizer *fgs=new wxFlexGridSizer(6,2,20,5);
 
-    dbCityManager *table;
+    db_table = engine->get_db_city();
 
     std::vector<std::string> cities;
 
-    cities=table->select();
+    cities=db_table->select();
     wxVector<string> choices;
-    for (int k=0; k<table->number_of_city(); k++){
+    for (int k=0; k<db_table->number_of_city(); k++){
         choices.push_back(cities[k]);
     }
-    wxString myString[table->number_of_city()];
-    for (int i=0;i<table->number_of_city();i++) {
+    wxString myString[db_table->number_of_city()];
+    for (int i=0;i<db_table->number_of_city();i++) {
         myString[i].Append(choices[i]);
     }
 
@@ -54,7 +54,7 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
     choiceC=new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
     choiceC->Append("All");
-    choiceC->Append(table->number_of_city(),myString);
+    choiceC->Append(db_table->number_of_city(),myString);
 
 
     fgs->Add(City,0);
@@ -100,4 +100,3 @@ void SelectionCityPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
-*/

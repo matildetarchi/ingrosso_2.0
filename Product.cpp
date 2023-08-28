@@ -8,14 +8,13 @@ using namespace std;
 
 Product::Product(){};
 
-Product::Product( const string &d, double p, int q, int q_a, const string &u_p, const string &s, int id_st) {
+Product::Product( const string &d, double p, int q, int q_a, const string &u_p, const string &s) {
 
     description = d;
     price = p;
     quantity = q;
     username_prov = u_p;
     subcategory = s;
-    id_store=id_st;
     q_available=q_a;
 
 }

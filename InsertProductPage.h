@@ -1,7 +1,7 @@
 //
 // Created by dario on 05/12/2022.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_INSERTPRODUCTPAGE_H
 #define INGROSSO_ONLINE_INSERTPRODUCTPAGE_H
 
@@ -9,14 +9,18 @@
 #include "wx/wxhtml.h"
 #include "wx/string.h"
 #include "wx/grid.h"
-#include <wx/spinctrl.h>
 #include <string>
-#include "HomePageProviders.h"
+#include "dbSubcategoriesManager.h"
 #include "dbCategoriesManager.h"
+#include "store.h"
+#include <vector>
+#include <wx/spinctrl.h>
+#include "Engine.h"
+#include "dbStoreManager.h"
 
 class InsertProductPage: public wxFrame {
 public:
-    InsertProductPage(const wxString &title);
+    InsertProductPage(Engine *e, const wxString &title);
 
     static const long IdButtonInsert;
     static const long IdButtonComeBack;
@@ -37,7 +41,13 @@ private:
     wxChoice* choiceSubC;
     wxSpinCtrl* tcQ;
     wxSpinCtrlDouble *tcC;
+    Engine *engine;
+    shared_ptr<dbCategoriesManager> db_categories;
+    shared_ptr<dbSubcategoriesManager> db_subcategories;
+    shared_ptr<User> user;
+    shared_ptr<Store> store;
+    shared_ptr<dbStoreManager> db_store;
+
 };
 
 #endif //INGROSSO_ONLINE_INSERTPRODUCTPAGE_H
- */

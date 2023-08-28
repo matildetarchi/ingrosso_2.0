@@ -2,6 +2,7 @@
 // Created by Andrea Lipperi on 14/11/22.
 //
 
+
 #include "store.h"
 using namespace std;
 
@@ -47,5 +48,3 @@ void Store::remove_all() {
     for( int i = 0; i<num_prod; i++)
         remove_one(i);
 }
-
-

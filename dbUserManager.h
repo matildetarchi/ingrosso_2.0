@@ -34,13 +34,14 @@ public:
     void add_to_db();
     bool access_reg(const string &email, const string &psw, int control);
     bool remove_from_db(const string &username, const string &type);
-    void changeData(const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username);
-    void changePsw(const string &email, const string &new_psw);
+    void change_data(const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username);
+    void change_psw(const string &email, const string &new_psw);
     void select_data(const string &username);
     const string select_type(const string &email);
     const string select_username(const string &email);
-
     int select_count_users(const string &type, const string &city);
+    vector<shared_ptr<User>> select_users(const string &type, const string &city);
+
 private:
     shared_ptr<User> user;
 

@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 08/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_USERSDATALISTPAGE_H
 #define INGROSSO_ONLINE_USERSDATALISTPAGE_H
 
@@ -13,19 +13,12 @@
 #include <iostream>
 #include <fstream>
 #include "MyApp.h"
-#include "InitialPage.h"
-#include "SelectionSubcategoryPage.h"
-#include "LogInPage.h"
-#include "HomePageProviders.h"
-#include "RegistrationPage.h"
-#include "HomePageClient.h"
 #include "wx/grid.h"
 #include "SelectionCityPage.h"
-#include "favourites.h"
-#include "cart.h"
 #include <wx/app.h>
 #include <wx/spinctrl.h>
 #include "Engine.h"
+#include "dbUserManager.h"
 
 class UsersDataListPage : public wxFrame {
 public:
@@ -44,11 +37,10 @@ private:
     std::string type;
     std::string username;
     wxChoice* choiceOrder;
-    vector<vector<string>> mat_users;
     Engine *engine;
     shared_ptr<User> user;
-    dbUserManager *db_user;
+    shared_ptr<dbUserManager> db_user;
+    vector<shared_ptr<User>> user_list;
 };
 
 #endif //INGROSSO_ONLINE_USERSDATALISTPAGE_H
-*/
