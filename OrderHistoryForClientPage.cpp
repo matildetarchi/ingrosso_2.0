@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #include "OrderHistoryForClientPage.h"
 
 #include "SingleOrderClientPage.h"
@@ -16,23 +16,23 @@ BEGIN_EVENT_TABLE (OrderHistoryForClientPage, wxDialog)
 
 END_EVENT_TABLE()
 
-OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &title, int control): engine(e),
+OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &title, int control): engine(e), ctrl(control),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
-    ctrl = control;
+
     user = engine->get_user();
     username = user->get_username();
 
-    wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
+   /* wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Code OrderProduct", "Provider Name", "Date OrderProduct"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");
     choiceOrder->Append(3,myString);
-    choiceOrder->Bind(wxEVT_CHOICE, &OrderHistoryForClientPage::OnChoice, this);
+    choiceOrder->Bind(wxEVT_CHOICE, &OrderHistoryForClientPage::OnChoice, this);*/
 
 
-    int row = db_order->select_for_client();
+    int row = db_order->select_count_for_client();
 
     grid = new wxGrid(this, wxID_ANY);
     if (ctrl==0) {
@@ -53,7 +53,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
     order= orders_list->get_orders();
 
     for (int i = 0; i < row; i++) {
-        Date *d= order[i]->get_date();
+        shared_ptr<Date> d= order[i]->get_date();
         std::string date = d->to_string("%d/%m/%Y");
         string status= order[i]->get_status();
         string us_client= order[i]->get_us_client();
@@ -89,7 +89,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(order_txt, 0, wxALL, 5);
+    //sizer->Add(order_txt, 0, wxALL, 5);
     sizer->Add(choiceOrder, 0, wxALL, 5);
     sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
     sizer->Add(Cancel, 1, wxEXPAND | wxALL, 5);
@@ -122,7 +122,7 @@ void OrderHistoryForClientPage::CancelOrder(wxCommandEvent &event) {
         grid->DeleteRows(row);
     }
 }
-/*void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
+void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
     if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
     } else {

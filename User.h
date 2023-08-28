@@ -21,17 +21,17 @@ public:
 
     virtual ~User() = default;
 
-     shared_ptr<Cart> get_cart(){
+    shared_ptr<Cart> get_cart(){
         return cart;
     };
 
-     shared_ptr<Favourites> get_fav(){
+    shared_ptr<Favourites> get_fav(){
         return fav;
     };
-     shared_ptr<OrdersList> get_order_list(){
+    shared_ptr<OrdersList> get_order_list(){
         return order;
     };
-     shared_ptr<Store> get_store() {
+    shared_ptr<Store> get_store() {
         return store;
     };
 

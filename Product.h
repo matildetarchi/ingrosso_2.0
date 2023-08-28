@@ -13,7 +13,7 @@ class Product {
 public:
 
     Product();
-    Product(const string &desc, double price, int quantity, int q_available, const string &u_p, const string &sub, int id_st);
+    Product(const string &desc, double price, int quantity, int q_available, const string &u_p, const string &sub);
     ~Product(){};
 
     const string &get_desc(){

@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 21/04/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
 #define INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
 
@@ -12,8 +12,8 @@
 #include "dbOrdersManager.h"
 #include "OrdersList.h"
 #include "Order.h"
+#include "User.h"
 #include "SingleOrderProviderPage.h"
-#include <SQLiteCpp/Database.h>
 #include <utility>
 #include <vector>
 #include <iostream>
@@ -36,7 +36,7 @@ private:
     void OnConfirm(wxCommandEvent& event);
     void OnDeny(wxCommandEvent& event);
     void ViewOrder(wxCommandEvent& event);
-    void OnChoice(wxCommandEvent& event);
+    //void OnChoice(wxCommandEvent& event);
 
     wxButton *Confirm;
     wxButton *Deny;
@@ -54,7 +54,7 @@ private:
     int ctrl;
     Engine* engine;
     shared_ptr<User> user;
-    dbOrdersManager *db_order;
+    shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;
 };
 
@@ -62,4 +62,3 @@ private:
 
 
 #endif //INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
-*/

@@ -5,10 +5,10 @@
 #include "SQLiteCpp/Database.h"
 using namespace std;
 
-//IMPLEMENT_APP(MyApp)
+IMPLEMENT_APP(MyApp)
 
 //TODO riguardare quantity e quantity_available
-
+/*
 int main() {
 
 
@@ -17,4 +17,4 @@ int main() {
 
     return 0;
 
-}
+}*/

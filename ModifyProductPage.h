@@ -1,7 +1,6 @@
 //
 // Created by Andrea Lipperi on 02/05/23.
 //
-/*
 #ifndef INGROSSO_ONLINE_MODIFYPRODUCTPAGE_H
 #define INGROSSO_ONLINE_MODIFYPRODUCTPAGE_H
 
@@ -12,10 +11,10 @@
 #include <wx/spinctrl.h>
 #include <string>
 #include "HomePageProviders.h"
-#include "dbCategoriesManager.h"
-#include "Store.h"
+#include "store.h"
 #include "Engine.h"
 #include "dbStoreManager.h"
+#include "Product.h"
 
 
 class ModifyProductPage : public wxDialog{
@@ -33,14 +32,13 @@ private:
     int id;
     wxBoxSizer *sizer;
     std::string type;
-    std::vector<std::string> data_store;
+    shared_ptr<Product> prod;
     wxTextCtrl *tcD;
     wxSpinCtrlDouble *tcP;
     wxSpinCtrl *tcQ;
     Engine* engine;
-    dbStoreManager db_store;
+    shared_ptr<dbStoreManager> db_store;
 
 };
 
 #endif //INGROSSO_ONLINE_MODIFYPRODUCTPAGE_H
-*/

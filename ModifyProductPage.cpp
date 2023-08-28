@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-/*
+
 #include "ModifyProductPage.h"
 
 
@@ -22,19 +22,19 @@ ModifyProductPage::ModifyProductPage(Engine *e, const wxString &title, int id_st
     wxStaticText *quant = new wxStaticText(this, -1, wxT("Available Quantity"));
 
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
+    db_store= engine->get_db_store();
 
-
-    data_store=store.select_to_modify(id);
-    tcD = new wxTextCtrl(this, wxID_ANY,data_store[0]);
+    prod = db_store->select_prod_to_modify(id);
+    tcD = new wxTextCtrl(this, wxID_ANY,prod->get_desc());
 
     sizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(desc);
     sizer->Add(tcD, 0, wxALL, 5);
     sizer->Add(price);
-    tcP = new wxSpinCtrlDouble(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, stod(data_store[1]), 0.01);
+    tcP = new wxSpinCtrlDouble(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, prod->get_price(), 0.01);
     sizer->Add(tcP, 0, wxALL, 5);
     sizer->Add(quant);
-    tcQ = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, stoi(data_store[2]));
+    tcQ = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, prod->get_q_available());
     sizer->Add(tcQ, 0, wxALL, 5);
     sizer->Add(Confirm,0);
 
@@ -50,8 +50,7 @@ void ModifyProductPage::OnConfirm(wxCommandEvent &event) {
 
     std::string new_desc=tcD->GetValue().ToStdString();
     double new_price = tcP->GetValue();
-    int new_quant= tcQ->GetValue();
-    db_store.change_data(id, new_desc, new_price, new_quant);
+    int new_available_quant= tcQ->GetValue();
+    db_store->change_data(id, new_desc, new_price, new_available_quant);
 
 }
-*/

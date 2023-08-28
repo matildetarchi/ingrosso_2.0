@@ -1,7 +1,6 @@
 //
 // Created by Matilde Tarchi on 29/07/22.
 //
-
 #ifndef INGROSSO_ONLINE_FAVOURITES_H
 #define INGROSSO_ONLINE_FAVOURITES_H
 

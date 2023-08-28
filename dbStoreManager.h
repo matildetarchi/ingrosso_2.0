@@ -15,6 +15,8 @@
 #include "User.h"
 #include <memory>
 #include "Database.h"
+#include <stdexcept>
+
 
 class dbStoreManager {
 public:
@@ -27,10 +29,12 @@ public:
 
     void add_to_db();
     bool remove_from_db(int id_store);
-    void change_data(int index, const string desc_prod, double price, int quantity);
+    void change_data(int index, const string& desc_prod, double price, int quantity);
     vector<vector<string>> select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
-    int select_for_prov(const string &username);
+    void select_for_prov();
     int select_count_for_client(const string &sub_name, const string &disp);
+    int select_count_for_provider();
+    shared_ptr<Product> select_prod_to_modify(int id_prod);
 private:
 
     shared_ptr<Store> st;

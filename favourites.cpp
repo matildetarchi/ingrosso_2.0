@@ -31,7 +31,7 @@ void Favourites:: update_num_prod(int control) {
 }
 
 void Favourites::remove_one(int index) {
-   if(index<products.size()){
+    if(index<products.size()){
         auto iteretor_to_remove = products.begin()+index;
         products.erase(iteretor_to_remove);
         update_num_prod(cancel);

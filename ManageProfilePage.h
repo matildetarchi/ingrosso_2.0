@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
 #define INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
 
@@ -10,7 +10,6 @@
 #include "wx/string.h"
 #include <string>
 #include "HomePageProviders.h"
-#include "dbCategoriesManager.h"
 #include "Engine.h"
 #include "dbCityManager.h"
 #include "User.h"
@@ -50,10 +49,9 @@ private:
     Engine *engine;
     shared_ptr<User> user;
     shared_ptr<dbCityManager> table_city;
-    dbUserManager *db_user;
+    shared_ptr<dbUserManager> db_user;
 
 };
 
 
 #endif //INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
-*/

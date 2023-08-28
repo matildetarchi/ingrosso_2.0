@@ -13,7 +13,7 @@ dbStoreManager::dbStoreManager(shared_ptr<Database> d) {
 
 
 
-void dbStoreManager::change_data(int index, const string desc_prod, double price, int available_quantity){
+void dbStoreManager::change_data(int index, const string& desc_prod, double price, int available_quantity){
 
     //metodo per cambiare i valori di un prodotto del proprio magazzino
     //lancio la query
@@ -196,8 +196,8 @@ int dbStoreManager::select_count_for_client(const string &sub_name, const string
 
 }
 
-int dbStoreManager::select_for_prov(const string &username) {
-
+void dbStoreManager::select_for_prov() {
+    string username=user->get_username();
     st= make_shared<Store>(username);
     //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
@@ -235,6 +235,43 @@ int dbStoreManager::select_for_prov(const string &username) {
         }
 
     }
+
+}
+
+int dbStoreManager::select_count_for_provider(){
+
+    //seleziono l'id del fornitore che sta usando il programma
+    int id_prov = user->get_db_id();
+
+    //prendo la quantità di prodotti presenti
+    string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='"+ to_string(id_prov)+"'";
+    int count = db->execAndGet(query_select_count).getInt();
     return count;
+
+}
+
+shared_ptr<Product> dbStoreManager::select_prod_to_modify(int id_prod){
+    if(user->get_type()=="F") {
+        int id_prov = user->get_db_id();
+        string username= user->get_username();
+        string select_prod = "SELECT desc_prod, price_product, available_quantity, subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
+                                                         to_string(id_prov) +"' AND store.id = '" + to_string(id_prod) + "' ";
+        SQLite::Statement query_prod(*db,select_prod);
+        query_prod.exec();
+        string desc_prod = query_prod.getColumn(0).getText();
+        double price = query_prod.getColumn(1).getDouble();
+        int available_quantity = query_prod.getColumn(2);
+        string subcategory = query_prod.getColumn(3).getText();
+
+        prod->set_available_quantity(available_quantity);
+        prod->set_price(price);
+        prod->set_desc(desc_prod);
+        prod->set_subcategory(subcategory);
+        prod->set_username_prov(username);
+        prod->set_quantity(0);
+        prod->set_id_store(id_prod);
+        return prod;
+    }else
+        throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
 
 }

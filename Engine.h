@@ -52,6 +52,15 @@ public:
     shared_ptr<dbUserManager> get_db_user() {
         return db_user;
     }
+    shared_ptr<dbCityManager> get_db_city() {
+        return db_city;
+    }
+    shared_ptr<dbCategoriesManager> get_db_cate() {
+        return db_cate;
+    }
+    shared_ptr<dbSubcategoriesManager> get_db_subc() {
+        return db_subc;
+    }
 private:
     shared_ptr<User> user;
     shared_ptr<dbCartManager> db_cart;

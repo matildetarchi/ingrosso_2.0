@@ -1,7 +1,7 @@
 //
 // Created by dario on 16/11/2022.
 //
-/*
+
 #include "InitialPage.h"
 
 
@@ -44,4 +44,3 @@ void InitialPage::OnRegister(wxCommandEvent& event){
     RegistrationPage *MainWin3 = new RegistrationPage(e,_T("REGISTRATION"));
     MainWin3->Show(TRUE);
 }
-*/

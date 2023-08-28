@@ -158,7 +158,7 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
     }
     return true;
 }
-void dbUserManager::changeData(const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username) {
+void dbUserManager::change_data(const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username) {
 
     //funzione per cambiare i dati dell'utente
 
@@ -203,7 +203,7 @@ void dbUserManager::select_data(const string &username) {
         string psw = query.getColumn(4).getText();
         string bus_name = query.getColumn(5).getText();
         user->set_id_db(dbId);
-        user->set_city(select_city_name);
+        user->set_city(city_name);
         user->set_password(psw);
         user->set_email(email);
         user->set_address(address);
@@ -236,7 +236,7 @@ const string dbUserManager::select_username(const string &email) {
 
 }
 
-void dbUserManager::changePsw(const string &email, const string &new_psw) {
+void dbUserManager::change_psw(const string &email, const string &new_psw) {
 
     //metodo per permettera all'utente di cambiare la prorpria password
 
@@ -244,5 +244,49 @@ void dbUserManager::changePsw(const string &email, const string &new_psw) {
     string query = "UPDATE users SET password='"+new_psw+"' WHERE email='"+email+"'";
     db->exec(query);
 
+}
+
+vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const string &city) {
+    vector<shared_ptr<User>> user_list;
+    string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
+    int id_city= db->execAndGet(select_id_city);
+
+    string user_data = "SELECT  business_name, address, email, password, username, id FROM users WHERE type = '"+ type+"' AND id_city = '"+
+            to_string(id_city)+"' ";
+    SQLite::Statement query_user(*db,user_data);
+    user->set_type(type);
+    user->set_city(city);
+    while(query_user.executeStep()){
+
+        string b_n = query_user.getColumn(0).getText();
+        string address = query_user.getColumn(1).getText();
+        string email = query_user.getColumn(2).getText();
+        string psw = query_user.getColumn(3).getText();
+        string username = query_user.getColumn(4);
+        int id_us = query_user.getColumn(5);
+        user->set_id_db(id_us);
+        user->set_password(psw);
+        user->set_email(email);
+        user->set_address(address);
+        user->set_bus_name(b_n);
+        user->set_username(username);
+
+
+        user_list.push_back(user);
+
+    }
+
+    return user_list;
+}
+
+int dbUserManager::select_count_users(const string &type, const string &city) {
+    string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
+    int id_city= db->execAndGet(select_id_city);
+
+    string user_data = "SELECT  count(*)FROM users WHERE type = '"+ type+"' AND id_city = '"+
+                       to_string(id_city)+"' ";
+
+    int count = db->execAndGet(user_data);
+    return count ;
 }
 

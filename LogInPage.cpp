@@ -1,7 +1,7 @@
 //
 // Created by dario on 09/12/2022.
 //
-/*
+
 
 #include "LogInPage.h"
 
@@ -21,8 +21,8 @@ BEGIN_EVENT_TABLE (LogInPage, wxFrame)
 END_EVENT_TABLE() // The button is pressed
 
 
-LogInPage::LogInPage(Engine *e, const wxString &title)
-        :engine(e), wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 350)){
+LogInPage::LogInPage(Engine *e, const wxString &title) :engine(e),
+           wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 350)){
 
     wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
 
@@ -79,7 +79,7 @@ void LogInPage::Access(wxCommandEvent &event) {
         std::string p = m_passwordText->GetValue().ToStdString();
         bool result;
 
-        result = engine->doLogin(e,p);
+        result = engine->do_login(e,p);
         user = engine->get_user();
         if (!result) {
             wxLogMessage("Incorrect email or password");
@@ -105,7 +105,7 @@ void LogInPage::ComeBack(wxCommandEvent &event) {
     home->Show(TRUE);
 }
 
-/*void LogInPage::ForgotPassword(wxCommandEvent &event) {
+void LogInPage::ForgotPassword(wxCommandEvent &event) {
     Close();
     ForgotPasswordPage *forpsw = new ForgotPasswordPage(engine, _T("FORGOT PASSWORD"));
     forpsw->Show(TRUE);
@@ -145,4 +145,3 @@ void LogInPage::ViewPass(wxCommandEvent &event) {
 
 }
 
-*/

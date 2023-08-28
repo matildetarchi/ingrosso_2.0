@@ -2,7 +2,7 @@
 // Created by dario on 23/11/2022.
 //
 
-/*
+
 #include "RegistrationPage.h"
 
 const long RegistrationPage::IdButtonConfirm =::wxNewId();
@@ -31,16 +31,16 @@ RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
 
     fgs = new wxFlexGridSizer(20, 1, 12, -5);
 
-    dbCityManager *table;
+    shared_ptr<dbCityManager> db_table =e->get_db_city();
     std::vector<std::string> cities;
 
-    cities=table->select();
+    cities=db_table->select();
     wxVector<string> choices;
-    for (int k=0; k<table->number_of_city(); k++){
+    for (int k=0; k<db_table->number_of_city(); k++){
         choices.push_back(cities[k]);
     }
-    wxString myString[table->number_of_city()];
-    for (int i=0;i<table->number_of_city();i++) {
+    wxString myString[db_table->number_of_city()];
+    for (int i=0;i<db_table->number_of_city();i++) {
         myString[i].Append(choices[i]);
     }
     cities.clear();
@@ -48,7 +48,7 @@ RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
 
     choiceC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
-    choiceC->Append(table->number_of_city(),myString);
+    choiceC->Append(db_table->number_of_city(),myString);
 
     wxStaticText *type = new wxStaticText(this, -1, wxT("Type"));
     wxStaticText *business_name = new wxStaticText(this, -1, wxT("Business name"));
@@ -122,7 +122,7 @@ void RegistrationPage::IsClient(wxCommandEvent& event) {
 
 
 void RegistrationPage::Register(wxCommandEvent &event) {
-    if (t=="" || tcB_n->IsEmpty() || tcA->IsEmpty() || choiceC->GetSelection() == wxNOT_FOUND || tcU->IsEmpty() || tcEm->IsEmpty() || m_passwordText->IsEmpty() || m_passwordConf->IsEmpty()){
+    if (t.empty() || tcB_n->IsEmpty() || tcA->IsEmpty() || choiceC->GetSelection() == wxNOT_FOUND || tcU->IsEmpty() || tcEm->IsEmpty() || m_passwordText->IsEmpty() || m_passwordConf->IsEmpty()){
         wxMessageBox("Insert every data.", "Error", wxICON_ERROR);
     } else {
 
@@ -147,8 +147,8 @@ void RegistrationPage::Register(wxCommandEvent &event) {
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
 
 
-            shared_ptr<User> user = std::make_shared<User> (NULL, t, b_n, a, em, psw, u, city_name);
-            if (engine->doRegistration(user)) {
+            shared_ptr<User> user = std::make_shared<User> (t, b_n, a, em, psw, u, city_name);
+            if (engine->do_registration(user)) {
                 Close();
                 InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
                 home->Show(TRUE);
@@ -225,4 +225,3 @@ void RegistrationPage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
 }
- */

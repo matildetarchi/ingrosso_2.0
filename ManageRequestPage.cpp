@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 21/04/23.
 //
-/*
+
 #include "ManageRequestPage.h"
 
 
@@ -21,17 +21,17 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
 
 
     user= e->get_user();
-    db_order->set_user(user);
+    db_order = e->get_db_order();
 
-    wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
+   /* wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Code OrderProduct", "Customer Name", "Date OrderProduct"};
     choiceOrder=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceOrder->Append("Select");
     choiceOrder->Append(3,myString);
-    choiceOrder->Bind(wxEVT_CHOICE, &ManageRequestPage::OnChoice, this);
+    choiceOrder->Bind(wxEVT_CHOICE, &ManageRequestPage::OnChoice, this);*/
 
 
-    int row = db_order->select_for_provider();
+    int row = db_order->select_count_for_provider();
     grid = new wxGrid(this, wxID_ANY);
 
     grid->CreateGrid(row, 4);
@@ -44,7 +44,7 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     order= orders_list->get_orders();
 
     for (int i = 0; i < row; i++) {
-        Date *d= order[i]->get_date();
+        shared_ptr<Date> d= order[i]->get_date();
         std::string date = d->to_string("%d/%m/%Y");
         string status= order[i]->get_status();
         string us_client= order[i]->get_us_client();
@@ -81,7 +81,7 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(order_txt, 0, wxALL, 5);
+    //sizer->Add(order_txt, 0, wxALL, 5);
     sizer->Add(choiceOrder, 0, wxALL, 5);
     sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
     sizer->Add(Confirm, 1, wxEXPAND | wxALL, 5);
@@ -103,6 +103,7 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
         i++;
     }
     row = selectedRows[i];
+
     string status =order[row]->get_status();
     int id_order= order[row]->get_id();
 
@@ -162,6 +163,7 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
             i++;
         }
         row = selectedRows[i];
+
         int code_order= order[row]->get_id();
         string id_order(to_string(code_order));
         SingleOrderProviderPage *view = new SingleOrderProviderPage(engine, _T("ORDER LIST"), id_order);
@@ -170,7 +172,7 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
 
 }
 
-void ManageRequestPage::OnChoice(wxCommandEvent& event) {
+/*void ManageRequestPage::OnChoice(wxCommandEvent& event) {
     OrderProduct table;
     string order_choice=event.GetString().ToStdString();
     mat_order=table.select_for_provider(username,ctrl,order_choice);

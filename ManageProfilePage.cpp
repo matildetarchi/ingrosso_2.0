@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 31/03/23.
 //
-/*
+
 #include "ManageProfilePage.h"
 
 
@@ -17,8 +17,9 @@ END_EVENT_TABLE()
 
 ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 400)) {
+
     user = engine->get_user();
-    db_user->set_user(user);
+    db_user= engine->get_db_user();
     username = user->get_username();
     type= user->get_type();
 
@@ -93,8 +94,6 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
     } else if (m_passwordConf->IsEmpty()) {
         wxMessageBox("Insert Confirm Password", "Error", wxICON_ERROR);
     } else {
-        std::string b_n = user->get_bus_name();
-        int id_user= user->get_db_id();
         std::string new_address = tcA->GetValue().ToStdString();
         int id_c = choiceC->GetSelection();
         string id_city(to_string(id_c));
@@ -114,7 +113,7 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
         }
         if (control_digit>0 && new_pass.length()>=8 && control_upper>0 && new_pass==new_pass_conf) {
             Close();
-            db_user->changeData(new_address , id_city , new_pass , new_email , new_username);
+            db_user->change_data(new_address , id_city , new_pass , new_email , new_username);
 
         } else if(new_pass!=new_pass_conf) {
             wxLogMessage("The password and The confirm password must be equal");
@@ -175,4 +174,3 @@ void ManageProfilePage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +4;
     SetSize(newWidth, newHeight);
 }
-*/
