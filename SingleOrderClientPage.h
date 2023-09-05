@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 #define INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
 
@@ -15,6 +15,9 @@
 #include <iostream>
 #include <fstream>
 #include "Engine.h"
+#include "OrdersList.h"
+#include "Order.h"
+#include "Product.h"
 
 class SingleOrderClientPage: public wxDialog {
 public:
@@ -36,10 +39,11 @@ private:
     std::string u_prov;
     Engine* engine;
     shared_ptr<User> user;
-    dbOrdersManager *db_order;
+    shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;
-    std::vector<shared_ptr<Order>> order
+    std::vector<shared_ptr<Order>> orders;
+    shared_ptr<Order> order;
+    std::vector<shared_ptr<Product>> order_p;
 
 };
 #endif //INGROSSO_ONLINE_SINGLEORDERCLIENTPAGE_H
-*/

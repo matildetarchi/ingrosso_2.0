@@ -44,3 +44,16 @@ vector<string> dbSubcategoriesManager::select(const string &categories_name) {
 
     return subcategories;
 }
+
+int dbSubcategoriesManager::number_of_subcat(const std::string &categories_name) {
+
+    string select_id_categorie= "SELECT id FROM categories WHERE name = '"+categories_name+"' ";
+    int id_categorie= db->execAndGet(select_id_categorie);
+
+    string user_data = "SELECT  count(*) FROM subcategories WHERE  id_cat = '"+
+                       to_string(id_categorie)+"' ";
+
+    int count = db->execAndGet(user_data);
+    return count ;
+
+}

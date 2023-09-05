@@ -1,14 +1,11 @@
 //
 // Created by Andrea Lipperi on 20/04/23.
 //
-/*
-#include "CartPage.h"
-#include "GlobalVariables.h"
-#include "Cart.h"
-#include "OrdersList.h"
-#include "wx/grid.h"
 
-#include <wx/spinctrl.h>
+#include "CartPage.h"
+
+
+
 
 const long CartPage::IdButtonRemove =::wxNewId();
 const long CartPage::IdButtonOrder =::wxNewId();
@@ -22,26 +19,47 @@ BEGIN_EVENT_TABLE (CartPage, wxFrame)
                 EVT_BUTTON(IdButtonComeBack, CartPage::ComeBack)
 END_EVENT_TABLE()
 
-CartPage::CartPage(const wxString &title):
+CartPage::CartPage(Engine *e, const wxString &title): engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
-    username=GlobalVariables::GetInstance().GetValueUsername();
-    CartProduct cart;
+
+    user = engine->get_user();
+    username = user->get_username();
+    db_cart = engine->get_db_cart();
+    db_ord = engine->get_db_order();
+
+    db_cart->select();
+    int num_prod = db_cart->select_count_of_prod();
+    cart = user->get_cart();
+    prod_list = cart->get_products();
+
+
     grid = new wxGrid(this, wxID_ANY);
-    grid->CreateGrid(cart.select_count(username), 4);
+    grid->CreateGrid(num_prod, 4);
     grid->SetColLabelValue(0, "Name Product");
     grid->SetColLabelValue(1, "Price");
     grid->SetColLabelValue(2, "Provider Name");
-    grid->SetColLabelValue(3, "Quantity to OrderProduct");
-    mat_cart=cart.select(username);
-    for (int i = 0; i < cart.select_count(username); i++) {
+    grid->SetColLabelValue(3, "Quantity to Order");
 
-        for (int col = 0; col < 3; col++) {
-            grid->SetReadOnly(i, col, true);
-            grid->SetCellValue(i, col,  mat_cart[i][col]);
-        }
-        grid->SetColFormatNumber(3);
-        grid->SetCellValue(i, 3,  mat_cart[i][3]);
+
+
+       for (int i = 0; i < num_prod; i++) {
+
+           string name_prod = prod_list[i]->get_desc();
+           int p = prod_list[i]->get_price();
+           string price(to_string(p));
+           string name_prov = prod_list[i]->get_username_prov();
+           int q= prod_list[i]->get_quantity();
+           string quantity(to_string(q));
+
+           grid->SetReadOnly(i, 0, true);
+           grid->SetCellValue(i, 0, name_prod);
+           grid->SetReadOnly(i, 1, true);
+           grid->SetCellValue(i, 1, price);
+           grid->SetReadOnly(i, 2, true);
+           grid->SetCellValue(i, 2, name_prov);
+           grid->SetColFormatNumber(3);
+           grid->SetCellValue(i, 3,  quantity);
     }
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
@@ -68,7 +86,7 @@ CartPage::CartPage(const wxString &title):
 }
 
 void CartPage::IsRemove(wxCommandEvent &event) {
-    if (grid->GetSelectedRows() == 0) {
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a product", "Error", wxICON_ERROR);
     } else {
         wxArrayInt selectedRows = grid->GetSelectedRows();
@@ -76,37 +94,25 @@ void CartPage::IsRemove(wxCommandEvent &event) {
         for (size_t i = 0; i < selectedRows.GetCount(); i++) {
             row = selectedRows[i];
         }
-        CartProduct *table;
-        int id = stoi(mat_cart[row][5]);
-        table->remove_prod(id);
+
+        int id = prod_list[row]->get_id_store();
+        db_cart->remove_prod(id);
         grid->DeleteRows(row);
     }
 }
 
 void CartPage::IsOrder(wxCommandEvent &event) {
-    CartProduct *cart;
-    int row = cart->select_count(username);
-    std::time_t t = std::time(nullptr); // ottiene il numero di secondi trascorsi dal 1 gennaio 1970
-    std::tm* now = std::localtime(&t); // converte in una struttura tm con informazioni sulla data e sull'ora attuali
-    int year = now->tm_year + 1900; // anno attuale (tm_year contiene l'anno dal 1900)
-    int month = now->tm_mon + 1; // mese attuale (tm_mon contiene il mese da 0 a 11)
-    int day = now->tm_mday; // giorno attuale del mese
-    string data = ""+to_string(day)+"/"+ to_string(month)+"/"+ to_string(year)+"";
+
+    int row = db_cart->select_count_of_prod();
+
     int i=0;
-    int j=0;
-    int id_order[row];
-    while (j<row) {
-        OrderProduct ord;
-        id_order[j]=ord.select_id_last_order(mat_cart[j][2])+1;
-        j++;
-    }
     while (i<row){
-        string new_quantity=grid->GetCellValue(i,3).ToStdString();
-        OrderProduct *order = new OrderProduct(stoi(new_quantity), stoi(mat_cart[i][4]), "S", data, username, mat_cart[i][2], id_order[i]);
-        order->add();
+        int new_quantity= stoi(grid->GetCellValue(i,3).ToStdString());
+        prod_list[i]->set_quantity(new_quantity);
         i++;
     }
-    cart->remove_all(username);
+    db_ord->add_to_db();
+    db_cart->remove_all();
     grid->ClearGrid();
 }
 
@@ -118,4 +124,3 @@ void CartPage::ComeBack(wxCommandEvent &event) {
 void CartPage::IsHelp(wxCommandEvent &event) {
     wxMessageBox("You can change the quantity to order directly in the grid", "Help", wxICON_ERROR);
 }
- */

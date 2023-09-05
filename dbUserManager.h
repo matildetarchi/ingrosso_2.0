@@ -44,8 +44,8 @@ public:
 
 private:
     shared_ptr<User> user;
-
     shared_ptr<SQLite::Database> db;
+
 };
 
 

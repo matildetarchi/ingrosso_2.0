@@ -3,6 +3,8 @@
 //
 
 #include "Client.h"
+
+#include <utility>
 using namespace std;
 
 Client::Client() : User(){}
@@ -19,16 +21,16 @@ Client::~Client() {
 
 }
 
-void Client::do_order(shared_ptr<Order> o) {
+void Client::do_order(const shared_ptr<Order>& o) {
     order->add_order(o);
 }
 
 void Client::add_to_cart(shared_ptr<Product> p) {
-    cart->add_product(p);
+    cart->add_product(std::move(p));
 }
 
 void Client::add_to_fav(shared_ptr<Product> p) {
-    fav->add_product(p);
+    fav->add_product(std::move(p));
 }
 
 

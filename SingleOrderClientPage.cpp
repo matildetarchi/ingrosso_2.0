@@ -1,9 +1,9 @@
 //
 // Created by Andrea Lipperi on 04/05/23.
 //
-/*
+
 #include "SingleOrderClientPage.h"
-#include "OrdersList.h"
+
 
 const long SingleOrderClientPage::IdButtonBack =::wxNewId();
 
@@ -17,29 +17,44 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, c
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
-    user= e->get_user();
+    user= engine->get_user();
     username= user->get_username();
+    db_order = engine->get_db_order();
 
     db_order->select_for_client();
     orders_list= user->get_order_list();
-    order= orders_list->get_orders();
+    orders= orders_list->get_orders();
 
-    int row = order
-    grid = new wxGrid(this, wxID_ANY);
-    grid->CreateGrid(row, 3);
-    grid->SetColLabelValue(0, "Quantity Requested");
-    grid->SetColLabelValue(1, "Total Price");
-    grid->SetColLabelValue(2, "Product");
 
-    mat_order = orders.select_single_order_for_client(username, order, prov);
-
-    for (int i = 0; i < orders.select_count_single_order_for_client(username, order, prov); i++) {
-
-        for (int col = 0; col < 3; col++) {
-            grid->SetReadOnly(i, col, true);
-            grid->SetCellValue(i, col, mat_order[i][col]);
-        }
+    int i = 0;
+    while(orders[i]->get_id()==id_order){
+        i++;
     }
+    order = orders[i];
+    order_p = order->get_order_prod();
+    int row=order->get_num_prod();
+
+    grid = new wxGrid(this, wxID_ANY);
+    grid->CreateGrid(row+1, 3);
+    grid->SetColLabelValue(1, "Quantity Requested");
+    grid->SetColLabelValue(2, "Total Price");
+    grid->SetColLabelValue(0, "Product");
+
+    double t_p= order->get_total(order);
+    string total_price(to_string(t_p));
+
+    for ( i = 0; i < row; i++) {
+        int q= order_p[i]->get_quantity();
+        string quantity(to_string(q));
+        string desc= order_p[i]->get_desc();
+
+        grid->SetReadOnly(i, 0, true);
+        grid->SetCellValue(i, 0, desc);
+        grid->SetReadOnly(i, 1, true);
+        grid->SetCellValue(i, 1, quantity);
+
+    }
+    grid->SetCellValue(row+1,2, total_price );
     grid->AutoSize();
 
 
@@ -60,4 +75,3 @@ void SingleOrderClientPage::ComeBack(wxCommandEvent &event) {
     Close();
 
 }
-*/

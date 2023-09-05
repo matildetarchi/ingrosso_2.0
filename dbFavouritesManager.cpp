@@ -97,3 +97,13 @@ void dbFavouritesManager::select() {
     }
 
 }
+
+int dbFavouritesManager::select_count_of_prod(){
+    //seleziono l'id del cliente che sta usando il programma
+    int id_client = user->get_db_id();
+
+    //prendo la quantità di prodotti presenti
+    string query_select_count = "SELECT count(*) FROM favourites WHERE id_cust ='" + to_string(id_client) + "'";
+    int count = db->execAndGet(query_select_count).getInt();
+    return count;
+}

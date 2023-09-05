@@ -1,10 +1,11 @@
 //
 // Created by Andrea Lipperi on 20/04/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_CARTPAGE_H
 #define INGROSSO_ONLINE_CARTPAGE_H
 
+#include <wx/spinctrl.h>
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
 #include <string>
@@ -12,17 +13,17 @@
 #include <iostream>
 #include <fstream>
 #include "MyApp.h"
-#include "InitialPage.h"
-#include "Menu.h"
-#include "LogInPage.h"
-#include "HomePageProviders.h"
-#include "RegistrationPage.h"
-#include "HomePageClient.h"
 #include "wx/grid.h"
+#include "cart.h"
+#include "Engine.h"
+#include "dbCartManager.h"
+#include "Product.h"
+#include "dbOrdersManager.h"
+
 
 class CartPage : public wxFrame {
 public:
-    CartPage(const wxString &title);
+    CartPage(Engine *e, const wxString &title);
     static const long IdButtonRemove;
     static const long IdButtonOrder;
     static const long IdButtonHelp;
@@ -45,9 +46,15 @@ private:
     wxTextCtrl *name;
     wxTextCtrl *cost;
     std::string username;
-    std::vector<std::vector<std::string>> mat_cart;
+    Engine *engine;
     wxGrid *grid;
     wxSpinCtrl* spinCtrl;
+    std::shared_ptr<User> user;
+    std::shared_ptr<dbCartManager> db_cart;
+    std::vector<std::shared_ptr<Product>> prod_list;
+    std::shared_ptr<Cart> cart;
+    std::shared_ptr<dbOrdersManager> db_ord;
+
+
 };
 #endif //INGROSSO_ONLINE_CARTPAGE_H
-*/

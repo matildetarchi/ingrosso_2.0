@@ -36,13 +36,6 @@ public:
     };
 
 
-
-
-    /*virtual void set_order(shared_ptr<OrdersList> ord);
-    virtual void set_favourites(shared_ptr<Favourites> fav);
-    virtual void set_cart(shared_ptr<Cart> crt);
-    virtual void set_store(shared_ptr<Store> st);*/
-
     const string &get_type() {
         return type;
     }
@@ -102,6 +95,11 @@ public:
     void set_id_db(const int &id){
         db_id=id;
     }
+    void set_type(const string &t){
+        type=t;
+    }
+
+    void delete_objects_of_user();
 
 private:
     string type;

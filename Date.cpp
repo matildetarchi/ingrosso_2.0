@@ -20,6 +20,7 @@ using namespace std;
  }
 
  std::string Date::to_string(const std::string& format) const {
+
         std::stringstream ss;
         char buffer[80];
         strftime(buffer, sizeof(buffer), format.c_str(), &date_);
@@ -39,6 +40,17 @@ std::shared_ptr<Date> Date::string_to_date_converter(const std::string &date) {
     std::shared_ptr<Date> dateObject = make_shared<Date>(year, month, day);
 
     return dateObject;
+}
+
+std::shared_ptr<Date> Date::get_current_date() {
+
+    std::time_t t = std::time(nullptr); // ottiene il numero di secondi trascorsi dal 1 gennaio 1970
+    std::tm* now = std::localtime(&t); // converte in una struttura tm con informazioni sulla data e sull'ora attuali
+    int year = now->tm_year + 1900; // anno attuale (tm_year contiene l'anno dal 1900)
+    int month = now->tm_mon + 1; // mese attuale (tm_mon contiene il mese da 0 a 11)
+    int day = now->tm_mday; // giorno attuale del mese
+    std::shared_ptr<Date> date= make_shared<Date>(year, month, day);
+    return date;
 }
 
 

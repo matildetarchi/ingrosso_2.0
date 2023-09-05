@@ -1,7 +1,7 @@
 //
 // Created by dario on 09/12/2022.
 //
-/*
+
 #include "HomePageClient.h"
 
 
@@ -39,6 +39,7 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
 
     username=user->get_username();
     type= user->get_type();
+    db_user = engine->get_db_user();
 
 
     wxPanel *panelHome = new wxPanel(this, -1);
@@ -84,56 +85,51 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
     Centre();
 
 }
-/*
+
 void HomePageClient::OpenProductsList(wxCommandEvent &event) {
-    SelectionSubcategoryPage *List = new SelectionSubcategoryPage (_T("SELECT SUBCATEGORY"));
+    SelectionSubcategoryPage *List = new SelectionSubcategoryPage (eng, _T("SELECT SUBCATEGORY"));
     List->Show(TRUE);
 }
 
 void HomePageClient::OpenProfile(wxCommandEvent &event) {
-    ManageProfilePage *manage = new ManageProfilePage (_T("MANAGE YOUR PROFILE"));
+    ManageProfilePage *manage = new ManageProfilePage (eng, _T("MANAGE YOUR PROFILE"));
     manage->Show(TRUE);
 }
 
 void HomePageClient::OpenCart(wxCommandEvent &event) {
-    CartPage *cart=new CartPage(_T("CART"));
+    CartPage *cart=new CartPage(eng, _T("CART"));
     cart->Show(TRUE);
 }
 
 void HomePageClient::OpenFavoritesList(wxCommandEvent &event) {
-    FavouritesListPage *fav=new FavouritesListPage(_T("FAVOURITES LIST"));
+    FavouritesListPage *fav=new FavouritesListPage(eng, _T("FAVOURITES LIST"));
     fav->Show(TRUE);
 }
 
 void HomePageClient::OpenOrdersList(wxCommandEvent &event) {
-    ChooseStatusPage *ord= new ChooseStatusPage(_T("ORDERS"));
+    ChooseStatusPage *ord= new ChooseStatusPage(eng, _T("ORDERS"));
     ord->Show(TRUE);
 }
 
 void HomePageClient::ComeBack(wxCommandEvent &event) {
-    GlobalVariables::GetInstance().SetValueUsername("");
-    GlobalVariables::GetInstance().SetValueType("");
     Close();
-    InitialPage *home = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
+    InitialPage *home = new InitialPage(eng, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
     home->Show(TRUE);
 }
 
 void HomePageClient::RemoveUser(wxCommandEvent &event) {
-    User user;
-    if (!user.remove(username, type)){
+
+    if (!db_user->remove_from_db(username, type)){
         wxMessageBox("You can't delete your account because you have orders not accepted/denied", "Error", wxICON_ERROR);
     } else {
         wxMessageBox("Account removed, you'll be sent to registracion page", "Error", wxICON_ERROR);
-        GlobalVariables::GetInstance().SetValueUsername("");
-        GlobalVariables::GetInstance().SetValueType("");
         Close();
-        InitialPage *home = new InitialPage(_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
+        InitialPage *home = new InitialPage(eng, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
         home->Show(TRUE);
     }
 }
 
 void HomePageClient::ViewProviders(wxCommandEvent &event) {
-    SelectionCityPage *sel_c = new SelectionCityPage(_T("SELECT CITY"));
+    SelectionCityPage *sel_c = new SelectionCityPage(eng, _T("SELECT CITY"));
     sel_c->Show(TRUE);
 }
-*/

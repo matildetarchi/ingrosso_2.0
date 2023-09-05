@@ -9,6 +9,7 @@
 
 dbUserManager::dbUserManager(shared_ptr<Database> d) {
     db = d->get_db();
+
 }
 
 bool dbUserManager::access_reg(const string &email, const string &psw, int control) {
@@ -58,6 +59,8 @@ void dbUserManager::add_to_db() {
     int id_user=db->execAndGet(i_u);
     user->set_id_db(id_user);
 }
+
+
 bool dbUserManager::remove_from_db(const string &username, const string &type) {
     //funzione per rimuovere l'utente
 
@@ -97,19 +100,21 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
 
         //se il fornitore non è presente da nessuna parte
         //elimino i dati degli ordini di quell'utente
-        //TODO id_store
-        //gli id store saranno molteplici per il fornitore che vuole eliminarsi.
-        //percui dobbiamo fare l'eliminazione all'interno di un ciclo
-        string query_sel_store = "SELECT id FROM store WHERE id_prov = '"+to_string(id)+"'";
-        int id_store = db->execAndGet(query_sel_store).getInt();
 
-        string query_del_ord_details="DELETE FROM orders_details WHERE id_product = '"+to_string(id_store)+"'";
-        db->exec(query_del_ord_details);
+        string sel_store = "SELECT id FROM store WHERE id_prov = '"+to_string(id)+"'";
+        SQLite::Statement query_id_store(*db,sel_store);
 
-        string query_del_ord="DELETE FROM orders WHERE id_product = '"+to_string(id_store)+"'";
-        db->exec(query_del_ord_details);
+        while(query_id_store.executeStep()) {
 
-        //TODO riguarda fino a qua
+            int id_store = query_id_store.getColumn(0);
+            string query_del_ord_details =
+                    "DELETE FROM orders_details WHERE id_product = '" + to_string(id_store) + "'";
+            db->exec(query_del_ord_details);
+
+            string query_del_ord = "DELETE FROM orders WHERE id_product = '" + to_string(id_store) + "'";
+            db->exec(query_del_ord_details);
+        }
+
 
         //se il fornitore non è presente da nessuna
         //parte elimino tutti i suoi prodotti dal magazzino
@@ -135,7 +140,6 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
         }
 
         //se non li ha
-
         //elimino i dati del carrello di quel cliente
         string query_del_cart = "DELETE FROM cart WHERE id_user = '"+to_string(id)+"'";
         db->exec(query_del_cart);
@@ -144,10 +148,13 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
         string query_del_fav = "DELETE FROM favourites WHERE id_cust = '"+to_string(id)+"'";
         db->exec(query_del_fav);
 
+
         //elimino i dati degli ordini di quell'utente
-        string query_del_ord_details = "DELETE FROM orders WHERE id_client = '"+to_string(id)+"'";
+        string query_del_ord_details = "DELETE FROM orders , orders_details WHERE  id_client = '"+to_string(id)+"' AND  orders.id = id_order";
         db->exec(query_del_ord_details);
-        //TODO eliminare anche da orders_details con ciclo sulla select
+        string query_del_ord = "DELETE FROM orders WHERE id_client = '"+to_string(id)+"'";
+        db->exec(query_del_ord);
+
 
         //infine elimino l'utente stesso
         string query_del_user = "DELETE FROM users WHERE id = '"+to_string(id)+"'";
@@ -156,6 +163,8 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
         return true;
 
     }
+    user->delete_objects_of_user();
+
     return true;
 }
 void dbUserManager::change_data(const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username) {
@@ -209,6 +218,7 @@ void dbUserManager::select_data(const string &username) {
         user->set_address(address);
         user->set_bus_name(bus_name);
         user->set_username(username);
+        user->set_type(type);
     }
     else {
         std::cout << "Nessun risultato trovato." << std::endl;
@@ -270,7 +280,7 @@ vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const s
         user->set_address(address);
         user->set_bus_name(b_n);
         user->set_username(username);
-
+        user->set_type(type);
 
         user_list.push_back(user);
 
@@ -283,7 +293,7 @@ int dbUserManager::select_count_users(const string &type, const string &city) {
     string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
     int id_city= db->execAndGet(select_id_city);
 
-    string user_data = "SELECT  count(*)FROM users WHERE type = '"+ type+"' AND id_city = '"+
+    string user_data = "SELECT  count(*) FROM users WHERE type = '"+ type+"' AND id_city = '"+
                        to_string(id_city)+"' ";
 
     int count = db->execAndGet(user_data);

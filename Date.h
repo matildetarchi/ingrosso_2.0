@@ -31,6 +31,8 @@ public:
 
     static std::shared_ptr<Date> string_to_date_converter(const std::string &date);
 
+    static std::shared_ptr<Date> get_current_date();
+
 private:
     std::tm date_;
 };

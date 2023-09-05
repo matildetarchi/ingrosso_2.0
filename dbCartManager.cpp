@@ -51,7 +51,7 @@ void dbCartManager::remove_all() {
     string query = "DELETE FROM cart WHERE id_user = '"+ to_string(id)+"'";
     db->exec(query);
 
-    //cart->remove_all();
+    cart->remove_all();
 }
 
 void dbCartManager::remove_prod(int id_s) {
@@ -105,6 +105,16 @@ void dbCartManager::select() {
         cart->add_product(std::move(prod));
     }
 
+}
+
+int dbCartManager::select_count_of_prod(){
+    //seleziono l'id del cliente che sta usando il programma
+    int id_client = user->get_db_id();
+
+    //prendo la quantità di prodotti presenti
+    string query_select_count = "SELECT count(*) FROM cart WHERE id_user ='" + to_string(id_client) + "'";
+    int count = db->execAndGet(query_select_count).getInt();
+    return count;
 }
 
 

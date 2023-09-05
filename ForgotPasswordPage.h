@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 06/05/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_FORGOTPASSWORDPAGE_H
 #define INGROSSO_ONLINE_FORGOTPASSWORDPAGE_H
 
@@ -15,10 +15,12 @@
 #include "User.h"
 #include "HomePageClient.h"
 #include "Engine.h"
+#include "dbUserManager.h"
+#include <memory>
 
 class ForgotPasswordPage : public wxFrame{
 public:
-    ForgotPasswordPage(Engine *engine, const wxString& title);
+    ForgotPasswordPage(Engine *e, const wxString& title);
     static const long IdButtonConfirm;
     static const long IdButtonChange;
     static const long IdButtonBack;
@@ -49,9 +51,11 @@ private:
     std::string txt_button;
     wxStaticText *txt_message;
     wxTextCtrl *tc1;
+    Engine *engine;
+    shared_ptr<dbUserManager> db_user;
+
 };
 
 
 
 #endif //INGROSSO_ONLINE_FORGOTPASSWORDPAGE_H
-*/

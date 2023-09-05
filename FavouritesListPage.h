@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 03/04/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_FAVOURITESLISTPAGE_H
 #define INGROSSO_ONLINE_FAVOURITESLISTPAGE_H
 
@@ -11,46 +11,51 @@
 #include "User.h"
 #include <iostream>
 #include <fstream>
-#include "MyApp.h"
-#include "InitialPage.h"
-#include "Menu.h"
-#include "LogInPage.h"
-#include "HomePageProviders.h"
-#include "RegistrationPage.h"
-#include "HomePageClient.h"
 #include "wx/grid.h"
+#include "favourites.h"
+#include <wx/spinctrl.h>
+#include "Engine.h"
+#include <memory>
+#include "dbFavouritesManager.h"
+#include "Product.h"
+#include "dbCartManager.h"
+#include "cart.h"
 
 
 
 
 class FavouritesListPage : public wxFrame {
 public:
-    FavouritesListPage(const wxString &title);
+    FavouritesListPage(Engine *e, const wxString &title);
     static const long IdButtonRemove;
-    static const long IdButtonOrder;
+    static const long IdButtonCart;
     static const long IdButtonComeBack;
 DECLARE_EVENT_TABLE()
 
 
 private:
     void IsRemove(wxCommandEvent &event);
-    void IsOrder(wxCommandEvent &event);
+    void IsCart(wxCommandEvent &event);
     void ComeBack(wxCommandEvent& event);
     wxButton *Remove;
     wxBoxSizer *sizer;
-    wxButton *Order;
+    wxButton *Cart_button;
     wxButton *Back;
     wxTextCtrl *sub;
     wxTextCtrl *cat;
     wxTextCtrl *name;
     wxTextCtrl *cost;
     std::string username;
-    std::vector<std::vector<std::string>> mat_fav;
     wxGrid *grid;
     wxSpinCtrl* spinCtrl;
-
+    Engine *engine;
+    std::shared_ptr<User> user;
+    std::shared_ptr<dbFavouritesManager> db_fav;
+    std::shared_ptr<Favourites> fav;
+    std::vector<std::shared_ptr<Product>> prod_list;
+    std::shared_ptr<dbCartManager> db_cart;
+    std::shared_ptr<Cart> cart;
 };
 
 
 #endif //INGROSSO_ONLINE_FAVOURITESLISTPAGE_H
-*/
