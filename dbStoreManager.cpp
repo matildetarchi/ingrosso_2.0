@@ -107,23 +107,21 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
 
 }
 
-vector<vector<string>> dbStoreManager::select_for_client(const string &sub_name, const string &disp, const string &order) {
+void dbStoreManager::select_for_client(const string &sub_name, const string &disp, const string &order) {
 
     //metodo per seleziona tutti i prodotti dai vari magazzini
     //appartenenti a una determinata sottocategoria
 
     //prendo l'id della sottocategoria della quale si vuole vedere i prodotti
-    string query_sub = "SELECT id FROM subcategories WHERE name ='"+sub_name+"'";
+    string query_sub = "SELECT id FROM subcategories WHERE name ='" + sub_name + "'";
     int i = db->execAndGet(query_sub).getInt();
 
-    //creo la matrice che conterrà i valori
-    vector<vector<string>> mat;
 
     //controllo il tipo di disponibilità
     //della quale l'utente vuole vedere i prodotti
     //solo disponibili o tutti quanti
     int n_dispo;
-    if (disp=="Only Available") {
+    if (disp == "Only Available") {
         n_dispo = 1;
     } else {
         n_dispo = 0;
@@ -132,146 +130,152 @@ vector<vector<string>> dbStoreManager::select_for_client(const string &sub_name,
     //controllo i tipo di ordinamento che l'utente
     //vuole usare per vedere i prodotti
     string str_order;
-    if (order=="Name Product") {
-        str_order="desc_prod;";
-    } else if (order=="Price") {
-        str_order="price_product;";
-    } else if (order=="Provider Name"){
-        str_order="username;";
+    if (order == "Name Product") {
+        str_order = "desc_prod;";
+    } else if (order == "Price") {
+        str_order = "price_product;";
+    } else if (order == "Provider Name") {
+        str_order = "username;";
     } else {
-        str_order=order;
+        str_order = order;
     }
 
     //lancio la query
     //popolo la matrice
     //restituisco la matrice
-    string select = "SELECT desc_prod, price_product, username, CASE WHEN (available_quantity>0) THEN 'Available ('||available_quantity||')' "
-                    "ELSE 'Not Available' END,store.id FROM users,store WHERE id_prov=users.id AND id_sub='"+to_string(i)+"' AND "
-                                                                                                                          "available_quantity>= '"+ to_string(n_dispo)+"' ORDER BY '"+str_order+"';";
+    string select =
+            "SELECT desc_prod, price_product, username, store.id, available_quantity CASE WHEN (available_quantity>0) THEN 'Available ('||available_quantity||')' "
+            "ELSE 'Not Available' END,store.id FROM users,store WHERE id_prov=users.id AND id_sub='" + to_string(i) +
+            "' AND "
+            "available_quantity>= '" + to_string(n_dispo) + "' ORDER BY '" + str_order + "';";
 
-    SQLite::Statement query(*db,select);
-    vector<string> vector;
-    string data;
-    int m=0;
-    int n=0;
-    while (query.executeStep()){
-        while (n<5) {
-            data=query.getColumn(n).getText();
-            vector.push_back(data);
-            n++;
+    SQLite::Statement query(*db, select);
+
+    while (query.executeStep()) {
+        string desc_prod = query.getColumn(0).getText();
+        double price = query.getColumn(1).getDouble();
+        string username_prov = query.getColumn(2).getText();
+        int id_store = query.getColumn(3);
+        int a_quantity = query.getColumn(4);
+
+        prod->set_available_quantity(a_quantity);
+        prod->set_price(price);
+        prod->set_desc(desc_prod);
+        prod->set_subcategory(sub_name);
+        prod->set_username_prov(username_prov);
+        prod->set_quantity(0);
+        prod->set_id_store(id_store);
+        st->add_to_store(prod);
+    }
+}
+
+    int dbStoreManager::select_count_for_client(const string &sub_name, const string &disp) {
+
+        //metodo per sapere quanti prodotti ci sono
+        //di una determinata sottocategoria e disponibilità
+
+        //prendo l'id della sottocategoria della quale si vuole vedere i prodotti
+        string query_sub = "SELECT id FROM subcategories WHERE name='" + sub_name + "'";
+        int i = db->execAndGet(query_sub).getInt();
+
+        //controllo il tipo di disponibilità
+        //della quale l'utente vuole vedere i prodotti
+        //solo disponibili o tutti quanti
+        int n_dispo;
+        if (disp == "Only Available") {
+            n_dispo = 1;
+        } else {
+            n_dispo = 0;
         }
-        mat.push_back(vector);
-        vector.clear();
-        n=0;
-        m++;
-    }
-    return mat;
 
-}
+        //lancio la query e restituisco il valore
+        string query_select_count =
+                "SELECT count(*) FROM store WHERE id_sub = '" + to_string(i) + "' AND available_quantity>= '" +
+                to_string(n_dispo) + "'";
+        int count = db->execAndGet(query_select_count).getInt();
+        return count;
 
-
-int dbStoreManager::select_count_for_client(const string &sub_name, const string &disp) {
-
-    //metodo per sapere quanti prodotti ci sono
-    //di una determinata sottocategoria e disponibilità
-
-    //prendo l'id della sottocategoria della quale si vuole vedere i prodotti
-    string query_sub = "SELECT id FROM subcategories WHERE name='"+sub_name+"'";
-    int i = db->execAndGet(query_sub).getInt();
-
-    //controllo il tipo di disponibilità
-    //della quale l'utente vuole vedere i prodotti
-    //solo disponibili o tutti quanti
-    int n_dispo;
-    if (disp=="Only Available") {
-        n_dispo = 1;
-    } else {
-        n_dispo = 0;
     }
 
-    //lancio la query e restituisco il valore
-    string query_select_count = "SELECT count(*) FROM store WHERE id_sub = '"+ to_string(i)+"' AND available_quantity>= '"+to_string(n_dispo)+"'";
-    int count = db->execAndGet(query_select_count).getInt();
-    return count;
+    void dbStoreManager::select_for_prov() {
+        string username = user->get_username();
+        st = make_shared<Store>(username);
+        //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
-}
+        //seleziono l'id del fornitore che sta usando il programma
+        int id_prov = user->get_db_id();
 
-void dbStoreManager::select_for_prov() {
-    string username=user->get_username();
-    st= make_shared<Store>(username);
-    //metodo che prende i valori dei prodotti nel magazzino di un fornitore
-
-    //seleziono l'id del fornitore che sta usando il programma
-    int id_prov = user->get_db_id();
-
-    //prendo la quantità di prodotti presenti
-    string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='"+ to_string(id_prov)+"'";
-    int count = db->execAndGet(query_select_count).getInt();
+        //prendo la quantità di prodotti presenti
+        string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
+        int count = db->execAndGet(query_select_count).getInt();
 
 
-    //lancio la query
-    //popolo la matrice
-    //restituisco la matrice
-    if(count > 0) {
-        string select = "SELECT desc_prod, price_product, available_quantity, subcategories.name, store.id FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
-                        to_string(id_prov) + "';";
-        SQLite::Statement query(*db,select);
+        //lancio la query
+        //popolo la matrice
+        //restituisco la matrice
+        if (count > 0) {
+            string select =
+                    "SELECT desc_prod, price_product, available_quantity, subcategories.name, store.id FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
+                    to_string(id_prov) + "';";
+            SQLite::Statement query(*db, select);
 
 
-        while (query.executeStep()) {
-            string desc_prod = query.getColumn(0).getText();
-            double price = query.getColumn(1).getDouble();
-            int quantity = query.getColumn(2);
-            string subcategory = query.getColumn(3).getText();
-            int id_store = query.getColumn(4);
-            prod->set_available_quantity(quantity);
+            while (query.executeStep()) {
+                string desc_prod = query.getColumn(0).getText();
+                double price = query.getColumn(1).getDouble();
+                int quantity = query.getColumn(2);
+                string subcategory = query.getColumn(3).getText();
+                int id_store = query.getColumn(4);
+                prod->set_available_quantity(quantity);
+                prod->set_price(price);
+                prod->set_desc(desc_prod);
+                prod->set_subcategory(subcategory);
+                prod->set_username_prov(username);
+                prod->set_quantity(0);
+                prod->set_id_store(id_store);
+                st->add_to_store(prod);
+            }
+
+        }
+
+    }
+
+    int dbStoreManager::select_count_for_provider() {
+
+        //seleziono l'id del fornitore che sta usando il programma
+        int id_prov = user->get_db_id();
+
+        //prendo la quantità di prodotti presenti
+        string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
+        int count = db->execAndGet(query_select_count).getInt();
+        return count;
+
+    }
+
+    shared_ptr<Product> dbStoreManager::select_prod_to_modify(int id_prod) {
+        if (user->get_type() == "F") {
+            int id_prov = user->get_db_id();
+            string username = user->get_username();
+            string select_prod =
+                    "SELECT desc_prod, price_product, available_quantity, subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
+                    to_string(id_prov) + "' AND store.id = '" + to_string(id_prod) + "' ";
+            SQLite::Statement query_prod(*db, select_prod);
+            query_prod.exec();
+            string desc_prod = query_prod.getColumn(0).getText();
+            double price = query_prod.getColumn(1).getDouble();
+            int available_quantity = query_prod.getColumn(2);
+            string subcategory = query_prod.getColumn(3).getText();
+
+            prod->set_available_quantity(available_quantity);
             prod->set_price(price);
             prod->set_desc(desc_prod);
             prod->set_subcategory(subcategory);
             prod->set_username_prov(username);
             prod->set_quantity(0);
-            prod->set_id_store(id_store);
-            st->add_to_store(prod);
-        }
+            prod->set_id_store(id_prod);
+            return prod;
+        } else
+            throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
 
     }
-
-}
-
-int dbStoreManager::select_count_for_provider(){
-
-    //seleziono l'id del fornitore che sta usando il programma
-    int id_prov = user->get_db_id();
-
-    //prendo la quantità di prodotti presenti
-    string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='"+ to_string(id_prov)+"'";
-    int count = db->execAndGet(query_select_count).getInt();
-    return count;
-
-}
-
-shared_ptr<Product> dbStoreManager::select_prod_to_modify(int id_prod){
-    if(user->get_type()=="F") {
-        int id_prov = user->get_db_id();
-        string username= user->get_username();
-        string select_prod = "SELECT desc_prod, price_product, available_quantity, subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
-                                                         to_string(id_prov) +"' AND store.id = '" + to_string(id_prod) + "' ";
-        SQLite::Statement query_prod(*db,select_prod);
-        query_prod.exec();
-        string desc_prod = query_prod.getColumn(0).getText();
-        double price = query_prod.getColumn(1).getDouble();
-        int available_quantity = query_prod.getColumn(2);
-        string subcategory = query_prod.getColumn(3).getText();
-
-        prod->set_available_quantity(available_quantity);
-        prod->set_price(price);
-        prod->set_desc(desc_prod);
-        prod->set_subcategory(subcategory);
-        prod->set_username_prov(username);
-        prod->set_quantity(0);
-        prod->set_id_store(id_prod);
-        return prod;
-    }else
-        throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
-
 }

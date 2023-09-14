@@ -41,7 +41,7 @@ public:
     }*/
 
 
-    void do_order(shared_ptr<Order> o);
+    void do_order(const shared_ptr<Order>& o);
     void add_to_cart(shared_ptr<Product> p);
     void add_to_fav(shared_ptr<Product> p);
 

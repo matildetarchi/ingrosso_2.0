@@ -1,22 +1,23 @@
 //
 // Created by dario on 09/12/2022.
 //
-/*
 
-#include <wx/wx.h>
 
 #ifndef INGROSSO_ONLINE_CLIENTFRAME_H
 #define INGROSSO_ONLINE_CLIENTFRAME_H
+
+
+#include <wx/wx.h>
 #include "InitialPage.h"
 #include "Engine.h"
 #include "SelectionSubcategoryPage.h"
-#include "InitialPage.h"
 #include "ChooseStatusPage.h"
 #include "SelectionCityPage.h"
 #include "ManageProfilePage.h"
 #include "FavouritesListPage.h"
 #include "CartPage.h"
 #include "User.h"
+#include "dbUserManager.h"
 
 class HomePageClient: public wxFrame {
 public:
@@ -54,6 +55,7 @@ private:
     std::string type;
     shared_ptr<User> user;
     Engine *eng;
+    std::shared_ptr<dbUserManager> db_user;
 
 
 
@@ -62,4 +64,4 @@ private:
 
 #endif //INGROSSO_ONLINE_CLIENTFRAME_H
 
-*/
+

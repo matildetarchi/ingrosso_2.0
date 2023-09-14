@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 06/05/23.
 //
-/*
+
 #include "ForgotPasswordPage.h"
 
 
@@ -20,8 +20,10 @@ BEGIN_EVENT_TABLE (ForgotPasswordPage, wxFrame)
 END_EVENT_TABLE() // The button is pressed
 
 
-ForgotPasswordPage::ForgotPasswordPage(Engine *engine, const wxString &title)
-        : wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
+ForgotPasswordPage::ForgotPasswordPage(Engine *e, const wxString &title)
+        :engine(e), wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
+
+        db_user = engine->get_db_user();
 
         wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
 
@@ -61,7 +63,7 @@ void ForgotPasswordPage::Insert(wxCommandEvent &event){
         std::string e = tc1->GetValue().ToStdString();
         int result;
 
-        result = engine->access_reg(e, "", 1);
+        result = db_user->access_reg(e, "", 1);
         if (!result) {
             wxLogMessage("There is no account with this email");
         } else {
@@ -111,11 +113,11 @@ void ForgotPasswordPage::Change(wxCommandEvent &event) {
             }
         }
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
-            User user;
-            user.changePsw(tc1->GetValue().ToStdString(), psw);
+
+            db_user->change_psw(tc1->GetValue().ToStdString(), psw);
             Close();
             wxLogMessage("Password Changed");
-            LogInPage *MainWin2 = new LogInPage(_T("ACCESS"));
+            LogInPage *MainWin2 = new LogInPage(engine, _T("ACCESS"));
             MainWin2->Show(TRUE);
         } else {
             wxLogMessage("The password should contain a number, a capital letter and a lenght >= of 8 characters");
@@ -125,7 +127,7 @@ void ForgotPasswordPage::Change(wxCommandEvent &event) {
 
 void ForgotPasswordPage::ComeBack(wxCommandEvent &event) {
     Close();
-    LogInPage *MainWin2 = new LogInPage(_T("ACCESS"));
+    LogInPage *MainWin2 = new LogInPage(engine,_T("ACCESS"));
     MainWin2->Show(TRUE);
 }
 void ForgotPasswordPage::ViewPass(wxCommandEvent &event) {
@@ -187,4 +189,3 @@ void ForgotPasswordPage::OnTextChange(wxCommandEvent &event) {
     int newHeight = currentSize.GetHeight() +1;
     SetSize(newWidth, newHeight);
 }
-*/

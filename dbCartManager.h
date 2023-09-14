@@ -34,6 +34,7 @@ public:
     void remove_all();
     void remove_prod(int id);
     void select();
+    int select_count_of_prod();
 
 private:
 

@@ -30,7 +30,7 @@ public:
     void add_to_db();
     bool remove_from_db(int id_store);
     void change_data(int index, const string& desc_prod, double price, int quantity);
-    vector<vector<string>> select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
+    void select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
     void select_for_prov();
     int select_count_for_client(const string &sub_name, const string &disp);
     int select_count_for_provider();

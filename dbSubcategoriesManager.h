@@ -20,7 +20,7 @@ public:
     explicit dbSubcategoriesManager(shared_ptr<Database> d);
 
     vector<string> select(const string &categories_name);
-
+    int number_of_subcat(const string &categories_name);
 private:
     shared_ptr<SQLite::Database> db;
 };

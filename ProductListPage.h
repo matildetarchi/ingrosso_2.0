@@ -1,7 +1,7 @@
 //
 // Created by Andrea Lipperi on 22/03/23.
 //
-/*
+
 #ifndef INGROSSO_ONLINE_PRODUCTLISTPAGE_H
 #define INGROSSO_ONLINE_PRODUCTLISTPAGE_H
 #include "wx/wxhtml.h"
@@ -10,21 +10,25 @@
 #include "User.h"
 #include <iostream>
 #include <fstream>
-#include "MyApp.h"
-#include "InitialPage.h"
-#include "SelectionSubcategoryPage.h"
-#include "LogInPage.h"
-#include "HomePageProviders.h"
-#include "RegistrationPage.h"
-#include "HomePageClient.h"
 #include "wx/grid.h"
+#include "Engine.h"
+#include "favourites.h"
+#include "cart.h"
+#include <wx/app.h>
+#include <memory>
+#include <wx/spinctrl.h>
+#include "dbStoreManager.h"
+#include "store.h"
+#include "Product.h"
+#include "dbFavouritesManager.h"
+#include "dbCartManager.h"
 
 
 
 
 class ProductListPage : public wxFrame {
 public:
-    ProductListPage(const wxString &title, const std::string &sub, const std::string &disp);
+    ProductListPage(Engine *e, const wxString &title, std::string sub, std::string disp);
     static const long IdButtonFav;
     static const long IdButtonCart;
     static const long IdButtonInsert;
@@ -51,8 +55,15 @@ private:
     std::string username;
     wxChoice* choiceOrder;
     wxChoice* choiceQuantity;
-    std::vector<std::vector<std::string>> mat_store;
+    Engine *engine;
+    std::shared_ptr<User> user;
+    std::shared_ptr<dbStoreManager> db_store;
+    std::vector<shared_ptr<Product>> prod_list;
+    std::shared_ptr<Store> store;
+    std::shared_ptr<Favourites> fav;
+    std::shared_ptr<dbFavouritesManager> db_fav;
+    std::shared_ptr<Cart> cart;
+    std::shared_ptr<dbCartManager> db_cart;
 };
 
 #endif //INGROSSO_ONLINE_PRODUCTLISTPAGE_H
-*/

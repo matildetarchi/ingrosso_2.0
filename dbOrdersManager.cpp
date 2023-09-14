@@ -12,12 +12,11 @@ dbOrdersManager::dbOrdersManager(shared_ptr<Database> d) {
 
 void dbOrdersManager::add_to_db() {
 
-   // cast per convertire l'oggetto data in una stringa
 
-    time_t t = std::time(nullptr);
-    tm* now = std::localtime(&t);
-    Date date(now->tm_mday, (now->tm_mon + 1), (now->tm_year + 1900));
-    std::string dataString = date.to_string("%d/%m/%Y");
+
+
+    std::shared_ptr<Date> date = date->get_current_date();
+    std::string dataString = date->to_string("%d/%m/%Y");
 
     int id_client = user->get_db_id();
     string username = user->get_username();
@@ -34,6 +33,7 @@ void dbOrdersManager::add_to_db() {
 
     shared_ptr<Cart> cart = user->get_cart();
     vector<shared_ptr<Product>> products = cart->get_products();
+
     for( const shared_ptr<Product>& prod: products) {
         string query_insert_ord_detail = "INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(prod->get_quantity())+"', '"+ to_string(id_last_ord) +"', '"+
                                        to_string(prod->get_id_store())+"');";

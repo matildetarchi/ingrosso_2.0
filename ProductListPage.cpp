@@ -1,15 +1,11 @@
 //
 // Created by Andrea Lipperi on 22/03/23.
 //
-/*
+
 #include "ProductListPage.h"
-#include "SelectionSubcategoryPage.h"
-#include "GlobalVariables.h"
-#include "favourite.h"
-#include "Cart.h"
-#include <wx/grid.h>
-#include <wx/app.h>
-#include <wx/spinctrl.h>
+
+#include <utility>
+
 
 const long ProductListPage::IdButtonFav =::wxNewId();
 const long ProductListPage::IdButtonCart =::wxNewId();
@@ -21,11 +17,18 @@ BEGIN_EVENT_TABLE (ProductListPage, wxFrame)
                 EVT_BUTTON(IdButtonInsert, ProductListPage::IsInsert)
 END_EVENT_TABLE()
 
-ProductListPage::ProductListPage(const wxString &title, const std::string &sub, const std::string &disp):
+ProductListPage::ProductListPage(Engine *e, const wxString &title, std::string sub, std::string disp): engine(e), sub_name(std::move(sub)), disponibility(std::move(disp)),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
-    sub_name=sub;
-    disponibility=disp;
-    username=GlobalVariables::GetInstance().GetValueUsername();
+
+    user = engine->get_user();
+    username = user->get_username();
+
+    db_store = engine->get_db_store();
+    db_fav = engine->get_db_fav();
+    db_cart = engine->get_db_cart();
+    fav = make_shared<Favourites>(username);
+    cart = make_shared<Cart>(username);
+
 
     wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Name Product", "Price", "Provider Name"};
@@ -34,27 +37,6 @@ ProductListPage::ProductListPage(const wxString &title, const std::string &sub, 
     choiceOrder->Append(3,myString);
     choiceOrder->Bind(wxEVT_CHOICE, &ProductListPage::OnChoice, this);
 
-
-    StoreProduct store;
-    int row = store.select_count_for_client(sub, disponibility);
-
-    grid = new wxGrid(this, wxID_ANY);
-    grid->CreateGrid(row, 4);
-    grid->SetColLabelValue(0, "Name Product");
-    grid->SetColLabelValue(1, "Price");
-    grid->SetColLabelValue(2, "Provider Name");
-    grid->SetColLabelValue(3, "Disponibility");
-    mat_store=store.select_for_client(sub_name,disponibility);
-
-    for (int i = 0; i < store.select_count_for_client(sub_name, disponibility); i++) {
-
-        for (int col = 0; col < 4; col++) {
-                grid->SetReadOnly(i, col, true);
-                grid->SetCellValue(i, col,  mat_store[i][col]);
-        }
-    }
-    grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    grid->AutoSize();
 
 
     FavButton=new wxButton (this,IdButtonFav,_T ("Add to favourites"),wxDefaultPosition,wxDefaultSize,0);
@@ -74,21 +56,48 @@ ProductListPage::ProductListPage(const wxString &title, const std::string &sub, 
 
 }
 void ProductListPage::OnChoice(wxCommandEvent& event) {
-    StoreProduct store;
-    string order=event.GetString().ToStdString();
-    mat_store=store.select_for_client(sub_name, disponibility,order);
-    for (int i = 0; i < store.select_count_for_client(sub_name, disponibility); i++) {
-        for (int col = 0; col < 4; col++) {
-            grid->SetReadOnly(i, col, true);
-            grid->SetCellValue(i, col,  mat_store[i][col]);
-        }
 
+    string order=event.GetString().ToStdString();
+
+
+    db_store->select_for_client(sub_name, disponibility,order);
+    int row = db_store->select_count_for_client(sub_name, disponibility);
+    store = user->get_store();
+    prod_list = store->get_products();
+
+
+    grid = new wxGrid(this, wxID_ANY);
+    grid->CreateGrid(row, 4);
+    grid->SetColLabelValue(0, "Name Product");
+    grid->SetColLabelValue(1, "Price");
+    grid->SetColLabelValue(2, "Provider Name");
+    grid->SetColLabelValue(3, "Disponibility");
+
+
+
+    for (int i = 0; i < row ; i++) {
+        string name_prod = prod_list[i]->get_desc();
+        int p = prod_list[i]->get_price();
+        string price(to_string(p));
+        string name_prov = prod_list[i]->get_username_prov();
+        int a_q= prod_list[i]->get_q_available();
+        string available_q(to_string(a_q));
+
+        grid->SetReadOnly(i, 0, true);
+        grid->SetCellValue(i, 0, name_prod);
+        grid->SetReadOnly(i, 1, true);
+        grid->SetCellValue(i, 1, price);
+        grid->SetReadOnly(i, 2, true);
+        grid->SetCellValue(i, 2, name_prov);
+        grid->SetReadOnly(i, 3, true);
+        grid->SetCellValue(i, 3, available_q);
     }
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 }
+
 void ProductListPage::IsFavourites(wxCommandEvent &event) {
-    if (grid->GetSelectedRows() == 0) {
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a product", "Error", wxICON_ERROR);
     } else {
         wxArrayInt selectedRows = grid->GetSelectedRows();
@@ -96,14 +105,14 @@ void ProductListPage::IsFavourites(wxCommandEvent &event) {
         for (size_t i = 0; i < selectedRows.GetCount(); i++) {
             row = selectedRows[i];
         }
-        int id_product = stoi(mat_store[row][4]);
-        FavouriteProduct *fav = new FavouriteProduct(id_product, username, mat_store[row][2]);
-        fav->add();
+
+        fav->add_product(prod_list[row]);
+        db_fav->add_to_db();
     }
 }
 
 void ProductListPage::IsCart(wxCommandEvent &event)  {
-    if (grid->GetSelectedRows() == 0) {
+    if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a product", "Error", wxICON_ERROR);
     } else {
         sizer->Hide(FavButton);
@@ -129,11 +138,10 @@ void ProductListPage::IsInsert(wxCommandEvent &event) {
         for (size_t i = 0; i < selectedRows.GetCount(); i++) {
             row = selectedRows[i];
         }
-        std::string username_cust=GlobalVariables::GetInstance().GetValueUsername();
+
         int quantity = spinCtrl->GetValue();
-        int cod_product = stoi(mat_store[row][4]);
-        CartProduct *cart = new CartProduct(quantity,cod_product, username_cust, mat_store[row][2]);
-        cart->add();
+        prod_list[row]->set_quantity(quantity);
+        cart->add_product(prod_list[row]);
+        db_cart->add_to_db();
     }
 }
-*/
