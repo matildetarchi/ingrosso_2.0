@@ -7,7 +7,7 @@
 Engine::Engine() {
 
     // Specifica il percorso del tuo database SQLite
-    const std::string dbPath = "C:/Users/dario/CLionProjects/ingrosso_online/ingrossodb.sqlite";
+    const std::string dbPath = "/Users/matildetarchi/CLionProjects/ingrosso_2.0/ingrossodb.sqlite";
 
     // Apri il database
     //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);

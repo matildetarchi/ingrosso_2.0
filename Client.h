@@ -9,6 +9,7 @@
 #include "OrdersList.h"
 #include "favourites.h"
 #include "cart.h"
+
 #include <memory>
 
 using namespace std;
@@ -49,6 +50,7 @@ private:
     shared_ptr<OrdersList> order;
     shared_ptr<Favourites> fav;
     shared_ptr<Cart> cart;
+
 
     shared_ptr<Product> prod;
 };
