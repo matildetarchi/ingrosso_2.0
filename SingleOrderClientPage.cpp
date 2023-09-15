@@ -4,6 +4,8 @@
 
 #include "SingleOrderClientPage.h"
 
+#include <utility>
+
 
 const long SingleOrderClientPage::IdButtonBack =::wxNewId();
 
@@ -13,12 +15,11 @@ BEGIN_EVENT_TABLE (SingleOrderClientPage, wxDialog)
 
 END_EVENT_TABLE()
 
-SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, const std::string &code_order, const std::string &us_prov): engine(e), id_order(code_order), u_prov(us_prov),
+SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, std::string code_order): engine(e), id_order(std::move(code_order)),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
     user= engine->get_user();
-    username= user->get_username();
     db_order = engine->get_db_order();
 
     db_order->select_for_client();

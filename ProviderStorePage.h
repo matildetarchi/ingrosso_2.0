@@ -10,7 +10,7 @@
 #include "store.h"
 #include "ModifyProductPage.h"
 #include "Engine.h"
-#include "User.h"
+#include "Provider.h"
 #include "dbStoreManager.h"
 #include "Product.h"
 
@@ -39,7 +39,7 @@ private:
     std::string username;
     wxChoice* choiceOrder;
     Engine *engine;
-    shared_ptr<User> user;
+    shared_ptr<Provider> prov;
     shared_ptr<dbStoreManager> db_store;
     vector<shared_ptr<Product>> prod_list;
     shared_ptr<Store> store;

@@ -14,7 +14,8 @@
 #include "SelectionCityPage.h"
 #include "ManageProfilePage.h"
 #include "InitialPage.h"
-#include "User.h"
+#include "Provider.h"
+
 
 class HomePageProviders: public wxFrame {
 public:
@@ -45,11 +46,11 @@ private:
     wxButton *InsProd;
     wxButton *Remove;
     wxButton *Back;
-    shared_ptr<User> user;
+    shared_ptr<Provider> prov;
     std::string username;
     std::string type;
     Engine* engine;
-    dbUserManager *db_u;
+    shared_ptr<dbUserManager> db_u;
 
 };
 

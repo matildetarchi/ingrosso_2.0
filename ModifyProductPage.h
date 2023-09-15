@@ -38,6 +38,7 @@ private:
     wxSpinCtrl *tcQ;
     Engine* engine;
     shared_ptr<dbStoreManager> db_store;
+    shared_ptr <Provider> prov;
 
 };
 

@@ -25,7 +25,7 @@ class dbOrdersManager {
 public:
 
 
-    explicit dbOrdersManager(shared_ptr<Database> d);
+    explicit dbOrdersManager(const shared_ptr<Database>& d);
 
 
     void set_user(shared_ptr<User> o){

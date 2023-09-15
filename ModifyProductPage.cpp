@@ -16,6 +16,7 @@ END_EVENT_TABLE()
 ModifyProductPage::ModifyProductPage(Engine *e, const wxString &title, int id_store):engine(e), id(id_store),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
+    prov = engine->get_prov();
 
     wxStaticText *desc = new wxStaticText(this, -1, wxT("Name Product"));
     wxStaticText *price = new wxStaticText(this, -1, wxT("Price"));
@@ -51,6 +52,5 @@ void ModifyProductPage::OnConfirm(wxCommandEvent &event) {
     std::string new_desc=tcD->GetValue().ToStdString();
     double new_price = tcP->GetValue();
     int new_available_quant= tcQ->GetValue();
-    db_store->change_data(id, new_desc, new_price, new_available_quant);
-
+    prov->modify_prod(id, new_desc, new_price, new_available_quant);
 }

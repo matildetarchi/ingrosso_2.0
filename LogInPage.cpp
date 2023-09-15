@@ -81,6 +81,7 @@ void LogInPage::Access(wxCommandEvent &event) {
 
         result = engine->do_login(e,p);
         user = engine->get_user();
+
         if (!result) {
             wxLogMessage("Incorrect email or password");
         } else {

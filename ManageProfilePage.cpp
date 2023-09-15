@@ -21,7 +21,7 @@ ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e)
     user = engine->get_user();
     db_user= engine->get_db_user();
     username = user->get_username();
-    type= user->get_type();
+    table_city = engine->get_db_city();
 
     messageError="Password Not Equal";
     messageCorrect="Password Equal";
@@ -103,11 +103,11 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
         std::string new_pass_conf = m_passwordConf->GetValue().ToStdString();
         int control_digit=0;
         int control_upper=0;
-        for(int i=0; i<new_pass.length();i++){
-            if (isdigit(new_pass[i])){
+        for(char new_pas : new_pass){
+            if (isdigit(new_pas)){
                 control_digit=control_digit+1;
             }
-            if (isupper(new_pass[i])) {
+            if (isupper(new_pas)) {
                 control_upper=control_upper+1;
             }
         }

@@ -42,12 +42,11 @@ private:
     wxGrid *grid;
     std::string username;
     wxChoice* choiceOrder;
-    std::vector<std::vector<std::string>> mat_order;
     int ctrl;
     Engine *engine;
     shared_ptr<User> user;
     std::vector<shared_ptr<Order>> order;
-    dbOrdersManager *db_order;
+    shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;
 };
 

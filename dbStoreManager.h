@@ -12,19 +12,19 @@
 #include <SQLiteCpp/Statement.h>
 #include "dbCartManager.h"
 #include "dbFavouritesManager.h"
-#include "User.h"
 #include <memory>
 #include "Database.h"
 #include <stdexcept>
+#include "Provider.h"
 
 
 class dbStoreManager {
 public:
-    explicit dbStoreManager(shared_ptr<Database> d);
+    explicit dbStoreManager(const shared_ptr<Database>& d);
 
 
-    void set_user(shared_ptr<User> o){
-        user = std::move(o);
+    void set_user(shared_ptr<Provider> o){
+        prov = std::move(o);
     }
 
     void add_to_db();
@@ -41,9 +41,7 @@ private:
 
     shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
-    dbFavouritesManager* fav;
-    dbCartManager* cart;
-    shared_ptr<User> user;
+    shared_ptr<Provider> prov;
 };
 
 

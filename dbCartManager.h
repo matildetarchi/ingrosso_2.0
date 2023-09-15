@@ -16,6 +16,7 @@
 #include <string>
 #include <memory>
 #include "User.h"
+#include "Client.h"
 
 
 using namespace std;
@@ -25,8 +26,8 @@ public:
     explicit dbCartManager(const shared_ptr<Database>& d);
 
 
-    void set_user(shared_ptr<User> o){
-        user = std::move(o);
+    void set_user(shared_ptr<Client> o){
+        client = std::move(o);
     }
 
 
@@ -41,7 +42,8 @@ private:
     shared_ptr<Cart> cart;
     shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
-    shared_ptr<User> user;
+    shared_ptr<Client> client;
+    vector<std::shared_ptr<Product>> prod_list;
 
 };
 

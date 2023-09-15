@@ -6,13 +6,12 @@
 
 
 
-dbOrdersManager::dbOrdersManager(shared_ptr<Database> d) {
+dbOrdersManager::dbOrdersManager(const shared_ptr<Database>& d) {
         db = d->get_db();
+        tab_order= make_shared<OrdersList>(user->get_username());
 }
 
 void dbOrdersManager::add_to_db() {
-
-
 
 
     std::shared_ptr<Date> date = date->get_current_date();
@@ -62,9 +61,8 @@ void dbOrdersManager::add_to_db() {
         ord->add_to_order(std::move(product));
 
     }
-    shared_ptr<OrdersList> order = make_shared<OrdersList>(username);
 
-    order->add_order(std::move(ord));
+    tab_order->add_order(ord);
 }
 
 void dbOrdersManager::change_status( const string &new_status, int id_order) {
@@ -85,7 +83,7 @@ void dbOrdersManager::change_status( const string &new_status, int id_order) {
 void dbOrdersManager::select_for_provider() {
     int id_user = user->get_db_id();
     string username = user->get_username();
-    tab_order= make_shared<OrdersList>(username);
+
     string select_id_store = "SELECT id FROM store WHERE id_prov = '" + to_string(id_user) +"'";
     int id_store = db->execAndGet(select_id_store).getInt();
 
@@ -140,7 +138,7 @@ void dbOrdersManager::select_for_provider() {
 void dbOrdersManager::select_for_client() {
     int id_user = user->get_db_id();
     string username = user->get_username();
-    tab_order= make_shared<OrdersList>(username);
+
 
 
     string select_orders = "SELECT orders.id, date_order, status FROM orders WHERE id_client = '" + to_string(id_user) +"'";

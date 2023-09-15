@@ -17,6 +17,7 @@
 #include <wx/spinctrl.h>
 #include "Engine.h"
 #include "dbStoreManager.h"
+#include "Provider.h"
 
 class InsertProductPage: public wxFrame {
 public:
@@ -44,7 +45,7 @@ private:
     Engine *engine;
     shared_ptr<dbCategoriesManager> db_categories;
     shared_ptr<dbSubcategoriesManager> db_subcategories;
-    shared_ptr<User> user;
+    shared_ptr<Provider> prov;
     shared_ptr<Store> store;
     shared_ptr<dbStoreManager> db_store;
 

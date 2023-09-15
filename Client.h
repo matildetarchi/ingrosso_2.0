@@ -9,7 +9,6 @@
 #include "OrdersList.h"
 #include "favourites.h"
 #include "cart.h"
-
 #include <memory>
 
 using namespace std;
@@ -24,21 +23,7 @@ public:
     ~Client() override ;
 
 
-
-
-
-
-    /*void set_order( shared_ptr<OrdersList> ord) override {
-        order = ord;
-    }
-
-    void set_favourites( shared_ptr<Favourites> f) override {
-        fav = f;
-    }
-
-    void set_cart( shared_ptr<Cart> crt) override {
-        cart = crt;
-    }*/
+    void delete_objects_of_user() override;
 
 
     void do_order(const shared_ptr<Order>& o);
@@ -50,7 +35,6 @@ private:
     shared_ptr<OrdersList> order;
     shared_ptr<Favourites> fav;
     shared_ptr<Cart> cart;
-
 
     shared_ptr<Product> prod;
 };

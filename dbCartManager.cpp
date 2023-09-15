@@ -10,7 +10,8 @@ using namespace std;
 
 dbCartManager::dbCartManager(const shared_ptr<Database>& d) {
     db = d->get_db();
-    prod=make_shared<Product>();
+    prod = make_shared<Product>();
+    cart = client->get_cart();
 
 }
 
@@ -18,7 +19,7 @@ void dbCartManager::add_to_db() {
 
     //metodo per aggiungere al carrello un nuovo prodotto
     int index = cart->get_num_prod()-1;
-    vector<std::shared_ptr<Product>> prod_list;
+
     prod_list = cart->get_products();
     prod = prod_list[index];
     //prendo l'id dell'utente che sta usando il programma e
@@ -45,7 +46,7 @@ void dbCartManager::remove_all() {
     // una volta effettuato l'ordine da quest'ultimo
 
     //prendo l'id dell'utente che sta usando il programma
-    int id = user->get_db_id();
+    int id = client->get_db_id();
 
     //lancio la query di delete dal db
     string query = "DELETE FROM cart WHERE id_user = '"+ to_string(id)+"'";
@@ -70,9 +71,8 @@ void dbCartManager::select() {
     //metodo per prendere i valori dei prodotti nel carrello dell'utente
 
     //prendo l'id dell'utente che sta usando il programma
-    int id = user->get_db_id();
-    string us_client= user->get_username();
-    cart=make_shared<Cart>(us_client);
+    int id = client->get_db_id();
+    string us_client= client->get_username();
 
     //lancio la query che prende i valori dal db
     string select = "SELECT desc_prod, price_product, username, quantity, available_quantity, id_sub, store.id FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='"+to_string(id) +"' ORDER BY username;";
@@ -109,7 +109,7 @@ void dbCartManager::select() {
 
 int dbCartManager::select_count_of_prod(){
     //seleziono l'id del cliente che sta usando il programma
-    int id_client = user->get_db_id();
+    int id_client = client->get_db_id();
 
     //prendo la quantità di prodotti presenti
     string query_select_count = "SELECT count(*) FROM cart WHERE id_user ='" + to_string(id_client) + "'";

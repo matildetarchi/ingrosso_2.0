@@ -19,8 +19,10 @@ END_EVENT_TABLE()
 InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 400)){
 
-    db_categories = e->get_db_cate();
-    user= e->get_user();
+    db_categories = engine ->get_db_cate();
+    prov= engine ->get_prov();
+    db_subcategories = engine->get_db_subc();
+
     std::vector<std::string> categories;
 
     categories=db_categories->select();
@@ -114,11 +116,8 @@ void InsertProductPage::InsertProduct(wxCommandEvent &event) {
         std::string name_prod = tcName->GetValue().ToStdString();
         int a_quantity = tcQ->GetValue();
         double price = tcC->GetValue();
-        string username_prov = user->get_username();
-        shared_ptr<Product> prod = make_shared<Product> (name_prod, price, 0, a_quantity, username_prov, sub_category);
-        store->add_to_store(prod);
-        db_store= engine->get_db_store();
-        db_store->add_to_db();
+        string username_prov = prov->get_username();
+        prov->add_prod(name_prod, price, 0, a_quantity, username_prov, sub_category);
     }
 }
 void InsertProductPage::ComeBack(wxCommandEvent &event) {

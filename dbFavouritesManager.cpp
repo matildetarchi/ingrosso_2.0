@@ -8,14 +8,15 @@
 
 dbFavouritesManager::dbFavouritesManager(shared_ptr<Database> d) {
     db = d->get_db();
-    prod=make_shared<Product>();
+    prod = make_shared<Product>();
+    fav = client->get_fav();
 }
 
 void dbFavouritesManager::add_to_db() {
 
     //metodo che aggiunge un prodotto alla lista dei favourites
     int index = fav->get_num_prod()-1;
-    vector<std::shared_ptr<Product>> prod_list;
+
     prod_list = fav->get_products();
     prod = prod_list[index];
     //prendo da db i valori di id dell'utente che sta usando il programma
@@ -41,11 +42,13 @@ void dbFavouritesManager::remove_all() {
     // una volta effettuato l'ordine da quest'ultimo
 
     //prendo l'id dell'utente che sta usando il programma
-    int id = user->get_db_id();
+    int id = client->get_db_id();
 
     //lancio la query di delete dal db
     string query = "DELETE FROM cart WHERE id_user = '"+ to_string(id)+"'";
     db->exec(query);
+
+    fav->remove_all();
 }
 
 void dbFavouritesManager::remove_prod(int id_store) {
@@ -64,8 +67,8 @@ void dbFavouritesManager::select() {
     // presenti nella lista dei favourites
 
     //prendo l'id dell'utente che sta usando il programma
-    int id = user->get_db_id();
-    string us_client= user->get_username();
+    int id = client->get_db_id();
+    string us_client= client->get_username();
     fav=make_shared<Favourites>(us_client);
 
     //lancio la query di selezione
@@ -100,7 +103,7 @@ void dbFavouritesManager::select() {
 
 int dbFavouritesManager::select_count_of_prod(){
     //seleziono l'id del cliente che sta usando il programma
-    int id_client = user->get_db_id();
+    int id_client = client->get_db_id();
 
     //prendo la quantità di prodotti presenti
     string query_select_count = "SELECT count(*) FROM favourites WHERE id_cust ='" + to_string(id_client) + "'";

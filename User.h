@@ -81,7 +81,7 @@ public:
     }
 
     void set_password(const string &new_psw) {
-        psw = new_psw;
+        psw= new_psw;
     }
 
     void set_username(const string &new_username) {
@@ -89,21 +89,17 @@ public:
     }
 
     void set_bus_name(const string &b_name){
-        business_name = b_name;
-    }
-
-    void set_type(const string &t){
-        type = t;
+        business_name=b_name;
     }
 
     void set_id_db(const int &id){
-        db_id = id;
+        db_id=id;
     }
     void set_type(const string &t){
         type=t;
     }
 
-    void delete_objects_of_user();
+    virtual void delete_objects_of_user();
 
 private:
     string type;

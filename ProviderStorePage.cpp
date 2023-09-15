@@ -18,8 +18,8 @@ END_EVENT_TABLE()
 ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
-    user = engine->get_user();
-    username = user->get_username();
+    prov = engine->get_prov();
+    username = prov->get_username();
 
     /*wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Name Product", "Price", "Quantity Available"};
@@ -37,7 +37,7 @@ ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e
     grid->SetColLabelValue(1, "Price");
     grid->SetColLabelValue(2, "Quantity Available");
 
-    store = user->get_store();
+    store = prov->get_store();
     prod_list = store->get_products();
 
 
@@ -96,8 +96,9 @@ void ProviderStorePage::DeleteProduct(wxCommandEvent &event) {
         }
         row = selectedRows[i];
         int id_prod= prod_list[i]->get_id_store();
-        if (!db_store->remove_from_db(id_prod)) {
-            wxMessageBox("You can't remove this product from your store because is in someone's cart or favourites list or not accepted/denied order", "Error", wxICON_ERROR);
+        if(!prov->delete_prod(id_prod)){
+            wxMessageBox("You can't remove this product from your store because is in someone's cart or favourites list or not accepted/denied order",
+                         "Error", wxICON_ERROR);
         } else {
             grid->DeleteRows(row);
         }

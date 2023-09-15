@@ -33,7 +33,7 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
 
     std::vector<std::string> cities;
 
-    cities=db_table->select();
+    cities = db_table->select();
     wxVector<string> choices;
     for (int k=0; k<db_table->number_of_city(); k++){
         choices.push_back(cities[k]);

@@ -17,23 +17,23 @@ Client::Client( const string &t, const string &bn,const string &a, const string 
     fav = make_unique<Favourites>(us);
 }
 
-Client::~Client() {
-
-}
+Client::~Client() = default;
 
 void Client::do_order(const shared_ptr<Order>& o) {
     order->add_order(o);
-
 }
 
 void Client::add_to_cart(shared_ptr<Product> p) {
-
     cart->add_product(std::move(p));
-
 }
 
 void Client::add_to_fav(shared_ptr<Product> p) {
     fav->add_product(std::move(p));
+}
+
+void Client::delete_objects_of_user() {
+    cart->remove_all();
+    fav->remove_all();
 }
 
 

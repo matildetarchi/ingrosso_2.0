@@ -19,6 +19,7 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
     city=var_city;
     type=user->get_type();
 
+
    /* wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     choiceOrder = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
     if (city=="All") {
@@ -73,7 +74,7 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(order, 0, wxALL, 5);
+   // sizer->Add(order, 0, wxALL, 5);
     sizer->Add(choiceOrder, 0, wxALL, 5);
     sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
     sizer->Add(Back, 1, wxEXPAND | wxALL, 5);

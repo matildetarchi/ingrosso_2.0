@@ -2,7 +2,6 @@
 // Created by dario on 12/11/2022.
 //
 
-
 #ifndef BUTTON_WXWIDGETS_FRAME_H
 #define BUTTON_WXWIDGETS_FRAME_H
 
@@ -15,6 +14,7 @@
 #include <vector>
 #include "Engine.h"
 #include <memory>
+
 
 class SelectionSubcategoryPage: public wxFrame {
 public:

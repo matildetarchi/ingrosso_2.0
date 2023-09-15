@@ -17,10 +17,10 @@ END_EVENT_TABLE()
 SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, const std::string &code_order): engine(e), id_order(code_order),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
-    user = engine->get_user();
+    prov = engine->get_prov();
 
 
-    orders_list= user->get_order_list();
+    orders_list= prov->get_order_list();
     orders= orders_list->get_orders();
 
 

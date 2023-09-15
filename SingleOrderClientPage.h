@@ -21,7 +21,7 @@
 
 class SingleOrderClientPage: public wxDialog {
 public:
-    SingleOrderClientPage(Engine *e, const wxString& title, const std::string &code_order, const std::string &us_prov);
+    SingleOrderClientPage(Engine *e, const wxString& title, std::string code_order);
 
     static const long IdButtonBack;
 
@@ -35,8 +35,6 @@ private:
     wxBoxSizer *sizer;
     wxGrid *grid;
     std::string id_order;
-    std::string username;
-    std::string u_prov;
     Engine* engine;
     shared_ptr<User> user;
     shared_ptr<dbOrdersManager> db_order;

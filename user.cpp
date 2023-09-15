@@ -19,12 +19,5 @@ User::User( const string &t, const string &bn,const string &a, const string &e, 
 }
 
 void User::delete_objects_of_user() {
-    if(type == "C") {
-        cart->remove_all();
-        fav->remove_all();
         order->remove_all();
-    }else{
-        order->remove_all();
-        store->remove_all();
-    }
 }

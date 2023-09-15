@@ -14,6 +14,7 @@
 #include <SQLiteCpp/Statement.h>
 #include <iostream>
 #include <string>
+#include "Client.h"
 
 #include "User.h"
 
@@ -26,8 +27,8 @@ public:
 
 
 
-    void set_user(shared_ptr<User> o){
-        user = std::move(o);
+    void set_user(shared_ptr<Client> o){
+        client = std::move(o);
 
     }
     void add_to_db();
@@ -42,7 +43,8 @@ private:
 
     shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
-    shared_ptr<User> user;
+    shared_ptr<Client> client;
+    vector<std::shared_ptr<Product>> prod_list;
 };
 
 

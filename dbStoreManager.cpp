@@ -4,11 +4,11 @@
 
 #include "dbStoreManager.h"
 
-#include <utility>
 
-dbStoreManager::dbStoreManager(shared_ptr<Database> d) {
+dbStoreManager::dbStoreManager(const shared_ptr<Database>& d) {
     db = d->get_db();
     prod=make_shared<Product>();
+    st = prov->get_store();
 }
 
 
@@ -19,17 +19,6 @@ void dbStoreManager::change_data(int index, const string& desc_prod, double pric
     //lancio la query
     string query = "UPDATE store SET desc_prod = '"+ desc_prod +"', price_product ='"+ to_string(price) +"', available_quantity ='"+to_string(available_quantity)+"' WHERE id = '"+to_string(index)+"'";
     db->exec(query);
-
-    string query_id = "SELECT id FROM store WHERE id = '"+to_string(index)+"'";
-    int id = db->execAndGet(query_id).getInt();
-
-    vector<std::shared_ptr<Product>> prod_list;
-    prod_list = st->get_products();
-    prod = prod_list[id];
-
-    prod->set_desc(desc_prod);
-    prod->set_price(price);
-    prod->set_available_quantity(available_quantity);
 }
 
 void dbStoreManager::add_to_db() {
@@ -66,11 +55,9 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
     // della lista dei preferiti di qualche utente
     //in caso sia presente lo elimino
 
-    string query_count_in_fav = "SELECT count(*) FROM favourites WHERE id_store ='"+ to_string(id_intern)+"'";
-    int count_fav = db->execAndGet(query_count_in_fav);
-    if (count_fav>0) {
-        fav->remove_prod(id_intern);
-    }
+    string query_count_in_fav = "DELETE FROM favourites WHERE id_store ='"+ to_string(id_intern)+"'";
+    db->exec(query_count_in_fav);
+
 
     //controllo che il prodotto non sia presente in qualche ordine in sopeso
     //in caso sia presente ritorno 0
@@ -84,18 +71,15 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
     //controllo che il prodotto non sia all'interno del carrello di qualche utente
     //in caso sia presente ritorno 0
     //non permetteno all'utente di cancellare il prodotto
-    string query_count_in_cart = "SELECT count(*) FROM cart WHERE id_store ='"+ to_string(id_intern)+"'";
-    int count_cart = db->execAndGet(query_count_in_cart);
-    if (count_cart>0) {
-        cart->remove_prod(id_intern);
-    }
+    string query_count_in_cart = "DELETE FROM cart WHERE id_store ='"+ to_string(id_intern)+"'";
+    db->exec(query_count_in_cart);
 
     //se il prodotto non è presente da nessuna parte
     //lo elimino da tutti gli ordini già accettati o rifiutati
     //per evitare futuri conflitti tra le tabelle
 
-    //TODO cancellare anche da orders_details tramite ciclo
-    string query_del_from_ord = "DELETE FROM orders WHERE id_product = "+ to_string(id_intern)+"";
+
+    string query_del_from_ord = "DELETE FROM orders_details WHERE id_product = "+ to_string(id_intern)+"";
     db->exec(query_del_from_ord);
 
     //se il prodotto non è presente da nessuna parte
@@ -198,12 +182,13 @@ void dbStoreManager::select_for_client(const string &sub_name, const string &dis
     }
 
     void dbStoreManager::select_for_prov() {
-        string username = user->get_username();
-        st = make_shared<Store>(username);
+
+        string username = prov->get_username();
+
         //metodo che prende i valori dei prodotti nel magazzino di un fornitore
 
         //seleziono l'id del fornitore che sta usando il programma
-        int id_prov = user->get_db_id();
+        int id_prov = prov->get_db_id();
 
         //prendo la quantità di prodotti presenti
         string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
@@ -243,7 +228,7 @@ void dbStoreManager::select_for_client(const string &sub_name, const string &dis
     int dbStoreManager::select_count_for_provider() {
 
         //seleziono l'id del fornitore che sta usando il programma
-        int id_prov = user->get_db_id();
+        int id_prov = prov->get_db_id();
 
         //prendo la quantità di prodotti presenti
         string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
@@ -253,9 +238,9 @@ void dbStoreManager::select_for_client(const string &sub_name, const string &dis
     }
 
     shared_ptr<Product> dbStoreManager::select_prod_to_modify(int id_prod) {
-        if (user->get_type() == "F") {
-            int id_prov = user->get_db_id();
-            string username = user->get_username();
+
+            int id_prov = prov->get_db_id();
+            string username = prov->get_username();
             string select_prod =
                     "SELECT desc_prod, price_product, available_quantity, subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
                     to_string(id_prov) + "' AND store.id = '" + to_string(id_prod) + "' ";
@@ -274,8 +259,5 @@ void dbStoreManager::select_for_client(const string &sub_name, const string &dis
             prod->set_quantity(0);
             prod->set_id_store(id_prod);
             return prod;
-        } else
-            throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
 
-    }
 }

@@ -23,6 +23,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 
     user = engine->get_user();
     username = user->get_username();
+    db_order = engine->get_db_order();
 
    /* wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Code OrderProduct", "Provider Name", "Date OrderProduct"};
@@ -126,14 +127,14 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
     if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
     } else {
-        std::string code;
+
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
         for (size_t i = 0; i < selectedRows.GetCount(); i++) {
             row = selectedRows[i];
         }
-        code = mat_order[row][0];
-        SingleOrderClientPage *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), code, mat_order[row][1]);
+        int code = order[row]->get_id();
+        SingleOrderClientPage *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), to_string(code));
         view->Show(TRUE);
     }
 

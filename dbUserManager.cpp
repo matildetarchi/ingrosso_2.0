@@ -225,7 +225,7 @@ void dbUserManager::select_data(const string &username) {
     }
 
 }
-const string dbUserManager::select_type(const string &email) {
+string dbUserManager::select_type(const string &email) {
 
     //metodo per selezionare il tipo di un utente
 
@@ -235,7 +235,7 @@ const string dbUserManager::select_type(const string &email) {
     return type;
 
 }
-const string dbUserManager::select_username(const string &email) {
+string dbUserManager::select_username(const string &email) {
 
     //metodo per selezionare l'username di un utente
 
@@ -253,6 +253,8 @@ void dbUserManager::change_psw(const string &email, const string &new_psw) {
     //lancio la query di update
     string query = "UPDATE users SET password='"+new_psw+"' WHERE email='"+email+"'";
     db->exec(query);
+
+    user->set_password(new_psw);
 
 }
 

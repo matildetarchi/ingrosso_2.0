@@ -18,8 +18,8 @@ END_EVENT_TABLE()
 ChooseStatusPage::ChooseStatusPage(Engine* e, const wxString &title) :engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
-    user= e->get_user();
-    type=user->get_type();
+    user= engine->get_user();
+    type = user->get_type();
 
     wxStaticText *txt = new wxStaticText(this, -1, wxT("CHOOSE STATUS OF THE ORDERS YOU WANT TO SEE"));
 

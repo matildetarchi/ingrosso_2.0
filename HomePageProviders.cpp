@@ -29,9 +29,10 @@ HomePageProviders::HomePageProviders(Engine *e, const wxString& title, const wxP
 
     wxPanel *panelHome = new wxPanel(this, -1);
 
-    user= e->get_user();
-    username= user->get_username();
-    type= user->get_type();
+    prov= engine->get_prov();
+    username= prov->get_username();
+    type= prov->get_type();
+    db_u = engine->get_db_user();
 
     wxBoxSizer *box = new wxBoxSizer(wxHORIZONTAL);
     wxFlexGridSizer *MainGrid = new wxFlexGridSizer(2, 2, 25, -5);
@@ -98,6 +99,7 @@ void HomePageProviders::RemoveUser(wxCommandEvent &event)  {
         wxMessageBox("You can't delete your account because you have orders not accepted/denied or some of your product are in someone's favourites or cart", "Error", wxICON_ERROR);
     } else {
         wxMessageBox("Account removed, you'll be sent to registracion page", "Error", wxICON_ERROR);
+        prov->delete_objects_of_user();
         Close();
         InitialPage *home = new InitialPage(engine,_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
         home->Show(TRUE);

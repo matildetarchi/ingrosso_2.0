@@ -20,8 +20,8 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
 
 
 
-    user= e->get_user();
-    db_order = e->get_db_order();
+    prov = engine->get_prov();
+    db_order = engine->get_db_order();
 
    /* wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
     wxString myString[]={"Code OrderProduct", "Customer Name", "Date OrderProduct"};
@@ -40,7 +40,7 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     grid->SetColLabelValue(2, "Date");
     grid->SetColLabelValue(3, "Status");
 
-    orders_list= user->get_order_list();
+    orders_list= prov->get_order_list();
     order= orders_list->get_orders();
 
     for (int i = 0; i < row; i++) {
@@ -113,9 +113,8 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
         wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
     } else {
 
-        string new_status;
-        new_status = "A";
-        db_order->change_status(new_status, id_order );
+        prov->accept_order(id_order);
+
         if (ctrl == 0) {
             grid->DeleteRows(row);
         } else {
@@ -141,9 +140,8 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
         wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
     } else {
 
-        string new_status;
-        new_status="D";
-        db_order->change_status(new_status, id_order);
+        prov->denied_order(id_order);
+
         if (ctrl==0) {
             grid->DeleteRows(row);
         } else {

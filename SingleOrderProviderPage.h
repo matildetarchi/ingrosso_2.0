@@ -14,7 +14,7 @@
 #include <iostream>
 #include <fstream>
 #include "Engine.h"
-#include "User.h"
+#include "Provider.h"
 
 class SingleOrderProviderPage: public wxDialog {
 public:
@@ -39,7 +39,7 @@ private:
     wxGrid *grid;
     std::string id_order;
     std::string username;
-    shared_ptr<User> user;
+    shared_ptr<Provider> prov;
     Engine *engine;
     shared_ptr <OrdersList> orders_list;
     std::vector<shared_ptr<Order>> orders;

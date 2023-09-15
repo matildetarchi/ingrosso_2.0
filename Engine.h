@@ -33,9 +33,13 @@ public:
 
     bool do_registration(const shared_ptr <User>& user);
     bool do_login(const string &email, const string &psw);
+    shared_ptr<User> get_user();
 
-    shared_ptr<User> get_user() {
-        return user;
+    shared_ptr<Provider> get_prov() {
+           return prov;
+    }
+    shared_ptr<Client> get_client() {
+        return client;
     }
     shared_ptr<dbCartManager> get_db_cart() {
         return db_cart;
@@ -62,7 +66,10 @@ public:
         return db_subc;
     }
 private:
+
+    shared_ptr<Client> client;
     shared_ptr<User> user;
+    shared_ptr<Provider> prov;
     shared_ptr<dbCartManager> db_cart;
     shared_ptr<dbOrdersManager> db_order;
     shared_ptr<dbStoreManager> db_store;

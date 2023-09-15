@@ -136,11 +136,11 @@ void RegistrationPage::Register(wxCommandEvent &event) {
         std::string psw_conf = m_passwordConf->GetValue().ToStdString();
         int control_digit=0;
         int control_upper=0;
-        for(int i=0; i<psw.length();i++){
-            if (isdigit(psw[i])){
+        for(char i : psw){
+            if (isdigit(i)){
                 control_digit=control_digit+1;
             }
-            if (isupper(psw[i])) {
+            if (isupper(i)) {
                 control_upper=control_upper+1;
             }
         }

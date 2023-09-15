@@ -20,6 +20,7 @@
 #include <string>
 #include <memory>
 #include <ctime>
+#include "Provider.h"
 
 class ManageRequestPage: public wxDialog{
 public:
@@ -53,7 +54,7 @@ private:
     std::vector<shared_ptr<Order>> order;
     int ctrl;
     Engine* engine;
-    shared_ptr<User> user;
+    shared_ptr<Provider> prov;
     shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;
 };

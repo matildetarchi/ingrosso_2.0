@@ -24,7 +24,7 @@ DECLARE_EVENT_TABLE()
 private:
     void OnAccess( wxCommandEvent& event );
     void OnRegister(wxCommandEvent& event);
-    wxButton *HelloWorld;
+    wxButton *Enter;
     wxButton *Register;
     static std::string username_actual_user;
     Engine *e;

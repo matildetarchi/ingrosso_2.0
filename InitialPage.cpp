@@ -21,10 +21,10 @@ InitialPage::InitialPage(Engine* engine, const wxString &title, const wxPoint &p
     wxBoxSizer *MainBox= new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer *MainBox1=new wxBoxSizer(wxHORIZONTAL);
     Register=new wxButton (this,IdButtonRegister,_T ("Register"),wxDefaultPosition,wxSize(180,40),0);
-    HelloWorld=new wxButton(this,IdButtonAccess,_T ("Enter"), wxDefaultPosition,wxSize(180,40),0);
+    Enter=new wxButton(this,IdButtonAccess,_T ("Enter"), wxDefaultPosition,wxSize(180,40),0);
     MainBox1->Add(Register,0,wxLEFT,210);
     this->SetSizer(MainBox1);
-    MainBox->Add(HelloWorld,0,wxLEFT,210);
+    MainBox->Add(Enter,0,wxLEFT,210);
     this->SetSizer(MainBox);
     this->Layout();
 
