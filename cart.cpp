@@ -3,8 +3,7 @@
 // Created by Andrea Lipperi on 14/11/22.
 //
 
-
-#include "cart.h"
+#include "Cart.h"
 
 using namespace std;
 
@@ -34,7 +33,7 @@ void Cart::update_num(int control) {
 }
 
 void Cart::remove_one(int index) {
-    if(index<products.size()){
+    if(index < products.size()){
         auto iteretor_to_remove= products.begin()+index;
         products.erase(iteretor_to_remove);
         update_num(cancel);

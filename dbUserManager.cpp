@@ -164,7 +164,6 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
 
     }
     user->delete_objects_of_user();
-
     return true;
 }
 void dbUserManager::change_data(const string &new_address, const string &new_city, const string &new_psw, const string &new_email, const string &new_username) {

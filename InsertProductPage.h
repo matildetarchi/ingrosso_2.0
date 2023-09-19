@@ -9,15 +9,9 @@
 #include "wx/wxhtml.h"
 #include "wx/string.h"
 #include "wx/grid.h"
-#include <string>
-#include "dbSubcategoriesManager.h"
-#include "dbCategoriesManager.h"
-#include "store.h"
-#include <vector>
 #include <wx/spinctrl.h>
 #include "Engine.h"
-#include "dbStoreManager.h"
-#include "Provider.h"
+
 
 class InsertProductPage: public wxFrame {
 public:

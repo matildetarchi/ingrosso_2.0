@@ -21,8 +21,8 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 
 
 
-    user = engine->get_user();
-    username = user->get_username();
+   client = engine->get_client();
+    username = client->get_username();
     db_order = engine->get_db_order();
 
    /* wxStaticText *order_txt = new wxStaticText(this, -1, wxT("OrderProduct By"));
@@ -50,7 +50,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
         grid->SetColLabelValue(3, "Status");
 
     }
-    orders_list= user->get_order_list();
+    orders_list= client->get_order_list();
     order= orders_list->get_orders();
 
     for (int i = 0; i < row; i++) {
@@ -103,24 +103,26 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 }
 
 void OrderHistoryForClientPage::CancelOrder(wxCommandEvent &event) {
-    wxArrayInt selectedRows = grid->GetSelectedRows();
-    int row;
-    size_t i = 0;
-    while (i == selectedRows.GetCount()) {
-        i++;
-    }
-    row = selectedRows[i];
-    string status =order[row]->get_status();
-    int id_order= order[row]->get_id();
-
     if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
-    } else if (ctrl==1 && status!="Pending") {
-        wxMessageBox("The one you choosed it's already confirmed or denied, you can't cancel it", "Error", wxICON_ERROR);
     } else {
+        wxArrayInt selectedRows = grid->GetSelectedRows();
+        int row;
+        size_t i = 0;
+        while (i == selectedRows.GetCount()) {
+            i++;
+        }
+        row = selectedRows[i];
+        string status = order[row]->get_status();
+        int id_order = order[row]->get_id();
 
-        db_order->cancel_order(id_order);
-        grid->DeleteRows(row);
+        if (ctrl == 1 && status != "Pending") {
+            wxMessageBox("The one you choosed it's already confirmed or denied, you can't cancel it", "Error",
+                         wxICON_ERROR);
+        } else {
+            db_order->cancel_order(id_order);
+            grid->DeleteRows(row);
+        }
     }
 }
 void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {

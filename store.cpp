@@ -3,11 +3,12 @@
 //
 
 
-#include "store.h"
+#include "Store.h"
 using namespace std;
 
 
 Store::Store(){};
+
 Store::Store(const string &provider) {
     username_prov = provider;
     num_prod = 0;

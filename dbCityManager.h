@@ -10,9 +10,6 @@
 #include <vector>
 #include <fstream>
 #include "Database.h"
-#include "SQLiteCpp/Database.h"
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
 #include <memory>
 
 using namespace std;

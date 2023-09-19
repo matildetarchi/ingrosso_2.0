@@ -52,5 +52,7 @@ void ModifyProductPage::OnConfirm(wxCommandEvent &event) {
     std::string new_desc=tcD->GetValue().ToStdString();
     double new_price = tcP->GetValue();
     int new_available_quant= tcQ->GetValue();
+    db_store->change_data(id, new_desc, new_price, new_available_quant);
+
     prov->modify_prod(id, new_desc, new_price, new_available_quant);
 }

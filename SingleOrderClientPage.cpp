@@ -4,7 +4,7 @@
 
 #include "SingleOrderClientPage.h"
 
-#include <utility>
+
 
 
 const long SingleOrderClientPage::IdButtonBack =::wxNewId();
@@ -19,11 +19,11 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, s
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
-    user= engine->get_user();
+    client = engine->get_client();
     db_order = engine->get_db_order();
 
     db_order->select_for_client();
-    orders_list= user->get_order_list();
+    orders_list= client->get_order_list();
     orders= orders_list->get_orders();
 
 

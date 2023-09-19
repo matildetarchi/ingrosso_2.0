@@ -6,14 +6,11 @@
 #define INGROSSO_ONLINE_CLIENT_H
 
 #include "User.h"
-#include "OrdersList.h"
-#include "favourites.h"
-#include "cart.h"
-#include <memory>
+
 
 using namespace std;
 
-class Client : public User {
+class Client : virtual public User {
 public:
 
     Client();
@@ -22,21 +19,33 @@ public:
 
     ~Client() override ;
 
+    shared_ptr<Cart> get_cart() override{
+        return cart;
+    };
+
+    shared_ptr<Favourites> get_fav() override{
+        return fav;
+    };
 
     void delete_objects_of_user() override;
 
 
-    void do_order(const shared_ptr<Order>& o);
-    void add_to_cart(shared_ptr<Product> p);
-    void add_to_fav(shared_ptr<Product> p);
+    void add_to_cart(shared_ptr<Product> p) override;
+    void add_to_fav(shared_ptr<Product> p) override;
+    bool remove_from_cart(int id_prod) override;
+    bool remove_from_fav(int id_prod) override;
+
+    shared_ptr<Store> get_store() override {};
+    bool modify_prod (int id_store, string desc, double price, int a_q ) override {};
+    bool add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category) override {};
 
 private:
 
     shared_ptr<OrdersList> order;
     shared_ptr<Favourites> fav;
     shared_ptr<Cart> cart;
-
     shared_ptr<Product> prod;
+
 };
 
 

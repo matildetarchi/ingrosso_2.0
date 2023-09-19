@@ -8,17 +8,9 @@
 #include <wx/spinctrl.h>
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
-#include <string>
-#include "User.h"
-#include <iostream>
-#include <fstream>
-#include "MyApp.h"
 #include "wx/grid.h"
-#include "cart.h"
 #include "Engine.h"
-#include "dbCartManager.h"
-#include "Product.h"
-#include "dbOrdersManager.h"
+
 
 
 class CartPage : public wxFrame {
@@ -49,7 +41,7 @@ private:
     Engine *engine;
     wxGrid *grid;
     wxSpinCtrl* spinCtrl;
-    std::shared_ptr<User> user;
+    std::shared_ptr<Client> client;
     std::shared_ptr<dbCartManager> db_cart;
     std::vector<std::shared_ptr<Product>> prod_list;
     std::shared_ptr<Cart> cart;

@@ -8,12 +8,7 @@
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
-#include "OrdersList.h"
 #include "Engine.h"
-#include "User.h"
-#include "dbOrdersManager.h"
-#include "OrdersList.h"
-#include "Order.h"
 #include "Date.h"
 
 class OrderHistoryForClientPage : public wxDialog{
@@ -44,7 +39,7 @@ private:
     wxChoice* choiceOrder;
     int ctrl;
     Engine *engine;
-    shared_ptr<User> user;
+    shared_ptr<Client> client;
     std::vector<shared_ptr<Order>> order;
     shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;

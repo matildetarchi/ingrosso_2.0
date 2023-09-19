@@ -7,16 +7,9 @@
 
 #include <wx/wx.h>
 #include "wx/wxhtml.h"
-#include "InitialPage.h"
 #include <wx/hyperlink.h>
-#include "LogInPage.h"
-#include "MyApp.h"
-#include "SelectionSubcategoryPage.h"
-#include "User.h"
-#include "HomePageClient.h"
 #include "Engine.h"
-#include "dbUserManager.h"
-#include <memory>
+
 
 class ForgotPasswordPage : public wxFrame{
 public:

@@ -7,18 +7,11 @@
 
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
-#include <string>
-#include <vector>
-#include "User.h"
-#include <iostream>
-#include <fstream>
-#include "MyApp.h"
 #include "wx/grid.h"
-#include "SelectionCityPage.h"
 #include <wx/app.h>
 #include <wx/spinctrl.h>
 #include "Engine.h"
-#include "dbUserManager.h"
+
 
 class UsersDataListPage : public wxFrame {
 public:

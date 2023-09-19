@@ -118,6 +118,8 @@ void InsertProductPage::InsertProduct(wxCommandEvent &event) {
         double price = tcC->GetValue();
         string username_prov = prov->get_username();
         prov->add_prod(name_prod, price, 0, a_quantity, username_prov, sub_category);
+        db_store->add_to_db();
+
     }
 }
 void InsertProductPage::ComeBack(wxCommandEvent &event) {

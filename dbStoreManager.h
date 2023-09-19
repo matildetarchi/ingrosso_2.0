@@ -4,17 +4,9 @@
 
 #ifndef INGROSSO_ONLINE_DBSTOREMANAGER_H
 #define INGROSSO_ONLINE_DBSTOREMANAGER_H
-#include <iostream>
-#include "store.h"
-#include <SQLiteCpp/Database.h>
-#include <vector>
-#include <string>
-#include <SQLiteCpp/Statement.h>
+
 #include "dbCartManager.h"
 #include "dbFavouritesManager.h"
-#include <memory>
-#include "Database.h"
-#include <stdexcept>
 #include "Provider.h"
 
 
@@ -30,7 +22,7 @@ public:
     void add_to_db();
     bool remove_from_db(int id_store);
     void change_data(int index, const string& desc_prod, double price, int quantity);
-    void select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
+    vector<shared_ptr<Product>> select_for_client(const string &sub_name, const string &disp, const string &order="store.id");
     void select_for_prov();
     int select_count_for_client(const string &sub_name, const string &disp);
     int select_count_for_provider();
@@ -38,7 +30,7 @@ public:
 private:
 
     shared_ptr<Store> st;
-
+    vector<shared_ptr<Product>> prod_list;
     shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
     shared_ptr<Provider> prov;

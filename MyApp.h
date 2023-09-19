@@ -5,8 +5,6 @@
 #ifndef BUTTON_WXWIDGETS_MYAPP_H
 #define BUTTON_WXWIDGETS_MYAPP_H
 
-#include "Engine.h"
-#include"wx/wx.h"
 #include "InitialPage.h"
 
 

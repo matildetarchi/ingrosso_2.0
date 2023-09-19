@@ -26,7 +26,7 @@ void dbStoreManager::add_to_db() {
     //metodo per aggiungere un nuovo prodotto al magazzino
     int index = st->get_num_prod()-1;
     //prendo l'id della sottocategoria alla quale appartiene il prodotto
-    vector<std::shared_ptr<Product>> prod_list;
+
     prod_list = st->get_products();
     prod = prod_list[index];
     string query_sub = "SELECT id FROM subcategories WHERE name='"+prod->get_subcategory()+"'";
@@ -91,7 +91,7 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
 
 }
 
-void dbStoreManager::select_for_client(const string &sub_name, const string &disp, const string &order) {
+vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_name, const string &disp, const string &order) {
 
     //metodo per seleziona tutti i prodotti dai vari magazzini
     //appartenenti a una determinata sottocategoria
@@ -149,8 +149,10 @@ void dbStoreManager::select_for_client(const string &sub_name, const string &dis
         prod->set_username_prov(username_prov);
         prod->set_quantity(0);
         prod->set_id_store(id_store);
-        st->add_to_store(prod);
+        prod_list.push_back(prod);
+
     }
+    return prod_list;
 }
 
     int dbStoreManager::select_count_for_client(const string &sub_name, const string &disp) {

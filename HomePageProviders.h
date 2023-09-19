@@ -5,16 +5,13 @@
 
 #ifndef INGROSSO_ONLINE_STOCKISTFRAME_H
 #define INGROSSO_ONLINE_STOCKISTFRAME_H
-#include "wx/wxhtml.h"
-#include "wx/wx.h"
+
 #include "InsertProductPage.h"
-#include "Engine.h"
 #include "ChooseStatusPage.h"
 #include "ProviderStorePage.h"
 #include "SelectionCityPage.h"
 #include "ManageProfilePage.h"
-#include "InitialPage.h"
-#include "Provider.h"
+
 
 
 class HomePageProviders: public wxFrame {

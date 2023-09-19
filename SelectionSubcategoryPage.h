@@ -5,15 +5,10 @@
 #ifndef BUTTON_WXWIDGETS_FRAME_H
 #define BUTTON_WXWIDGETS_FRAME_H
 
-#include "wx/wxhtml.h"
-#include "wx/wx.h"
-#include "dbCategoriesManager.h"
-#include "dbSubcategoriesManager.h"
+
 #include "ProductListPage.h"
-#include <string>
-#include <vector>
 #include "Engine.h"
-#include <memory>
+
 
 
 class SelectionSubcategoryPage: public wxFrame {

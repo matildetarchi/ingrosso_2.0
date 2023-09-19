@@ -11,8 +11,9 @@ dbOrdersManager::dbOrdersManager(const shared_ptr<Database>& d) {
         tab_order= make_shared<OrdersList>(user->get_username());
 }
 
-void dbOrdersManager::add_to_db() {
 
+
+void dbOrdersManager::add_to_db(){
 
     std::shared_ptr<Date> date = date->get_current_date();
     std::string dataString = date->to_string("%d/%m/%Y");
@@ -68,10 +69,9 @@ void dbOrdersManager::add_to_db() {
 void dbOrdersManager::change_status( const string &new_status, int id_order) {
 
     //metodo che cambia lo status dell'ordine da sospeso(S) a approvato(A) o rifiutato(D)
-    int id_client = user->get_db_id();
 
     //lancio la query di modifica
-    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = '" + to_string(id_order) +"' AND id_client = '" + to_string(id_client) + "';";
+    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = '" + to_string(id_order) +"'";
     db->exec(query);
 
     shared_ptr<OrdersList> order_s = user->get_order_list();

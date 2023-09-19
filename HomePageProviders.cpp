@@ -90,8 +90,7 @@ void HomePageProviders::OpenInsProd(wxCommandEvent &event) {
 }
 void HomePageProviders::ComeBack(wxCommandEvent &event) {
     Close();
-    InitialPage *home = new InitialPage(engine,_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
-    home->Show(TRUE);
+
 }
 void HomePageProviders::RemoveUser(wxCommandEvent &event)  {
 
@@ -101,8 +100,7 @@ void HomePageProviders::RemoveUser(wxCommandEvent &event)  {
         wxMessageBox("Account removed, you'll be sent to registracion page", "Error", wxICON_ERROR);
         prov->delete_objects_of_user();
         Close();
-        InitialPage *home = new InitialPage(engine,_T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
-        home->Show(TRUE);
+
     }
 }
 

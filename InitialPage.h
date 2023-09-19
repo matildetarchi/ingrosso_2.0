@@ -11,6 +11,8 @@
 #include "RegistrationPage.h"
 
 
+
+
 class InitialPage: public wxFrame// MainFrame is the class for our window,
 {
     // It contains the window and all objects in it

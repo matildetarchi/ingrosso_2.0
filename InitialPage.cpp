@@ -4,7 +4,6 @@
 
 #include "InitialPage.h"
 
-
 const long InitialPage::IdButtonRegister=::wxNewId();
 const long InitialPage::IdButtonAccess =::wxNewId();
 
@@ -33,14 +32,14 @@ InitialPage::InitialPage(Engine* engine, const wxString &title, const wxPoint &p
 
 void InitialPage::OnAccess(wxCommandEvent& event )
 {
-    Close();
+    Hide();
     LogInPage *MainWin2 = new LogInPage(e,_T("ACCESS"));
     MainWin2->Show(TRUE); // show the window
     // and finally, set it as the main window
     // Tells the OS to quit running this process
 }
 void InitialPage::OnRegister(wxCommandEvent& event){
-    Close();
+    Hide();
     RegistrationPage *MainWin3 = new RegistrationPage(e,_T("REGISTRATION"));
     MainWin3->Show(TRUE);
 }

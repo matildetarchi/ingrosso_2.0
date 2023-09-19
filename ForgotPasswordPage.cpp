@@ -117,8 +117,7 @@ void ForgotPasswordPage::Change(wxCommandEvent &event) {
             db_user->change_psw(tc1->GetValue().ToStdString(), psw);
             Close();
             wxLogMessage("Password Changed");
-            LogInPage *MainWin2 = new LogInPage(engine, _T("ACCESS"));
-            MainWin2->Show(TRUE);
+
         } else {
             wxLogMessage("The password should contain a number, a capital letter and a lenght >= of 8 characters");
         }
@@ -127,8 +126,6 @@ void ForgotPasswordPage::Change(wxCommandEvent &event) {
 
 void ForgotPasswordPage::ComeBack(wxCommandEvent &event) {
     Close();
-    LogInPage *MainWin2 = new LogInPage(engine,_T("ACCESS"));
-    MainWin2->Show(TRUE);
 }
 void ForgotPasswordPage::ViewPass(wxCommandEvent &event) {
     std::string pass = m_passwordText->GetValue().ToStdString();

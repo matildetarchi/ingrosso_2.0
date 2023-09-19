@@ -113,7 +113,7 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
         wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
     } else {
 
-        prov->accept_order(id_order);
+        db_order->change_status("A", id_order);
 
         if (ctrl == 0) {
             grid->DeleteRows(row);
@@ -140,7 +140,7 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
         wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
     } else {
 
-        prov->denied_order(id_order);
+        db_order->change_status("D", id_order);
 
         if (ctrl==0) {
             grid->DeleteRows(row);

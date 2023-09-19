@@ -7,14 +7,8 @@
 #define BUTTON_WXWIDGETS_REGISTERFRAME_H
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
-#include <string>
-#include "User.h"
-#include <iostream>
-#include <fstream>
-#include "InitialPage.h"
-#include "LogInPage.h"
 #include "Engine.h"
-#include "dbCityManager.h"
+
 
 
 
@@ -42,8 +36,8 @@ private:
     wxButton *Confirm;
     wxButton *ViewP;
     wxButton *Back;
-    wxRadioButton *Provider;
-    wxRadioButton *Client;
+    wxRadioButton *Prov;
+    wxRadioButton *Cli;
     std::string t;
     wxChoice* choiceC;
     wxTextCtrl *tcB_n;

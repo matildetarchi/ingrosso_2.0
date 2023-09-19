@@ -4,26 +4,19 @@
 
 #ifndef INGROSSO_ONLINE_ENGINE_H
 #define INGROSSO_ONLINE_ENGINE_H
-#include "User.h"
-#include "OrdersList.h"
-#include "store.h"
-#include "favourites.h"
-#include "cart.h"
 #include "Client.h"
 #include "Provider.h"
-#include "dbCartManager.h"
-#include "dbFavouritesManager.h"
-#include "dbOrdersManager.h"
-#include "dbStoreManager.h"
 #include "dbUserManager.h"
 #include "dbCategoriesManager.h"
 #include "dbSubcategoriesManager.h"
 #include "dbCityManager.h"
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <memory>
-#include "Database.h"
+#include "dbFavouritesManager.h"
+#include "dbCartManager.h"
+#include "dbStoreManager.h"
+#include "dbOrdersManager.h"
+
+
+
 
 
 class Engine {
@@ -33,6 +26,7 @@ public:
 
     bool do_registration(const shared_ptr <User>& user);
     bool do_login(const string &email, const string &psw);
+
     shared_ptr<User> get_user();
 
     shared_ptr<Provider> get_prov() {
@@ -68,7 +62,6 @@ public:
 private:
 
     shared_ptr<Client> client;
-    shared_ptr<User> user;
     shared_ptr<Provider> prov;
     shared_ptr<dbCartManager> db_cart;
     shared_ptr<dbOrdersManager> db_order;
@@ -79,6 +72,7 @@ private:
     shared_ptr<dbCategoriesManager> db_cate;
     shared_ptr<dbSubcategoriesManager> db_subc;
     shared_ptr<dbCityManager> db_city;
+    string type;
 
 
 };

@@ -102,12 +102,11 @@ void LogInPage::Access(wxCommandEvent &event) {
 
 void LogInPage::ComeBack(wxCommandEvent &event) {
     Close();
-    InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 350));
-    home->Show(TRUE);
+
 }
 
 void LogInPage::ForgotPassword(wxCommandEvent &event) {
-    Close();
+    Hide();
     ForgotPasswordPage *forpsw = new ForgotPasswordPage(engine, _T("FORGOT PASSWORD"));
     forpsw->Show(TRUE);
 }

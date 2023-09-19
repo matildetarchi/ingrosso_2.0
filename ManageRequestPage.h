@@ -5,22 +5,11 @@
 #ifndef INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
 #define INGROSSO_ONLINE_MANAGEREQUESTPAGE_H
 
-#include "wx/wx.h"
-#include "wx/wxhtml.h"
-#include "wx/grid.h"
+
 #include "Engine.h"
-#include "dbOrdersManager.h"
-#include "OrdersList.h"
-#include "Order.h"
-#include "User.h"
 #include "SingleOrderProviderPage.h"
-#include <utility>
-#include <vector>
-#include <iostream>
-#include <string>
-#include <memory>
 #include <ctime>
-#include "Provider.h"
+
 
 class ManageRequestPage: public wxDialog{
 public:
