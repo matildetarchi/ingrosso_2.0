@@ -9,12 +9,8 @@
 #include "wx/wxhtml.h"
 #include "wx/string.h"
 #include <wx/spinctrl.h>
-#include <string>
-#include "HomePageProviders.h"
-#include "store.h"
 #include "Engine.h"
-#include "dbStoreManager.h"
-#include "Product.h"
+
 
 
 class ModifyProductPage : public wxDialog{

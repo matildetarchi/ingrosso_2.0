@@ -7,10 +7,7 @@
 
 #define put_in 0
 #define cancel 1
-#include "store.h"
-#include <iostream>
-#include <string>
-#include <vector>
+#include "Store.h"
 #include "Order.h"
 
 using namespace std;

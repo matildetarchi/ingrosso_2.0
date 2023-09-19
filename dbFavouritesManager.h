@@ -5,18 +5,11 @@
 #ifndef INGROSSO_ONLINE_DBFAVOURITESMANAGER_H
 #define INGROSSO_ONLINE_DBFAVOURITESMANAGER_H
 
-
-#include "Database.h"
-#include <SQLiteCpp/Database.h>
-#include <memory>
-#include <utility>
-#include <vector>
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <string>
 #include "Client.h"
+#include "Database.h"
 
-#include "User.h"
+
+
 
 
 using namespace std;
@@ -29,8 +22,8 @@ public:
 
     void set_user(shared_ptr<Client> o){
         client = std::move(o);
-
     }
+
     void add_to_db();
     void remove_all();
     void remove_prod(int id);

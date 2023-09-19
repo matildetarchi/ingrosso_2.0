@@ -4,7 +4,7 @@
 
 #include "Client.h"
 
-#include <utility>
+
 using namespace std;
 
 Client::Client() : User(){}
@@ -13,22 +13,52 @@ Client::Client( const string &t, const string &bn,const string &a, const string 
                const string &password, const string &us, const string &c) : User(t, bn, a, e, password, us, c){
 
     cart = make_unique<Cart>(us);
-    order = make_unique<OrdersList>(us);
     fav = make_unique<Favourites>(us);
 }
 
 Client::~Client() = default;
 
-void Client::do_order(const shared_ptr<Order>& o) {
-    order->add_order(o);
-}
 
 void Client::add_to_cart(shared_ptr<Product> p) {
-    cart->add_product(std::move(p));
+    cart->add_product(p);
 }
 
 void Client::add_to_fav(shared_ptr<Product> p) {
-    fav->add_product(std::move(p));
+    fav->add_product(p);
+}
+
+bool Client::remove_from_cart(int id_prod){
+
+    vector<std::shared_ptr<Product>> prod_list;
+    prod_list = cart->get_products();
+    int num_prod = prod_list.size();
+    int i = 0;
+    while ( i<= num_prod && prod_list[i]->get_id_store() != id_prod){
+        i++;
+    }
+    if(i>num_prod)
+        return false;
+    else {
+        cart->remove_one(i);
+        return true;
+    }
+}
+
+bool Client::remove_from_fav(int id_prod){
+
+    vector<std::shared_ptr<Product>> prod_list;
+    prod_list = fav->get_products();
+    int num_prod = prod_list.size();
+    int i = 0;
+    while ( i<= num_prod && prod_list[i]->get_id_store() != id_prod){
+        i++;
+    }
+    if(i>num_prod)
+        return false;
+    else {
+        fav->remove_one(i);
+        return true;
+    }
 }
 
 void Client::delete_objects_of_user() {

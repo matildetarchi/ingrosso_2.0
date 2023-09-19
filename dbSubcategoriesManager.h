@@ -6,13 +6,7 @@
 #define INGROSSO_ONLINE_DBSUBCATEGORIESMANAGER_H
 
 #include "dbCategoriesManager.h"
-#include <string>
-#include <SQLiteCpp/Database.h>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <memory>
-#include "Database.h"
+
 
 using namespace std;
 class dbSubcategoriesManager{

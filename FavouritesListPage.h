@@ -7,19 +7,10 @@
 
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
-#include <string>
-#include "User.h"
-#include <iostream>
-#include <fstream>
 #include "wx/grid.h"
-#include "favourites.h"
 #include <wx/spinctrl.h>
 #include "Engine.h"
-#include <memory>
-#include "dbFavouritesManager.h"
-#include "Product.h"
-#include "dbCartManager.h"
-#include "cart.h"
+
 
 
 
@@ -49,7 +40,7 @@ private:
     wxGrid *grid;
     wxSpinCtrl* spinCtrl;
     Engine *engine;
-    std::shared_ptr<User> user;
+    std::shared_ptr<Client> client;
     std::shared_ptr<dbFavouritesManager> db_fav;
     std::shared_ptr<Favourites> fav;
     std::vector<std::shared_ptr<Product>> prod_list;

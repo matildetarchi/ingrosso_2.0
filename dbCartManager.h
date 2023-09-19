@@ -6,20 +6,12 @@
 #define INGROSSO_ONLINE_DBCARTMANAGER_H
 
 
-#include "Database.h"
-#include "SQLiteCpp/Database.h"
-#include "cart.h"
-#include <utility>
-#include <vector>
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <string>
-#include <memory>
-#include "User.h"
 #include "Client.h"
+#include "Database.h"
 
 
 using namespace std;
+
 
 class dbCartManager {
 public:
@@ -43,7 +35,7 @@ private:
     shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
     shared_ptr<Client> client;
-    vector<std::shared_ptr<Product>> prod_list;
+    vector<shared_ptr<Product>> prod_list;
 
 };
 

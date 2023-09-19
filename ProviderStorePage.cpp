@@ -96,7 +96,7 @@ void ProviderStorePage::DeleteProduct(wxCommandEvent &event) {
         }
         row = selectedRows[i];
         int id_prod= prod_list[i]->get_id_store();
-        if(!prov->delete_prod(id_prod)){
+        if(!db_store->remove_from_db(id_prod)){
             wxMessageBox("You can't remove this product from your store because is in someone's cart or favourites list or not accepted/denied order",
                          "Error", wxICON_ERROR);
         } else {

@@ -6,15 +6,8 @@
 #define INGROSSO_ONLINE_CHOOSESTATUSPAGE_H
 
 
-
-
-#include "wx/wxhtml.h"
-#include "wx/wx.h"
 #include "OrderHistoryForClientPage.h"
 #include "ManageRequestPage.h"
-#include "Engine.h"
-#include <string>
-#include <vector>
 #include "User.h"
 
 class ChooseStatusPage : public wxFrame {
@@ -36,7 +29,7 @@ private:
     wxChoice* choice;
     std::string type;
     Engine* engine;
-    shared_ptr<User> user;
+    std::shared_ptr<User> user;
 };
 
 #endif //INGROSSO_ONLINE_CHOOSESTATUSPAGE_H

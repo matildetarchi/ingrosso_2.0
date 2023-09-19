@@ -5,13 +5,9 @@
 #ifndef INGROSSO_ONLINE_SELECTIONCITYPAGE_H
 #define INGROSSO_ONLINE_SELECTIONCITYPAGE_H
 
-#include "wx/wxhtml.h"
-#include "wx/wx.h"
+
 #include "dbCityManager.h"
 #include "UsersDataListPage.h"
-#include <string>
-#include <vector>
-#include "Engine.h"
 
 class SelectionCityPage : public wxFrame {
 public:

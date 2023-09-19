@@ -5,13 +5,12 @@
 #ifndef INGROSSO_ONLINE_USER_H
 #define INGROSSO_ONLINE_USER_H
 
-#include <string>
-#include <vector>
+
 #include "OrdersList.h"
-#include "cart.h"
-#include "favourites.h"
-#include "store.h"
-#include <memory>
+#include "Cart.h"
+#include "Favourites.h"
+#include <utility>
+
 
 using namespace std;
 class User {
@@ -21,19 +20,11 @@ public:
 
     virtual ~User() = default;
 
-    shared_ptr<Cart> get_cart(){
-        return cart;
-    };
 
-    shared_ptr<Favourites> get_fav(){
-        return fav;
-    };
     shared_ptr<OrdersList> get_order_list(){
         return order;
     };
-    shared_ptr<Store> get_store() {
-        return store;
-    };
+
 
 
     const string &get_type() {
@@ -101,6 +92,23 @@ public:
 
     virtual void delete_objects_of_user();
 
+
+
+    virtual shared_ptr<Cart> get_cart() = 0;
+
+    virtual shared_ptr<Favourites> get_fav() = 0;
+
+
+    virtual void add_to_cart(shared_ptr<Product> p) = 0;
+    virtual  void add_to_fav(shared_ptr<Product> p) = 0;
+    virtual bool remove_from_cart(int id_prod) = 0;
+    virtual bool remove_from_fav(int id_prod) = 0;
+
+
+    virtual shared_ptr<Store> get_store()  = 0;
+    virtual bool modify_prod (int id_store, string desc, double price, int a_q ) = 0;
+    virtual bool add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category) = 0;
+
 private:
     string type;
     string business_name;
@@ -114,6 +122,7 @@ private:
     shared_ptr <Cart> cart;
     shared_ptr <Favourites> fav;
     shared_ptr <Store> store;
+
 };
 
 #endif //INGROSSO_ONLINE_USER_H

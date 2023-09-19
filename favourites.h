@@ -4,10 +4,11 @@
 #ifndef INGROSSO_ONLINE_FAVOURITES_H
 #define INGROSSO_ONLINE_FAVOURITES_H
 
-#include <string>
+
 #include <vector>
 #include "Product.h"
 #include <memory>
+
 #define put_in 0
 #define cancel 1
 using namespace std;

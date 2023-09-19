@@ -60,9 +60,9 @@ RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
 
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
-    Provider=new wxRadioButton(this,IdButtonProvider, _T("Provider"), wxDefaultPosition,wxDefaultSize,0 );
+    Prov=new wxRadioButton(this,IdButtonProvider, _T("Provider"), wxDefaultPosition,wxDefaultSize,0 );
     ViewP=new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
-    Client=new wxRadioButton(this, IdButtonClient, _T("Client"), wxDefaultPosition, wxDefaultSize, 0);
+    Cli=new wxRadioButton(this, IdButtonClient, _T("Client"), wxDefaultPosition, wxDefaultSize, 0);
     m_passwordConf = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(120, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
     m_passwordConf->Bind(wxEVT_TEXT, &RegistrationPage::OnTextChange, this);
     txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
@@ -74,8 +74,8 @@ RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
     tcEm=new wxTextCtrl(this, -1);
     m_passwordText = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
 
-    fgs1->Add(Provider,0);
-    fgs1->Add(Client,0, wxLEFT, 70);
+    fgs1->Add(Prov,0);
+    fgs1->Add(Cli,0, wxLEFT, 70);
     fgs->Add(type);
     fgs->Insert(1,fgs1);
     fgs->Insert(2,business_name);
@@ -144,14 +144,14 @@ void RegistrationPage::Register(wxCommandEvent &event) {
                 control_upper=control_upper+1;
             }
         }
+        shared_ptr<User> user;
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
-
-
-            shared_ptr<User> user = std::make_shared<User> (t, b_n, a, em, psw, u, city_name);
+            if (t == "F")
+                user = make_shared<Provider> (t, b_n, a, em, psw, u, city_name);
+            else
+                user = make_shared<Client>(t, b_n, a, em, psw, u, city_name);
             if (engine->do_registration(user)) {
                 Close();
-                InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
-                home->Show(TRUE);
             } else {
                 wxLogMessage("There is already an account with this email");
             }
@@ -165,8 +165,7 @@ void RegistrationPage::Register(wxCommandEvent &event) {
 }
 void RegistrationPage::ComeBack(wxCommandEvent &event) {
     Close();
-    InitialPage *home = new InitialPage(engine, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
-    home->Show(TRUE);
+
 }
 void RegistrationPage::ViewPass(wxCommandEvent &event) {
     fgs->Hide(m_passwordText);

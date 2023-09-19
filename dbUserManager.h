@@ -6,13 +6,7 @@
 #define INGROSSO_ONLINE_DBUSERMANAGER_H
 
 
-#include <string>
-#include <vector>
-#include <SQLiteCpp/Statement.h>
-#include <iostream>
-#include <SQLiteCpp/Database.h>
 #include "User.h"
-#include <memory>
 #include "Database.h"
 
 #define accesso 0
@@ -27,9 +21,7 @@ public:
     void set_user(shared_ptr<User> us){
         user=std::move(us);
     }
-    shared_ptr<User> get_user() {
-        return user;
-    }
+
 
     void add_to_db();
     bool access_reg(const string &email, const string &psw, int control);

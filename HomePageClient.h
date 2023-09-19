@@ -7,17 +7,14 @@
 #define INGROSSO_ONLINE_CLIENTFRAME_H
 
 
-#include <wx/wx.h>
-#include "InitialPage.h"
-#include "Engine.h"
+
 #include "SelectionSubcategoryPage.h"
 #include "ChooseStatusPage.h"
 #include "SelectionCityPage.h"
 #include "ManageProfilePage.h"
 #include "FavouritesListPage.h"
 #include "CartPage.h"
-#include "User.h"
-#include "dbUserManager.h"
+
 
 class HomePageClient: public wxFrame {
 public:
@@ -53,7 +50,7 @@ private:
     wxButton *Back;
     std::string username;
     std::string type;
-    shared_ptr<User> user;
+    shared_ptr<Client> client;
     Engine *eng;
     std::shared_ptr<dbUserManager> db_user;
 

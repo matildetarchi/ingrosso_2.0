@@ -1,5 +1,5 @@
 //
-// Created by dario on 16/06/2023.
+ // Created by dario on 16/06/2023.
 //
 
 #include "Engine.h"
@@ -28,6 +28,7 @@ Engine::Engine() {
 
 bool Engine::do_registration(const shared_ptr<User>& u) {
 
+
     string psw = u->get_psw();
     string email = u->get_email();
     if( db_user->access_reg(email,psw,1)){
@@ -45,7 +46,7 @@ bool Engine::do_login(const string &email, const string &psw) {
 
         string username = db_user->select_username(email);
 
-        string type = db_user->select_type(email);
+        type = db_user->select_type(email);
 
 
         if(type == "C") {
@@ -74,11 +75,10 @@ bool Engine::do_login(const string &email, const string &psw) {
 
             db_store->set_user(prov);
             db_store->select_for_prov();
-            prov->set_db_store(db_store);
+
 
             db_order->set_user(prov);
             db_order->select_for_provider();
-            prov->set_db_order(db_order);
 
         }
         return true;
@@ -87,7 +87,8 @@ bool Engine::do_login(const string &email, const string &psw) {
 }
 
 shared_ptr<User> Engine::get_user() {
-    if(user->get_type() == "F")
+
+    if(type == "F")
         return prov;
     else
         return client;

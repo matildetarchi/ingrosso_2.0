@@ -23,14 +23,13 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
-    user = engine->get_user();
-    username = user->get_username();
+    client = engine->get_client();
     db_cart = engine->get_db_cart();
     db_ord = engine->get_db_order();
 
-    db_cart->select();
+
     int num_prod = db_cart->select_count_of_prod();
-    cart = user->get_cart();
+    cart = client->get_cart();
     prod_list = cart->get_products();
 
 
@@ -96,6 +95,7 @@ void CartPage::IsRemove(wxCommandEvent &event) {
         }
 
         int id = prod_list[row]->get_id_store();
+        client->remove_from_cart(id);
         db_cart->remove_prod(id);
         grid->DeleteRows(row);
     }

@@ -4,15 +4,11 @@
 
 #ifndef INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
 #define INGROSSO_ONLINE_PROVIDERSTOREPAGE_H
-#include "wx/wx.h"
-#include "wx/wxhtml.h"
+
 #include "wx/grid.h"
-#include "store.h"
 #include "ModifyProductPage.h"
-#include "Engine.h"
-#include "Provider.h"
-#include "dbStoreManager.h"
-#include "Product.h"
+
+
 
 class ProviderStorePage: public wxDialog{
 public:

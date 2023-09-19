@@ -6,22 +6,14 @@
 #define INGROSSO_ONLINE_PRODUCTLISTPAGE_H
 #include "wx/wxhtml.h"
 #include "wx/wx.h"
-#include <string>
-#include "User.h"
-#include <iostream>
+#include "Client.h"
 #include <fstream>
 #include "wx/grid.h"
 #include "Engine.h"
-#include "favourites.h"
-#include "cart.h"
 #include <wx/app.h>
-#include <memory>
 #include <wx/spinctrl.h>
 #include "dbStoreManager.h"
-#include "store.h"
-#include "Product.h"
-#include "dbFavouritesManager.h"
-#include "dbCartManager.h"
+
 
 
 
@@ -29,6 +21,7 @@
 class ProductListPage : public wxFrame {
 public:
     ProductListPage(Engine *e, const wxString &title, std::string sub, std::string disp);
+
     static const long IdButtonFav;
     static const long IdButtonCart;
     static const long IdButtonInsert;
@@ -56,7 +49,7 @@ private:
     wxChoice* choiceOrder;
     wxChoice* choiceQuantity;
     Engine *engine;
-    std::shared_ptr<User> user;
+    std::shared_ptr<Client> client;
     std::shared_ptr<dbStoreManager> db_store;
     std::vector<shared_ptr<Product>> prod_list;
     std::shared_ptr<Store> store;

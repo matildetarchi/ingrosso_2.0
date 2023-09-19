@@ -5,11 +5,9 @@
 #ifndef INGROSSO_ONLINE_CART_H
 #define INGROSSO_ONLINE_CART_H
 
-#include <string>
-#include "store.h"
-#include "Product.h"
-#include <vector>
-#include <memory>
+
+#include "Store.h"
+
 #define put_in 0
 #define cancel 1
 

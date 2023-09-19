@@ -6,15 +6,10 @@
 #ifndef BUTTON_WXWIDGETS_NEWFRAME_H
 #define BUTTON_WXWIDGETS_NEWFRAME_H
 
-#include "User.h"
 #include "HomePageClient.h"
 #include "HomePageProviders.h"
-#include "InitialPage.h"
 #include "ForgotPasswordPage.h"
-#include "wx/wx.h"
-#include "wx/wxhtml.h"
-#include <wx/hyperlink.h>
-#include "Engine.h"
+
 
 
 class LogInPage : public wxFrame{

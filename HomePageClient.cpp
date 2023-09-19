@@ -35,10 +35,10 @@ END_EVENT_TABLE()
 HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPoint& pos, const wxSize& size): eng(engine),
          wxFrame(NULL, wxID_ANY, title, pos, size){
 
-    user=eng->get_user();
+    client = eng->get_client();
 
-    username=user->get_username();
-    type= user->get_type();
+    username = client->get_username();
+    type = client->get_type();
     db_user = engine->get_db_user();
 
 
@@ -113,8 +113,6 @@ void HomePageClient::OpenOrdersList(wxCommandEvent &event) {
 
 void HomePageClient::ComeBack(wxCommandEvent &event) {
     Close();
-    InitialPage *home = new InitialPage(eng, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
-    home->Show(TRUE);
 }
 
 void HomePageClient::RemoveUser(wxCommandEvent &event) {
@@ -123,9 +121,8 @@ void HomePageClient::RemoveUser(wxCommandEvent &event) {
         wxMessageBox("You can't delete your account because you have orders not accepted/denied", "Error", wxICON_ERROR);
     } else {
         wxMessageBox("Account removed, you'll be sent to registracion page", "Error", wxICON_ERROR);
+        client->delete_objects_of_user();
         Close();
-        InitialPage *home = new InitialPage(eng, _T("YOUR MARKET RIGHT HERE"), wxPoint(50, 20), wxSize(500, 300));
-        home->Show(TRUE);
     }
 }
 

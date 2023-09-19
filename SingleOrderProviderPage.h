@@ -8,13 +8,9 @@
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/grid.h"
-#include "OrdersList.h"
-#include <string>
-#include <vector>
-#include <iostream>
 #include <fstream>
 #include "Engine.h"
-#include "Provider.h"
+
 
 class SingleOrderProviderPage: public wxDialog {
 public:

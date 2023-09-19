@@ -5,14 +5,12 @@
 #ifndef INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
 #define INGROSSO_ONLINE_MANAGEPROFILEPAGE_H
 
+
 #include "wx/wx.h"
 #include "wx/wxhtml.h"
 #include "wx/string.h"
-#include <string>
-#include "HomePageProviders.h"
+#include <wx/spinctrl.h>
 #include "Engine.h"
-#include "dbCityManager.h"
-#include "User.h"
 #include "wx/textctrl.h"
 
 
