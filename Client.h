@@ -29,7 +29,6 @@ public:
 
     void delete_objects_of_user() override;
 
-
     void add_to_cart(shared_ptr<Product> p) override;
     void add_to_fav(shared_ptr<Product> p) override;
     bool remove_from_cart(int id_prod) override;

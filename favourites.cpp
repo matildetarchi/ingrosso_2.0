@@ -2,7 +2,7 @@
 // Created by Matilde Tarchi on 02/08/22.
 //
 
-#include "Favourites.h"
+#include "favourites.h"
 using namespace std;
 
 
@@ -25,7 +25,7 @@ void Favourites::add_product( std::shared_ptr<Product> prod){
 void Favourites:: update_num_prod(int control) {
     if (control==put_in) {
         num_prod = num_prod + 1;
-    } else if (control==cancel) {
+    } else if (control==cc) {
         num_prod=num_prod-1;
     }
 }
@@ -34,7 +34,7 @@ void Favourites::remove_one(int index) {
     if(index<products.size()){
         auto iteretor_to_remove = products.begin()+index;
         products.erase(iteretor_to_remove);
-        update_num_prod(cancel);
+        update_num_prod(cc);
     }
     else
         std::cout<<"Invalid index provided."<< std::endl;

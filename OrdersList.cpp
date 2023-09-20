@@ -35,7 +35,7 @@ void OrdersList::remove_one(int index) {
     if(index<orders.size()){
         auto iteretor_to_remove=orders.begin()+index;
         orders.erase(iteretor_to_remove);
-        update_num(cancel);
+        update_num(cc);
     }
     else
         std::cout<<"Invalid index provided."<< std::endl;

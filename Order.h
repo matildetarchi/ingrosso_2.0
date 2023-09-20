@@ -54,12 +54,9 @@ public:
 
 
     double get_total(const shared_ptr<Order>& o);
-
-
     void add_to_order(shared_ptr<Product> p);
 
     void update_num(int control);
-
     void remove_one(int index);
     void remove_all();
 

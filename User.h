@@ -7,8 +7,8 @@
 
 
 #include "OrdersList.h"
-#include "Cart.h"
-#include "Favourites.h"
+#include "cart.h"
+#include "favourites.h"
 #include <utility>
 
 

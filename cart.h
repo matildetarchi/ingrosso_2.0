@@ -6,10 +6,10 @@
 #define INGROSSO_ONLINE_CART_H
 
 
-#include "Store.h"
+#include "store.h"
 
 #define put_in 0
-#define cancel 1
+#define cc 1
 
 
 using namespace std;

@@ -10,7 +10,7 @@
 #include <memory>
 
 #define put_in 0
-#define cancel 1
+#define cc 1
 using namespace std;
 
 class Favourites{

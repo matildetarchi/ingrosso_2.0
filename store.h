@@ -5,19 +5,28 @@
 #ifndef INGROSSO_ONLINE_STORE_H
 #define INGROSSO_ONLINE_STORE_H
 
-#define add 0
-#define cancel 1
+#define put_in 0
+#define cc 1
 #include <vector>
 #include "Product.h"
+#include <memory>
 
 using namespace std;
 class Store{
 public:
 
+    Store();
     explicit Store(const string &provider);
 
     ~Store();
 
+    vector <std::shared_ptr<Product>> get_products() {
+        return store;
+    }
+
+    int get_id() {
+        return id;
+    }
 
     int get_num_prod() const {
         return num_prod;
@@ -27,17 +36,18 @@ public:
         return username_prov;
     }
 
-    void add_to_store(Product* product);
+    void add_to_store(const shared_ptr<Product>& product);
     void update_num(int control);
     void remove_one(int index);
     void remove_all();
 
-    vector<Product*> store;
 
 private:
+    int id;
     string username_prov;
     int num_prod;
-    Product* prod;
+    vector<std::shared_ptr<Product>> store;
+
 
 };
 

@@ -6,8 +6,8 @@
 #define INGROSSO_ONLINE_ORDERSLIST_H
 
 #define put_in 0
-#define cancel 1
-#include "Store.h"
+#define cc 1
+#include "store.h"
 #include "Order.h"
 
 using namespace std;

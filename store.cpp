@@ -3,7 +3,7 @@
 //
 
 
-#include "Store.h"
+#include "store.h"
 using namespace std;
 
 
@@ -37,7 +37,7 @@ void Store::remove_one(int index) {
     if(index<store.size()){
         auto iteretor_to_remove= store.begin()+index;
         store.erase(iteretor_to_remove);
-        update_num(cancel);
+        update_num(cc);
     }
     else
         std::cout<<"Invalid index provided."<< std::endl;
