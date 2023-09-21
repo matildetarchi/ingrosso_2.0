@@ -13,7 +13,7 @@ class StoreSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
         //deve essere un fornitore
-        user = make_unique<Provider>("P", "matilde", "via dini", email, "psw", "Mama", "Firenze");
+        user = make_unique<Provider>("F", "matilde", "via dini", email, "psw", "Mama", "Firenze");
         store = make_unique<Store>("Mama");
     }
 

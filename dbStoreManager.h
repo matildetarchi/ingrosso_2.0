@@ -19,6 +19,10 @@ public:
         prov = std::move(o);
     }
 
+    void set_store() {
+        st = prov->get_store();
+    }
+
     void add_to_db();
     bool remove_from_db(int id_store);
     void change_data(int index, const string& desc_prod, double price, int quantity);

@@ -107,7 +107,7 @@ void HomePageClient::OpenFavoritesList(wxCommandEvent &event) {
 }
 
 void HomePageClient::OpenOrdersList(wxCommandEvent &event) {
-    ChooseStatusPage *ord= new ChooseStatusPage(eng, _T("ORDERS"));
+    OrderHistoryForClientPage *ord= new OrderHistoryForClientPage(eng, _T("ORDERS"));
     ord->Show(TRUE);
 }
 

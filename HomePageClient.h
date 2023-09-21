@@ -9,7 +9,7 @@
 
 
 #include "SelectionSubcategoryPage.h"
-#include "ChooseStatusPage.h"
+#include "OrderHistoryForClientPage.h"
 #include "SelectionCityPage.h"
 #include "ManageProfilePage.h"
 #include "FavouritesListPage.h"

@@ -16,7 +16,7 @@ BEGIN_EVENT_TABLE (OrderHistoryForClientPage, wxDialog)
 
 END_EVENT_TABLE()
 
-OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &title, int control): engine(e), ctrl(control),
+OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &title): engine(e),
         wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
@@ -51,8 +51,9 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 
     }
     orders_list= client->get_order_list();
-    order= orders_list->get_orders();
-
+    if(orders_list != NULL) {
+        order = orders_list->get_orders();
+    }
     for (int i = 0; i < row; i++) {
         shared_ptr<Date> d= order[i]->get_date();
         std::string date = d->to_string("%d/%m/%Y");
@@ -141,25 +142,3 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
     }
 
 }
-/*
-void OrderHistoryForClientPage::OnChoice(wxCommandEvent& event) {
-
-    string order_choice=event.GetString().ToStdString();
-    mat_order=db_order->select_for_client();
-    for (int i = 0; i < table.select_count_for_client(username,ctrl); i++) {
-        if (ctrl==0) {
-            for (int col = 0; col < 3; col++) {
-                grid->SetReadOnly(i, col, true);
-                grid->SetCellValue(i, col, mat_order[i][col]);
-            }
-        } else {
-            for (int col = 0; col < 4; col++) {
-                grid->SetReadOnly(i, col, true);
-                grid->SetCellValue(i, col, mat_order[i][col]);
-            }
-        }
-    }
-    grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    grid->AutoSize();
-}
-*/

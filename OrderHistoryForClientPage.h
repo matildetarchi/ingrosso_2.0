@@ -13,7 +13,7 @@
 
 class OrderHistoryForClientPage : public wxDialog{
 public:
-    OrderHistoryForClientPage(Engine *e, const wxString& title, int control);
+    OrderHistoryForClientPage(Engine *e, const wxString& title);
 
     static const long IdButtonCancel;
     static const long IdButtonView;

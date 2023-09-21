@@ -23,6 +23,9 @@ public:
     void set_user(shared_ptr<Client> o){
         client = std::move(o);
     }
+    void set_fav(){
+        fav = client->get_fav();
+    }
 
     void add_to_db();
     void remove_all();

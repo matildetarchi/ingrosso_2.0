@@ -21,6 +21,9 @@ public:
     void set_user(shared_ptr<Client> o){
         client = std::move(o);
     }
+    void set_cart(){
+        cart = client->get_cart();
+    }
 
 
     void add_to_db();

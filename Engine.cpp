@@ -7,7 +7,7 @@
 Engine::Engine() {
 
     // Specifica il percorso del tuo database SQLite
-    const std::string dbPath = "ingrosso_2.0/ingrossodb.sqlite";
+    const std::string dbPath = "ingrosso_2.0/database/ingrossodb.sqlite";
 
     // Apri il database
     //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
@@ -48,7 +48,6 @@ bool Engine::do_login(const string &email, const string &psw) {
 
         type = db_user->select_type(email);
 
-
         if(type == "C") {
 
             client = make_shared<Client>();
@@ -59,12 +58,15 @@ bool Engine::do_login(const string &email, const string &psw) {
             // così anche per set_favourites
             // vedi db_order
             db_cart->set_user(client);
+            db_cart->set_cart();
             db_cart->select();
 
             db_fav->set_user(client);
+            db_fav->set_fav();
             db_fav->select();
 
             db_order->set_user(client);
+            db_order->set_orderlist();
             db_order->select_for_client();
 
         } else {
@@ -72,12 +74,13 @@ bool Engine::do_login(const string &email, const string &psw) {
             db_user->set_user(prov);
             db_user->select_data(username);
 
-
             db_store->set_user(prov);
+            db_store->set_store();
             db_store->select_for_prov();
 
 
             db_order->set_user(prov);
+            db_order->set_orderlist();
             db_order->select_for_provider();
 
         }
@@ -87,9 +90,8 @@ bool Engine::do_login(const string &email, const string &psw) {
 }
 
 shared_ptr<User> Engine::get_user() {
-
-    if(type == "F")
-        return prov;
-    else
+    if(type == "C")
         return client;
+    else
+        return prov;
 }

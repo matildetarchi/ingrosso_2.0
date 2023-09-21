@@ -53,7 +53,9 @@ void dbUserManager::add_to_db() {
     //funzione che aggiunge un nuovo utente al database
 
     //lancio la query di insert
-    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" + user->get_city() + "', '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "')";
+    string query_id_city="SELECT id FROM cities WHERE name='"+user->get_city()+"'";
+    int id_city = db->execAndGet(query_id_city).getInt();
+    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" + to_string(id_city) + "', '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "')";
     db->exec(query);
     string i_u= "SELECT id FROM users WHERE email= '" + user->get_email() + "'";
     int id_user=db->execAndGet(i_u);
@@ -201,6 +203,7 @@ void dbUserManager::select_data(const string &username) {
         int id_city = query.getColumn(2);
         string select_city_name = "SELECT name FROM cities WHERE id = '" + to_string(id_city) + "'";
         string city_name = db->execAndGet(select_city_name).getString();
+
         string select_type = "SELECT type FROM users WHERE username = '" + username + "'";
         string type = db->execAndGet(select_type).getString();
 
@@ -259,14 +262,26 @@ void dbUserManager::change_psw(const string &email, const string &new_psw) {
 
 vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const string &city) {
     vector<shared_ptr<User>> user_list;
-    string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
-    int id_city= db->execAndGet(select_id_city);
+    string user_data;
+    if (city!="All") {
+        string select_id_city = "SELECT id FROM cities WHERE name = '" + city + "' ";
+        int id_city = db->execAndGet(select_id_city);
 
-    string user_data = "SELECT  business_name, address, email, password, username, id FROM users WHERE type = '"+ type+"' AND id_city = '"+
-            to_string(id_city)+"' ";
-    SQLite::Statement query_user(*db,user_data);
-    user->set_type(type);
-    user->set_city(city);
+        user_data =
+                "SELECT  business_name, address, email, password, username, name, users.id FROM users, cities WHERE type = '" + type +
+                "' AND id_city = '" +
+                to_string(id_city) + "' AND id_city=cities.id";
+        SQLite::Statement query_user(*db, user_data);
+        user->set_type(type);
+        user->set_city(city);
+    } else {
+        user_data =
+                "SELECT  business_name, address, email, password, username, name, users.id FROM users, cities WHERE type = '" + type +
+                "' AND cities.id=id_city";
+        user->set_type(type);
+    }
+    SQLite::Statement query_user(*db, user_data);
+
     while(query_user.executeStep()){
 
         string b_n = query_user.getColumn(0).getText();
@@ -274,7 +289,8 @@ vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const s
         string email = query_user.getColumn(2).getText();
         string psw = query_user.getColumn(3).getText();
         string username = query_user.getColumn(4);
-        int id_us = query_user.getColumn(5);
+        string us_city = query_user.getColumn(5);
+        int id_us = query_user.getColumn(6);
         user->set_id_db(id_us);
         user->set_password(psw);
         user->set_email(email);
@@ -282,6 +298,7 @@ vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const s
         user->set_bus_name(b_n);
         user->set_username(username);
         user->set_type(type);
+        user->set_city(us_city);
 
         user_list.push_back(user);
 
@@ -291,13 +308,20 @@ vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const s
 }
 
 int dbUserManager::select_count_users(const string &type, const string &city) {
-    string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
-    int id_city= db->execAndGet(select_id_city);
+    int count;
+    if ( city!="All") {
+        string select_id_city = "SELECT id FROM cities WHERE name = '" + city + "' ";
+        int id_city = db->execAndGet(select_id_city);
 
-    string user_data = "SELECT  count(*) FROM users WHERE type = '"+ type+"' AND id_city = '"+
-                       to_string(id_city)+"' ";
+        string user_data = "SELECT  count(*) FROM users WHERE type = '" + type + "' AND id_city = '" +
+                           to_string(id_city) + "' ";
 
-    int count = db->execAndGet(user_data);
+        count = db->execAndGet(user_data);
+    } else {
+        string user_data = "SELECT  count(*) FROM users WHERE type = '" + type + "'";
+
+        count = db->execAndGet(user_data);
+    }
     return count ;
 }
 

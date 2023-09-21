@@ -21,6 +21,9 @@ public:
     void set_user(const shared_ptr<User>& u){
        user = u;
     }
+    void set_orderlist(){
+        tab_order= make_shared<OrdersList>(user->get_username());
+    }
 
     void add_to_db();
 

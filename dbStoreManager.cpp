@@ -8,13 +8,11 @@
 dbStoreManager::dbStoreManager(const shared_ptr<Database>& d) {
     db = d->get_db();
     prod=make_shared<Product>();
-    st = prov->get_store();
 }
 
 
 
 void dbStoreManager::change_data(int index, const string& desc_prod, double price, int available_quantity){
-
     //metodo per cambiare i valori di un prodotto del proprio magazzino
     //lancio la query
     string query = "UPDATE store SET desc_prod = '"+ desc_prod +"', price_product ='"+ to_string(price) +"', available_quantity ='"+to_string(available_quantity)+"' WHERE id = '"+to_string(index)+"'";
@@ -40,9 +38,9 @@ void dbStoreManager::add_to_db() {
     string query_id_inter = "SELECT MAX(id) FROM store WHERE id_prov ='"+ to_string(id_prov)+"'";
     int id_intern = db->execAndGet(query_id_inter).getInt();
 
-    //lancio la query di inserimento nel db
-    string query_insert = "INSERT INTO store (available_quantity, price_product, desc_prod, id_sub, id_prov, id_intern) VALUES"
-                          " ('"+to_string(prod->get_quantity())+ "', '" + to_string(prod->get_price()) + "', '"+prod->get_desc()+"', '"+to_string(id_sub)+"', '"+to_string(id_prov)+"', '"+to_string(id_intern+1)+"');";
+    //lancio la query d'inserimento nel db
+    string query_insert = "INSERT INTO store (available_quantity, price_product, desc_prod, id_sub, id_prov) VALUES"
+                          " ('"+to_string(prod->get_quantity())+ "', '" + to_string(prod->get_price()) + "', '"+prod->get_desc()+"', '"+to_string(id_sub)+"', '"+to_string(id_prov)+"');";
     db->exec(query_insert);
 
 }

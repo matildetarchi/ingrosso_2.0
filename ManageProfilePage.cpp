@@ -59,7 +59,7 @@ ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e)
     tcU= new wxTextCtrl(this, wxID_ANY,username);
     tcEm=new wxTextCtrl(this, wxID_ANY,user->get_email());
     txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
-    m_passwordText = new wxTextCtrl(this, wxID_ANY, data_user[3], wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
+    m_passwordText = new wxTextCtrl(this, wxID_ANY, user->get_psw(), wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
     m_passwordConf = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(120, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
     m_passwordConf->Bind(wxEVT_TEXT, &ManageProfilePage::OnTextChange, this);
 

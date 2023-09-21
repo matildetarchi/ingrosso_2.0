@@ -18,14 +18,16 @@ END_EVENT_TABLE()
 FavouritesListPage::FavouritesListPage(Engine *e, const wxString &title): engine(e),
         wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
+
     client = engine->get_client();
     username = client->get_username();
     db_cart = engine->get_db_cart();
     cart = client->get_cart();
     db_fav = engine->get_db_fav();
     fav = client->get_fav();
-    prod_list = fav->get_products();
-
+    if (fav != NULL) {
+        prod_list = fav->get_products();
+    }
     int row = db_fav->select_count_of_prod();
 
     grid = new wxGrid(this, wxID_ANY);

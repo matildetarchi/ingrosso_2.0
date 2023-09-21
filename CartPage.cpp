@@ -30,8 +30,9 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
 
     int num_prod = db_cart->select_count_of_prod();
     cart = client->get_cart();
+    if(cart!=NULL) {
     prod_list = cart->get_products();
-
+    }
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(num_prod, 4);

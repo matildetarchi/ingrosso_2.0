@@ -13,7 +13,7 @@ class UserSuite : public ::testing::Test {
 protected:
     virtual void SetUp() {
         client = make_unique<Client>("C", "dario", "via dini", email, "psw", "Dario", "Firenze");
-        provider = make_unique<Provider>("F", "siria", "via dini", "siria.mazzocchi@icloud.it", "psw", "Sisi", "Firenze");
+        provider = make_unique<Provider>("P", "siria", "via dini", "siria.mazzocchi@icloud.it", "psw", "Sisi", "Firenze");
     }
 
     void TearDown() override {

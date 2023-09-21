@@ -12,10 +12,7 @@ class FavouritesSuite : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
-        client.set_username("Erlippe");
-        client.set_email(email);
-        //const std::string dbPath = "ingrosso_2.0/database/dbFavourites.sqlite";
-        //d = make_shared <Database>(dbPath);
+        client = make_unique<Client>("C", "andrea", "via dini", email, "psw", "Erlippe", "Firenze");
         fav = make_unique<Favourites>("Erlippe");
     }
 
@@ -23,10 +20,9 @@ protected:
         fav->remove_all();
     }
 
-    Client client;
+    unique_ptr<Client> client;
     string email = "andrea.lipperi@icloud.com";
     unique_ptr<Favourites> fav;
-    //shared_ptr<Database> d; // uniqueptr
 };
 
 TEST_F(FavouritesSuite, TestAddToFav) {

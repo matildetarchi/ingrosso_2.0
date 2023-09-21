@@ -17,8 +17,11 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
     user=engine->get_user();
     db_user = engine->get_db_user();
     city=var_city;
-    type=user->get_type();
-
+    if(user->get_type()=="C"){
+        type="F";
+    } else {
+        type="C";
+    }
 
    /* wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
     choiceOrder = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
@@ -53,6 +56,7 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
         string us= user_list[i]->get_username();
         string email= user_list[i]->get_email();
         string address= user_list[i]->get_address();
+        string us_city = user_list[i]->get_city();
 
 
         grid->SetReadOnly(i, 0, true);
@@ -64,7 +68,7 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
         grid->SetReadOnly(i, 3, true);
         grid->SetCellValue(i, 3, address);
         grid->SetReadOnly(i, 4, true);
-        grid->SetCellValue(i, 4, city);
+        grid->SetCellValue(i, 4, us_city);
     }
 
     grid->AutoSize();

@@ -54,7 +54,7 @@ void ChooseStatusPage::InsertProduct(wxCommandEvent &event) {
             // Passa la stringa alla classe wxFrame di destinazione.
             req->Show(TRUE);
         } else {
-            OrderHistoryForClientPage *ord = new OrderHistoryForClientPage(engine,_T("YOUR ORDERS"), Id_choice);
+            OrderHistoryForClientPage *ord = new OrderHistoryForClientPage(engine,_T("YOUR ORDERS"));
             // Passa la stringa alla classe wxFrame di destinazione.
             ord->Show(TRUE);
         }
