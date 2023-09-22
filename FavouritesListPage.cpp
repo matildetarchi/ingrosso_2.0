@@ -25,6 +25,7 @@ FavouritesListPage::FavouritesListPage(Engine *e, const wxString &title): engine
     cart = client->get_cart();
     db_fav = engine->get_db_fav();
     fav = client->get_fav();
+
     if (fav != NULL) {
         prod_list = fav->get_products();
     }

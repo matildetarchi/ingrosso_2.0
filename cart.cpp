@@ -12,16 +12,19 @@ Cart::Cart(const string &client) {
     username_client = client;
     num_prod = 0;
 
+
 }
 
 Cart::~Cart() {
     remove_all();
 }
 
-void Cart::add_product(std::shared_ptr<Product> prod) {
+void Cart::add_product(const std::shared_ptr<Product> &prod) {
 
-    products.push_back(std::move(prod));
-    update_num(put_in);
+    if (prod && prod.get() != nullptr){
+        products.push_back(prod);
+        update_num(put_in);
+    }
 }
 
 void Cart::update_num(int control) {

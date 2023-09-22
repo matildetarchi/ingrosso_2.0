@@ -15,6 +15,7 @@ dbFavouritesManager::dbFavouritesManager(shared_ptr<Database> d) {
 void dbFavouritesManager::add_to_db() {
 
     //metodo che aggiunge un prodotto alla lista dei favourites
+    fav= client->get_fav();
     int index = fav->get_num_prod()-1;
 
     prod_list = fav->get_products();

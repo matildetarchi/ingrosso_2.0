@@ -6,7 +6,7 @@
 #define INGROSSO_ONLINE_CART_H
 
 
-#include "store.h"
+#include "Store.h"
 
 #define put_in 0
 #define cc 1
@@ -34,7 +34,7 @@ public:
         return products;
     }
 
-    void add_product(shared_ptr<Product> prod);
+    void add_product(const shared_ptr<Product> &prod);
 
     void update_num(int control);
 
@@ -47,7 +47,7 @@ private:
     string username_client;
     int num_prod;
 
-    vector<std::shared_ptr<Product>> products;
+    vector<std::shared_ptr<Product>> products ;
 
 };
 

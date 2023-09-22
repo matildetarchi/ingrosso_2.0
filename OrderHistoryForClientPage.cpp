@@ -21,7 +21,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 
 
 
-   client = engine->get_client();
+    client = engine->get_client();
     username = client->get_username();
     db_order = engine->get_db_order();
 
@@ -50,7 +50,9 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
         grid->SetColLabelValue(3, "Status");
 
     }
+
     orders_list= client->get_order_list();
+
     if(orders_list != NULL) {
         order = orders_list->get_orders();
     }

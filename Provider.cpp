@@ -6,7 +6,9 @@
 
 using namespace std;
 
-Provider::Provider():User(){}
+Provider::Provider( const string &us):User( us){
+    store = make_shared<Store>(us);
+}
 
 Provider::Provider( const string &t, const string &bn,const string &a, const string &e,
                 const string &password, const string &us, const string &c) : User(t, bn, a, e, password, us, c){

@@ -8,14 +8,14 @@
 
 #include "OrdersList.h"
 #include "cart.h"
-#include "favourites.h"
+#include "Favourites.h"
 #include <utility>
 
 
 using namespace std;
 class User {
 public:
-    User();
+    User(const string &us);
     User( const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c);
 
     virtual ~User() = default;

@@ -89,7 +89,7 @@ bool dbStoreManager::remove_from_db(int id_intern)  {
 
 }
 
-vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_name, const string &disp, const string &order) {
+vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_name, const string &disp) {
 
     //metodo per seleziona tutti i prodotti dai vari magazzini
     //appartenenti a una determinata sottocategoria
@@ -102,55 +102,45 @@ vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_
     //controllo il tipo di disponibilità
     //della quale l'utente vuole vedere i prodotti
     //solo disponibili o tutti quanti
-    int n_dispo;
+    int n_dispo = 0;
     if (disp == "Only Available") {
         n_dispo = 1;
     } else {
         n_dispo = 0;
     }
+    //prendo la quantità di prodotti presenti
+    string query_select_count = "SELECT count(*) FROM users,store WHERE id_prov=users.id AND id_sub='" + to_string(i) +"' AND available_quantity>= '" + to_string(n_dispo) + "'";
+    int count = db->execAndGet(query_select_count).getInt();
 
-    //controllo i tipo di ordinamento che l'utente
-    //vuole usare per vedere i prodotti
-    string str_order;
-    if (order == "Name Product") {
-        str_order = "desc_prod;";
-    } else if (order == "Price") {
-        str_order = "price_product;";
-    } else if (order == "Provider Name") {
-        str_order = "username;";
-    } else {
-        str_order = order;
-    }
-
+    vector<shared_ptr<Product>> product_list;
     //lancio la query
     //popolo la matrice
     //restituisco la matrice
-    string select =
-            "SELECT desc_prod, price_product, username, store.id, available_quantity CASE WHEN (available_quantity>0) THEN 'Available ('||available_quantity||')' "
-            "ELSE 'Not Available' END,store.id FROM users,store WHERE id_prov=users.id AND id_sub='" + to_string(i) +
-            "' AND "
-            "available_quantity>= '" + to_string(n_dispo) + "' ORDER BY '" + str_order + "';";
+    if (count > 0) {
+        //lancio la query
 
-    SQLite::Statement query(*db, select);
+        string select =
+                "SELECT desc_prod, price_product, username, store.id, available_quantity FROM users,store WHERE id_prov=users.id AND id_sub='" +
+                to_string(i) + "' AND available_quantity>= '" + to_string(n_dispo) + "'";
 
-    while (query.executeStep()) {
-        string desc_prod = query.getColumn(0).getText();
-        double price = query.getColumn(1).getDouble();
-        string username_prov = query.getColumn(2).getText();
-        int id_store = query.getColumn(3);
-        int a_quantity = query.getColumn(4);
+        SQLite::Statement query(*db, select);
 
-        prod->set_available_quantity(a_quantity);
-        prod->set_price(price);
-        prod->set_desc(desc_prod);
-        prod->set_subcategory(sub_name);
-        prod->set_username_prov(username_prov);
-        prod->set_quantity(0);
-        prod->set_id_store(id_store);
-        prod_list.push_back(prod);
+        while (query.executeStep()) {
+            string desc_prod = query.getColumn(0).getText();
+            double price = query.getColumn(1).getDouble();
+            string username_prov = query.getColumn(2).getText();
+            int id_store = query.getColumn(3);
+            int a_quantity = query.getColumn(4);
 
-    }
-    return prod_list;
+            shared_ptr<Product> product = make_shared<Product>(desc_prod, price, 0, a_quantity, username_prov,
+                                                               sub_name);
+            product->set_id_store(id_store);
+            product_list.push_back(product);
+
+        }
+
+    }return product_list;
+
 }
 
     int dbStoreManager::select_count_for_client(const string &sub_name, const string &disp) {
@@ -211,14 +201,11 @@ vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_
                 int quantity = query.getColumn(2);
                 string subcategory = query.getColumn(3).getText();
                 int id_store = query.getColumn(4);
-                prod->set_available_quantity(quantity);
-                prod->set_price(price);
-                prod->set_desc(desc_prod);
-                prod->set_subcategory(subcategory);
-                prod->set_username_prov(username);
-                prod->set_quantity(0);
-                prod->set_id_store(id_store);
-                st->add_to_store(prod);
+
+                shared_ptr<Product> product = make_shared<Product>(desc_prod, price, 0, quantity, username, subcategory);
+                product->set_id_store(id_store);
+
+                st->add_to_store(product);
             }
 
         }

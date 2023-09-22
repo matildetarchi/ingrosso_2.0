@@ -50,7 +50,7 @@ bool Engine::do_login(const string &email, const string &psw) {
 
         if(type == "C") {
 
-            client = make_shared<Client>();
+            client = make_shared<Client>(username);
             db_user->set_user(client);
             db_user->select_data(username);
 
@@ -70,12 +70,13 @@ bool Engine::do_login(const string &email, const string &psw) {
             db_order->select_for_client();
 
         } else {
-            prov = make_shared<Provider>();
+            prov = make_shared<Provider>(username);
             db_user->set_user(prov);
             db_user->select_data(username);
 
             db_store->set_user(prov);
             db_store->set_store();
+            db_store->set_prod_list();
             db_store->select_for_prov();
 
 

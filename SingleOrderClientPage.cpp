@@ -33,7 +33,7 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, s
     }
     order = orders[i];
     order_p = order->get_order_prod();
-    int row=order->get_num_prod();
+    int row = order->get_num_prod();
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row+1, 3);
@@ -55,7 +55,10 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, s
         grid->SetCellValue(i, 1, quantity);
 
     }
-    grid->SetCellValue(row+1,2, total_price );
+    grid->SetReadOnly(row, 2, true);
+    grid->SetCellValue(row,2, total_price );
+
+    grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 
 

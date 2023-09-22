@@ -38,9 +38,7 @@ vector<string> dbCityManager::select() {
     while (query.executeStep()) {
         city = query.getColumn(0).getString();
         cities.push_back(city);
-
     }
     query.reset();
     return cities;
-
 }

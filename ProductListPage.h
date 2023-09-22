@@ -30,7 +30,7 @@ DECLARE_EVENT_TABLE()
 
 private:
     void IsFavourites(wxCommandEvent &event);
-    void IsCart(wxCommandEvent& event);
+    void IsCart(wxCommandEvent &event);
     void IsInsert(wxCommandEvent& event);
     void OnChoice(wxCommandEvent& event);
     wxButton *FavButton;

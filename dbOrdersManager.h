@@ -22,7 +22,7 @@ public:
        user = u;
     }
     void set_orderlist(){
-        tab_order= make_shared<OrdersList>(user->get_username());
+        tab_order= user->get_order_list();
     }
 
     void add_to_db();

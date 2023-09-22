@@ -75,6 +75,7 @@ void dbCartManager::select() {
     string query_count="SELECT count(*) FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='"+to_string(id) +"'";
     int count = db->execAndGet(query_count).getInt();
 
+
     if (count>0) {
         //lancio la query che prende i valori dal db
         string select =
@@ -95,18 +96,13 @@ void dbCartManager::select() {
             int id_store = query.getColumn(6);
 
             string select_sub_name = "SELECT name FROM subcategories WHERE id = '" + to_string(id_sub) + "'";
-            string sub_name = db->execAndGet(select_sub_name);
-
-            prod->set_desc(desc);
-            prod->set_price(price);
-            prod->set_quantity(quantity);
-            prod->set_username_prov(username_prov);
-            prod->set_id_store(id_store);
-            prod->set_available_quantity(available_q);
-            prod->set_subcategory(sub_name);
+            string sub_name = db->execAndGet(select_sub_name).getString();
 
 
-            cart->add_product(std::move(prod));
+            shared_ptr<Product> product = make_shared<Product>(desc, price, quantity, available_q, username_prov, sub_name);
+            product->set_id_store(id_store);
+
+            cart->add_product(product);
         }
     }
 }
@@ -120,6 +116,5 @@ int dbCartManager::select_count_of_prod(){
     int count = db->execAndGet(query_select_count).getInt();
     return count;
 }
-
 
 

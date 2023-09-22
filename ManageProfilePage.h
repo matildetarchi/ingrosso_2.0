@@ -33,7 +33,6 @@ private:
     wxBoxSizer *sizer;
     wxChoice* choiceC;
     std::string type;
-    vector<string> data_user;
     wxTextCtrl *tcA;
     wxTextCtrl *tcU;
     wxTextCtrl *tcEm;

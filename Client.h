@@ -13,7 +13,7 @@ using namespace std;
 class Client : virtual public User {
 public:
 
-    Client();
+    Client(const string &us);
     Client(const string &t, const string &bn, const string &a, const string &e, const string &password,
            const string &us, const string &c);
 

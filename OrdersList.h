@@ -7,7 +7,7 @@
 
 #define put_in 0
 #define cc 1
-#include "store.h"
+#include "Store.h"
 #include "Order.h"
 
 using namespace std;
@@ -20,12 +20,9 @@ public:
     ~OrdersList();
 
 
-    int get_num_order() const {
-        return num_order;
-    }
+    int get_num_order() const  {
 
-    const string &get_username_user() {
-        return username_user;
+        return num_order;
     }
 
     vector<shared_ptr<Order>> get_orders(){

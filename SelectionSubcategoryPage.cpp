@@ -52,7 +52,7 @@ SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString 
     wxStaticText *SubCategory = new wxStaticText(Mainpanel, -1, wxT("Subcategory"));
     wxStaticText *Disp = new wxStaticText(Mainpanel, -1, wxT("Disponibility"));
 
-    Insert=new wxButton (Mainpanel,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
+    Insert=new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
     choiceC=new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);

@@ -23,6 +23,8 @@ public:
     }
 
 
+
+
     void add_to_db();
     bool access_reg(const string &email, const string &psw, int control);
     bool remove_from_db(const string &username, const string &type);

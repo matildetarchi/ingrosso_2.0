@@ -14,7 +14,7 @@ using namespace std;
 class Provider: virtual public User {
 public:
 
-    Provider();
+    Provider(const string &us);
     Provider(const string &t, const string &bn, const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 

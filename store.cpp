@@ -20,13 +20,15 @@ Store::~Store() {
 
 
 void Store::add_to_store(const shared_ptr<Product>& prod) {
-    store.push_back(prod);
-    update_num(0);
+    if (prod && prod.get() != nullptr) {
+        store.push_back(prod);
+        update_num(0);
+    }
 }
 
 void Store::update_num(int control) {
     if (control==put_in) {
-        num_prod=num_prod+1;
+        num_prod = num_prod+1;
     } else {
         num_prod=num_prod-1;
     }

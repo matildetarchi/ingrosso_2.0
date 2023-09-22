@@ -245,8 +245,9 @@ int dbOrdersManager::select_count_for_provider(){
 
 int dbOrdersManager::select_count_for_client(){
     if(user->get_type()== "C") {
-        tab_order=user->get_order_list();
-        int count =tab_order->get_num_order();
+
+        tab_order = user->get_order_list();
+        int count = tab_order->get_num_order();
         return count;
     }else
         throw std::runtime_error("Errore, l'utente selezionato non è un cliente");

@@ -42,7 +42,6 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
     grid->SetColLabelValue(3, "Quantity to Order");
 
 
-
        for (int i = 0; i < num_prod; i++) {
 
            string name_prod = prod_list[i]->get_desc();
@@ -60,7 +59,8 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
            grid->SetCellValue(i, 2, name_prov);
            grid->SetColFormatNumber(3);
            grid->SetCellValue(i, 3,  quantity);
-    }
+       }
+
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 
@@ -81,8 +81,6 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
 
 
     Centre();
-
-
 }
 
 void CartPage::IsRemove(wxCommandEvent &event) {
