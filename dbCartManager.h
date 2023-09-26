@@ -21,6 +21,7 @@ public:
     void set_user(shared_ptr<Client> o){
         client = std::move(o);
     }
+
     void set_cart(){
         cart = client->get_cart();
     }
@@ -31,6 +32,9 @@ public:
     void remove_prod(int id);
     void select();
     int select_count_of_prod();
+    int select_id_cart(const string &desc, const string &prov);
+    void change_quantity(int id, int quantity);
+    bool control_if_exist(const shared_ptr<Product>& p);
 
 private:
 

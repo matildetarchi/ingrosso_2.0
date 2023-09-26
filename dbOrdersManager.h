@@ -21,23 +21,18 @@ public:
     void set_user(const shared_ptr<User>& u){
        user = u;
     }
+
     void set_orderlist(){
         tab_order= user->get_order_list();
     }
 
     void add_to_db();
-
     void change_status(const string &new_status, int id_order);
-
     void cancel_order(int id_order);
-
     void select_for_provider();
-
     void select_for_client();
-
-    int select_id_last_order(const string &username_prov);
     int select_count_for_provider();
-    int select_count_for_client();
+    int select_count_for_client(int control);
 
 
 private:

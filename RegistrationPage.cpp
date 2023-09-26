@@ -20,14 +20,15 @@ BEGIN_EVENT_TABLE (RegistrationPage, wxFrame)
 END_EVENT_TABLE()
 
 RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 700)) {
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 700)) {
 
 
     messageError="Password Not Equal";
     messageCorrect="Password Equal";
-    wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
 
-    wxFlexGridSizer *fgs1=new wxFlexGridSizer(1,2, 12,-5);
+    auto *hbox = new wxBoxSizer(wxHORIZONTAL);
+
+    auto *fgs1=new wxFlexGridSizer(1,2, 12,-5);
 
     fgs = new wxFlexGridSizer(20, 1, 12, -5);
 
@@ -50,13 +51,13 @@ RegistrationPage::RegistrationPage(Engine *e, const wxString &title): engine(e),
     choiceC->Append("Select");
     choiceC->Append(db_table->number_of_city(),myString);
 
-    wxStaticText *type = new wxStaticText(this, -1, wxT("Type"));
-    wxStaticText *business_name = new wxStaticText(this, -1, wxT("Business name"));
-    wxStaticText *address = new wxStaticText(this, -1, wxT("Address"));
-    wxStaticText *city = new wxStaticText(this, -1, wxT("City"));
-    wxStaticText *password = new wxStaticText(this, -1, wxT("Password"));
-    wxStaticText *username = new wxStaticText(this, -1, wxT("Username"));
-    wxStaticText *email=new wxStaticText(this, -1, wxT("Email"));
+    auto *type = new wxStaticText(this, -1, wxT("Type"));
+    auto *business_name = new wxStaticText(this, -1, wxT("Business name"));
+    auto *address = new wxStaticText(this, -1, wxT("Address"));
+    auto *city = new wxStaticText(this, -1, wxT("City"));
+    auto *password = new wxStaticText(this, -1, wxT("Password"));
+    auto *username = new wxStaticText(this, -1, wxT("Username"));
+    auto *email=new wxStaticText(this, -1, wxT("Email"));
 
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);

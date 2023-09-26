@@ -15,13 +15,12 @@ using namespace std;
 class OrdersList{
 public:
     OrdersList();
-    explicit OrdersList(const string &user);
+    explicit OrdersList(string user);
 
     ~OrdersList();
 
 
     int get_num_order() const  {
-
         return num_order;
     }
 
@@ -30,7 +29,6 @@ public:
     }
 
     void add_order( const shared_ptr<Order>& ord);
-
     void update_num(int control);
     void remove_one(int index);
     void remove_all();

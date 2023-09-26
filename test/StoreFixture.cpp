@@ -36,9 +36,9 @@ TEST_F(StoreSuite, TestAddToStore) {
 
 TEST_F(StoreSuite, TestUpdateNum) {
     int n = store->get_num_prod();
-    store->update_num(1);
-    EXPECT_EQ(n+1, store->get_num_prod());
     store->update_num(0);
+    EXPECT_EQ(n+1, store->get_num_prod());
+    store->update_num(1);
     EXPECT_EQ(n, store->get_num_prod());
 }
 
@@ -46,7 +46,7 @@ TEST_F(StoreSuite, TestDeleteOneProd) {
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Erlippe", "pasta");
     store->add_to_store(p);
     int num = store->get_num_prod();
-    store->remove_one(num);
+    store->remove_one(num-1);
     EXPECT_EQ(0, store->get_num_prod());
 }
 

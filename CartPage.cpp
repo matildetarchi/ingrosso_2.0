@@ -20,7 +20,7 @@ BEGIN_EVENT_TABLE (CartPage, wxFrame)
 END_EVENT_TABLE()
 
 CartPage::CartPage(Engine *e, const wxString &title): engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(600, 350)) {
 
 
     client = engine->get_client();
@@ -30,7 +30,7 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
 
     int num_prod = db_cart->select_count_of_prod();
     cart = client->get_cart();
-    if(cart!=NULL) {
+    if(cart != nullptr ) {
     prod_list = cart->get_products();
     }
 
@@ -45,7 +45,7 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
        for (int i = 0; i < num_prod; i++) {
 
            string name_prod = prod_list[i]->get_desc();
-           int p = prod_list[i]->get_price();
+           double p = prod_list[i]->get_price();
            string price(to_string(p));
            string name_prov = prod_list[i]->get_username_prov();
            int q= prod_list[i]->get_quantity();
@@ -70,13 +70,15 @@ CartPage::CartPage(Engine *e, const wxString &title): engine(e),
     Help=new wxButton(this,IdButtonHelp,_T ("?"),wxDefaultPosition,wxDefaultSize,0);
 
 
-    sizer = new wxBoxSizer(wxVERTICAL);
+    sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer_vertical = new wxBoxSizer (wxVERTICAL);
 
-    sizer->Add(Help, 0, wxEXPAND | wxALL, 3);
-    sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Remove, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Order, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Back, 1, wxEXPAND | wxALL, 5);
+    sizer_vertical->Add(Help, 0,  wxALL , 3);
+    sizer->Add(grid, 1, wxALL , 5);
+    sizer_vertical->Add(Remove, 1, wxALL , 5);
+    sizer_vertical->Add(Order, 1, wxALL , 5);
+    sizer_vertical->Add(Back, 1, wxALL, 5);
+    sizer->Add(sizer_vertical,1);
     SetSizer(sizer);
 
 

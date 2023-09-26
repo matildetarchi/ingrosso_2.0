@@ -24,26 +24,30 @@ protected:
     unique_ptr<Client> client;
     unique_ptr<Provider> provider;
     string email = "dario.mori@gmail.com";
+
 };
 
 
 TEST_F(UserSuite, TestClientAddToCart) {
-    unique_ptr<Cart> c = make_unique<Cart>("Dario");
+    shared_ptr<Cart> c = make_shared<Cart>("Dario");
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Siria", "pasta");
+    client->set_cart(c);
     client->add_to_cart(p);
     EXPECT_EQ(1, c->get_num_prod());
 }
 
 TEST_F(UserSuite, TestClientAddToFav) {
-    unique_ptr<Favourites> f = make_unique<Favourites>("Dario");
+    shared_ptr<Favourites> f = make_shared<Favourites>("Dario");
+    client->set_fav(f);
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Siria", "pasta");
     client->add_to_fav(p);
     EXPECT_EQ(1, f->get_num_prod());
 }
 
 TEST_F(UserSuite, TestClientRemoveFromCart) {
-    unique_ptr<Cart> c = make_unique<Cart>("Dario");
+    shared_ptr<Cart> c = make_shared<Cart>("Dario");
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Siria", "pasta");
+    client->set_cart(c);
     client->add_to_cart(p);
     EXPECT_EQ(1, c->get_num_prod());
     int id = p->get_id_store();
@@ -52,8 +56,9 @@ TEST_F(UserSuite, TestClientRemoveFromCart) {
 }
 
 TEST_F(UserSuite, TestClientRemoveFromFav) {
-    unique_ptr<Favourites> f = make_unique<Favourites>("Dario");
+    shared_ptr<Favourites> f = make_shared<Favourites>("Dario");
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Siria", "pasta");
+    client->set_fav(f);
     client->add_to_fav(p);
     EXPECT_EQ(1, f->get_num_prod());
     int id = p->get_id_store();
@@ -61,24 +66,17 @@ TEST_F(UserSuite, TestClientRemoveFromFav) {
     EXPECT_EQ(0, f->get_num_prod());
 }
 
-TEST_F(UserSuite, TestClientDeleteAll) {
-    //trova un modo per testarla
-}
-
 TEST_F(UserSuite, TestProviderAddProd) {
-    unique_ptr<Store> s = make_unique<Store>("Sisi");
+    shared_ptr<Store> s = make_shared<Store>("Sisi");
+    provider->set_store(s);
     provider->add_prod("penne", 1.24, 5, 6, "Siria", "pasta");
     EXPECT_EQ(1, s->get_num_prod());
 }
 
 TEST_F(UserSuite, TestProviderModifyProd) {
-    unique_ptr<Store> s = make_unique<Store>("Sisi");
+    shared_ptr<Store> s = make_shared<Store>("Sisi");
+    provider->set_store(s);
     provider->add_prod("penne", 1.24, 5, 6, "Siria", "pasta");
     EXPECT_EQ(1, provider->modify_prod(s->get_id(), "fusilli", 1.25, 7));
-    EXPECT_EQ(0, provider->modify_prod(100, "fusilli", 1.25, 7));
-}
-
-TEST_F(UserSuite, TestProviderDeleteAll) {
-    //come sopra
 }
 

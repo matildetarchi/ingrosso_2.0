@@ -13,14 +13,13 @@
 
 
 
-
-
 class FavouritesListPage : public wxFrame {
 public:
     FavouritesListPage(Engine *e, const wxString &title);
     static const long IdButtonRemove;
     static const long IdButtonCart;
     static const long IdButtonComeBack;
+    static const long IdButtonInsert;
 DECLARE_EVENT_TABLE()
 
 
@@ -28,10 +27,14 @@ private:
     void IsRemove(wxCommandEvent &event);
     void IsCart(wxCommandEvent &event);
     void ComeBack(wxCommandEvent& event);
+    void IsInsert(wxCommandEvent& event);
+    void OnClose();
     wxButton *Remove;
     wxBoxSizer *sizer;
+    wxBoxSizer *sizer_vertical;
     wxButton *Cart_button;
     wxButton *Back;
+    wxButton *Insert;
     wxTextCtrl *sub;
     wxTextCtrl *cat;
     wxTextCtrl *name;
@@ -44,8 +47,12 @@ private:
     std::shared_ptr<dbFavouritesManager> db_fav;
     std::shared_ptr<Favourites> fav;
     std::vector<std::shared_ptr<Product>> prod_list;
+    std::vector<std::shared_ptr<Product>> prod_l;
     std::shared_ptr<dbCartManager> db_cart;
     std::shared_ptr<Cart> cart;
+    int quantity;
+    int control;
+    shared_ptr<Product> p;
 };
 
 

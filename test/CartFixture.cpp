@@ -33,9 +33,9 @@ TEST_F(CartSuite, TestAddToCart) {
 
 TEST_F(CartSuite, TestUpdateNum) {
     int n = cart->get_num_prod();
-    cart->update_num(1);
-    EXPECT_EQ(n+1, cart->get_num_prod());
     cart->update_num(0);
+    EXPECT_EQ(n+1, cart->get_num_prod());
+    cart->update_num(1);
     EXPECT_EQ(n, cart->get_num_prod());
 }
 

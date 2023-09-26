@@ -10,9 +10,6 @@
 #include "Engine.h"
 
 
-
-
-
 class RegistrationPage : public wxFrame{
 public:
     RegistrationPage(Engine* e, const wxString& title);

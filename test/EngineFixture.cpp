@@ -2,37 +2,34 @@
 // Created by Matilde Tarchi on 16/11/22.
 //
 #include "gtest/gtest.h"
-#include "../dbUserManager.h"
-#include "../User.h"
 #include "../Engine.h"
-#include "../Database.h"
+
 
 
 class EngineSuite : public ::testing::Test {
 
 protected:
-
-
-    Engine* e = new Engine();
+    Engine* eng = new Engine();
     string email = "matilde.tarchi@gmail.com";
     shared_ptr <Client> user;
+    shared_ptr<dbUserManager> db_user;
+
 
     virtual void SetUp() {
-        user = make_shared <Client>("C", "lola", "viao", email, "ciao", "mati", "roma");
+        db_user = eng->get_db_user();
+        user = make_shared <Client>("C", "matilde tarchi", "via ciao", email, "ciao", "Mati", "Roma");
     }
 
 };
 
 TEST_F(EngineSuite, TestDoRegistration) {
-
-    EXPECT_EQ(1,e->do_registration(user));
-    EXPECT_EQ(0,e->do_registration(user));
+    db_user->remove_user("Mati");
+    EXPECT_EQ(1,eng->do_registration(user));
+    EXPECT_EQ(0,eng->do_registration(user));
 }
 
 TEST_F(EngineSuite, TestDoLogin) {
-    user->set_type("C");
-
-    EXPECT_EQ(1,e->do_login(email, "ciao"));
-    EXPECT_EQ(0,e->do_login(email, "hola"));
+    EXPECT_EQ(1,eng->do_login(email, "ciao"));
+    EXPECT_EQ(0,eng->do_login(email, "hola"));
 }
 

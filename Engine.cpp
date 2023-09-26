@@ -7,8 +7,7 @@
 Engine::Engine() {
 
     // Specifica il percorso del tuo database SQLite
-    const std::string dbPath = "ingrosso_2.0/database/ingrossodb.sqlite";
-
+    const std::string dbPath = "/Users/matildetarchi/CLionProjects/ingrosso_2.0/database/ingrossodb.sqlite";
     // Apri il database
     //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     database = make_shared <Database>(dbPath);
@@ -54,9 +53,7 @@ bool Engine::do_login(const string &email, const string &psw) {
             db_user->set_user(client);
             db_user->select_data(username);
 
-            // cambiare set_cart in set_user e passare user
-            // così anche per set_favourites
-            // vedi db_order
+
             db_cart->set_user(client);
             db_cart->set_cart();
             db_cart->select();

@@ -16,13 +16,13 @@ using namespace std;
 class dbFavouritesManager {
 public:
 
-    explicit dbFavouritesManager(shared_ptr<Database> d);
-
+    explicit dbFavouritesManager(const shared_ptr<Database>& d);
 
 
     void set_user(shared_ptr<Client> o){
         client = std::move(o);
     }
+
     void set_fav(){
         fav = client->get_fav();
     }
@@ -32,6 +32,7 @@ public:
     void remove_prod(int id);
     void select();
     int select_count_of_prod();
+    bool control_if_exist(const shared_ptr<Product>& p);
 
 private:
 

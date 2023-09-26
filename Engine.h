@@ -59,6 +59,10 @@ public:
     shared_ptr<dbSubcategoriesManager> get_db_subc() {
         return db_subc;
     }
+    shared_ptr<Database> get_db(){
+        return database;
+    }
+
 private:
 
     shared_ptr<Client> client;

@@ -10,7 +10,6 @@ using namespace std;
 
 dbCartManager::dbCartManager(const shared_ptr<Database>& d) {
     db = d->get_db();
-    prod = make_shared<Product>();
 
 }
 
@@ -21,6 +20,7 @@ void dbCartManager::add_to_db() {
 
     prod_list = cart->get_products();
     prod = prod_list[index];
+
     //prendo l'id dell'utente che sta usando il programma e
     // del fornitore del prodotto che sto mettendo nel carrello
     string query_user = "SELECT id FROM users WHERE username='"+cart->get_client()+"'";
@@ -42,7 +42,6 @@ void dbCartManager::add_to_db() {
 void dbCartManager::remove_all() {
 
     //metodo per rimuovere tutti i prodotti dal carello
-    // una volta effettuato l'ordine da quest'ultimo
 
     //prendo l'id dell'utente che sta usando il programma
     int id = client->get_db_id();
@@ -78,8 +77,7 @@ void dbCartManager::select() {
 
     if (count>0) {
         //lancio la query che prende i valori dal db
-        string select =
-                "SELECT desc_prod, price_product, username, quantity, available_quantity, id_sub, store.id FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='" +
+        string select = "SELECT desc_prod, price_product, username, quantity, available_quantity, id_sub, store.id FROM users, cart, store WHERE id_store = store.id AND store.id_prov = users.id AND id_user ='" +
                 to_string(id) + "' ORDER BY username;";
         SQLite::Statement query(*db, select);
 
@@ -115,6 +113,29 @@ int dbCartManager::select_count_of_prod(){
     string query_select_count = "SELECT count(*) FROM cart WHERE id_user ='" + to_string(id_client) + "'";
     int count = db->execAndGet(query_select_count).getInt();
     return count;
+}
+
+bool dbCartManager::control_if_exist(const shared_ptr<Product>& p) {
+    string select_prod = "SELECT count(*) FROM store, cart WHERE id_store = store.id AND id_user = '"+ to_string(client->get_db_id()) +"' AND desc_prod = '" + p->get_desc() + "'";
+    int count = db->execAndGet(select_prod);
+    if(count > 0)
+        return true;
+    else
+        return false;
+}
+
+int dbCartManager::select_id_cart(const string &desc, const string &prov) {
+    string select_id_prov = "SELECT id FROM users WHERE username = '"+prov+"'";
+    int id_prov = db->execAndGet(select_id_prov);
+    string select_id_cart = "SELECT cart.id FROM cart, store WHERE store.id = id_store AND cart.id_prov = "+ to_string(id_prov)+" AND desc_prod = '"+desc+"' AND id_user = "+
+                                                                                                                                                    to_string(client->get_db_id())+"";
+    int id_cart = db->execAndGet(select_id_cart);
+    return id_cart;
+}
+
+void dbCartManager::change_quantity(int id, int quantity) {
+    string update = "UPDATE cart SET quantity = "+ to_string(quantity)+" WHERE id = "+ to_string(id)+"";
+    db->exec(update);
 }
 
 

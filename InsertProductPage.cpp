@@ -10,19 +10,17 @@ const long InsertProductPage::IdButtonInsert =::wxNewId();
 const long InsertProductPage::IdButtonComeBack =::wxNewId();
 
 BEGIN_EVENT_TABLE (InsertProductPage, wxFrame)
-
                 EVT_BUTTON(IdButtonInsert, InsertProductPage::InsertProduct)
                 EVT_BUTTON(IdButtonComeBack, InsertProductPage::ComeBack)
-
 END_EVENT_TABLE()
 
 InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 400)){
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 400)){
 
     db_categories = engine ->get_db_cate();
-    prov= engine ->get_prov();
+    prov= engine->get_prov();
     db_subcategories = engine->get_db_subc();
-
+    db_store = engine->get_db_store();
     std::vector<std::string> categories;
 
     categories=db_categories->select();
@@ -38,11 +36,11 @@ InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(
     categories.clear();
     choices.clear();
 
-    wxStaticText *Category = new wxStaticText(this, -1, wxT("Category"));
-    wxStaticText *SubCategory = new wxStaticText(this, -1, wxT("Subcategory"));
-    wxStaticText *Name = new wxStaticText(this, -1, wxT("Product's name"));
-    wxStaticText *Qty_avb= new wxStaticText(this, -1, wxT("Quantity available"));
-    wxStaticText *Cost= new wxStaticText(this, -1, wxT("Price €"));
+    auto *Category = new wxStaticText(this, -1, wxT("Category"));
+    auto *SubCategory = new wxStaticText(this, -1, wxT("Subcategory"));
+    auto *Name = new wxStaticText(this, -1, wxT("Product's name"));
+    auto *Qty_avb= new wxStaticText(this, -1, wxT("Quantity available"));
+    auto *Cost= new wxStaticText(this, -1, wxT("Price €"));
 
     Insert=new wxButton (this,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(this,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
@@ -65,17 +63,17 @@ InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(
 
     sizer->Add(Category, 0, wxALL, 5);
     sizer->Add(choiceC, 0, wxALL, 5);
-    sizer->Add(SubCategory, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(SubCategory, 1, wxEXPAND , 5);
     sizer->Add(choiceSubC, 0, wxALL, 5);
-    sizer->Add(Name, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(tcName, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Qty_avb, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(tcQ, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-    sizer->Add(Cost, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(Name, 1, wxEXPAND , 5);
+    sizer->Add(tcName, 1, wxEXPAND , 5);
+    sizer->Add(Qty_avb, 1, wxEXPAND , 5);
+    sizer->Add(tcQ, 0,  wxALL, 5);
+    sizer->Add(Cost, 1, wxEXPAND , 5);
     tcC = new wxSpinCtrlDouble(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 500, 0, 0.01);
     sizer->Add(tcC, 0, wxALL, 5);
-    sizer->Add(Insert, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Back, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(Insert, 1, wxEXPAND , 5);
+    sizer->Add(Back, 1, wxEXPAND , 5);
     SetSizer(sizer);
 
     Centre();
@@ -119,8 +117,9 @@ void InsertProductPage::InsertProduct(wxCommandEvent &event) {
         string username_prov = prov->get_username();
         prov->add_prod(name_prod, price, 0, a_quantity, username_prov, sub_category);
         db_store->add_to_db();
-
+        wxMessageBox("Insert gone well", "", wxICON_ERROR);
     }
+    Close();
 }
 void InsertProductPage::ComeBack(wxCommandEvent &event) {
 

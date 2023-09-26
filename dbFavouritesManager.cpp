@@ -4,9 +4,9 @@
 
 #include "dbFavouritesManager.h"
 
-#include <utility>
 
-dbFavouritesManager::dbFavouritesManager(shared_ptr<Database> d) {
+
+dbFavouritesManager::dbFavouritesManager(const shared_ptr<Database>& d) {
     db = d->get_db();
     prod = make_shared<Product>();
 
@@ -20,8 +20,10 @@ void dbFavouritesManager::add_to_db() {
 
     prod_list = fav->get_products();
     prod = prod_list[index];
+
     //prendo da db i valori di id dell'utente che sta usando il programma
     // e del fornitore del prodotto da inserire
+
     string query_cust = "SELECT id FROM users WHERE username='"+fav->get_client()+"'";
     int id_client = db->execAndGet(query_cust).getInt();
 
@@ -93,24 +95,36 @@ void dbFavouritesManager::select() {
             string select_sub_name = "SELECT name FROM subcategories WHERE id = '" + to_string(id_sub) + "'";
             string sub_name = db->execAndGet(select_sub_name);
 
-            prod->set_desc(desc);
-            prod->set_price(price);
-            prod->set_username_prov(username_prov);
-            prod->set_id_store(id_store);
-            prod->set_available_quantity(available_q);
-            prod->set_subcategory(sub_name);
-            prod->set_quantity(0);
 
-            fav->add_product(prod);
+            shared_ptr<Product> product = make_shared<Product>(desc,price,0,available_q,username_prov,sub_name);
+            product->set_id_store(id_store);
+            fav->add_product(product);
         }
+        client->set_fav(fav);
     }
 }
 
 int dbFavouritesManager::select_count_of_prod(){
+
     //seleziono l'id del cliente che sta usando il programma
     int id_client = client->get_db_id();
     //prendo la quantità di prodotti presenti
     string query_select_count = "SELECT count(*) FROM favourites WHERE id_cust ='" + to_string(id_client) + "'";
     int count = db->execAndGet(query_select_count).getInt();
     return count;
+}
+
+bool dbFavouritesManager::control_if_exist(const shared_ptr<Product>& p) {
+
+    string select_id_prov = "SELECT id FROM users WHERE username = '"+p->get_username_prov()+"'";
+    cout << select_id_prov << endl;
+    int id_prov = db->execAndGet(select_id_prov).getInt();
+    string select_prod = "SELECT count(*) FROM store, favourites WHERE id_store = store.id AND id_cust = "+ to_string(client->get_db_id()) +" AND desc_prod = '" + p->get_desc() + "' AND favourites.id_prov="+
+                         to_string(id_prov)+"";
+    cout << select_prod << endl;
+    int count = db->execAndGet(select_prod);
+    if(count > 0)
+        return true;
+    else
+        return false;
 }

@@ -33,13 +33,13 @@ InitialPage::InitialPage(Engine* engine, const wxString &title, const wxPoint &p
 void InitialPage::OnAccess(wxCommandEvent& event )
 {
 
-    LogInPage *MainWin2 = new LogInPage(e,_T("ACCESS"));
+    auto *MainWin2 = new LogInPage(e,_T("ACCESS"));
     MainWin2->Show(TRUE); // show the window
     // and finally, set it as the main window
     // Tells the OS to quit running this process
 }
 void InitialPage::OnRegister(wxCommandEvent& event){
 
-    RegistrationPage *MainWin3 = new RegistrationPage(e,_T("REGISTRATION"));
+    auto *MainWin3 = new RegistrationPage(e,_T("REGISTRATION"));
     MainWin3->Show(TRUE);
 }

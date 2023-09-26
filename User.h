@@ -23,9 +23,11 @@ public:
 
     shared_ptr<OrdersList> get_order_list(){
         return order;
-    };
+    }
 
-
+    void set_order_list(shared_ptr<OrdersList> o_l) {
+        order = std::move(o_l);
+    }
 
     const string &get_type() {
         return type;
@@ -55,7 +57,7 @@ public:
         return username;
     }
 
-    const int &get_db_id() const {
+    [[nodiscard]]  int get_db_id() const {
         return db_id;
     }
 
@@ -72,7 +74,7 @@ public:
     }
 
     void set_password(const string &new_psw) {
-        psw= new_psw;
+        psw = new_psw;
     }
 
     void set_username(const string &new_username) {
@@ -80,14 +82,15 @@ public:
     }
 
     void set_bus_name(const string &b_name){
-        business_name=b_name;
+        business_name = b_name;
     }
 
     void set_id_db(const int &id){
-        db_id=id;
+        db_id = id;
     }
+
     void set_type(const string &t){
-        type=t;
+        type = t;
     }
 
     virtual void delete_objects_of_user();
@@ -107,7 +110,7 @@ public:
 
     virtual shared_ptr<Store> get_store()  = 0;
     virtual bool modify_prod (int id_store, string desc, double price, int a_q ) = 0;
-    virtual bool add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category) = 0;
+    virtual void add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category) = 0;
 
 private:
     string type;

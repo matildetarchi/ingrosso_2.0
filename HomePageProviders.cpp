@@ -25,17 +25,17 @@ END_EVENT_TABLE()
 
 
 HomePageProviders::HomePageProviders(Engine *e, const wxString& title, const wxPoint& pos, const wxSize& size)
-        :engine(e), wxFrame(NULL, wxID_ANY, title, pos, size){
+        :engine(e), wxFrame(nullptr, wxID_ANY, title, pos, size){
 
-    wxPanel *panelHome = new wxPanel(this, -1);
+    auto *panelHome = new wxPanel(this, -1);
 
     prov= engine->get_prov();
     username= prov->get_username();
     type= prov->get_type();
     db_u = engine->get_db_user();
 
-    wxBoxSizer *box = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer *MainGrid = new wxFlexGridSizer(2, 2, 25, -5);
+    auto *box = new wxBoxSizer(wxHORIZONTAL);
+    auto *MainGrid = new wxFlexGridSizer(4, 2, 25, -5);
 
     Requests=new wxButton (panelHome,IdButtonRequests,_T ("Manage requests"),wxDefaultPosition,wxSize(180,40),0);
     Profile=new wxButton(panelHome,IdButtonProfile, _T("Manage profile"), wxDefaultPosition,wxSize(180,40),0 );
@@ -70,22 +70,22 @@ HomePageProviders::HomePageProviders(Engine *e, const wxString& title, const wxP
 }
 
 void HomePageProviders::OpenRequests(wxCommandEvent &event) {
-    ChooseStatusPage *EnterWin = new ChooseStatusPage (engine, _T("REQUESTS"));
+    auto *EnterWin = new ChooseStatusPage (engine, _T("REQUESTS"));
     EnterWin->Show(TRUE);
 }
 
 void HomePageProviders::OpenProfile(wxCommandEvent &event) {
-    ManageProfilePage *manage = new ManageProfilePage (engine,_T("MANAGE PROFILE"));
+    auto *manage = new ManageProfilePage (engine,_T("MANAGE PROFILE"));
     manage->Show(TRUE);
 }
 
 void HomePageProviders::OpenStore(wxCommandEvent &event) {
-    ProviderStorePage *store = new ProviderStorePage(engine, _T("STORE"));
+    auto *store = new ProviderStorePage(engine, _T("STORE"));
     store->Show(TRUE);
 }
 
 void HomePageProviders::OpenInsProd(wxCommandEvent &event) {
-    InsertProductPage *EnterWin = new InsertProductPage (engine, _T("NEW PRODUCT"));
+    auto *EnterWin = new InsertProductPage (engine, _T("NEW PRODUCT"));
     EnterWin->Show(TRUE);
 }
 void HomePageProviders::ComeBack(wxCommandEvent &event) {
@@ -105,6 +105,6 @@ void HomePageProviders::RemoveUser(wxCommandEvent &event)  {
 }
 
 void HomePageProviders::ViewClients(wxCommandEvent &event) {
-    SelectionCityPage *sel_c = new SelectionCityPage(engine, _T("SELECT CITY"));
+    auto *sel_c = new SelectionCityPage(engine, _T("SELECT CITY"));
     sel_c->Show(TRUE);
 }

@@ -14,6 +14,7 @@
 #include "ManageProfilePage.h"
 #include "FavouritesListPage.h"
 #include "CartPage.h"
+#include "ChooseStatusPage.h"
 
 
 class HomePageClient: public wxFrame {
@@ -53,9 +54,6 @@ private:
     shared_ptr<Client> client;
     Engine *eng;
     std::shared_ptr<dbUserManager> db_user;
-
-
-
 };
 
 

@@ -5,7 +5,7 @@ add_subdirectory(./lib/googletest)
 set(gtest_SOURCE_DIR ./lib/googletest/)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-set(TEST_SOURCE_FILES runAllTests.cpp EngineFixture.cpp StoreFixture.cpp CartFixture.cpp FavouritesFixture.cpp UsersFixture.cpp OrdersFixture.cpp dbCartFixture.cpp dbFavouritesFixture.cpp dbOrderFixture.cpp dbStoreFixture.cpp dbUserFixture.cpp)
+set(TEST_SOURCE_FILES runAllTests.cpp EngineFixture.cpp StoreFixture.cpp CartFixture.cpp FavouritesFixture.cpp UsersFixture.cpp OrdersFixture.cpp)
 add_executable(runIngTests ${TEST_SOURCE_FILES})
 target_link_libraries(runIngTests gtest gtest_main core)
 

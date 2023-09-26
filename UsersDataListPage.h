@@ -21,7 +21,6 @@ public:
 
 
 private:
-    void OnChoice(wxCommandEvent& event);
     void ComeBack(wxCommandEvent& event);
     wxButton *Back;
     wxBoxSizer *sizer;
@@ -29,7 +28,6 @@ private:
     std::string city;
     std::string type;
     std::string username;
-    wxChoice* choiceOrder;
     Engine *engine;
     shared_ptr<User> user;
     shared_ptr<dbUserManager> db_user;

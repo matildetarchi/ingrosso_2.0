@@ -1,7 +1,7 @@
 //
 // Created by dario on 15/06/2023.
 //
-#define only_pending 0
+
 #include "dbOrdersManager.h"
 
 
@@ -14,8 +14,8 @@ dbOrdersManager::dbOrdersManager(const shared_ptr<Database>& d) {
 
 void dbOrdersManager::add_to_db(){
 
-    std::shared_ptr<Date> date = date->get_current_date();
-    std::string dataString = date->to_string("%d/%m/%Y");
+    std::shared_ptr<Date> d = date->get_current_date();
+    std::string dataString = d->to_string("%d/%m/%Y");
 
     int id_client = user->get_db_id();
     string username = user->get_username();
@@ -33,9 +33,9 @@ void dbOrdersManager::add_to_db(){
     shared_ptr<Cart> cart = user->get_cart();
     vector<shared_ptr<Product>> products = cart->get_products();
 
-    for( const shared_ptr<Product>& prod: products) {
-        string query_insert_ord_detail = "INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(prod->get_quantity())+"', '"+ to_string(id_last_ord) +"', '"+
-                                       to_string(prod->get_id_store())+"');";
+    for( const shared_ptr<Product>& p: products) {
+        string query_insert_ord_detail = "INSERT INTO orders_details (quantity, id_order, id_product) VALUES ('"+to_string(p->get_quantity())+"', '"+ to_string(id_last_ord) +"', '"+
+                                       to_string(p->get_id_store())+"');";
 
         db->exec(query_insert_ord_detail);
     }
@@ -53,7 +53,7 @@ void dbOrdersManager::add_to_db(){
         int id_store = query.getColumn(4).getInt();
         string subcategories = query.getColumn(3).getText();
         int quantity = query.getColumn(2).getInt();
-        int price_prod = query.getColumn(1).getInt();
+        double price_prod = query.getColumn(1).getInt();
         string desc_prod = query.getColumn(0).getText();
 
         std::shared_ptr<Product> product = std::make_shared<Product>(desc_prod, price_prod, quantity,q_available, username, subcategories);// Qui passate i paraemtri che servono a OrderProduct
@@ -70,7 +70,7 @@ void dbOrdersManager::change_status( const string &new_status, int id_order) {
     //metodo che cambia lo status dell'ordine da sospeso(S) a approvato(A) o rifiutato(D)
 
     //lancio la query di modifica
-    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = '" + to_string(id_order) +"'";
+    string query = "UPDATE orders SET status = '"+new_status+"' WHERE id = " + to_string(id_order) +"";
     db->exec(query);
 
     shared_ptr<OrdersList> order_s = user->get_order_list();
@@ -142,13 +142,14 @@ void dbOrdersManager::select_for_provider() {
 }
 
 void dbOrdersManager::select_for_client() {
+
     int id_user = user->get_db_id();
     string username = user->get_username();
 
-    string query_count = "SELECT count(*) FROM orders WHERE id_client = '" + to_string(id_user) +"'";
+    string query_count = "SELECT count(*) FROM orders WHERE id_client = '" + to_string(id_user) + "'";
     int count = db->execAndGet(query_count).getInt();
 
-    if (count>0) {
+    if (count > 0) {
         string select_orders =
                 "SELECT orders.id, date_order, status FROM orders WHERE id_client = '" + to_string(id_user) + "'";
         SQLite::Statement query_ord(*db, select_orders);
@@ -163,13 +164,13 @@ void dbOrdersManager::select_for_client() {
             // trasformo la stringa data in un oggetto Date
             date = date->string_to_date_converter(date_string);
 
-            order = make_shared<Order>(id_order, status, username);
-            order->set_date(date);
+            shared_ptr<Order> o = make_shared<Order>(id_order, status, username);
+            o->set_date(date);
 
 
             string select_products =
                     "SELECT desc_prod, price_product, quantity, id_sub, id_product, available_quantity FROM store, orders_details, orders WHERE id_product = store.id AND orders_details.id_order = '" +
-                    to_string(id_order) + "'AND id_client = '" + to_string(id_user) + "' GROUP BY desc_prod";
+                    to_string(id_order) + "'AND id_client = '" + to_string(id_user) + "'";
             SQLite::Statement query_prod(*db, select_products);
 
             while (query_prod.executeStep()) {
@@ -188,12 +189,13 @@ void dbOrdersManager::select_for_client() {
                 std::shared_ptr<Product> product = std::make_shared<Product>(desc_prod, price_prod, quantity,
                                                                              q_available, username, sub_name);
                 product->set_id_store(id_store);
-                order->add_to_order(std::move(product));
+                o->add_to_order(std::move(product));
 
             }
 
-            tab_order->add_order(order);
+            tab_order->add_order(o);
         }
+        user->set_order_list(tab_order);
     }
 }
 
@@ -205,12 +207,10 @@ void dbOrdersManager::cancel_order(int id_order) {
     int id = user->get_db_id();
 
     //lancio la query delete
-    string query_cancel_details =
-                "DELETE FROM orders_details WHERE id_order = '" + to_string(id_order) + "'";
+    string query_cancel_details = "DELETE FROM orders_details WHERE id_order = '" + to_string(id_order) + "'";
     db->exec(query_cancel_details);
 
-    string query_cancel =
-                "DELETE FROM orders WHERE id = '" + to_string(id_order) + "' AND id_client ='" +
+    string query_cancel = "DELETE FROM orders WHERE id = '" + to_string(id_order) + "' AND id_client ='" +
                 to_string(id) + "'";
     db->exec(query_cancel);
 
@@ -218,20 +218,6 @@ void dbOrdersManager::cancel_order(int id_order) {
 
 }
 
-int dbOrdersManager::select_id_last_order(const string &username_prov) {
-    //metodo per ottenere il codice dell'ultimo ordine fatto a un fornitore
-
-    //prendo l'id del fornitore
-    string query_user = "SELECT id FROM users WHERE username ='" + username_prov + "'";
-    int id_prov = db->execAndGet(query_user).getInt();
-
-    //lancio la select del MAX(id) e ritorno il risultato
-    string query_id = "SELECT MAX(id) FROM orders, store, orders_details WHERE id_order = orders.id AND id_product = store.id AND id_prov = '" + to_string(id_prov) + "'";
-    int id_single_order = db->execAndGet(query_id).getInt();
-
-    return id_single_order;
-
-}
 
 int dbOrdersManager::select_count_for_provider(){
     if(user->get_type()== "F") {
@@ -243,13 +229,26 @@ int dbOrdersManager::select_count_for_provider(){
 
 }
 
-int dbOrdersManager::select_count_for_client(){
+int dbOrdersManager::select_count_for_client(int control){
     if(user->get_type()== "C") {
-
+        int count = 0;
         tab_order = user->get_order_list();
-        int count = tab_order->get_num_order();
+        if (control == 0){
+            vector<shared_ptr<Order>> o_l = tab_order->get_orders();
+            int i = 0;
+            while(i < o_l.size()){
+                if(o_l[i]->get_status() == "S"){
+                    count ++;
+                    i++;
+                }
+                i++;
+            }
+        }else {
+            count = tab_order->get_num_order();
+        }
         return count;
-    }else
+    }
+    else
         throw std::runtime_error("Errore, l'utente selezionato non è un cliente");
 
 }

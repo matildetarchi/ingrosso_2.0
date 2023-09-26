@@ -20,7 +20,7 @@ void dbStoreManager::change_data(int index, const string& desc_prod, double pric
 }
 
 void dbStoreManager::add_to_db() {
-
+     st = prov->get_store();
     //metodo per aggiungere un nuovo prodotto al magazzino
     int index = st->get_num_prod()-1;
     //prendo l'id della sottocategoria alla quale appartiene il prodotto
@@ -40,7 +40,7 @@ void dbStoreManager::add_to_db() {
 
     //lancio la query d'inserimento nel db
     string query_insert = "INSERT INTO store (available_quantity, price_product, desc_prod, id_sub, id_prov) VALUES"
-                          " ('"+to_string(prod->get_quantity())+ "', '" + to_string(prod->get_price()) + "', '"+prod->get_desc()+"', '"+to_string(id_sub)+"', '"+to_string(id_prov)+"');";
+                          " ('"+to_string(prod->get_q_available())+ "', '" + to_string(prod->get_price()) + "', '"+prod->get_desc()+"', '"+to_string(id_sub)+"', '"+to_string(id_prov)+"');";
     db->exec(query_insert);
 
 }
@@ -139,112 +139,109 @@ vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_
 
         }
 
-    }return product_list;
+    }
+    return product_list;
+}
+
+int dbStoreManager::select_count_for_client(const string &sub_name, const string &disp) {
+
+    //metodo per sapere quanti prodotti ci sono
+    //di una determinata sottocategoria e disponibilità
+
+    //prendo l'id della sottocategoria della quale si vuole vedere i prodotti
+    string query_sub = "SELECT id FROM subcategories WHERE name='" + sub_name + "'";
+    int i = db->execAndGet(query_sub).getInt();
+
+    //controllo il tipo di disponibilità
+    //della quale l'utente vuole vedere i prodotti
+    //solo disponibili o tutti quanti
+    int n_dispo;
+    if (disp == "Only Available") {
+        n_dispo = 1;
+    } else {
+        n_dispo = 0;
+    }
+
+    //lancio la query e restituisco il valore
+    string query_select_count = "SELECT count(*) FROM store WHERE id_sub = '" + to_string(i) + "' AND available_quantity>= '" +
+            to_string(n_dispo) + "'";
+    int count = db->execAndGet(query_select_count).getInt();
+
+    return count;
+}
+
+void dbStoreManager::select_for_prov() {
+
+    string username = prov->get_username();
+
+    //metodo che prende i valori dei prodotti nel magazzino di un fornitore
+
+    //seleziono l'id del fornitore che sta usando il programma
+    int id_prov = prov->get_db_id();
+
+    //prendo la quantità di prodotti presenti
+    string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
+    int count = db->execAndGet(query_select_count).getInt();
+
+
+    //lancio la query
+    //popolo la matrice
+    //restituisco la matrice
+    if (count > 0) {
+        string select = "SELECT desc_prod, price_product, available_quantity, subcategories.name, store.id FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
+                to_string(id_prov) + "';";
+        SQLite::Statement query(*db, select);
+
+
+        while (query.executeStep()) {
+            string desc_prod = query.getColumn(0).getText();
+            double price = query.getColumn(1).getDouble();
+            int quantity = query.getColumn(2);
+            string subcategory = query.getColumn(3).getText();
+            int id_store = query.getColumn(4);
+
+            shared_ptr<Product> product = make_shared<Product>(desc_prod, price, 0, quantity, username, subcategory);
+            product->set_id_store(id_store);
+
+            st->add_to_store(product);
+        }
+
+    }
 
 }
 
-    int dbStoreManager::select_count_for_client(const string &sub_name, const string &disp) {
+int dbStoreManager::select_count_for_provider() {
 
-        //metodo per sapere quanti prodotti ci sono
-        //di una determinata sottocategoria e disponibilità
+    //seleziono l'id del fornitore che sta usando il programma
+    int id_prov = prov->get_db_id();
 
-        //prendo l'id della sottocategoria della quale si vuole vedere i prodotti
-        string query_sub = "SELECT id FROM subcategories WHERE name='" + sub_name + "'";
-        int i = db->execAndGet(query_sub).getInt();
+    //prendo la quantità di prodotti presenti
+    string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
+    int count = db->execAndGet(query_select_count).getInt();
+    return count;
 
-        //controllo il tipo di disponibilità
-        //della quale l'utente vuole vedere i prodotti
-        //solo disponibili o tutti quanti
-        int n_dispo;
-        if (disp == "Only Available") {
-            n_dispo = 1;
-        } else {
-            n_dispo = 0;
-        }
+}
 
-        //lancio la query e restituisco il valore
-        string query_select_count =
-                "SELECT count(*) FROM store WHERE id_sub = '" + to_string(i) + "' AND available_quantity>= '" +
-                to_string(n_dispo) + "'";
-        int count = db->execAndGet(query_select_count).getInt();
-        return count;
+shared_ptr<Product> dbStoreManager::select_prod_to_modify(int id_prod) {
 
+    int id_prov = prov->get_db_id();
+    string username = prov->get_username();
+    string select_prod = "SELECT desc_prod, price_product, available_quantity, subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= " +
+            to_string(id_prov) + " AND store.id = " + to_string(id_prod) + " ";
+    SQLite::Statement query_prod(*db, select_prod);
+    while(query_prod.executeStep()) {
+        string desc_prod = query_prod.getColumn(0).getText();
+        double price = query_prod.getColumn(1).getDouble();
+        int available_quantity = query_prod.getColumn(2);
+        string subcategory = query_prod.getColumn(3).getText();
+
+        prod->set_available_quantity(available_quantity);
+        prod->set_price(price);
+        prod->set_desc(desc_prod);
+        prod->set_subcategory(subcategory);
+        prod->set_username_prov(username);
+        prod->set_quantity(0);
+        prod->set_id_store(id_prod);
     }
-
-    void dbStoreManager::select_for_prov() {
-
-        string username = prov->get_username();
-
-        //metodo che prende i valori dei prodotti nel magazzino di un fornitore
-
-        //seleziono l'id del fornitore che sta usando il programma
-        int id_prov = prov->get_db_id();
-
-        //prendo la quantità di prodotti presenti
-        string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
-        int count = db->execAndGet(query_select_count).getInt();
-
-
-        //lancio la query
-        //popolo la matrice
-        //restituisco la matrice
-        if (count > 0) {
-            string select =
-                    "SELECT desc_prod, price_product, available_quantity, subcategories.name, store.id FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
-                    to_string(id_prov) + "';";
-            SQLite::Statement query(*db, select);
-
-
-            while (query.executeStep()) {
-                string desc_prod = query.getColumn(0).getText();
-                double price = query.getColumn(1).getDouble();
-                int quantity = query.getColumn(2);
-                string subcategory = query.getColumn(3).getText();
-                int id_store = query.getColumn(4);
-
-                shared_ptr<Product> product = make_shared<Product>(desc_prod, price, 0, quantity, username, subcategory);
-                product->set_id_store(id_store);
-
-                st->add_to_store(product);
-            }
-
-        }
-
-    }
-
-    int dbStoreManager::select_count_for_provider() {
-
-        //seleziono l'id del fornitore che sta usando il programma
-        int id_prov = prov->get_db_id();
-
-        //prendo la quantità di prodotti presenti
-        string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
-        int count = db->execAndGet(query_select_count).getInt();
-        return count;
-
-    }
-
-    shared_ptr<Product> dbStoreManager::select_prod_to_modify(int id_prod) {
-
-            int id_prov = prov->get_db_id();
-            string username = prov->get_username();
-            string select_prod =
-                    "SELECT desc_prod, price_product, available_quantity, subcategories.name FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
-                    to_string(id_prov) + "' AND store.id = '" + to_string(id_prod) + "' ";
-            SQLite::Statement query_prod(*db, select_prod);
-            query_prod.exec();
-            string desc_prod = query_prod.getColumn(0).getText();
-            double price = query_prod.getColumn(1).getDouble();
-            int available_quantity = query_prod.getColumn(2);
-            string subcategory = query_prod.getColumn(3).getText();
-
-            prod->set_available_quantity(available_quantity);
-            prod->set_price(price);
-            prod->set_desc(desc_prod);
-            prod->set_subcategory(subcategory);
-            prod->set_username_prov(username);
-            prod->set_quantity(0);
-            prod->set_id_store(id_prod);
-            return prod;
-
+    return prod;
 }

@@ -4,10 +4,9 @@
 
 #include "dbUserManager.h"
 
-#include <utility>
 
 
-dbUserManager::dbUserManager(shared_ptr<Database> d) {
+dbUserManager::dbUserManager(const shared_ptr<Database>& d) {
     db = d->get_db();
 
 }
@@ -53,7 +52,11 @@ void dbUserManager::add_to_db() {
     //funzione che aggiunge un nuovo utente al database
 
     //lancio la query di insert
-    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" + user->get_city() + "', '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "')";
+    string query_id_city ="SELECT id FROM cities WHERE name = '"+user->get_city()+"'";
+    int id_city = db->execAndGet(query_id_city);
+
+    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" +
+            to_string(id_city) + "', '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "')";
     db->exec(query);
     string i_u= "SELECT id FROM users WHERE email= '" + user->get_email() + "'";
     int id_user=db->execAndGet(i_u);
@@ -141,20 +144,36 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
 
         //se non li ha
         //elimino i dati del carrello di quel cliente
-        string query_del_cart = "DELETE FROM cart WHERE id_user = '"+to_string(id)+"'";
-        db->exec(query_del_cart);
+        string query_count_cart = "SELECT count(*) FROM cart WHERE id_user = '"+to_string(id)+"' ";
+        int num_prod_cart = db->execAndGet(query_count_cart);
+        if(num_prod_cart > 0) {
+            string query_del_cart = "DELETE FROM cart WHERE id_user = '" + to_string(id) + "'";
+            db->exec(query_del_cart);
+        }
 
         //elimino i dati della lista dei preferiti del cliente
-        string query_del_fav = "DELETE FROM favourites WHERE id_cust = '"+to_string(id)+"'";
-        db->exec(query_del_fav);
+        string query_count_fav = "SELECT count(*) FROM favourites WHERE id_cust = '"+to_string(id)+"' ";
+        int num_prod_fav = db->execAndGet(query_count_fav);
 
+        if(num_prod_fav > 0) {
+            string query_del_fav = "DELETE FROM favourites WHERE id_cust = '" + to_string(id) + "'";
+            db->exec(query_del_fav);
+        }
 
         //elimino i dati degli ordini di quell'utente
-        string query_del_ord_details = "DELETE FROM orders , orders_details WHERE  id_client = '"+to_string(id)+"' AND  orders.id = id_order";
-        db->exec(query_del_ord_details);
-        string query_del_ord = "DELETE FROM orders WHERE id_client = '"+to_string(id)+"'";
-        db->exec(query_del_ord);
-
+        string query_count_ord = "SELECT count(*) FROM orders WHERE id_client = '"+to_string(id)+"' ";
+        int num_prod_ord = db->execAndGet(query_count_ord);
+        if(num_prod_ord > 0) {
+            string query_id_order = "SELECT id FROM orders WHERE id_client = " + to_string(id) + "";
+            SQLite::Statement query(*db, query_id_order);
+            while (query.executeStep()) {
+                int id_order = query.getColumn(0);
+                string query_del_ord_details = "DELETE FROM orders_details WHERE id = " + to_string(id_order) + " ";
+                db->exec(query_del_ord_details);
+            }
+            string query_del_ord = "DELETE FROM orders WHERE id_client = '" + to_string(id) + "'";
+            db->exec(query_del_ord);
+        }
 
         //infine elimino l'utente stesso
         string query_del_user = "DELETE FROM users WHERE id = '"+to_string(id)+"'";
@@ -172,12 +191,9 @@ void dbUserManager::change_data(const string &new_address, const string &new_cit
 
     //prendo i valore dell'id dell'utente che vuole modificare i suoi dati
     int id = user->get_db_id();
-
-    string query_city_id = "SELECT id FROM cities WHERE name ='"+new_city+"'";
-    int id_city = db->execAndGet(query_city_id).getInt();
-
+    int id_city = stoi(new_city);
     //lancio la query di update dei dati
-    string query = "UPDATE users SET address='"+new_address+"', id_city = '"+to_string(id_city)+"', email = '"+new_email+"', password = '"+new_psw+"', username = '"+new_username+"' WHERE id = '"+ to_string(id)+"'";
+    string query = "UPDATE users SET address='"+new_address+"', id_city = "+to_string(id_city)+", email = '"+new_email+"', password = '"+new_psw+"', username = '"+new_username+"' WHERE id = "+ to_string(id)+"";
     db->exec(query);
 
     user->set_address(new_address);
@@ -248,56 +264,98 @@ string dbUserManager::select_username(const string &email) {
 void dbUserManager::change_psw(const string &email, const string &new_psw) {
 
     //metodo per permettera all'utente di cambiare la prorpria password
-
     //lancio la query di update
     string query = "UPDATE users SET password='"+new_psw+"' WHERE email='"+email+"'";
     db->exec(query);
-
-    user->set_password(new_psw);
 
 }
 
 vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const string &city) {
     vector<shared_ptr<User>> user_list;
-    string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
-    int id_city= db->execAndGet(select_id_city);
+    shared_ptr<User> single_user;
+    string type_us;
+    if (type=="C") {
+        type_us="F";
+    } else {
+        type_us="C";
+    }
+    if (city!="All") {
+        string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
+        int id_city= db->execAndGet(select_id_city);
 
-    string user_data = "SELECT  business_name, address, email, password, username, id FROM users WHERE type = '"+ type+"' AND id_city = '"+
-            to_string(id_city)+"' ";
-    SQLite::Statement query_user(*db,user_data);
-    user->set_type(type);
-    user->set_city(city);
-    while(query_user.executeStep()){
+        string user_data = "SELECT business_name, address, email, password, username, id FROM users WHERE type = '"+ type_us+"' AND id_city = "+
+                           to_string(id_city)+"";
+        SQLite::Statement query_user(*db,user_data);
+        while(query_user.executeStep()){
+            string b_n = query_user.getColumn(0).getText();
+            string address = query_user.getColumn(1).getText();
+            string email = query_user.getColumn(2).getText();
+            string psw = query_user.getColumn(3).getText();
+            string username = query_user.getColumn(4);
+            int id_us = query_user.getColumn(5);
+            if (type_us=="C") {
+                single_user = make_shared<Client>(type_us, b_n, address, email, psw, username, city);
+                single_user->set_id_db(id_us);
+            } else {
+                single_user = make_shared<Provider>(type_us, b_n, address, email, psw, username, city);
+                single_user->set_id_db(id_us);
+            }
+            user_list.push_back(single_user);
+        }
+    } else {
+        string user_data = "SELECT business_name, address, email, password, username, cities.name, users.id FROM users, cities WHERE type = '"+ type_us+"' AND cities.id=id_city";
+        SQLite::Statement query_user(*db,user_data);
+        while(query_user.executeStep()){
+            string b_n = query_user.getColumn(0).getText();
+            string address = query_user.getColumn(1).getText();
+            string email = query_user.getColumn(2).getText();
+            string psw = query_user.getColumn(3).getText();
+            string username = query_user.getColumn(4).getText();
+            string user_city = query_user.getColumn(5).getText();
+            int id_us = query_user.getColumn(6).getInt();
+            if (type_us=="C")
+            {
+                single_user = make_shared<Client>(type_us, b_n, address, email, psw, username, user_city);
+                single_user->set_id_db(id_us);
+            } else if (type_us=="F")
+            {
+                single_user = make_shared<Provider>(type_us, b_n, address, email, psw, username, user_city);
+                single_user->set_id_db(id_us);
+            }
+            user_list.push_back(single_user);
 
-        string b_n = query_user.getColumn(0).getText();
-        string address = query_user.getColumn(1).getText();
-        string email = query_user.getColumn(2).getText();
-        string psw = query_user.getColumn(3).getText();
-        string username = query_user.getColumn(4);
-        int id_us = query_user.getColumn(5);
-        user->set_id_db(id_us);
-        user->set_password(psw);
-        user->set_email(email);
-        user->set_address(address);
-        user->set_bus_name(b_n);
-        user->set_username(username);
-        user->set_type(type);
-
-        user_list.push_back(user);
-
+        }
     }
 
     return user_list;
 }
 
+
 int dbUserManager::select_count_users(const string &type, const string &city) {
-    string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
-    int id_city= db->execAndGet(select_id_city);
+    int count;
+    string type_us;
+    if (type=="C"){
+        type_us="F";
+    } else {
+        type_us="C";
+    }
+    if (city!="All") {
+        string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
+        int id_city= db->execAndGet(select_id_city);
 
-    string user_data = "SELECT  count(*) FROM users WHERE type = '"+ type+"' AND id_city = '"+
-                       to_string(id_city)+"' ";
+        string user_data = "SELECT count(*) FROM users WHERE type = '"+ type_us+"' AND id_city = "+
+                           to_string(id_city)+"";
+        count = db->execAndGet(user_data);
+    } else {
+        string user_data = "SELECT count(*) FROM users WHERE type = '"+ type_us+"'";
+        count = db->execAndGet(user_data);
+    }
 
-    int count = db->execAndGet(user_data);
     return count ;
 }
 
+
+void dbUserManager:: remove_user(const string &username){
+    string query_del_user = "DELETE FROM users WHERE username = '"+username+"'";
+    db->exec(query_del_user);
+}

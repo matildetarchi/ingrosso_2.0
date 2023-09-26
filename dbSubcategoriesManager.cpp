@@ -4,11 +4,10 @@
 
 #include "dbSubcategoriesManager.h"
 
-#include <utility>
 
 using namespace std;
 
-dbSubcategoriesManager::dbSubcategoriesManager(shared_ptr<Database> d) {
+dbSubcategoriesManager::dbSubcategoriesManager(const shared_ptr<Database>& d) {
     db = d->get_db();
 }
 

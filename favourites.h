@@ -24,7 +24,7 @@ public:
         return username_client;
     }
 
-    int get_num_prod() const{
+    [[nodiscard]] int get_num_prod() const{
         return num_prod;
     }
 
@@ -33,13 +33,9 @@ public:
     }
 
     void add_product( std::shared_ptr<Product> prod);
-
     void update_num_prod(int control);
-
     void remove_one(int index);
     void remove_all();
-
-
 
 private :
 

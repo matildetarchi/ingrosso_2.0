@@ -4,11 +4,10 @@
 
 #include "dbCityManager.h"
 
-#include <utility>
 
 using namespace std;
 
-dbCityManager::dbCityManager(shared_ptr<Database> d) {
+dbCityManager::dbCityManager(const shared_ptr<Database>& d) {
     db = d->get_db();
 
     //metodo per creare la tabella delle categorie di prodotti nel database

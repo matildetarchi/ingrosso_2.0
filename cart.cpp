@@ -11,8 +11,6 @@ Cart::Cart(const string &client) {
 
     username_client = client;
     num_prod = 0;
-
-
 }
 
 Cart::~Cart() {

@@ -5,9 +5,9 @@
 #ifndef INGROSSO_ONLINE_DBUSERMANAGER_H
 #define INGROSSO_ONLINE_DBUSERMANAGER_H
 
-
-#include "User.h"
 #include "Database.h"
+#include "Provider.h"
+#include "Client.h"
 
 #define accesso 0
 #define registrazione 1
@@ -15,14 +15,12 @@
 class dbUserManager {
 public:
 
-    explicit dbUserManager(shared_ptr<Database> d);
+    explicit dbUserManager(const shared_ptr<Database>& d);
 
 
     void set_user(shared_ptr<User> us){
         user=std::move(us);
     }
-
-
 
 
     void add_to_db();
@@ -35,7 +33,7 @@ public:
     string select_username(const string &email);
     int select_count_users(const string &type, const string &city);
     vector<shared_ptr<User>> select_users(const string &type, const string &city);
-
+    void remove_user(const string &username);
 private:
     shared_ptr<User> user;
     shared_ptr<SQLite::Database> db;

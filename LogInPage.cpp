@@ -17,20 +17,19 @@ BEGIN_EVENT_TABLE (LogInPage, wxFrame)
                 EVT_BUTTON(IdButtonBack, LogInPage::ComeBack)
                 EVT_BUTTON(IdButtonForPsw, LogInPage::ForgotPassword)
                 EVT_BUTTON(IdButtonVP, LogInPage::ViewPass)
-
-END_EVENT_TABLE() // The button is pressed
+END_EVENT_TABLE()
 
 
 LogInPage::LogInPage(Engine *e, const wxString &title) :engine(e),
-           wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 350)){
+           wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(400, 350)){
 
-    wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+    auto *hbox = new wxBoxSizer(wxHORIZONTAL);
 
     fgs = new wxFlexGridSizer(9, 1, 12, -5);
 
 
-    wxStaticText *thetitle = new wxStaticText(this, -1, wxT("Email"));
-    wxStaticText *password = new wxStaticText(this, -1, wxT("Password"));
+    auto *thetitle = new wxStaticText(this, -1, wxT("Email"));
+    auto *password = new wxStaticText(this, -1, wxT("Password"));
     ViewP=new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
@@ -90,10 +89,10 @@ void LogInPage::Access(wxCommandEvent &event) {
             TypeUser=user->get_type();
 
             if (TypeUser == "F") {
-                HomePageProviders *ProvidersWin = new HomePageProviders(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));
+                auto *ProvidersWin = new HomePageProviders(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ProvidersWin->Show(TRUE);
             } else {
-                HomePageClient *ClientWin = new HomePageClient(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));
+                auto *ClientWin = new HomePageClient(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));
                 ClientWin->Show(TRUE);
             }
         }
@@ -102,12 +101,11 @@ void LogInPage::Access(wxCommandEvent &event) {
 
 void LogInPage::ComeBack(wxCommandEvent &event) {
     Close();
-
 }
 
 void LogInPage::ForgotPassword(wxCommandEvent &event) {
     Hide();
-    ForgotPasswordPage *forpsw = new ForgotPasswordPage(engine, _T("FORGOT PASSWORD"));
+    auto *forpsw = new ForgotPasswordPage(engine, _T("FORGOT PASSWORD"));
     forpsw->Show(TRUE);
 }
 

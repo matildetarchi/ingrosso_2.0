@@ -5,7 +5,6 @@
 #ifndef INGROSSO_ONLINE_CART_H
 #define INGROSSO_ONLINE_CART_H
 
-
 #include "Store.h"
 
 #define put_in 0
@@ -25,7 +24,7 @@ public:
         return username_client;
     }
 
-    int get_num_prod() const{
+    [[nodiscard]] int get_num_prod() const{
         return num_prod;
     }
 
@@ -34,13 +33,13 @@ public:
         return products;
     }
 
+    void set_prod(vector <std::shared_ptr<Product>> p) {
+        products = p;
+    }
     void add_product(const shared_ptr<Product> &prod);
-
     void update_num(int control);
-
     void remove_one(int index);
     void remove_all();
-
 
 
 private:

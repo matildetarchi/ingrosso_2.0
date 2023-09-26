@@ -7,15 +7,12 @@
 
 const long SingleOrderProviderPage::IdButtonBack =::wxNewId();
 
-
 BEGIN_EVENT_TABLE (SingleOrderProviderPage, wxDialog)
                 EVT_BUTTON(IdButtonBack, SingleOrderProviderPage::ComeBack)
-
-
 END_EVENT_TABLE()
 
 SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, const std::string &code_order): engine(e), id_order(code_order),
-        wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
+        wxDialog(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
     prov = engine->get_prov();
 
@@ -40,7 +37,7 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
     grid->SetColLabelValue(3, "Total Price");
 
     double t_p= order->get_total(order);
-    string total_price(to_string(t_p));
+    string total_price = to_string(t_p);
 
     for ( i = 0; i < row; i++) {
         int q= order_p[i]->get_quantity();
@@ -56,7 +53,7 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
         grid->SetReadOnly(i, 2, true);
         grid->SetCellValue(i, 2, available_q);
     }
-    grid->SetCellValue(row+1,3, total_price );
+    grid->SetCellValue(i,3, total_price);
     grid->AutoSize();
 
 
@@ -64,16 +61,14 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
-    sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(grid, 1,  wxALL, 5);
 
-    sizer->Add(Back, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(Back, 1, wxALL, 5);
     SetSizer(sizer);
 
     Centre();
 }
 
 void SingleOrderProviderPage::ComeBack(wxCommandEvent &event) {
-
     Close();
-
 }

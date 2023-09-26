@@ -19,7 +19,6 @@ public :
     explicit dbCategoriesManager(const shared_ptr<Database>& d);
 
     int number_of_cat();
-
     vector<string> select();
 
 private:

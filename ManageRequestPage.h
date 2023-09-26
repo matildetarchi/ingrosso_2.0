@@ -18,6 +18,8 @@ public:
     static const long IdButtonConfirm;
     static const long IdButtonDeny;
     static const long IdButtonView;
+    static const long IdButtonBack;
+
 
 DECLARE_EVENT_TABLE()
 
@@ -26,20 +28,21 @@ private:
     void OnConfirm(wxCommandEvent& event);
     void OnDeny(wxCommandEvent& event);
     void ViewOrder(wxCommandEvent& event);
-    //void OnChoice(wxCommandEvent& event);
+    void ComeBack(wxCommandEvent& event);
 
     wxButton *Confirm;
     wxButton *Deny;
+    wxButton *Back;
     wxButton *View;
     wxTextCtrl *sub;
     wxTextCtrl *cat;
     wxTextCtrl *name;
     wxTextCtrl *cost;
     wxBoxSizer *sizer;
+    wxBoxSizer *sizer_vertical;
     wxSpinCtrl* spinCtrl;
     wxGrid *grid;
     std::string username;
-    wxChoice* choiceOrder;
     std::vector<shared_ptr<Order>> order;
     int ctrl;
     Engine* engine;
@@ -47,8 +50,5 @@ private:
     shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;
 };
-
-
-
 
 #endif //INGROSSO_ONLINE_MANAGEREQUESTPAGE_H

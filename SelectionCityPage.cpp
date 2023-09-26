@@ -12,22 +12,20 @@ const long SelectionCityPage::IdButtonInsert =::wxNewId();
 const long SelectionCityPage::IdButtonComeBack =::wxNewId();
 
 BEGIN_EVENT_TABLE (SelectionCityPage, wxFrame)
-
                 EVT_BUTTON(IdButtonInsert, SelectionCityPage::InsertCity)
                 EVT_BUTTON(IdButtonComeBack, SelectionCityPage::ComeBack)
-
 END_EVENT_TABLE()
 
 SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
 
-    wxPanel *Mainpanel = new wxPanel(this, -1);
+    auto *Mainpanel = new wxPanel(this, -1);
 
-    wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+    auto *hbox = new wxBoxSizer(wxHORIZONTAL);
 
 
-    wxFlexGridSizer *fgs=new wxFlexGridSizer(6,2,20,5);
+    auto *fgs=new wxFlexGridSizer(6,2,20,5);
 
     db_table = engine->get_db_city();
 
@@ -46,7 +44,7 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
     cities.clear();
     choices.clear();
 
-    wxStaticText *City = new wxStaticText(Mainpanel, -1, wxT("City"));
+    auto *City = new wxStaticText(Mainpanel, -1, wxT("City"));
 
     Insert=new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
@@ -63,20 +61,13 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
     fgs->Add(Insert,0);
     fgs->Add(Back,0);
 
-
-
     fgs->AddGrowableRow(1, 1);
     fgs->AddGrowableCol(1, 1);
 
 
-
-
     hbox->Add(fgs, 1, wxALL, 10);
 
-
-
     Mainpanel->SetSizer(hbox);
-    //this->SetSizer(MainBox);
 
     Centre();
 
@@ -90,13 +81,11 @@ void SelectionCityPage::InsertCity(wxCommandEvent &event) {
         int Id_city = choiceC->GetSelection();
         string city = choiceC->GetString(Id_city).ToStdString();
         Close();
-        UsersDataListPage *view= new UsersDataListPage(engine, _T("USERS"), city);
+        auto *view= new UsersDataListPage(engine, _T("USERS"), city);
         view->Show(TRUE);
     }
 }
 
 void SelectionCityPage::ComeBack(wxCommandEvent &event) {
-
     Close();
-
 }

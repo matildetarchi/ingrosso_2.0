@@ -30,11 +30,11 @@ void Order::update_num(int control) {
 }
 
 double Order::get_total(const shared_ptr<Order>& o) {
-    int s = 0;
+    double s = 0;
     vector<shared_ptr<Product>> products = o->get_order_prod();
     for(int i = 0; i<o->num_prod; i++) {
         shared_ptr<Product> p = products[i];
-        int price = p->get_price();
+        double price = p->get_price();
         s += price *(p->get_quantity());
     }
     return s;

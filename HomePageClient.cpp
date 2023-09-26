@@ -17,7 +17,6 @@ const long HomePageClient::IdButtonComeBack =::wxNewId();
 
 
 
-
 BEGIN_EVENT_TABLE (HomePageClient, wxFrame)
 
            EVT_BUTTON(IdButtonCart, HomePageClient::OpenCart)
@@ -33,7 +32,7 @@ END_EVENT_TABLE()
 
 
 HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPoint& pos, const wxSize& size): eng(engine),
-         wxFrame(NULL, wxID_ANY, title, pos, size){
+         wxFrame(nullptr, wxID_ANY, title, pos, size){
 
     client = eng->get_client();
 
@@ -42,12 +41,12 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
     db_user = engine->get_db_user();
 
 
-    wxPanel *panelHome = new wxPanel(this, -1);
+    auto *panelHome = new wxPanel(this, -1);
 
 
 
-    wxBoxSizer *box = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer *MainGrid = new wxFlexGridSizer(3, 2, 25, -60);
+    auto *box = new wxBoxSizer(wxHORIZONTAL);
+    auto *MainGrid = new wxFlexGridSizer(4, 2, 25, -60);
 
 
     Orders=new wxButton (panelHome,IdButtonOrders,_T ("Orders' list"),wxDefaultPosition,wxSize(140,40),0);
@@ -80,35 +79,34 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
 
 
     panelHome->SetSizer(box);
-    //this->SetSizer(MainBox);
 
     Centre();
 
 }
 
 void HomePageClient::OpenProductsList(wxCommandEvent &event) {
-    SelectionSubcategoryPage *List = new SelectionSubcategoryPage (eng, _T("SELECT SUBCATEGORY"));
+    auto *List = new SelectionSubcategoryPage (eng, _T("SELECT SUBCATEGORY"));
     List->Show(TRUE);
 }
 
 void HomePageClient::OpenProfile(wxCommandEvent &event) {
-    ManageProfilePage *manage = new ManageProfilePage (eng, _T("MANAGE YOUR PROFILE"));
+    auto *manage = new ManageProfilePage (eng, _T("MANAGE YOUR PROFILE"));
     manage->Show(TRUE);
 }
 
 void HomePageClient::OpenCart(wxCommandEvent &event) {
-    CartPage *cart=new CartPage(eng, _T("CART"));
+    auto *cart=new CartPage(eng, _T("CART"));
     cart->Show(TRUE);
 }
 
 void HomePageClient::OpenFavoritesList(wxCommandEvent &event) {
-    FavouritesListPage *fav=new FavouritesListPage(eng, _T("FAVOURITES LIST"));
+    auto *fav=new FavouritesListPage(eng, _T("FAVOURITES LIST"));
     fav->Show(TRUE);
 }
 
 void HomePageClient::OpenOrdersList(wxCommandEvent &event) {
-    OrderHistoryForClientPage *ord= new OrderHistoryForClientPage(eng, _T("ORDERS"));
-    ord->Show(TRUE);
+    auto *EnterWin = new ChooseStatusPage (eng, _T("REQUESTS"));
+    EnterWin->Show(TRUE);
 }
 
 void HomePageClient::ComeBack(wxCommandEvent &event) {
@@ -127,6 +125,6 @@ void HomePageClient::RemoveUser(wxCommandEvent &event) {
 }
 
 void HomePageClient::ViewProviders(wxCommandEvent &event) {
-    SelectionCityPage *sel_c = new SelectionCityPage(eng, _T("SELECT CITY"));
+    auto *sel_c = new SelectionCityPage(eng, _T("SELECT CITY"));
     sel_c->Show(TRUE);
 }

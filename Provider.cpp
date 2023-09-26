@@ -17,25 +17,23 @@ Provider::Provider( const string &t, const string &bn,const string &a, const str
 
 }
 
-Provider::~Provider() {
-
-}
+Provider::~Provider() = default;
 
 
 
 bool Provider:: modify_prod(int id_store, string desc, double price, int a_q ){
 
-    vector<std::shared_ptr<Product>> prod_list;
-    prod_list = store->get_products();
-    int num_prod = prod_list.size();
+    vector<std::shared_ptr<Product>> prod_l;
+    prod_l = store->get_products();
+    int num_prod = prod_l.size();
     int i = 0;
-    while ( i<= num_prod && prod_list[i]->get_id_store() != id_store){
+    while ( i<= num_prod && prod_l[i]->get_id_store() != id_store){
         i++;
     }
     if(i> num_prod){
         return false;
-    }else {
-        prod = prod_list[i];
+    } else {
+        prod = prod_l[i];
         prod->set_desc(desc);
         prod->set_price(price);
         prod->set_available_quantity(a_q);
@@ -43,10 +41,11 @@ bool Provider:: modify_prod(int id_store, string desc, double price, int a_q ){
     }
 }
 
-bool Provider:: add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category){
+void Provider:: add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category){
 
     shared_ptr<Product> new_prod = make_shared<Product> (desc, price, 0, a_quantity, username_prov, sub_category);
     store->add_to_store(new_prod);
+
 }
 
 void Provider::delete_objects_of_user() {

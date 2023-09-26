@@ -32,11 +32,11 @@ void Client::add_to_fav(shared_ptr<Product> p) {
 
 bool Client::remove_from_cart(int id_prod){
 
-    vector<std::shared_ptr<Product>> prod_list;
-    prod_list = cart->get_products();
-    int num_prod = prod_list.size();
+    vector<std::shared_ptr<Product>> prod_l;
+    prod_l = cart->get_products();
+    int num_prod = prod_l.size();
     int i = 0;
-    while ( i<= num_prod && prod_list[i]->get_id_store() != id_prod){
+    while ( i<= num_prod && prod_l[i]->get_id_store() != id_prod){
         i++;
     }
     if(i>num_prod)

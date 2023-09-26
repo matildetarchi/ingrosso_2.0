@@ -6,7 +6,6 @@
 
 
 
-
 const long ModifyProductPage::IdButtonConfirm =::wxNewId();
 
 BEGIN_EVENT_TABLE (ModifyProductPage, wxDialog)
@@ -14,13 +13,13 @@ BEGIN_EVENT_TABLE (ModifyProductPage, wxDialog)
 END_EVENT_TABLE()
 
 ModifyProductPage::ModifyProductPage(Engine *e, const wxString &title, int id_store):engine(e), id(id_store),
-        wxDialog(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
+                   wxDialog(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
     prov = engine->get_prov();
 
-    wxStaticText *desc = new wxStaticText(this, -1, wxT("Name Product"));
-    wxStaticText *price = new wxStaticText(this, -1, wxT("Price"));
-    wxStaticText *quant = new wxStaticText(this, -1, wxT("Available Quantity"));
+    auto *desc = new wxStaticText(this, -1, wxT("Name Product"));
+    auto *price = new wxStaticText(this, -1, wxT("Price"));
+    auto *quant = new wxStaticText(this, -1, wxT("Available Quantity"));
 
     Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
     db_store= engine->get_db_store();

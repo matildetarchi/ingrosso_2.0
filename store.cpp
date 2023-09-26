@@ -7,7 +7,7 @@
 using namespace std;
 
 
-Store::Store(){};
+Store::Store()= default;
 
 Store::Store(const string &provider) {
     username_prov = provider;
@@ -20,7 +20,7 @@ Store::~Store() {
 
 
 void Store::add_to_store(const shared_ptr<Product>& prod) {
-    if (prod && prod.get() != nullptr) {
+    if ( prod != nullptr) {
         store.push_back(prod);
         update_num(0);
     }

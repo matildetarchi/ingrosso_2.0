@@ -16,8 +16,6 @@
 
 
 
-
-
 class ProductListPage : public wxFrame {
 public:
     ProductListPage(Engine *e, const wxString &title, std::string sub, std::string disp);
@@ -25,6 +23,8 @@ public:
     static const long IdButtonFav;
     static const long IdButtonCart;
     static const long IdButtonInsert;
+    static const long IdButtonBack;
+
 DECLARE_EVENT_TABLE()
 
 
@@ -33,8 +33,11 @@ private:
     void IsCart(wxCommandEvent &event);
     void IsInsert(wxCommandEvent& event);
     void OnChoice(wxCommandEvent& event);
+    void ComeBack(wxCommandEvent& event);
+
     wxButton *FavButton;
     wxButton *CartButton;
+    wxButton *Back;
     wxButton *InsertButton;
     wxTextCtrl *sub;
     wxTextCtrl *cat;
@@ -57,6 +60,8 @@ private:
     std::shared_ptr<dbFavouritesManager> db_fav;
     std::shared_ptr<Cart> cart;
     std::shared_ptr<dbCartManager> db_cart;
+    std::vector<shared_ptr<Product>> prod_l;
+    int control;
 };
 
 #endif //INGROSSO_ONLINE_PRODUCTLISTPAGE_H

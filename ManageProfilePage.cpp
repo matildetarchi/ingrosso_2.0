@@ -16,7 +16,7 @@ BEGIN_EVENT_TABLE (ManageProfilePage, wxFrame)
 END_EVENT_TABLE()
 
 ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(400, 400)) {
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(400, 400)) {
 
     user = engine->get_user();
     db_user= engine->get_db_user();
@@ -26,11 +26,11 @@ ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e)
     messageError="Password Not Equal";
     messageCorrect="Password Equal";
 
-    wxStaticText *address = new wxStaticText(this, -1, wxT("Address"));
-    wxStaticText *city = new wxStaticText(this, -1, wxT("City"));
-    wxStaticText *password = new wxStaticText(this, -1, wxT("Password"));
-    wxStaticText *usernameText = new wxStaticText(this, -1, wxT("Username"));
-    wxStaticText *email=new wxStaticText(this, -1, wxT("Email"));
+    auto *address = new wxStaticText(this, -1, wxT("Address"));
+    auto *city = new wxStaticText(this, -1, wxT("City"));
+    auto *password = new wxStaticText(this, -1, wxT("Password"));
+    auto *usernameText = new wxStaticText(this, -1, wxT("Username"));
+    auto *email=new wxStaticText(this, -1, wxT("Email"));
 
 
     std::vector<std::string> cities;
@@ -122,6 +122,8 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
         }
     }
 }
+
+
 void ManageProfilePage::ViewPass(wxCommandEvent &event) {
     std::string pass = m_passwordText->GetValue().ToStdString();
     std::string pass_conf = m_passwordConf->GetValue().ToStdString();
@@ -156,6 +158,8 @@ void ManageProfilePage::ViewPass(wxCommandEvent &event) {
     SetSize(newWidth, newHeight);
 
 }
+
+
 void ManageProfilePage::OnTextChange(wxCommandEvent &event) {
     sizer->Hide(txt_message);
     std::string pass = m_passwordText->GetValue().ToStdString();

@@ -12,7 +12,7 @@ BEGIN_EVENT_TABLE (UsersDataListPage, wxFrame)
 END_EVENT_TABLE()
 
 UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std::string &var_city): engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
+                   wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
     user=engine->get_user();
     db_user = engine->get_db_user();
@@ -20,22 +20,8 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
     type=user->get_type();
 
 
-   /* wxStaticText *order = new wxStaticText(this, -1, wxT("OrderProduct By"));
-    choiceOrder = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    if (city=="All") {
-        wxString myString[] = {"Business Name", "Username", "Email", "Address", "City"};
-        choiceOrder->Append("Select");
-        choiceOrder->Append(5, myString);
-    } else {
-        wxString myString[] = {"Business Name", "Username", "Email", "Address"};
-        choiceOrder->Append("Select");
-        choiceOrder->Append(4, myString);
-    }
-
-    choiceOrder->Bind(wxEVT_CHOICE, &UsersDataListPage::OnChoice, this);
-*/
-
     int row = db_user->select_count_users(type,city);
+    cout << row << endl;
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row, 5);
@@ -45,28 +31,29 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
     grid->SetColLabelValue(3, "Address");
     grid->SetColLabelValue(4, "City");
 
-    user_list= db_user->select_users(type,city);
+    if (row >0) {
+        user_list = db_user->select_users(type, city);
 
-    for (int i = 0; i < row; i++) {
+        for (int i = 0; i < row; i++) {
 
-        string b_n = user_list[i]->get_bus_name();
-        string us= user_list[i]->get_username();
-        string email= user_list[i]->get_email();
-        string address= user_list[i]->get_address();
+            string b_n = user_list[i]->get_bus_name();
+            string us = user_list[i]->get_username();
+            string email = user_list[i]->get_email();
+            string address = user_list[i]->get_address();
+            string user_city = user_list[i]->get_city();
 
-
-        grid->SetReadOnly(i, 0, true);
-        grid->SetCellValue(i, 0, b_n);
-        grid->SetReadOnly(i, 1, true);
-        grid->SetCellValue(i, 1, us);
-        grid->SetReadOnly(i, 2, true);
-        grid->SetCellValue(i, 2, email);
-        grid->SetReadOnly(i, 3, true);
-        grid->SetCellValue(i, 3, address);
-        grid->SetReadOnly(i, 4, true);
-        grid->SetCellValue(i, 4, city);
+            grid->SetReadOnly(i, 0, true);
+            grid->SetCellValue(i, 0, b_n);
+            grid->SetReadOnly(i, 1, true);
+            grid->SetCellValue(i, 1, us);
+            grid->SetReadOnly(i, 2, true);
+            grid->SetCellValue(i, 2, email);
+            grid->SetReadOnly(i, 3, true);
+            grid->SetCellValue(i, 3, address);
+            grid->SetReadOnly(i, 4, true);
+            grid->SetCellValue(i, 4, user_city);
+        }
     }
-
     grid->AutoSize();
 
 
@@ -74,30 +61,15 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
-   // sizer->Add(order, 0, wxALL, 5);
-    sizer->Add(choiceOrder, 0, wxALL, 5);
-    sizer->Add(grid, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Back, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(grid, 1, wxALL, 5);
+    sizer->Add(Back, 1, wxALL, 5);
     SetSizer(sizer);
 
     Centre();
 
 
 }
-/*void UsersDataListPage::OnChoice(wxCommandEvent& event) {
-
-    string order=event.GetString().ToStdString();
-    mat_users=users.select_data_all_users(type,city,order);
-    for (int i = 0; i < users.select_count_users(type,city); i++) {
-
-        for (int col = 0; col < 5; col++) {
-            grid->SetReadOnly(i, col, true);
-            grid->SetCellValue(i, col,  mat_users[i][col]);
-        }
-    }
-    grid->AutoSize();
-}*/
 
 void UsersDataListPage::ComeBack(wxCommandEvent &event) {
-   Close();
+    Close();
 }

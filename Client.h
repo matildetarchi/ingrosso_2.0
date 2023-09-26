@@ -5,6 +5,8 @@
 #ifndef INGROSSO_ONLINE_CLIENT_H
 #define INGROSSO_ONLINE_CLIENT_H
 
+#include <utility>
+
 #include "User.h"
 
 
@@ -13,7 +15,8 @@ using namespace std;
 class Client : virtual public User {
 public:
 
-    Client(const string &us);
+    explicit Client(const string &us);
+
     Client(const string &t, const string &bn, const string &a, const string &e, const string &password,
            const string &us, const string &c);
 
@@ -21,22 +24,29 @@ public:
 
     shared_ptr<Cart> get_cart() override{
         return cart;
-    };
+    }
 
     shared_ptr<Favourites> get_fav() override{
         return fav;
-    };
+    }
+
+    void set_fav(shared_ptr<Favourites> f){
+        fav = std::move(f);
+    }
+
+    void set_cart(shared_ptr<Cart> c){
+        cart = std::move(c);
+    }
+
 
     void delete_objects_of_user() override;
-
     void add_to_cart(shared_ptr<Product> p) override;
     void add_to_fav(shared_ptr<Product> p) override;
     bool remove_from_cart(int id_prod) override;
     bool remove_from_fav(int id_prod) override;
-
     shared_ptr<Store> get_store() override {};
     bool modify_prod (int id_store, string desc, double price, int a_q ) override {};
-    bool add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category) override {};
+    void add_prod(const string& desc, double price, int quantity, int a_quantity, const string&  username_prov, const string& sub_category) override {};
 
 private:
 

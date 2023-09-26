@@ -5,11 +5,13 @@
 
 #include "OrdersList.h"
 
+#include <utility>
+
 using namespace std;
 
-OrdersList::OrdersList(){};
+OrdersList::OrdersList()= default;
 
-OrdersList::OrdersList(const string &user): username_user(user), num_order(0){
+OrdersList::OrdersList(string user): username_user(std::move(user)), num_order(0){
 }
 
 OrdersList::~OrdersList(){

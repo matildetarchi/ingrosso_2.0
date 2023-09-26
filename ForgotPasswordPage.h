@@ -46,6 +46,7 @@ private:
     wxTextCtrl *tc1;
     Engine *engine;
     shared_ptr<dbUserManager> db_user;
+    string e;
 
 };
 

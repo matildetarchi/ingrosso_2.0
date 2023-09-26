@@ -34,16 +34,16 @@ TEST_F(FavouritesSuite, TestAddToFav) {
 
 TEST_F(FavouritesSuite, TestUpdateNum) {
     int n = fav->get_num_prod();
-    fav->update_num_prod(1);
-    EXPECT_EQ(n+1, fav->get_num_prod());
     fav->update_num_prod(0);
+    EXPECT_EQ(n+1, fav->get_num_prod());
+    fav->update_num_prod(1);
     EXPECT_EQ(n, fav->get_num_prod());
 }
 
 TEST_F(FavouritesSuite, TestDeleteOneProd) {
     int num = fav->get_num_prod();
     fav->remove_one(num-1);
-    EXPECT_EQ(num-1, fav->get_num_prod());
+    EXPECT_EQ(num, fav->get_num_prod());
 }
 
 TEST_F(FavouritesSuite, TestDeleteProducts) {

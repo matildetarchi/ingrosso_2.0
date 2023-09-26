@@ -20,12 +20,11 @@ public:
 
     ~Order();
 
-
-    int get_id() const {
+    [[nodiscard]] int get_id() const {
         return id;
     }
 
-    int get_num_prod() const{
+    [[nodiscard]] int get_num_prod() const{
         return num_prod;
     }
 
@@ -40,6 +39,7 @@ public:
     shared_ptr<Date> get_date() {
         return date;
     }
+
     const string &get_us_client() {
         return username_client;
     }
@@ -53,9 +53,8 @@ public:
     }
 
 
-    double get_total(const shared_ptr<Order>& o);
+    static double get_total(const shared_ptr<Order>& o);
     void add_to_order(shared_ptr<Product> p);
-
     void update_num(int control);
     void remove_one(int index);
     void remove_all();

@@ -8,7 +8,7 @@ using namespace std;
 
 
  Date::Date(int year, int month, int day) {
-        date_.tm_year = year; // Anno - 1900
+        date_.tm_year = year-1900; // Anno - 1900
         date_.tm_mon = month ; // Mese (da 0 a 11)
         date_.tm_mday = day; // Giorno
         date_.tm_hour = 0;

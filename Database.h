@@ -20,7 +20,7 @@ public:
     explicit Database(const string &db_name);
 
 
-   shared_ptr<SQLite::Database> get_db(){
+    shared_ptr<SQLite::Database> get_db(){
         return db;
     }
 

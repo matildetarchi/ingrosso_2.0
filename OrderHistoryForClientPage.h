@@ -13,10 +13,11 @@
 
 class OrderHistoryForClientPage : public wxDialog{
 public:
-    OrderHistoryForClientPage(Engine *e, const wxString& title);
+    OrderHistoryForClientPage(Engine *e, const wxString& title, int control);
 
     static const long IdButtonCancel;
     static const long IdButtonView;
+    static const long IdButtonBack;
 
     DECLARE_EVENT_TABLE()
 
@@ -25,14 +26,17 @@ private:
     void CancelOrder(wxCommandEvent& event);
     void ViewOrder(wxCommandEvent& event);
     void OnChoice(wxCommandEvent& event);
+    void ComeBack(wxCommandEvent& event);
 
     wxButton *Cancel;
     wxButton *View;
+    wxButton *Back;
     wxTextCtrl *sub;
     wxTextCtrl *cat;
     wxTextCtrl *name;
     wxTextCtrl *cost;
     wxBoxSizer *sizer;
+    wxBoxSizer *sizer_vertical;
     wxSpinCtrl* spinCtrl;
     wxGrid *grid;
     std::string username;

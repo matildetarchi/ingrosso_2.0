@@ -16,11 +16,12 @@
 class CartPage : public wxFrame {
 public:
     CartPage(Engine *e, const wxString &title);
+
     static const long IdButtonRemove;
     static const long IdButtonOrder;
     static const long IdButtonHelp;
     static const long IdButtonComeBack;
-DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 
 
 private:
@@ -30,6 +31,7 @@ private:
     void ComeBack(wxCommandEvent& event);
     wxButton *Remove;
     wxBoxSizer *sizer;
+    wxBoxSizer *sizer_vertical;
     wxButton *Order;
     wxButton *Help;
     wxButton *Back;

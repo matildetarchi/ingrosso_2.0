@@ -21,50 +21,50 @@ END_EVENT_TABLE() // The button is pressed
 
 
 ForgotPasswordPage::ForgotPasswordPage(Engine *e, const wxString &title)
-        :engine(e), wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
+        :engine(e), wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
-        db_user = engine->get_db_user();
+    db_user = engine->get_db_user();
 
-        wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+    auto *hbox = new wxBoxSizer(wxHORIZONTAL);
 
-        fgs2 = new wxFlexGridSizer(3, 2, 12, 5);
-        fgs = new wxFlexGridSizer(9, 1, 12, -5);
+    fgs2 = new wxFlexGridSizer(3, 2, 12, 5);
+    fgs = new wxFlexGridSizer(9, 1, 12, -5);
 
-        messageError="Password Not Equal";
-        messageCorrect="Password Equal";
-        txt_email = new wxStaticText(this, -1, wxT("Email"));
-        Confirm=new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
-        Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    messageError="Password Not Equal";
+    messageCorrect="Password Equal";
+    txt_email = new wxStaticText(this, -1, wxT("Email"));
+    Confirm=new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
+    Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
-        tc1 = new wxTextCtrl(this, -1, wxT(""), wxDefaultPosition, wxSize(200, wxDefaultSize.GetHeight()));
-
-
-        fgs->Add(txt_email);
-        fgs->Add(tc1, 0, wxEXPAND, 5);
-        fgs->Add(Confirm,0);
-        fgs->Add(Back,0);
-
-        fgs->AddGrowableRow(1, 1);
-        fgs->AddGrowableCol(1, 1);
+    tc1 = new wxTextCtrl(this, -1, wxT(""), wxDefaultPosition, wxSize(200, wxDefaultSize.GetHeight()));
 
 
-        hbox->Add(fgs, 1, wxALL, 5);
+    fgs->Add(txt_email);
+    fgs->Add(tc1, 0, wxEXPAND, 5);
+    fgs->Add(Confirm,0);
+    fgs->Add(Back,0);
+    fgs->AddGrowableRow(1, 1);
+    fgs->AddGrowableCol(1, 1);
 
-        SetSizer(hbox);
 
-        Centre();
+    hbox->Add(fgs, 1, wxALL, 5);
+
+    SetSizer(hbox);
+
+    Centre();
 
 }
 
 void ForgotPasswordPage::Insert(wxCommandEvent &event){
+
     if (tc1->IsEmpty()){
         wxMessageBox("Insert your email", "Error", wxICON_ERROR);
     } else {
-        std::string e = tc1->GetValue().ToStdString();
+         e = tc1->GetValue().ToStdString();
         int result;
 
         result = db_user->access_reg(e, "", 1);
-        if (!result) {
+        if (result) {
             wxLogMessage("There is no account with this email");
         } else {
 
@@ -113,8 +113,7 @@ void ForgotPasswordPage::Change(wxCommandEvent &event) {
             }
         }
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
-
-            db_user->change_psw(tc1->GetValue().ToStdString(), psw);
+            db_user->change_psw(e, psw);
             Close();
             wxLogMessage("Password Changed");
 
@@ -131,7 +130,7 @@ void ForgotPasswordPage::ViewPass(wxCommandEvent &event) {
     std::string pass = m_passwordText->GetValue().ToStdString();
     std::string passConf = m_passwordConf->GetValue().ToStdString();
     int control;
-    string txt_button;
+
     if (m_passwordText->GetWindowStyle() & wxTE_PASSWORD) {
         control = 0;
         txt_button ="Hide Password";

@@ -6,7 +6,7 @@
 
 
 Database::Database(const string &db_name){
-    const std::string dbPath = db_name;
+    const std::string &dbPath = db_name;
 
     // Apri il database
     //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);

@@ -22,6 +22,7 @@ public:
     void set_store() {
         st = prov->get_store();
     }
+
     void set_prod_list(){
         prod_list = st->get_products();
     }
@@ -34,6 +35,7 @@ public:
     int select_count_for_client(const string &sub_name, const string &disp);
     int select_count_for_provider();
     shared_ptr<Product> select_prod_to_modify(int id_prod);
+
 private:
 
     shared_ptr<Store> st;

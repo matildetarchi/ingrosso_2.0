@@ -13,20 +13,20 @@ class Product {
 public:
 
     Product();
-    Product(const string &desc, double price, int quantity, int q_available, const string &u_p, const string &sub);
+    Product(const string &desc, float price, int quantity, int q_available, const string &u_p, const string &sub);
     ~Product(){};
 
     const string &get_desc(){
          return description;
     }
 
-    double &get_price(){
+    float &get_price(){
         return price;
     }
-    int get_q_available()const{
+    [[nodiscard]] int get_q_available()const{
         return q_available;
     }
-    int get_quantity() const {
+    [[nodiscard]] int get_quantity() const {
         return quantity;
     }
 
@@ -38,7 +38,7 @@ public:
         return subcategory;
     }
 
-    int get_id_store() const {
+    [[nodiscard]] int get_id_store() const {
         return id_store;
     }
 
@@ -46,16 +46,14 @@ public:
         description = desc;
     }
 
-    void set_price(double p){
-        price = p;
+    void set_price(float p);
+
+    void set_quantity(int q);
+
+    void set_available_quantity(int a_q) {
+            q_available = a_q;
     }
 
-    void set_quantity(int q) {
-        quantity = q;
-    }
-    void set_available_quantity(int a_q) {
-        q_available = a_q;
-    }
     void set_subcategory(const string &sub) {
         subcategory = sub;
     }
@@ -70,7 +68,7 @@ public:
 private:
 
     string description;
-    double price;
+    float price;
     string username_prov;
     int quantity;
     string subcategory;

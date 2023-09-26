@@ -16,7 +16,7 @@ using namespace std;
 class dbCityManager {
 public :
 
-    explicit dbCityManager(shared_ptr<Database> d);
+    explicit dbCityManager(const shared_ptr<Database>& d);
     int number_of_city();
     vector<string> select();
 

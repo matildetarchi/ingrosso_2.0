@@ -4,7 +4,6 @@
 
 #include "dbCategoriesManager.h"
 
-#include <utility>
 
 using namespace std;
 
@@ -26,6 +25,7 @@ int dbCategoriesManager::number_of_cat(){
     return n;
 
 }
+
 vector<string> dbCategoriesManager::select() {
 
     //metodo per prendere i nomi delle categorie dal db
@@ -41,6 +41,6 @@ vector<string> dbCategoriesManager::select() {
 
     }
     query.reset();
-    return categories;
 
+    return categories;
 }

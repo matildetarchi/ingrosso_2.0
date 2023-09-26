@@ -18,17 +18,17 @@ BEGIN_EVENT_TABLE (SelectionSubcategoryPage, wxFrame)
 END_EVENT_TABLE()
 
 SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString &title) : engine(eng),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
     db_cat = engine->get_db_cate();
     db_subcat = engine->get_db_subc();
 
-    wxPanel *Mainpanel = new wxPanel(this, -1);
+    auto *Mainpanel = new wxPanel(this, -1);
 
-    wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+    auto *hbox = new wxBoxSizer(wxHORIZONTAL);
 
 
-    wxFlexGridSizer *fgs=new wxFlexGridSizer(6,2,20,5);
+    auto *fgs=new wxFlexGridSizer(6,2,20,5);
 
 
     std::vector<std::string> categories;
@@ -48,9 +48,9 @@ SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString 
     categories.clear();
     choices.clear();
 
-    wxStaticText *Category = new wxStaticText(Mainpanel, -1, wxT("Category"));
-    wxStaticText *SubCategory = new wxStaticText(Mainpanel, -1, wxT("Subcategory"));
-    wxStaticText *Disp = new wxStaticText(Mainpanel, -1, wxT("Disponibility"));
+    auto *Category = new wxStaticText(Mainpanel, -1, wxT("Category"));
+    auto *SubCategory = new wxStaticText(Mainpanel, -1, wxT("Subcategory"));
+    auto *Disp = new wxStaticText(Mainpanel, -1, wxT("Disponibility"));
 
     Insert=new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
@@ -83,14 +83,9 @@ SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString 
     fgs->AddGrowableCol(1, 1);
 
 
-
-
     hbox->Add(fgs, 1, wxALL, 10);
 
-
-
     Mainpanel->SetSizer(hbox);
-    //this->SetSizer(MainBox);
 
     Centre();
 
@@ -128,7 +123,7 @@ void SelectionSubcategoryPage::InsertProduct(wxCommandEvent &event) {
         int Id_disp = choiceDisp->GetSelection();
         string sub_name = choiceSubC->GetString(Id_subcategory).ToStdString();
         string disp = choiceDisp->GetString(Id_disp).ToStdString();
-        ProductListPage *prodList = new ProductListPage(engine, _T("ALL PRODUCT"), sub_name, disp);
+        auto *prodList = new ProductListPage(engine, _T("ALL PRODUCT"), sub_name, disp);
         prodList->Show(TRUE);
     }
 }

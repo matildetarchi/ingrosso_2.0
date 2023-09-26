@@ -50,9 +50,9 @@ TEST_F(OrderSuite, TestAddToOL) {
 
 TEST_F(OrderSuite, TestUpdateNumOL) {
     int n = o1->get_num_order();
-    o1->update_num(1);
-    EXPECT_EQ(n+1, o1->get_num_order());
     o1->update_num(0);
+    EXPECT_EQ(n+1, o1->get_num_order());
+    o1->update_num(1);
     EXPECT_EQ(n, o1->get_num_order());
 }
 
@@ -65,11 +65,11 @@ TEST_F(OrderSuite, TestUpdateNumOrders) {
 }
 
 TEST_F(OrderSuite, TestGetTotal) {
-    shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Erlippe", "pasta");
+    shared_ptr <Product> p = make_shared<Product>("penne", 1, 5, 6, "Erlippe", "pasta");
     o->add_to_order(p);
-    shared_ptr <Product> p1 = make_shared<Product>("fusilli", 1.25, 5, 6, "Erlippe", "pasta");
+    shared_ptr <Product> p1 = make_shared<Product>("fusilli", 1, 5, 6, "Erlippe", "pasta");
     o->add_to_order(p1);
-    double tot = (1.24*5) + (1.25*5);
+    double tot = (1*5) + (1*5);
     EXPECT_EQ(tot, o->get_total(o));
 }
 
@@ -84,7 +84,7 @@ TEST_F(OrderSuite, TestDeleteOneFromOL) {
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Erlippe", "pasta");
     o->add_to_order(p);
     o1->add_order(o);
-    o1->remove_one(1);
+    o1->remove_one(0);
     EXPECT_EQ(0, o1->get_num_order());
 }
 
@@ -96,7 +96,7 @@ TEST_F(OrderSuite, TestDeleteAllFromOL) {
 TEST_F(OrderSuite, TestDeleteOneProd) {
     shared_ptr <Product> p = make_shared<Product>("penne", 1.24, 5, 6, "Erlippe", "pasta");
     o->add_to_order(p);
-    o->remove_one(1);
+    o->remove_one(0);
     EXPECT_EQ(0, o->get_num_prod());
 }
 

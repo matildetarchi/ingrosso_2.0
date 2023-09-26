@@ -16,12 +16,12 @@ BEGIN_EVENT_TABLE (ChooseStatusPage, wxFrame)
 END_EVENT_TABLE()
 
 ChooseStatusPage::ChooseStatusPage(Engine* e, const wxString &title) :engine(e),
-        wxFrame(NULL, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
+        wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)){
 
     user= engine->get_user();
     type = user->get_type();
 
-    wxStaticText *txt = new wxStaticText(this, -1, wxT("CHOOSE STATUS OF THE ORDERS YOU WANT TO SEE"));
+    auto *txt = new wxStaticText(this, -1, wxT("CHOOSE STATUS OF THE ORDERS YOU WANT TO SEE"));
 
     Insert=new wxButton (this,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
     Back=new wxButton(this,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
@@ -34,9 +34,9 @@ ChooseStatusPage::ChooseStatusPage(Engine* e, const wxString &title) :engine(e),
     sizer = new wxBoxSizer(wxVERTICAL);
 
     sizer->Add(txt, 0);
-    sizer->Add(choice, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Insert, 1, wxEXPAND | wxALL, 5);
-    sizer->Add(Back, 1, wxEXPAND | wxALL, 5);
+    sizer->Add(choice, 1, wxEXPAND , 5);
+    sizer->Add(Insert, 1, wxEXPAND, 5);
+    sizer->Add(Back, 1,  wxALL, 5);
     SetSizer(sizer);
 
 
@@ -44,17 +44,17 @@ ChooseStatusPage::ChooseStatusPage(Engine* e, const wxString &title) :engine(e),
 
 }
 void ChooseStatusPage::InsertProduct(wxCommandEvent &event) {
-    if (choice->GetSelection() == wxNOT_FOUND)
-    {
+    if (choice->GetSelection() == wxNOT_FOUND){
         wxMessageBox("Choose an option", "Error", wxICON_ERROR);
-    } else {
+    }
+    else {
         int Id_choice = choice->GetSelection()-1;
         if (type=="F") {
-            ManageRequestPage *req = new ManageRequestPage(engine, _T("YOUR REQUESTS"), Id_choice);
+            auto *req = new ManageRequestPage(engine, _T("YOUR REQUESTS"), Id_choice);
             // Passa la stringa alla classe wxFrame di destinazione.
             req->Show(TRUE);
         } else {
-            OrderHistoryForClientPage *ord = new OrderHistoryForClientPage(engine,_T("YOUR ORDERS"));
+            auto *ord = new OrderHistoryForClientPage(engine,_T("YOUR ORDERS"), Id_choice);
             // Passa la stringa alla classe wxFrame di destinazione.
             ord->Show(TRUE);
         }
