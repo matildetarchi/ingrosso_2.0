@@ -26,39 +26,27 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     db_order = engine->get_db_order();
 
 
-    int row = db_order->select_count_for_provider();
+    int row = db_order->select_count_for_provider(ctrl);
     grid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxSize(450,300));
 
-    orders_list= prov->get_order_list();
-    order= orders_list->get_orders();
+    orders_list = prov->get_order_list();
+    order = orders_list->get_orders();
 
     if (ctrl==0) {
         grid->CreateGrid(row, 3);
-        grid->SetColSize(0,90);
-        grid->SetColSize(1,230);
-        grid->SetColSize(2, 230);
         grid->SetColLabelValue(0, "Code order");
         grid->SetColLabelValue(1, "Customer");
         grid->SetColLabelValue(2, "Date");
 
-
-
     } else {
         grid->CreateGrid(row, 4);
-        grid->SetColSize(0,60);
-        grid->SetColSize(1,130);
-        grid->SetColSize(2,130);
-        grid->SetColSize(3,130);
         grid->SetColLabelValue(0, "Code order");
         grid->SetColLabelValue(1, "Customer");
         grid->SetColLabelValue(2, "Date");
         grid->SetColLabelValue(3, "Status");
-
-
-
     }
-
-    for (int i = 0; i < row; i++) {
+    int i = 0;
+    while( i < row) {
         shared_ptr<Date> d= order[i]->get_date();
         std::string date = d->to_string("%d/%m/%Y");
         string status= order[i]->get_status();
@@ -68,18 +56,19 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
 
         if (ctrl==0 ) {
             if (status == "S") {
-
                 grid->SetReadOnly(i, 0, true);
                 grid->SetCellValue(i, 0, id_order);
                 grid->SetReadOnly(i, 1, true);
                 grid->SetCellValue(i, 1, us_client);
                 grid->SetReadOnly(i, 2, true);
                 grid->SetCellValue(i, 2, date);
-            }
+                i++;
+            } else
+                i++;
         }
 
-        if(ctrl == 1)
-        {
+        if(ctrl == 1){
+
             grid->SetReadOnly(i, 0, true);
             grid->SetCellValue(i,0, id_order);
             grid->SetReadOnly(i, 1, true);
@@ -88,6 +77,7 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
             grid->SetCellValue(i,2, date);
             grid->SetReadOnly(i, 3, true);
             grid->SetCellValue(i,3, status);
+            i++;
         }
     }
     sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -128,20 +118,22 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
 
 void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
 
+    if (grid->GetSelectedRows().IsEmpty()) {
+        wxMessageBox("Choose a order", "Error", wxICON_ERROR);
+    }
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
     size_t i = 0;
-    while (i == selectedRows.GetCount()) {
+    while (i < selectedRows.GetCount()) {
         i++;
     }
+
     row = selectedRows[i];
 
-    string status =order[row]->get_status();
-    int id_order= order[row]->get_id();
+    string status = order[row]->get_status();
+    int id_order = order[row]->get_id();
 
-    if (grid->GetSelectedRows().IsEmpty()) {
-        wxMessageBox("Choose a order", "Error", wxICON_ERROR);
-    } else if (ctrl == 1 && status != "S") {
+    if (ctrl == 1 && status != "S") {
         wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
     } else {
         db_order->change_status("A", id_order);
@@ -154,7 +146,9 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
 }
 
 void ManageRequestPage::OnDeny(wxCommandEvent &event) {
-
+    if (grid->GetSelectedRows().IsEmpty()) {
+        wxMessageBox("Choose a order", "Error", wxICON_ERROR);
+    }
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
     size_t i = 0;
@@ -162,12 +156,9 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
         i++;
     }
     row = selectedRows[i];
-    string status =order[row]->get_status();
-    int id_order= order[row]->get_id();
-
-    if (grid->GetSelectedRows().IsEmpty()) {
-        wxMessageBox("Choose a order", "Error", wxICON_ERROR);
-    } else if (ctrl==1 && status!="Pending") {
+    string status = order[row]->get_status();
+    int id_order = order[row]->get_id();
+    if (status!="Pending") {
         wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
     } else {
 
@@ -189,14 +180,13 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
         size_t i = 0;
-        while (i == selectedRows.GetCount()) {
+        while (i < selectedRows.GetCount()) {
             i++;
         }
         row = selectedRows[i];
 
         int code_order= order[row]->get_id();
-        string id_order(to_string(code_order));
-        auto *view = new SingleOrderProviderPage(engine, _T("ORDER LIST"), id_order);
+        auto *view = new SingleOrderProviderPage(engine, _T("ORDER LIST"), code_order);
         view->Show(TRUE);
     }
 

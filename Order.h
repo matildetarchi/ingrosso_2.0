@@ -20,7 +20,7 @@ public:
 
     ~Order();
 
-    [[nodiscard]] int get_id() const {
+    int get_id() const {
         return id;
     }
 

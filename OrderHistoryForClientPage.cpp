@@ -50,9 +50,9 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
         std::string date = d->to_string("%d/%m/%Y");
         string status = order[i]->get_status();
         int id_o = order[i]->get_id();
-        string id_order(to_string(id_o));
+        string id_order = (to_string(id_o));
 
-        if (ctrl == 0) {
+        if (ctrl == 0 ) {
             if(status == "S") {
                 grid->SetReadOnly(i, 0, true);
                 grid->SetCellValue(i, 0, id_order);
@@ -60,7 +60,7 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
                 grid->SetCellValue(i, 1, date);
             }
         }
-        else {
+        else if(ctrl == 1){
                 grid->SetReadOnly(i, 0, true);
                 grid->SetCellValue(i, 0, id_order);
                 grid->SetReadOnly(i, 1, true);
@@ -99,7 +99,7 @@ void OrderHistoryForClientPage::CancelOrder(wxCommandEvent &event) {
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
         size_t i = 0;
-        while (i == selectedRows.GetCount()) {
+        while (i < selectedRows.GetCount()) {
             i++;
         }
         row = selectedRows[i];
@@ -119,14 +119,15 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
     if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
     } else {
-
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
-        for (size_t i = 0; i < selectedRows.GetCount(); i++) {
-            row = selectedRows[i];
+        size_t i = 0;
+        while (i < selectedRows.GetCount()) {
+            i++;
         }
+        row = selectedRows[i];
         int code = order[row]->get_id();
-        auto *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), to_string(code));
+        auto *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), code);
         view->Show(TRUE);
     }
 

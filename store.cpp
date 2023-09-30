@@ -3,7 +3,7 @@
 //
 
 
-#include "store.h"
+#include "Store.h"
 using namespace std;
 
 

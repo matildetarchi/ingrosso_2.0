@@ -14,7 +14,7 @@
 
 class SingleOrderProviderPage: public wxDialog {
 public:
-    SingleOrderProviderPage(Engine *e, const wxString& title, const std::string &code_order);
+    SingleOrderProviderPage(Engine *e, const wxString& title, int code_order);
 
     static const long IdButtonBack;
 
@@ -33,7 +33,7 @@ private:
     wxBoxSizer *sizer;
     wxSpinCtrl* spinCtrl;
     wxGrid *grid;
-    std::string id_order;
+    int id_order;
     std::string username;
     shared_ptr<Provider> prov;
     Engine *engine;

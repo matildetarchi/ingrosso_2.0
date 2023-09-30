@@ -20,7 +20,7 @@ public:
     ~OrdersList();
 
 
-    int get_num_order() const  {
+    [[nodiscard]] int get_num_order() const  {
         return num_order;
     }
 

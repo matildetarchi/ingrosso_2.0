@@ -4,6 +4,8 @@
 
 #include "SingleOrderProviderPage.h"
 
+#include <utility>
+
 
 const long SingleOrderProviderPage::IdButtonBack =::wxNewId();
 
@@ -11,8 +13,8 @@ BEGIN_EVENT_TABLE (SingleOrderProviderPage, wxDialog)
                 EVT_BUTTON(IdButtonBack, SingleOrderProviderPage::ComeBack)
 END_EVENT_TABLE()
 
-SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, const std::string &code_order): engine(e), id_order(code_order),
-        wxDialog(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
+SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &title, int code_order): engine(e), id_order(code_order),
+                                                                                                                    wxDialog(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
     prov = engine->get_prov();
 
@@ -22,7 +24,7 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
 
 
     int i = 0;
-    while(orders[i]->get_id()==id_order){
+    while(orders[i]->get_id() != id_order){
         i++;
     }
     order = orders[i];

@@ -27,7 +27,7 @@ void OrdersList::add_order( const shared_ptr<Order>& ord) {
 
 void OrdersList::update_num(int control) {
     if (control==put_in) {
-        num_order=num_order+1;
+        num_order = num_order+1;
     } else {
         num_order = num_order-1;
     }

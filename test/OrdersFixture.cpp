@@ -8,6 +8,7 @@
 #include "../Provider.h"
 #include "../Order.h"
 #include "../OrdersList.h"
+#include "../dbOrdersManager.h"
 #include "gtest/gtest.h"
 
 class OrderSuite : public ::testing::Test {
@@ -104,3 +105,4 @@ TEST_F(OrderSuite, TestDeleteProducts) {
     o->remove_all();
     EXPECT_EQ(0, o->get_num_prod());
 }
+

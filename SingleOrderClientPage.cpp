@@ -12,7 +12,7 @@ BEGIN_EVENT_TABLE (SingleOrderClientPage, wxDialog)
                 EVT_BUTTON(IdButtonBack, SingleOrderClientPage::ComeBack)
 END_EVENT_TABLE()
 
-SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, std::string code_order): engine(e), id_order(std::move(code_order)),
+SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, int code_order): engine(e), id_order(code_order),
         wxDialog(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
 
@@ -22,15 +22,17 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, s
     db = engine->get_db();
     shared_ptr<SQLite::Database> database;
     database = db->get_db();
-    db_order->select_for_client();
     orders_list = client->get_order_list();
     orders = orders_list->get_orders();
 
 
     int i = 0;
-    while(orders[i]->get_id()==id_order){
+    while (i < orders.size()) {
+        if(orders[i]->get_id() == id_order)
+            break;
         i++;
     }
+
     order = orders[i];
     order_p = order->get_order_prod();
     int row = order->get_num_prod();
@@ -43,15 +45,15 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, s
     grid->SetColLabelValue(0, "Product");
 
     double t_p = order->get_total(order);
-    string total_price(to_string(t_p));
+    string total_price = (to_string(t_p));
 
     for ( i = 0; i < row; i++) {
-        int q= order_p[i]->get_quantity();
-        string quantity(to_string(q));
+        int q = order_p[i]->get_quantity();
+        string quantity = (to_string(q));
         int id_prod = order_p[i]->get_id_store();
         string query_us_prov = "SELECT username FROM users, store WHERE store.id = "+to_string(id_prod)+" AND users.id = id_prov";
         string us_prov = database->execAndGet(query_us_prov);
-        string desc= order_p[i]->get_desc();
+        string desc = order_p[i]->get_desc();
 
         grid->SetReadOnly(i, 0, true);
         grid->SetCellValue(i, 0, desc);

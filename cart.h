@@ -46,7 +46,7 @@ private:
     string username_client;
     int num_prod;
 
-    vector<std::shared_ptr<Product>> products ;
+    vector<std::shared_ptr<Product>> products;
 
 };
 

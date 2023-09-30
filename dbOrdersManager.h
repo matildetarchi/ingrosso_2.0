@@ -31,7 +31,7 @@ public:
     void cancel_order(int id_order);
     void select_for_provider();
     void select_for_client();
-    int select_count_for_provider();
+    int select_count_for_provider(int control);
     int select_count_for_client(int control);
 
 
