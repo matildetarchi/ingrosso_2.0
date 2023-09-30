@@ -18,9 +18,8 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
 
     prov = engine->get_prov();
 
-
-    orders_list= prov->get_order_list();
-    orders= orders_list->get_orders();
+    orders_list = prov->get_order_list();
+    orders = orders_list->get_orders();
 
 
     int i = 0;
@@ -29,7 +28,7 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
     }
     order = orders[i];
     order_p = order->get_order_prod();
-    int row=order->get_num_prod();
+    int row = order->get_num_prod();
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row+1, 4);
@@ -38,15 +37,15 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
     grid->SetColLabelValue(2, "Quantity Available In Store");
     grid->SetColLabelValue(3, "Total Price");
 
-    double t_p= order->get_total(order);
+    double t_p = order->get_total(order);
     string total_price = to_string(t_p);
 
     for ( i = 0; i < row; i++) {
-        int q= order_p[i]->get_quantity();
+        int q = order_p[i]->get_quantity();
         string quantity(to_string(q));
-        int a_q= order_p[i]->get_q_available();
+        int a_q = order_p[i]->get_q_available();
         string available_q(to_string(a_q));
-        string desc= order_p[i]->get_desc();
+        string desc = order_p[i]->get_desc();
 
         grid->SetReadOnly(i, 0, true);
         grid->SetCellValue(i, 0, desc);

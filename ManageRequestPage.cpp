@@ -26,9 +26,11 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     db_order = engine->get_db_order();
 
 
-    int row = db_order->select_count_for_provider(ctrl);
+    int row = db_order->select_count_for_provider(ctrl); //giusto perche uso le query al posto degli oggetti
     grid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxSize(450,300));
 
+    //errore nei get, orders_list da 5 ordini e dovrebbe ritornarne 3
+    //non piu ma se faccio all me li fa vedere sbagliati
     orders_list = prov->get_order_list();
     order = orders_list->get_orders();
 
@@ -64,11 +66,11 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
                 grid->SetCellValue(i, 2, date);
                 i++;
             } else
+                //mi mette lo stesso le righe ma vuote
                 i++;
         }
 
         if(ctrl == 1){
-
             grid->SetReadOnly(i, 0, true);
             grid->SetCellValue(i,0, id_order);
             grid->SetReadOnly(i, 1, true);
@@ -82,8 +84,9 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     }
     sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer_vertical = new wxBoxSizer(wxVERTICAL);
-    View=new wxButton (this,IdButtonView,_T ("View"),wxDefaultPosition,wxDefaultSize,0);
-    Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    View = new wxButton (this,IdButtonView,_T ("View"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+
     if(ctrl == 0){
 
         grid->SetSelectionMode(wxGrid::wxGridSelectRows);
@@ -123,12 +126,9 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
     }
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
-    size_t i = 0;
-    while (i < selectedRows.GetCount()) {
-        i++;
+    for (int i = 0; i < selectedRows.GetCount(); i++) {
+        row = selectedRows[i];
     }
-
-    row = selectedRows[i];
 
     string status = order[row]->get_status();
     int id_order = order[row]->get_id();
@@ -151,11 +151,10 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
     }
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
-    size_t i = 0;
-    while (i == selectedRows.GetCount()) {
-        i++;
+    for (int i = 0; i < selectedRows.GetCount(); i++) {
+        row = selectedRows[i];
     }
-    row = selectedRows[i];
+
     string status = order[row]->get_status();
     int id_order = order[row]->get_id();
     if (status!="Pending") {
@@ -179,13 +178,11 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
         std::string code;
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
-        size_t i = 0;
-        while (i < selectedRows.GetCount()) {
-            i++;
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row = selectedRows[i];
         }
-        row = selectedRows[i];
 
-        int code_order= order[row]->get_id();
+        int code_order = order[row]->get_id();
         auto *view = new SingleOrderProviderPage(engine, _T("ORDER LIST"), code_order);
         view->Show(TRUE);
     }

@@ -23,9 +23,9 @@ void Order::add_to_order(shared_ptr<Product> p){
 
 void Order::update_num(int control) {
     if (control==put_in) {
-        num_prod=num_prod+1;
+        num_prod = num_prod+1;
     } else {
-        num_prod=num_prod-1;
+        num_prod = num_prod-1;
     }
 }
 

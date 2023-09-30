@@ -83,62 +83,65 @@ void dbOrdersManager::select_for_provider() {
     int id_user = user->get_db_id();
     string username = user->get_username();
 
-    string query_count="SELECT count(*) FROM store WHERE id_prov = '" + to_string(id_user) +"'";
-    int count=db->execAndGet(query_count).getInt();
+    string query_count = "SELECT count(*) FROM store WHERE id_prov = '" + to_string(id_user) +"'";
+    int count = db->execAndGet(query_count).getInt();
     if (count >0) {
 
-        string select_id_store = "SELECT id FROM store WHERE id_prov = '" + to_string(id_user) + "'";
-        //mettere dentro un ciclo while perche id_store restituisce piu di un prodotto
-        int id_store = db->execAndGet(select_id_store).getInt();
+        string select_id_store = "SELECT store.id FROM store, orders, orders_details WHERE orders.id = id_order AND store.id = id_product AND id_prov = '" + to_string(id_user) + "'";
 
-        string select_orders = "SELECT orders.id, date_order, status, id_client FROM orders, orders_details, users, store WHERE orders.id = id_order AND id_product = "+
-                               to_string(id_store)+" GROUP BY date_order";
-        SQLite::Statement query_ord(*db, select_orders);
+        SQLite::Statement query(*db, select_id_store);
+        while (query.executeStep()) {
+
+            int id_store = query.getColumn(0).getInt();
+
+            string select_orders = "SELECT orders.id, date_order, status, id_client FROM orders, orders_details, store WHERE orders.id = id_order AND id_prov = "+
+                                   to_string(id_user)+" AND id_product = "+
+                                   to_string(id_store)+" GROUP BY date_order";
+            SQLite::Statement query_ord(*db, select_orders);
+
+            while (query_ord.executeStep()) {
+                //mettere dettagli ordine da poi usare nella query dopo
+                int id_order = query_ord.getColumn(0);
+                string date_string = query_ord.getColumn(1).getText();
+                string status = query_ord.getColumn(2).getText();
+                int id_client = query_ord.getColumn(3);
+
+                //prendo username cliente
+                string select_us_cl = "SELECT username FROM users WHERE  id= '" + to_string(id_client) + "'";
+                string username_client = db->execAndGet(select_us_cl);
 
 
-        while (query_ord.executeStep()) {
-            //mettere dettagli ordine da poi usare nella query dopo
-            int id_order = query_ord.getColumn(0);
-            string date_string = query_ord.getColumn(1).getText();
-            string status = query_ord.getColumn(2).getText();
-            int id_client = query_ord.getColumn(3);
+                // trasformo la stringa data in un oggetto Date
+                date = date->string_to_date_converter(date_string);
 
-            //prendo username cliente
-            string select_us_cl = "SELECT username FROM users WHERE  id= '" + to_string(id_client) + "'";
-            string username_client = db->execAndGet(select_us_cl);
+                order = make_shared<Order>(id_order, status, username_client);
+                order->set_date(date);
 
+                string select_products =
+                        "SELECT desc_prod, price_product, quantity, id_sub, available_quantity FROM store, orders, orders_details WHERE store.id = id_product AND orders.id = id_order AND id_order = '" +
+                        to_string(id_order) + "'AND id_prov = '" + to_string(id_user) + "'";
+                SQLite::Statement query_prod(*db, select_products);
+                while (query_prod.executeStep()) {
 
-            // trasformo la stringa data in un oggetto Date
-            date = date->string_to_date_converter(date_string);
+                    int q_available = query_prod.getColumn(4);
+                    int id_subcategories = query_prod.getColumn(3);
+                    int quantity = query_prod.getColumn(2);
+                    double price_prod = query_prod.getColumn(1);
+                    string desc_prod = query_prod.getColumn(0).getText();
 
-            order = make_shared<Order>(id_order, status, username_client);
-            order->set_date(date);
+                    string select_sub_name =
+                            "SELECT name FROM subcategories WHERE id = '" + to_string(id_subcategories) + "'";
+                    string sub_name = db->execAndGet(select_sub_name);
 
-            string select_products =
-                    "SELECT desc_prod, price_product, quantity, id_sub, available_quantity FROM store, orders_details WHERE id_product = store.id AND id_order = '" +
-                    to_string(id_order) + "'AND id_prov = '" + to_string(id_user) + "'";
-            SQLite::Statement query_prod(*db, select_products);
-            while (query_prod.executeStep()) {
+                    std::shared_ptr<Product> product = std::make_shared<Product>(desc_prod, price_prod, quantity,
+                                                                                 q_available, username, sub_name);
+                    product->set_id_store(id_store);
+                    order->add_to_order(product);
 
-                int q_available = query_prod.getColumn(4);
-                int id_subcategories = query_prod.getColumn(3);
-                int quantity = query_prod.getColumn(2);
-                double price_prod = query_prod.getColumn(1);
-                string desc_prod = query_prod.getColumn(0).getText();
-
-                string select_sub_name =
-                        "SELECT name FROM subcategories WHERE id = '" + to_string(id_subcategories) + "'";
-                string sub_name = db->execAndGet(select_sub_name);
-
-                std::shared_ptr<Product> product = std::make_shared<Product>(desc_prod, price_prod, quantity,
-                                                                             q_available, username, sub_name);
-                product->set_id_store(id_store);
-                order->add_to_order(product);
+                }
 
             }
-
             tab_order->add_order(order);
-
         }
     }
 }
@@ -169,9 +172,8 @@ void dbOrdersManager::select_for_client() {
             shared_ptr<Order> o = make_shared<Order>(id_order, status, username);
             o->set_date(date);
 
-
             string select_products =
-                    "SELECT desc_prod, price_product, quantity, id_sub, id_product, available_quantity FROM store, orders_details, orders WHERE id_product = store.id AND orders_details.id_order = '" +
+                    "SELECT desc_prod, price_product, quantity, id_sub, id_product, available_quantity FROM store, orders_details, orders WHERE id_product = store.id orders.id = id_order AND id_order = '" +
                     to_string(id_order) + "'AND id_client = '" + to_string(id_user) + "'";
             SQLite::Statement query_prod(*db, select_products);
 
@@ -220,10 +222,31 @@ void dbOrdersManager::cancel_order(int id_order) {
 
 }
 
-
 int dbOrdersManager::select_count_for_provider(int control) {
     if (user->get_type() == "F") {
+        int count;
+
+        tab_order = user->get_order_list();
+        if (control == 0) {
+            string sel_orders_s = "SELECT COUNT (*) FROM orders, orders_details, store, users WHERE orders.id = id_order AND store.id = id_product AND id_prov = users.id AND users.id = "+
+                                to_string(user->get_db_id())+" AND status = 'S'";
+            count = db->execAndGet(sel_orders_s);
+        } else {
+            string sel_orders = "SELECT COUNT (*) FROM orders, orders_details, store, users WHERE orders.id = id_order AND store.id = id_product AND id_prov = users.id AND users.id = "+
+                                to_string(user->get_db_id())+"";
+            count = db->execAndGet(sel_orders);
+        }
+        return count;
+    } else
+        throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
+
+}
+
+
+/*int dbOrdersManager::select_count_for_provider(int control) {
+    if (user->get_type() == "F") {
         int count = 0;
+        //ERRORE QUA
         tab_order = user->get_order_list();
         if (control == 0) {
             vector<shared_ptr<Order>> o_l = tab_order->get_orders();
@@ -241,7 +264,7 @@ int dbOrdersManager::select_count_for_provider(int control) {
     } else
         throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
 
-}
+}*/
 
 int dbOrdersManager::select_count_for_client(int control){
     if(user->get_type()== "C") {

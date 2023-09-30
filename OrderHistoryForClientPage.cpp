@@ -98,11 +98,10 @@ void OrderHistoryForClientPage::CancelOrder(wxCommandEvent &event) {
     } else {
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
-        size_t i = 0;
-        while (i < selectedRows.GetCount()) {
-            i++;
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row = selectedRows[i];
         }
-        row = selectedRows[i];
+
         string status = order[row]->get_status();
         int id_order = order[row]->get_id();
 

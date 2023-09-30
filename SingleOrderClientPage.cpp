@@ -35,7 +35,13 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, i
 
     order = orders[i];
     order_p = order->get_order_prod();
-    int row = order->get_num_prod();
+    //errore nel get_num, ritorna 3. dovrebbe essere 1
+    //int row = order->get_num_prod();
+    //sembrerebbe riaolto ma
+    //il problema rimane nel get_total perche i prodotticontinuano a rimanere 3 e da il totale su quei 3
+    string sel_count = "SELECT COUNT (*) FROM orders, orders_details WHERE orders.id = id_order AND id_order = "+
+                       to_string(id_order)+"";
+    int row = database->execAndGet(sel_count);
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row+1, 4);
