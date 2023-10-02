@@ -42,9 +42,9 @@ SingleOrderProviderPage::SingleOrderProviderPage( Engine *e, const wxString &tit
 
     for ( i = 0; i < row; i++) {
         int q = order_p[i]->get_quantity();
-        string quantity(to_string(q));
+        string quantity = (to_string(q));
         int a_q = order_p[i]->get_q_available();
-        string available_q(to_string(a_q));
+        string available_q = (to_string(a_q));
         string desc = order_p[i]->get_desc();
 
         grid->SetReadOnly(i, 0, true);

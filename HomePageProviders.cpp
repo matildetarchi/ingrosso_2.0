@@ -29,21 +29,21 @@ HomePageProviders::HomePageProviders(Engine *e, const wxString& title, const wxP
 
     auto *panelHome = new wxPanel(this, -1);
 
-    prov= engine->get_prov();
-    username= prov->get_username();
-    type= prov->get_type();
+    prov = engine->get_prov();
+    username = prov->get_username();
+    type = prov->get_type();
     db_u = engine->get_db_user();
 
     auto *box = new wxBoxSizer(wxHORIZONTAL);
     auto *MainGrid = new wxFlexGridSizer(4, 2, 25, -5);
 
-    Requests=new wxButton (panelHome,IdButtonRequests,_T ("Manage requests"),wxDefaultPosition,wxSize(180,40),0);
-    Profile=new wxButton(panelHome,IdButtonProfile, _T("Manage profile"), wxDefaultPosition,wxSize(180,40),0 );
-    InsProd=new wxButton(panelHome, IdButtonInsProd, _T("Insert products"), wxDefaultPosition, wxSize(180,40), 0);
-    Store=new wxButton(panelHome, IdButtonStore, _T("Store"),wxDefaultPosition, wxSize(180,40),0);
-    Clients=new wxButton(panelHome, IdButtonClients, _T("View Clients"),wxDefaultPosition, wxSize(180,40),0);
-    Remove=new wxButton(panelHome, IdButtonRemove, _T("Delete Account"),wxDefaultPosition, wxSize(180,40),0);
-    Back=new wxButton(panelHome,IdButtonBack,_T ("Logout"),wxDefaultPosition,wxDefaultSize,0);
+    Requests = new wxButton (panelHome,IdButtonRequests,_T ("Manage requests"),wxDefaultPosition,wxSize(180,40),0);
+    Profile = new wxButton(panelHome,IdButtonProfile, _T("Manage profile"), wxDefaultPosition,wxSize(180,40),0 );
+    InsProd = new wxButton(panelHome, IdButtonInsProd, _T("Insert products"), wxDefaultPosition, wxSize(180,40), 0);
+    Store = new wxButton(panelHome, IdButtonStore, _T("Store"),wxDefaultPosition, wxSize(180,40),0);
+    Clients = new wxButton(panelHome, IdButtonClients, _T("View Clients"),wxDefaultPosition, wxSize(180,40),0);
+    Remove = new wxButton(panelHome, IdButtonRemove, _T("Delete Account"),wxDefaultPosition, wxSize(180,40),0);
+    Back = new wxButton(panelHome,IdButtonBack,_T ("Logout"),wxDefaultPosition,wxDefaultSize,0);
 
 
     MainGrid->Add(InsProd,0,wxLEFT, 10);
@@ -60,8 +60,6 @@ HomePageProviders::HomePageProviders(Engine *e, const wxString& title, const wxP
 
 
     box->Add(MainGrid, 1, wxALL, 60);
-
-
 
     panelHome->SetSizer(box);
 

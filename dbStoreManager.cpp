@@ -113,9 +113,7 @@ vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_
     int count = db->execAndGet(query_select_count).getInt();
 
     vector<shared_ptr<Product>> product_list;
-    //lancio la query
-    //popolo la matrice
-    //restituisco la matrice
+
     if (count > 0) {
         //lancio la query
 
@@ -138,7 +136,6 @@ vector<shared_ptr<Product>> dbStoreManager::select_for_client(const string &sub_
             product_list.push_back(product);
 
         }
-
     }
     return product_list;
 }
@@ -183,10 +180,8 @@ void dbStoreManager::select_for_prov() {
     string query_select_count = "SELECT count(*) FROM store WHERE id_prov ='" + to_string(id_prov) + "'";
     int count = db->execAndGet(query_select_count).getInt();
 
-
     //lancio la query
-    //popolo la matrice
-    //restituisco la matrice
+
     if (count > 0) {
         string select = "SELECT desc_prod, price_product, available_quantity, subcategories.name, store.id FROM store,subcategories WHERE id_sub =subcategories.id AND id_prov= '" +
                 to_string(id_prov) + "';";
@@ -205,9 +200,7 @@ void dbStoreManager::select_for_prov() {
 
             st->add_to_store(product);
         }
-
     }
-
 }
 
 int dbStoreManager::select_count_for_provider() {

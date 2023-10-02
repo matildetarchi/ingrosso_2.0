@@ -15,7 +15,7 @@ dbFavouritesManager::dbFavouritesManager(const shared_ptr<Database>& d) {
 void dbFavouritesManager::add_to_db() {
 
     //metodo che aggiunge un prodotto alla lista dei favourites
-    fav= client->get_fav();
+    fav = client->get_fav();
     int index = fav->get_num_prod()-1;
 
     prod_list = fav->get_products();
@@ -72,8 +72,8 @@ void dbFavouritesManager::select() {
     //prendo l'id dell'utente che sta usando il programma
     int id = client->get_db_id();
 
-    string us_client= client->get_username();
-    fav=make_shared<Favourites>(us_client);
+    string us_client = client->get_username();
+    fav = make_shared<Favourites>(us_client);
     string query_count = "SELECT count(*) FROM users, favourites, store WHERE favourites.id_prov = users.id AND id_store = store.id AND id_cust ='"+to_string(id) +"'";
     int count = db->execAndGet(query_count).getInt();
     if (count >0) {
@@ -117,11 +117,11 @@ int dbFavouritesManager::select_count_of_prod(){
 bool dbFavouritesManager::control_if_exist(const shared_ptr<Product>& p) {
 
     string select_id_prov = "SELECT id FROM users WHERE username = '"+p->get_username_prov()+"'";
-    cout << select_id_prov << endl;
+
     int id_prov = db->execAndGet(select_id_prov).getInt();
     string select_prod = "SELECT count(*) FROM store, favourites WHERE id_store = store.id AND id_cust = "+ to_string(client->get_db_id()) +" AND desc_prod = '" + p->get_desc() + "' AND favourites.id_prov="+
                          to_string(id_prov)+"";
-    cout << select_prod << endl;
+
     int count = db->execAndGet(select_prod);
     if(count > 0)
         return true;

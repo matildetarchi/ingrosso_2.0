@@ -26,14 +26,12 @@ SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString 
     auto *Mainpanel = new wxPanel(this, -1);
 
     auto *hbox = new wxBoxSizer(wxHORIZONTAL);
-
-
-    auto *fgs=new wxFlexGridSizer(6,2,20,5);
+    auto *fgs = new wxFlexGridSizer(6,2,20,5);
 
 
     std::vector<std::string> categories;
 
-    categories= db_cat->select();
+    categories = db_cat->select();
     wxVector<string> choices;
     int num_of_categories = db_cat->number_of_cat();
 
@@ -52,18 +50,18 @@ SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString 
     auto *SubCategory = new wxStaticText(Mainpanel, -1, wxT("Subcategory"));
     auto *Disp = new wxStaticText(Mainpanel, -1, wxT("Disponibility"));
 
-    Insert=new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
-    Back=new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    Insert = new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
-    choiceC=new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceC = new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
     choiceC->Append(num_of_categories ,myString);
 
     choiceC->Bind(wxEVT_CHOICE, &SelectionSubcategoryPage::OnChoice, this);
 
-    choiceSubC=new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceSubC = new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     wxString myDisp[]={"Only Available", "All"};
-    choiceDisp=new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceDisp = new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceDisp->Append("Select");
     choiceDisp->Append(2,myDisp);
 
@@ -77,11 +75,8 @@ SelectionSubcategoryPage::SelectionSubcategoryPage( Engine *eng, const wxString 
     fgs->Add(Insert,0);
     fgs->Add(Back,0);
 
-
-
     fgs->AddGrowableRow(1, 1);
     fgs->AddGrowableCol(1, 1);
-
 
     hbox->Add(fgs, 1, wxALL, 10);
 
@@ -99,7 +94,7 @@ void SelectionSubcategoryPage::OnChoice(wxCommandEvent& event) {
     std::vector<std::string> subcategories;
     string cat = event.GetString().ToStdString();
     subcategories = db_subcat->select(cat);
-    int num_of_subcat= db_subcat->number_of_subcat(cat);
+    int num_of_subcat = db_subcat->number_of_subcat(cat);
 
     for (int k = 0; k < num_of_subcat ; k++){
         choices2.push_back(subcategories[k]);

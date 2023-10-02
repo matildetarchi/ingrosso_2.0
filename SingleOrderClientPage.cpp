@@ -74,9 +74,7 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, i
     Back = new wxButton(this, IdButtonBack, _T ("Back"), wxDefaultPosition, wxDefaultSize, 0);
 
     sizer = new wxBoxSizer(wxVERTICAL);
-
     sizer->Add(grid, 1, wxALL, 5);
-
     sizer->Add(Back, 1,  wxALL, 5);
     SetSizer(sizer);
 

@@ -43,20 +43,18 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
 
     auto *panelHome = new wxPanel(this, -1);
 
-
-
     auto *box = new wxBoxSizer(wxHORIZONTAL);
     auto *MainGrid = new wxFlexGridSizer(4, 2, 25, -60);
 
 
-    Orders=new wxButton (panelHome,IdButtonOrders,_T ("Orders' list"),wxDefaultPosition,wxSize(140,40),0);
-    Profile=new wxButton(panelHome,IdButtonProfile, _T("Manage profile"), wxDefaultPosition,wxSize(140,40),0 );
-    Products=new wxButton(panelHome, IdButtonProducts, _T("Products' list"), wxDefaultPosition, wxSize(140,40), 0);
-    Providers=new wxButton(panelHome, IdButtonProviders, _T("View Providers"), wxDefaultPosition, wxSize(140,40), 0);
-    Cart=new wxButton(panelHome, IdButtonCart, _T("Cart"),wxDefaultPosition, wxSize(140,40),0);
-    Favorites=new wxButton(panelHome, IdButtonFavorites, _T("Favorites"),wxDefaultPosition, wxSize(140,40),0);
-    Remove=new wxButton(panelHome, IdButtonRemove, _T("Delete Account"),wxDefaultPosition, wxDefaultSize,0);
-    Back=new wxButton(panelHome,IdButtonComeBack,_T ("Logout"),wxDefaultPosition,wxDefaultSize,0);
+    Orders = new wxButton (panelHome,IdButtonOrders,_T ("Orders' list"),wxDefaultPosition,wxSize(140,40),0);
+    Profile = new wxButton(panelHome,IdButtonProfile, _T("Manage profile"), wxDefaultPosition,wxSize(140,40),0 );
+    Products = new wxButton(panelHome, IdButtonProducts, _T("Products' list"), wxDefaultPosition, wxSize(140,40), 0);
+    Providers = new wxButton(panelHome, IdButtonProviders, _T("View Providers"), wxDefaultPosition, wxSize(140,40), 0);
+    Cart = new wxButton(panelHome, IdButtonCart, _T("Cart"),wxDefaultPosition, wxSize(140,40),0);
+    Favorites = new wxButton(panelHome, IdButtonFavorites, _T("Favorites"),wxDefaultPosition, wxSize(140,40),0);
+    Remove = new wxButton(panelHome, IdButtonRemove, _T("Delete Account"),wxDefaultPosition, wxDefaultSize,0);
+    Back = new wxButton(panelHome,IdButtonComeBack,_T ("Logout"),wxDefaultPosition,wxDefaultSize,0);
 
 
 
@@ -76,8 +74,6 @@ HomePageClient::HomePageClient(Engine *engine, const wxString& title, const wxPo
 
     box->Add(MainGrid, 1, wxALL, 60);
 
-
-
     panelHome->SetSizer(box);
 
     Centre();
@@ -95,12 +91,12 @@ void HomePageClient::OpenProfile(wxCommandEvent &event) {
 }
 
 void HomePageClient::OpenCart(wxCommandEvent &event) {
-    auto *cart=new CartPage(eng, _T("CART"));
+    auto *cart = new CartPage(eng, _T("CART"));
     cart->Show(TRUE);
 }
 
 void HomePageClient::OpenFavoritesList(wxCommandEvent &event) {
-    auto *fav=new FavouritesListPage(eng, _T("FAVOURITES LIST"));
+    auto *fav = new FavouritesListPage(eng, _T("FAVOURITES LIST"));
     fav->Show(TRUE);
 }
 

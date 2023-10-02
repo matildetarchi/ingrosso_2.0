@@ -22,7 +22,7 @@ ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e
 
     store = prov->get_store();
 
-    db_store= engine->get_db_store();
+    db_store = engine->get_db_store();
     int row = db_store->select_count_for_provider();
 
     grid = new wxGrid(this, wxID_ANY);
@@ -33,13 +33,12 @@ ProviderStorePage::ProviderStorePage(Engine *e, const wxString &title): engine(e
 
     prod_list = store->get_products();
 
-
     for (int i = 0; i < row ; i++) {
-      string name_prod= prod_list[i]->get_desc();
-      float p= prod_list[i]->get_price();
-      string price(to_string(p));
-      int a_q= prod_list[i]->get_q_available();
-      string available_q(to_string(a_q));
+      string name_prod = prod_list[i]->get_desc();
+      double p = prod_list[i]->get_price();
+      string price = (to_string(p));
+      int a_q = prod_list[i]->get_q_available();
+      string available_q = (to_string(a_q));
 
         grid->SetReadOnly(i, 0, true);
         grid->SetCellValue(i, 0, name_prod);

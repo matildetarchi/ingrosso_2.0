@@ -24,11 +24,11 @@ public:
         return store;
     }
 
-    int get_id() {
+    [[nodiscard]] int get_id() {
         return id;
     }
 
-    int get_num_prod() const {
+    [[nodiscard]] int get_num_prod() const {
         return num_prod;
     }
 

@@ -4,7 +4,7 @@
 
 #include "InitialPage.h"
 
-const long InitialPage::IdButtonRegister=::wxNewId();
+const long InitialPage::IdButtonRegister =::wxNewId();
 const long InitialPage::IdButtonAccess =::wxNewId();
 
 BEGIN_EVENT_TABLE (InitialPage, wxFrame)
@@ -17,10 +17,10 @@ InitialPage::InitialPage(Engine* engine, const wxString &title, const wxPoint &p
                                             e(engine), wxFrame(nullptr,  - 1, title, pos, size){
 
     this->SetSizeHints(wxDefaultSize, wxDefaultSize);
-    wxBoxSizer *MainBox= new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer *MainBox1=new wxBoxSizer(wxHORIZONTAL);
-    Register=new wxButton (this,IdButtonRegister,_T ("Register"),wxDefaultPosition,wxSize(180,40),0);
-    Enter=new wxButton(this,IdButtonAccess,_T ("Enter"), wxDefaultPosition,wxSize(180,40),0);
+    wxBoxSizer *MainBox = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer *MainBox1 = new wxBoxSizer(wxHORIZONTAL);
+    Register = new wxButton (this,IdButtonRegister,_T ("Register"),wxDefaultPosition,wxSize(180,40),0);
+    Enter = new wxButton(this,IdButtonAccess,_T ("Enter"), wxDefaultPosition,wxSize(180,40),0);
     MainBox1->Add(Register,0,wxLEFT,210);
     this->SetSizer(MainBox1);
     MainBox->Add(Enter,0,wxLEFT,210);
@@ -34,9 +34,7 @@ void InitialPage::OnAccess(wxCommandEvent& event )
 {
 
     auto *MainWin2 = new LogInPage(e,_T("ACCESS"));
-    MainWin2->Show(TRUE); // show the window
-    // and finally, set it as the main window
-    // Tells the OS to quit running this process
+    MainWin2->Show(TRUE);
 }
 void InitialPage::OnRegister(wxCommandEvent& event){
 

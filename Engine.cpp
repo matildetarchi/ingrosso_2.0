@@ -6,10 +6,8 @@
 
 Engine::Engine() {
 
-    // Specifica il percorso del tuo database SQLite
+    // Specifica del percorso del database
     const std::string dbPath = "/Users/matildetarchi/CLionProjects/ingrosso_2.0/database/ingrossodb.sqlite";
-    // Apri il database
-    //SQLite::Database database(dbPath, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     database = make_shared <Database>(dbPath);
 
 
@@ -44,7 +42,6 @@ bool Engine::do_login(const string &email, const string &psw) {
     if(db_user->access_reg(email, psw, 0)) {
 
         string username = db_user->select_username(email);
-
         type = db_user->select_type(email);
 
         if(type == "C") {

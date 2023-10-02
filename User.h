@@ -94,19 +94,13 @@ public:
     }
 
     virtual void delete_objects_of_user();
-
-
-
     virtual shared_ptr<Cart> get_cart() = 0;
-
     virtual shared_ptr<Favourites> get_fav() = 0;
-
 
     virtual void add_to_cart(shared_ptr<Product> p) = 0;
     virtual  void add_to_fav(shared_ptr<Product> p) = 0;
     virtual bool remove_from_cart(int id_prod) = 0;
     virtual bool remove_from_fav(int id_prod) = 0;
-
 
     virtual shared_ptr<Store> get_store()  = 0;
     virtual bool modify_prod (int id_store, string desc, double price, int a_q ) = 0;

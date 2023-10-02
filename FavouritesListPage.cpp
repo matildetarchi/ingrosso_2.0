@@ -142,8 +142,8 @@ void FavouritesListPage::IsInsert(wxCommandEvent &event) {
                     if (control == 0) {
                         wxMessageBox("Product already in cart, click againg in insert if you want to add this quantity", "Error", wxICON_ERROR);
                     } else {
-                        int i=0;
-                        int count =0;
+                        int i = 0;
+                        int count = 0;
                         while(i < prod_l.size() && count == 0) {
                             string desc_cart = prod_l[i]->get_desc();
                             string desc_fav = prod_list[row]->get_desc();
@@ -179,11 +179,9 @@ void FavouritesListPage::IsInsert(wxCommandEvent &event) {
                     wxMessageBox("Insert gone well", "", wxICON_ERROR);
                 }
 
-            }else {
+            } else {
                 wxMessageBox("Quantity not available", "Error", wxICON_ERROR);
             }
         }
-
     }
-
 }

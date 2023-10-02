@@ -16,13 +16,13 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
     //control = 0 accesso normale
     //control = 1 per controllo se utente già esistente in caso di registrazione
 
-    int num_found =0;
+    int num_found = 0;
     //lancio la query di selezione di tutti gli utenti dal db
     //controllo cosa deve fare il programma
     SQLite::Statement query(*db, "SELECT * FROM users");
     query.reset();
 
-    if (control==accesso) {
+    if (control == accesso) {
         //controllo se la mail e la password sono corretti
         //se si restituisco true altrimenti false
         while (query.executeStep()){
@@ -35,7 +35,7 @@ bool dbUserManager::access_reg(const string &email, const string &psw, int contr
         } else {
             return true;
         }
-    } else if(control==registrazione){
+    } else if(control == registrazione){
         //controllo che la mail non sia già stata usata per un utente
         //se si restituisco false almtrimenti true
         while (query.executeStep()){
@@ -52,14 +52,14 @@ void dbUserManager::add_to_db() {
     //funzione che aggiunge un nuovo utente al database
 
     //lancio la query di insert
-    string query_id_city ="SELECT id FROM cities WHERE name = '"+user->get_city()+"'";
+    string query_id_city = "SELECT id FROM cities WHERE name = '"+user->get_city()+"'";
     int id_city = db->execAndGet(query_id_city);
 
-    string query="INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" +
+    string query = "INSERT INTO users (type, business_name, address, id_city, email, password, username) VALUES ('" + user->get_type() + "', '" +user->get_bus_name() + "', '" + user->get_address() + "', '" +
             to_string(id_city) + "', '" + user->get_email() + "', '" + user->get_psw() + "', '" + user->get_username() + "')";
     db->exec(query);
-    string i_u= "SELECT id FROM users WHERE email= '" + user->get_email() + "'";
-    int id_user=db->execAndGet(i_u);
+    string i_u = "SELECT id FROM users WHERE email= '" + user->get_email() + "'";
+    int id_user = db->execAndGet(i_u);
     user->set_id_db(id_user);
 }
 
@@ -136,7 +136,7 @@ bool dbUserManager::remove_from_db(const string &username, const string &type) {
         //controllo che il cliente non abbia ordini in sospeso
         //se li ha restituisco 0
         //non gli permetto di cancellarsi
-        string query_count_orders="SELECT count(*) FROM orders WHERE status='S' AND id_client = '"+to_string(id)+"'";
+        string query_count_orders = "SELECT count(*) FROM orders WHERE status='S' AND id_client = '"+to_string(id)+"'";
         int count_ord = db->execAndGet(query_count_orders).getInt();
         if (count_ord > 0) {
             return false;
@@ -209,8 +209,6 @@ void dbUserManager::select_data(const string &username) {
     //funzione per selezionare dal database tutti i dati dell'utente
 
     //lancio la query
-    //popolo la matrice
-    //restituisco la matrice
     string select = "SELECT id, address, id_city, email, password, business_name FROM users WHERE username='"+username+"'";
     SQLite::Statement query(*db,select);
     if(query.executeStep()) {
@@ -275,13 +273,13 @@ vector<shared_ptr<User>> dbUserManager::select_users(const string &type, const s
     shared_ptr<User> single_user;
     string type_us;
     if (type=="C") {
-        type_us="F";
+        type_us = "F";
     } else {
-        type_us="C";
+        type_us = "C";
     }
-    if (city!="All") {
-        string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";
-        int id_city= db->execAndGet(select_id_city);
+    if (city != "All") {
+        string select_id_city = "SELECT id FROM cities WHERE name = '"+city+"' ";
+        int id_city = db->execAndGet(select_id_city);
 
         string user_data = "SELECT business_name, address, email, password, username, id FROM users WHERE type = '"+ type_us+"' AND id_city = "+
                            to_string(id_city)+"";
@@ -335,9 +333,9 @@ int dbUserManager::select_count_users(const string &type, const string &city) {
     int count;
     string type_us;
     if (type=="C"){
-        type_us="F";
+        type_us = "F";
     } else {
-        type_us="C";
+        type_us = "C";
     }
     if (city!="All") {
         string select_id_city= "SELECT id FROM cities WHERE name = '"+city+"' ";

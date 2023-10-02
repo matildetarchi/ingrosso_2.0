@@ -19,7 +19,7 @@ public:
 
 
     void set_user(shared_ptr<User> us){
-        user=std::move(us);
+        user = std::move(us);
     }
 
 

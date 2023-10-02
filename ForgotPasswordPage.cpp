@@ -17,7 +17,7 @@ BEGIN_EVENT_TABLE (ForgotPasswordPage, wxFrame)
                 EVT_BUTTON(IdButtonBack, ForgotPasswordPage::ComeBack)
                 EVT_BUTTON(IdButtonVP, ForgotPasswordPage::ViewPass)
 
-END_EVENT_TABLE() // The button is pressed
+END_EVENT_TABLE()
 
 
 ForgotPasswordPage::ForgotPasswordPage(Engine *e, const wxString &title)
@@ -30,11 +30,11 @@ ForgotPasswordPage::ForgotPasswordPage(Engine *e, const wxString &title)
     fgs2 = new wxFlexGridSizer(3, 2, 12, 5);
     fgs = new wxFlexGridSizer(9, 1, 12, -5);
 
-    messageError="Password Not Equal";
-    messageCorrect="Password Equal";
+    messageError = "Password Not Equal";
+    messageCorrect = "Password Equal";
     txt_email = new wxStaticText(this, -1, wxT("Email"));
-    Confirm=new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
-    Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    Confirm = new wxButton (this,IdButtonConfirm,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
     tc1 = new wxTextCtrl(this, -1, wxT(""), wxDefaultPosition, wxSize(200, wxDefaultSize.GetHeight()));
 
@@ -46,9 +46,7 @@ ForgotPasswordPage::ForgotPasswordPage(Engine *e, const wxString &title)
     fgs->AddGrowableRow(1, 1);
     fgs->AddGrowableCol(1, 1);
 
-
     hbox->Add(fgs, 1, wxALL, 5);
-
     SetSizer(hbox);
 
     Centre();
@@ -71,12 +69,12 @@ void ForgotPasswordPage::Insert(wxCommandEvent &event){
             fgs->DeleteWindows();
             txt_psw = new wxStaticText(this, -1, wxT("New Password"));
             txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
-            ChangeButton=new wxButton (this,IdButtonChange,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
-            ViewP=new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
+            ChangeButton = new wxButton (this,IdButtonChange,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
+            ViewP = new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
             m_passwordText = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(120, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
             m_passwordConf = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(120, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
             m_passwordConf->Bind(wxEVT_TEXT, &ForgotPasswordPage::OnTextChange, this);
-            Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+            Back = new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
             fgs->Add(fgs2);
             fgs2->Add(txt_psw);
@@ -102,14 +100,14 @@ void ForgotPasswordPage::Change(wxCommandEvent &event) {
     } else {
         std::string psw = m_passwordText->GetValue().ToStdString();
         std::string psw_conf = m_passwordConf->GetValue().ToStdString();
-        int control_digit=0;
-        int control_upper=0;
-        for(int i=0; i<psw.length();i++){
+        int control_digit = 0;
+        int control_upper = 0;
+        for(int i=0; i<psw.length(); i++){
             if (isdigit(psw[i])){
-                control_digit=control_digit+1;
+                control_digit = control_digit+1;
             }
             if (isupper(psw[i])) {
-                control_upper=control_upper+1;
+                control_upper = control_upper+1;
             }
         }
         if (control_digit>0 && psw.length()>=8 && control_upper>0 && psw==psw_conf) {
@@ -133,10 +131,10 @@ void ForgotPasswordPage::ViewPass(wxCommandEvent &event) {
 
     if (m_passwordText->GetWindowStyle() & wxTE_PASSWORD) {
         control = 0;
-        txt_button ="Hide Password";
+        txt_button = "Hide Password";
         } else {
         control = 1;
-        txt_button="View Password";
+        txt_button = "View Password";
     }
     fgs->DeleteWindows();
     txt_psw = new wxStaticText(this, -1, wxT("New Password"));
@@ -144,14 +142,14 @@ void ForgotPasswordPage::ViewPass(wxCommandEvent &event) {
         m_passwordText = new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PROCESS_ENTER);
         m_passwordConf = new wxTextCtrl(this, wxID_ANY, passConf, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PROCESS_ENTER);
     } else {
-        m_passwordText=new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
+        m_passwordText = new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
         m_passwordConf = new wxTextCtrl(this, wxID_ANY, passConf, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
     }
     m_passwordConf->Bind(wxEVT_TEXT, &ForgotPasswordPage::OnTextChange, this);
     txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
-    ViewP=new wxButton (this,IdButtonVP,txt_button,wxDefaultPosition,wxDefaultSize,0);
-    ChangeButton=new wxButton (this,IdButtonChange,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
-    Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    ViewP = new wxButton (this,IdButtonVP,txt_button,wxDefaultPosition,wxDefaultSize,0);
+    ChangeButton = new wxButton (this,IdButtonChange,_T ("Ok"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
     fgs2->Insert(0,txt_psw);
     fgs2->Insert(1,m_passwordText,0, wxEXPAND);

@@ -12,7 +12,7 @@ User::User(const string &us){
 User::User( const string &t, const string &bn,const string &a, const string &e, const string &password, const string &us, const string &c) {
 
     type = t;
-    business_name= bn;
+    business_name = bn;
     address = a;
     city = c;
     email = e;

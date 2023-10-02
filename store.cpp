@@ -30,7 +30,7 @@ void Store::update_num(int control) {
     if (control==put_in) {
         num_prod = num_prod+1;
     } else {
-        num_prod=num_prod-1;
+        num_prod = num_prod-1;
     }
 }
 

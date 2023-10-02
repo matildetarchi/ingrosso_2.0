@@ -105,8 +105,8 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
         grid->SetSelectionMode(wxGrid::wxGridSelectRows);
         grid->AutoSize();
 
-        Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
-        Deny=new wxButton (this,IdButtonDeny,_T ("Deny OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
+        Confirm = new wxButton (this,IdButtonConfirm,_T ("Confirm OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
+        Deny = new wxButton (this,IdButtonDeny,_T ("Deny OrderProduct"),wxDefaultPosition,wxDefaultSize,0);
 
         sizer->Add(grid, 1,  wxALL, 5);
         sizer_vertical->Add(Confirm, 1,  wxALL, 5);
@@ -183,17 +183,14 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
         for (int i = 0; i < selectedRows.GetCount(); i++) {
             row_op = selectedRows[i];
         }
-
         id_order = order_op[row_op]->get_id();
     }
 
     db_order->change_status("D", id_order);
-
     if (ctrl==0)
         grid->DeleteRows(row);
     else
         grid->SetCellValue(row, 3, "Denied");
-
 }
 
 void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
@@ -214,14 +211,11 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
             for (int i = 0; i < selectedRows.GetCount(); i++) {
                 row_op = selectedRows[i];
             }
-
             code_order = order_op[row_op]->get_id();
-
         }
         auto *view = new SingleOrderProviderPage(engine, _T("ORDER LIST"), code_order);
         view->Show(TRUE);
     }
-
 }
 
 void ManageRequestPage::ComeBack(wxCommandEvent& event){

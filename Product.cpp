@@ -6,9 +6,9 @@
 
 using namespace std;
 
-Product::Product()= default;
+Product::Product() = default;
 
-Product::Product( const string &d, float p, int q, int q_a, const string &u_p, const string &s) {
+Product::Product( const string &d, double p, int q, int q_a, const string &u_p, const string &s) {
 
     description = d;
     price = p;
@@ -19,7 +19,7 @@ Product::Product( const string &d, float p, int q, int q_a, const string &u_p, c
 
 }
 
-void Product::set_price(float p){
+void Product::set_price(double p){
     if (p > 0) {
         price = p;
     } else {

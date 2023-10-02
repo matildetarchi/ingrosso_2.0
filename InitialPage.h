@@ -13,9 +13,8 @@
 
 
 
-class InitialPage: public wxFrame// MainFrame is the class for our window,
+class InitialPage: public wxFrame
 {
-    // It contains the window and all objects in it
 public:
     InitialPage(Engine* engine,const wxString &title, const wxPoint &pos, const wxSize &size );
 
@@ -34,7 +33,7 @@ private:
 
 enum
 {
-    BUTTON_Hello = wxID_HIGHEST + 1 // declares an id which will be used to call our button
+    BUTTON_Hello = wxID_HIGHEST + 1
 };
 
 #endif

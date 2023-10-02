@@ -8,7 +8,7 @@
 #include "InitialPage.h"
 
 
-class MyApp: public wxApp // MainApp is the class for our application
+class MyApp: public wxApp
 {
 
 public:

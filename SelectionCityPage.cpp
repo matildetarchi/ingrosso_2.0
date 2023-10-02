@@ -23,8 +23,6 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
     auto *Mainpanel = new wxPanel(this, -1);
 
     auto *hbox = new wxBoxSizer(wxHORIZONTAL);
-
-
     auto *fgs=new wxFlexGridSizer(6,2,20,5);
 
     db_table = engine->get_db_city();
@@ -33,11 +31,11 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
 
     cities = db_table->select();
     wxVector<string> choices;
-    for (int k=0; k<db_table->number_of_city(); k++){
+    for (int k = 0; k<db_table->number_of_city(); k++){
         choices.push_back(cities[k]);
     }
     wxString myString[db_table->number_of_city()];
-    for (int i=0;i<db_table->number_of_city();i++) {
+    for (int i = 0; i < db_table->number_of_city(); i++) {
         myString[i].Append(choices[i]);
     }
 
@@ -46,10 +44,10 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
 
     auto *City = new wxStaticText(Mainpanel, -1, wxT("City"));
 
-    Insert=new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
-    Back=new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    Insert = new wxButton (Mainpanel,IdButtonInsert,_T ("Search"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton(Mainpanel,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
-    choiceC=new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceC = new wxChoice(Mainpanel, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
     choiceC->Append("All");
     choiceC->Append(db_table->number_of_city(),myString);
@@ -63,7 +61,6 @@ SelectionCityPage::SelectionCityPage(Engine *e, const wxString &title) : engine(
 
     fgs->AddGrowableRow(1, 1);
     fgs->AddGrowableCol(1, 1);
-
 
     hbox->Add(fgs, 1, wxALL, 10);
 
@@ -81,7 +78,7 @@ void SelectionCityPage::InsertCity(wxCommandEvent &event) {
         int Id_city = choiceC->GetSelection();
         string city = choiceC->GetString(Id_city).ToStdString();
         Close();
-        auto *view= new UsersDataListPage(engine, _T("USERS"), city);
+        auto *view = new UsersDataListPage(engine, _T("USERS"), city);
         view->Show(TRUE);
     }
 }

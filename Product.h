@@ -13,14 +13,14 @@ class Product {
 public:
 
     Product();
-    Product(const string &desc, float price, int quantity, int q_available, const string &u_p, const string &sub);
+    Product(const string &desc, double price, int quantity, int q_available, const string &u_p, const string &sub);
     ~Product(){};
 
     const string &get_desc(){
          return description;
     }
 
-    float &get_price(){
+    double &get_price(){
         return price;
     }
     [[nodiscard]] int get_q_available()const{
@@ -46,7 +46,7 @@ public:
         description = desc;
     }
 
-    void set_price(float p);
+    void set_price(double p);
 
     void set_quantity(int q);
 
@@ -68,7 +68,7 @@ public:
 private:
 
     string description;
-    float price;
+    double price;
     string username_prov;
     int quantity;
     string subcategory;

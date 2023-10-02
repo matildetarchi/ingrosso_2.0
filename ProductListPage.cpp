@@ -40,9 +40,7 @@ ProductListPage::ProductListPage(Engine *e, const wxString &title, std::string s
         Close();
     } else {
 
-
         int row = db_store->select_count_for_client(sub_name, disponibility);
-
 
         grid = new wxGrid(this, wxID_ANY);
         grid->CreateGrid(row, 4);
@@ -51,11 +49,9 @@ ProductListPage::ProductListPage(Engine *e, const wxString &title, std::string s
         grid->SetColLabelValue(2, "Provider Name");
         grid->SetColLabelValue(3, "Disponibility");
 
-
-
         for (int i = 0; i < row; i++) {
             string name_prod = prod_list[i]->get_desc();
-            float p = prod_list[i]->get_price();
+            double p = prod_list[i]->get_price();
             string price(to_string(p));
             string name_prov = prod_list[i]->get_username_prov();
             int a_q = prod_list[i]->get_q_available();
@@ -112,7 +108,6 @@ void ProductListPage::IsFavourites(wxCommandEvent &event) {
             client->add_to_fav(prod_list[row]);
             db_fav->add_to_db();
         }
-
     }
 }
 
@@ -126,7 +121,7 @@ void ProductListPage::IsCart(wxCommandEvent &event)  {
         sizer->Add(q, 0,  wxALL, 5);
         spinCtrl = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 0);
         sizer->Add(spinCtrl, 0,  wxALL, 5);
-        InsertButton=new wxButton(this,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
+        InsertButton = new wxButton(this,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
         sizer->Add(InsertButton, 0,  wxALL, 5);
         wxSize currentSize = GetSize();
         int newWidth = currentSize.GetWidth() +1;
@@ -158,7 +153,7 @@ void ProductListPage::IsInsert(wxCommandEvent &event) {
                     } else {
                         int i = 0;
                         int count = 0;
-                        cart=client->get_cart();
+                        cart = client->get_cart();
                         prod_l = cart->get_products();
                         while (i< prod_l.size() && count == 0) {
                             string desc_cart = prod_l[i]->get_desc();

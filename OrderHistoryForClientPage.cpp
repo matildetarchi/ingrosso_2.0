@@ -150,14 +150,12 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
             for (int i = 0; i < selectedRows.GetCount(); i++) {
                 row_op = selectedRows[i];
             }
-
             code = order_op[row_op]->get_id();
 
         }
         auto *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), code);
         view->Show(TRUE);
     }
-
 }
 
 void OrderHistoryForClientPage::ComeBack(wxCommandEvent &event) {

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-OrdersList::OrdersList()= default;
+OrdersList::OrdersList() = default;
 
 OrdersList::OrdersList(string user): username_user(std::move(user)), num_order(0){
 }
@@ -17,7 +17,6 @@ OrdersList::OrdersList(string user): username_user(std::move(user)), num_order(0
 OrdersList::~OrdersList(){
     remove_all();
 }
-
 
 
 void OrdersList::add_order( const shared_ptr<Order>& ord) {

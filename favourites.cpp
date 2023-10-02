@@ -9,7 +9,7 @@ using namespace std;
 
 Favourites::Favourites( const string &client) {
 
-    username_client=client;
+    username_client = client;
     num_prod = 0;
 }
 
@@ -26,7 +26,7 @@ void Favourites:: update_num_prod(int control) {
     if (control==put_in) {
         num_prod = num_prod + 1;
     } else if (control==cc) {
-        num_prod=num_prod-1;
+        num_prod = num_prod-1;
     }
 }
 
@@ -41,7 +41,7 @@ void Favourites::remove_one(int index) {
 }
 
 void Favourites::remove_all() {
-    for (int i=0;i<num_prod; i++) {
+    for (int i = 0; i < num_prod; i++) {
         remove_one(i);
     }
 }

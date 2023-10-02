@@ -20,7 +20,7 @@ public:
     static std::shared_ptr<Date> get_current_date();
 
 private:
-    std::tm date_;
+    std::tm date_{};
 };
 
 

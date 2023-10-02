@@ -18,12 +18,12 @@ InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(
         wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 400)){
 
     db_categories = engine ->get_db_cate();
-    prov= engine->get_prov();
+    prov = engine->get_prov();
     db_subcategories = engine->get_db_subc();
     db_store = engine->get_db_store();
     std::vector<std::string> categories;
 
-    categories=db_categories->select();
+    categories = db_categories->select();
     wxVector<string> choices;
     for (int k=0; k< db_categories->number_of_cat(); k++){
         choices.push_back(categories[k]);
@@ -39,23 +39,21 @@ InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(
     auto *Category = new wxStaticText(this, -1, wxT("Category"));
     auto *SubCategory = new wxStaticText(this, -1, wxT("Subcategory"));
     auto *Name = new wxStaticText(this, -1, wxT("Product's name"));
-    auto *Qty_avb= new wxStaticText(this, -1, wxT("Quantity available"));
-    auto *Cost= new wxStaticText(this, -1, wxT("Price €"));
+    auto *Qty_avb = new wxStaticText(this, -1, wxT("Quantity available"));
+    auto *Cost = new wxStaticText(this, -1, wxT("Price €"));
 
-    Insert=new wxButton (this,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
-    Back=new wxButton(this,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    Insert = new wxButton (this,IdButtonInsert,_T ("Insert"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton(this,IdButtonComeBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
-    choiceC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceC = new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
     choiceC->Append(db_categories->number_of_cat(),myString);
 
     choiceC->Bind(wxEVT_CHOICE, &InsertProductPage::OnChoice, this);
 
-    choiceSubC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceSubC = new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceSubC->Append("Select");
     tcQ = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 0);
-
-
 
     tcName = new wxTextCtrl(this, -1);
 
@@ -79,6 +77,7 @@ InsertProductPage::InsertProductPage(Engine *e, const wxString &title) : engine(
     Centre();
 
 }
+
 void InsertProductPage::OnChoice(wxCommandEvent& event) {
 
 

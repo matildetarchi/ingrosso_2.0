@@ -9,9 +9,6 @@
 #include "Database.h"
 
 
-
-
-
 using namespace std;
 class dbFavouritesManager {
 public:
@@ -37,7 +34,6 @@ public:
 private:
 
     shared_ptr<Favourites> fav;
-
     shared_ptr<SQLite::Database> db;
     shared_ptr<Product> prod;
     shared_ptr<Client> client;

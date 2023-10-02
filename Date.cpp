@@ -31,10 +31,10 @@ using namespace std;
 std::shared_ptr<Date> Date::string_to_date_converter(const std::string &date) {
     int year, month, day;
 
-    // Creiamo uno stream di input dalla stringa
+    // Creo uno stream di input dalla stringa
     std::istringstream iss(date);
 
-    // Estrai i componenti della data dalla stringa
+    // Estraggo i componenti della data dalla stringa
     char delimiter;
     iss >> day >> delimiter >> month >> delimiter >> year;
     std::shared_ptr<Date> dateObject = make_shared<Date>(year, month, day);

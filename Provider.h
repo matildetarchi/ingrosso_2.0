@@ -27,9 +27,8 @@ public:
         store = s;
     }
 
-    shared_ptr<Cart> get_cart() override{}
-
-    shared_ptr<Favourites> get_fav() override{}
+    shared_ptr<Cart> get_cart() override{};
+    shared_ptr<Favourites> get_fav() override{};
 
     void add_to_cart(shared_ptr<Product> p) override {};
     void add_to_fav(shared_ptr<Product> p) override {};

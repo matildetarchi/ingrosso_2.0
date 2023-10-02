@@ -14,7 +14,6 @@ Provider::Provider( const string &t, const string &bn,const string &a, const str
                 const string &password, const string &us, const string &c) : User(t, bn, a, e, password, us, c){
 
     store = make_shared<Store>(us);
-
 }
 
 Provider::~Provider() = default;
@@ -30,7 +29,7 @@ bool Provider:: modify_prod(int id_store, string desc, double price, int a_q ){
     while ( i<= num_prod && prod_l[i]->get_id_store() != id_store){
         i++;
     }
-    if(i> num_prod){
+    if(i > num_prod){
         return false;
     } else {
         prod = prod_l[i];

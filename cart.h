@@ -5,6 +5,8 @@
 #ifndef INGROSSO_ONLINE_CART_H
 #define INGROSSO_ONLINE_CART_H
 
+#include <utility>
+
 #include "Store.h"
 
 #define put_in 0
@@ -34,7 +36,7 @@ public:
     }
 
     void set_prod(vector <std::shared_ptr<Product>> p) {
-        products = p;
+        products = std::move(p);
     }
     void add_product(const shared_ptr<Product> &prod);
     void update_num(int control);

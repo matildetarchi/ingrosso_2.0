@@ -40,7 +40,6 @@ LogInPage::LogInPage(Engine *e, const wxString &title) :engine(e),
     m_passwordText = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
 
 
-    // Creare un controllo wxHyperlinkCtrl che apre il frame di destinazione
     hyperlink = new wxHyperlinkCtrl(this, wxID_ANY, "Forgot Password?", "", wxDefaultPosition, wxDefaultSize, wxHL_ALIGN_LEFT);
     hyperlink->SetNormalColour(wxColour(255, 0, 0));
     hyperlink->SetHoverColour(wxColour(0, 200, 0));
@@ -86,7 +85,7 @@ void LogInPage::Access(wxCommandEvent &event) {
         } else {
             Close();
             std::string TypeUser;
-            TypeUser=user->get_type();
+            TypeUser = user->get_type();
 
             if (TypeUser == "F") {
                 auto *ProvidersWin = new HomePageProviders(engine, _T("HOME"), wxPoint(50, 20), wxSize(500, 350));

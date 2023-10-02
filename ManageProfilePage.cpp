@@ -5,8 +5,6 @@
 #include "ManageProfilePage.h"
 
 
-
-
 const long ManageProfilePage::IdButtonConfirm =::wxNewId();
 const long ManageProfilePage::IdButtonVP =::wxNewId();
 
@@ -19,23 +17,22 @@ ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e)
         wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(400, 400)) {
 
     user = engine->get_user();
-    db_user= engine->get_db_user();
+    db_user = engine->get_db_user();
     username = user->get_username();
     table_city = engine->get_db_city();
 
-    messageError="Password Not Equal";
-    messageCorrect="Password Equal";
+    messageError = "Password Not Equal";
+    messageCorrect = "Password Equal";
 
     auto *address = new wxStaticText(this, -1, wxT("Address"));
     auto *city = new wxStaticText(this, -1, wxT("City"));
     auto *password = new wxStaticText(this, -1, wxT("Password"));
     auto *usernameText = new wxStaticText(this, -1, wxT("Username"));
-    auto *email=new wxStaticText(this, -1, wxT("Email"));
+    auto *email = new wxStaticText(this, -1, wxT("Email"));
 
 
     std::vector<std::string> cities;
-
-    cities=table_city->select();
+    cities = table_city->select();
     wxVector<string> choices;
     for (int k=0; k<table_city->number_of_city(); k++){
         choices.push_back(cities[k]);
@@ -47,17 +44,17 @@ ManageProfilePage::ManageProfilePage(Engine *e, const wxString &title):engine(e)
     cities.clear();
     choices.clear();
 
-    choiceC=new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
+    choiceC = new wxChoice(this, wxID_ANY,wxDefaultPosition, wxDefaultSize);
     choiceC->Append("Select");
     choiceC->Append(table_city->number_of_city(),myString);
 
-    Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
-    ViewP=new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
+    Confirm = new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
+    ViewP = new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
 
 
     tcA = new wxTextCtrl(this, wxID_ANY,user->get_address());
-    tcU= new wxTextCtrl(this, wxID_ANY,username);
-    tcEm=new wxTextCtrl(this, wxID_ANY,user->get_email());
+    tcU = new wxTextCtrl(this, wxID_ANY,username);
+    tcEm = new wxTextCtrl(this, wxID_ANY,user->get_email());
     txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
     m_passwordText = new wxTextCtrl(this, wxID_ANY, user->get_psw(), wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
     m_passwordConf = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(120, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
@@ -101,14 +98,14 @@ void ManageProfilePage::OnConfirm(wxCommandEvent &event) {
         std::string new_email = tcEm->GetValue().ToStdString();
         std::string new_pass = m_passwordText->GetValue().ToStdString();
         std::string new_pass_conf = m_passwordConf->GetValue().ToStdString();
-        int control_digit=0;
-        int control_upper=0;
+        int control_digit = 0;
+        int control_upper = 0;
         for(char new_pas : new_pass){
             if (isdigit(new_pas)){
-                control_digit=control_digit+1;
+                control_digit = control_digit+1;
             }
             if (isupper(new_pas)) {
-                control_upper=control_upper+1;
+                control_upper = control_upper+1;
             }
         }
         if (control_digit>0 && new_pass.length()>=8 && control_upper>0 && new_pass==new_pass_conf) {
@@ -135,18 +132,18 @@ void ManageProfilePage::ViewPass(wxCommandEvent &event) {
     sizer->Hide(Confirm);
     if (m_passwordText->GetWindowStyle() & wxTE_PASSWORD) {
         // Impostazione della proprietà wxTE_PROCESS_ENTER per visualizzare il testo
-        m_passwordText=new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PROCESS_ENTER);
+        m_passwordText = new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PROCESS_ENTER);
         m_passwordConf = new wxTextCtrl(this, wxID_ANY, pass_conf, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PROCESS_ENTER);
-        ViewP=new wxButton (this,IdButtonVP,_T ("Hide Password"),wxDefaultPosition,wxDefaultSize,0);
+        ViewP = new wxButton (this,IdButtonVP,_T ("Hide Password"),wxDefaultPosition,wxDefaultSize,0);
     } else {
         // Impostazione della proprietà wxTE_PASSWORD per nascondere il testo
-        m_passwordText=new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
+        m_passwordText = new wxTextCtrl(this, wxID_ANY, pass, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
         m_passwordConf = new wxTextCtrl(this, wxID_ANY, pass_conf, wxDefaultPosition, wxSize(150, wxDefaultSize.GetHeight()), wxTE_PASSWORD);
-        ViewP=new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
+        ViewP = new wxButton (this,IdButtonVP,_T ("View Password"),wxDefaultPosition,wxDefaultSize,0);
     }
     txt_conf_psw = new wxStaticText(this, -1, wxT("Confirm Password"));
     m_passwordConf->Bind(wxEVT_TEXT, &ManageProfilePage::OnTextChange, this);
-    Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
+    Confirm = new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
     sizer->Insert(9,m_passwordText,1, wxALL, 5);
     sizer->Insert(10,txt_conf_psw);
     sizer->Insert(11,m_passwordConf,1, wxALL, 5);

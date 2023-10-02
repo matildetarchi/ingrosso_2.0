@@ -20,7 +20,6 @@ public:
     static const long IdButtonInsert;
     static const long IdButtonComeBack;
 
-
 DECLARE_EVENT_TABLE()
 private:
     void ComeBack(wxCommandEvent& event);

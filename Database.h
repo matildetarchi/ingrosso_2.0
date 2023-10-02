@@ -11,8 +11,6 @@
 #include <SQLiteCpp/Database.h>
 #include "sqlite3.h"
 
-//questa pagina contiene l'indirizzo del database sqlite su cui
-//lavorerà il programmaııı
 using namespace std;
 
 class Database{

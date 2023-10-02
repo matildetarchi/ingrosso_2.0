@@ -51,7 +51,7 @@ void Order::remove_one(int index) {
 }
 
 void Order::remove_all() {
-    for (int i=0;i<num_prod; i++) {
+    for (int i = 0; i < num_prod; i++) {
         remove_one(i);
     }
 }

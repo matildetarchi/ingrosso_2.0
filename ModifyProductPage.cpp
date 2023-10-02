@@ -21,8 +21,8 @@ ModifyProductPage::ModifyProductPage(Engine *e, const wxString &title, int id_st
     auto *price = new wxStaticText(this, -1, wxT("Price"));
     auto *quant = new wxStaticText(this, -1, wxT("Available Quantity"));
 
-    Confirm=new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
-    db_store= engine->get_db_store();
+    Confirm = new wxButton (this,IdButtonConfirm,_T ("Confirm"),wxDefaultPosition,wxDefaultSize,0);
+    db_store = engine->get_db_store();
 
     prod = db_store->select_prod_to_modify(id);
     tcD = new wxTextCtrl(this, wxID_ANY,prod->get_desc());
@@ -48,9 +48,9 @@ ModifyProductPage::ModifyProductPage(Engine *e, const wxString &title, int id_st
 void ModifyProductPage::OnConfirm(wxCommandEvent &event) {
     Close();
 
-    std::string new_desc=tcD->GetValue().ToStdString();
+    std::string new_desc = tcD->GetValue().ToStdString();
     double new_price = tcP->GetValue();
-    int new_available_quant= tcQ->GetValue();
+    int new_available_quant = tcQ->GetValue();
     db_store->change_data(id, new_desc, new_price, new_available_quant);
 
     prov->modify_prod(id, new_desc, new_price, new_available_quant);

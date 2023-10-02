@@ -14,14 +14,13 @@ END_EVENT_TABLE()
 UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std::string &var_city): engine(e),
                    wxFrame(nullptr, -1, title, wxPoint(-1, -1), wxSize(500, 350)) {
 
-    user=engine->get_user();
+    user = engine->get_user();
     db_user = engine->get_db_user();
-    city=var_city;
-    type=user->get_type();
+    city = var_city;
+    type = user->get_type();
 
 
     int row = db_user->select_count_users(type,city);
-    cout << row << endl;
 
     grid = new wxGrid(this, wxID_ANY);
     grid->CreateGrid(row, 5);
@@ -57,7 +56,7 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
     grid->AutoSize();
 
 
-    Back=new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
+    Back = new wxButton (this,IdButtonBack,_T ("Back"),wxDefaultPosition,wxDefaultSize,0);
 
     sizer = new wxBoxSizer(wxVERTICAL);
 
@@ -66,8 +65,6 @@ UsersDataListPage::UsersDataListPage(Engine *e, const wxString &title, const std
     SetSizer(sizer);
 
     Centre();
-
-
 }
 
 void UsersDataListPage::ComeBack(wxCommandEvent &event) {

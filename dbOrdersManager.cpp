@@ -142,6 +142,9 @@ void dbOrdersManager::select_for_provider() {
                 }
 
             }
+            //********************************************************
+            //sarebbe da mettere un if qua: se il codice di questo ordine è uguale al precedente
+            //allora questo non lo inserisce
             tab_order->add_order(order);
         }
     }
