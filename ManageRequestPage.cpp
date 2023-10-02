@@ -26,13 +26,28 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     db_order = engine->get_db_order();
 
 
-    int row_op = db_order->select_count_for_provider_onlyp(ctrl);
-    int row = db_order->select_count_for_provider();
+    //int row_op = db_order->select_count_for_provider_onlyp(ctrl);
+    //int row = db_order->select_count_for_provider();
     grid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxSize(450,300));
 
 
     orders_list = prov->get_order_list();
     order = orders_list->get_orders();
+    for(int i = 0; i<orders_list->get_num_order(); i++) {
+        orders_id.push_back(order[i]->get_id());
+    }
+    int x = 0;
+    int y = 1;
+    while(y <= orders_list->get_num_order()) {
+        if(orders_id[x] == orders_id[y])
+            orders_list->remove_one(x);
+        x++;
+        y++;
+    }
+    new_order = orders_list->get_orders();
+
+    int row_op = db_order->select_count_for_provider_onlyp(ctrl);
+    int row = db_order->select_count_for_provider();
 
     if (ctrl==0) {
         grid->CreateGrid(row_op, 3);
@@ -52,11 +67,11 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
         int i = 0;
         int j = 0;
         while(i < row) {
-            if(order[i]->get_status() == "S") {
-                shared_ptr<Date> d = order[i]->get_date();
+            if(new_order[i]->get_status() == "S") {
+                shared_ptr<Date> d = new_order[i]->get_date();
                 std::string date = d->to_string("%d/%m/%Y");
-                string us_client = order[i]->get_us_client();
-                int id_o = order[i]->get_id();
+                string us_client = new_order[i]->get_us_client();
+                int id_o = new_order[i]->get_id();
                 string id_order = (to_string(id_o));
                 shared_ptr<Order> o = make_shared<Order>(id_o, "S", us_client);
                 o->set_date(d);
@@ -76,11 +91,11 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     } else {
         int i = 0;
         while( i < row) {
-            shared_ptr<Date> d = order[i]->get_date();
+            shared_ptr<Date> d = new_order[i]->get_date();
             std::string date = d->to_string("%d/%m/%Y");
-            string status = order[i]->get_status();
-            string us_client = order[i]->get_us_client();
-            int id_o = order[i]->get_id();
+            string status = new_order[i]->get_status();
+            string us_client = new_order[i]->get_us_client();
+            int id_o = new_order[i]->get_id();
             string id_order = (to_string(id_o));
 
             grid->SetReadOnly(i, 0, true);
@@ -146,7 +161,7 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
             row = selectedRows[i];
         }
 
-        id_order = order[row]->get_id();
+        id_order = new_order[row]->get_id();
     } else {
         int row_op = 0;
         for (int i = 0; i < selectedRows.GetCount(); i++) {
@@ -177,7 +192,7 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
             row = selectedRows[i];
         }
 
-        id_order = order[row]->get_id();
+        id_order = new_order[row]->get_id();
     } else {
         int row_op = 0;
         for (int i = 0; i < selectedRows.GetCount(); i++) {
@@ -205,7 +220,7 @@ void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
                 row = selectedRows[i];
             }
 
-            code_order = order[row]->get_id();
+            code_order = new_order[row]->get_id();
         } else {
             int row_op = 0;
             for (int i = 0; i < selectedRows.GetCount(); i++) {

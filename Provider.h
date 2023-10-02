@@ -5,6 +5,8 @@
 #ifndef INGROSSO_ONLINE_PROVIDER_H
 #define INGROSSO_ONLINE_PROVIDER_H
 
+#include <utility>
+
 #include "User.h"
 
 
@@ -14,7 +16,7 @@ using namespace std;
 class Provider: virtual public User {
 public:
 
-    Provider(const string &us);
+    explicit Provider(const string &us);
     Provider(const string &t, const string &bn, const string &a, const string &e, const string &password, const string &us, const string &c);
     ~Provider() override;
 
@@ -24,7 +26,7 @@ public:
     }
 
     void set_store(shared_ptr<Store> s) {
-        store = s;
+        store = std::move(s);
     }
 
     shared_ptr<Cart> get_cart() override{};

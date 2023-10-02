@@ -80,12 +80,11 @@ void ProviderStorePage::DeleteProduct(wxCommandEvent &event) {
 
         wxArrayInt selectedRows = grid->GetSelectedRows();
         int row;
-        size_t i = 0;
-        while (i == selectedRows.GetCount()) {
-            i++;
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row = selectedRows[i];
         }
-        row = selectedRows[i];
-        int id_prod= prod_list[i]->get_id_store();
+
+        int id_prod = prod_list[row]->get_id_store();
         if(!db_store->remove_from_db(id_prod)){
             wxMessageBox("You can't remove this product from your store because is in someone's cart or favourites list or not accepted/denied order",
                          "Error", wxICON_ERROR);

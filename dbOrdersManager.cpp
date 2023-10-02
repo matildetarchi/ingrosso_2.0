@@ -5,11 +5,9 @@
 #include "dbOrdersManager.h"
 
 
-
 dbOrdersManager::dbOrdersManager(const shared_ptr<Database>& d) {
         db = d->get_db();
 }
-
 
 
 void dbOrdersManager::add_to_db(){
@@ -89,15 +87,14 @@ void dbOrdersManager::select_for_provider() {
     if (count >0) {
 
         string select_id_store = "SELECT store.id FROM store, orders, orders_details WHERE orders.id = id_order AND store.id = id_product AND id_prov = '" + to_string(id_user) + "'";
-
         SQLite::Statement query(*db, select_id_store);
-        while (query.executeStep()) {
 
+        while (query.executeStep()) {
             int id_store = query.getColumn(0).getInt();
 
             string select_orders = "SELECT orders.id, date_order, status, id_client FROM orders, orders_details, store WHERE orders.id = id_order AND id_prov = "+
                                    to_string(id_user)+" AND id_product = "+
-                                   to_string(id_store)+" GROUP BY orders.id";
+                                   to_string(id_store)+" GROUP BY date_order";
             SQLite::Statement query_ord(*db, select_orders);
 
             while (query_ord.executeStep()) {
@@ -110,7 +107,6 @@ void dbOrdersManager::select_for_provider() {
                 //prendo username cliente
                 string select_us_cl = "SELECT username FROM users WHERE  id= '" + to_string(id_client) + "'";
                 string username_client = db->execAndGet(select_us_cl);
-
 
                 // trasformo la stringa data in un oggetto Date
                 date = date->string_to_date_converter(date_string);
@@ -142,9 +138,7 @@ void dbOrdersManager::select_for_provider() {
                 }
 
             }
-            //********************************************************
-            //sarebbe da mettere un if qua: se il codice di questo ordine è uguale al precedente
-            //allora questo non lo inserisce
+
             tab_order->add_order(order);
         }
     }

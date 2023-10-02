@@ -33,7 +33,7 @@ void OrdersList::update_num(int control) {
 }
 
 void OrdersList::remove_one(int index) {
-    if(index<orders.size()){
+    if(index < orders.size()){
         auto iteretor_to_remove=orders.begin()+index;
         orders.erase(iteretor_to_remove);
         update_num(cc);
