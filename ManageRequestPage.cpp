@@ -26,16 +26,16 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
     db_order = engine->get_db_order();
 
 
-    int row = db_order->select_count_for_provider(ctrl); //giusto perche uso le query al posto degli oggetti
+    int row_op = db_order->select_count_for_provider_onlyp(ctrl);
+    int row = db_order->select_count_for_provider();
     grid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxSize(450,300));
 
-    //errore nei get, orders_list da 5 ordini e dovrebbe ritornarne 3
-    //non piu ma se faccio all me li fa vedere sbagliati
+
     orders_list = prov->get_order_list();
     order = orders_list->get_orders();
 
     if (ctrl==0) {
-        grid->CreateGrid(row, 3);
+        grid->CreateGrid(row_op, 3);
         grid->SetColLabelValue(0, "Code order");
         grid->SetColLabelValue(1, "Customer");
         grid->SetColLabelValue(2, "Date");
@@ -47,41 +47,54 @@ ManageRequestPage::ManageRequestPage(Engine* e, const wxString &title, int contr
         grid->SetColLabelValue(2, "Date");
         grid->SetColLabelValue(3, "Status");
     }
-    int i = 0;
-    while( i < row) {
-        shared_ptr<Date> d= order[i]->get_date();
-        std::string date = d->to_string("%d/%m/%Y");
-        string status= order[i]->get_status();
-        string us_client= order[i]->get_us_client();
-        int id_o= order[i]->get_id();
-        string id_order(to_string(id_o));
 
-        if (ctrl==0 ) {
-            if (status == "S") {
-                grid->SetReadOnly(i, 0, true);
-                grid->SetCellValue(i, 0, id_order);
-                grid->SetReadOnly(i, 1, true);
-                grid->SetCellValue(i, 1, us_client);
-                grid->SetReadOnly(i, 2, true);
-                grid->SetCellValue(i, 2, date);
+    if(ctrl == 0) {
+        int i = 0;
+        int j = 0;
+        while(i < row) {
+            if(order[i]->get_status() == "S") {
+                shared_ptr<Date> d = order[i]->get_date();
+                std::string date = d->to_string("%d/%m/%Y");
+                string us_client = order[i]->get_us_client();
+                int id_o = order[i]->get_id();
+                string id_order = (to_string(id_o));
+                shared_ptr<Order> o = make_shared<Order>(id_o, "S", us_client);
+                o->set_date(d);
+                order_op.push_back(o);
+
+                grid->SetReadOnly(j, 0, true);
+                grid->SetCellValue(j, 0, id_order);
+                grid->SetReadOnly(j, 1, true);
+                grid->SetCellValue(j, 1, us_client);
+                grid->SetReadOnly(j, 2, true);
+                grid->SetCellValue(j, 2, date);
+                j++;
                 i++;
             } else
-                //mi mette lo stesso le righe ma vuote
                 i++;
         }
+    } else {
+        int i = 0;
+        while( i < row) {
+            shared_ptr<Date> d = order[i]->get_date();
+            std::string date = d->to_string("%d/%m/%Y");
+            string status = order[i]->get_status();
+            string us_client = order[i]->get_us_client();
+            int id_o = order[i]->get_id();
+            string id_order = (to_string(id_o));
 
-        if(ctrl == 1){
             grid->SetReadOnly(i, 0, true);
-            grid->SetCellValue(i,0, id_order);
+            grid->SetCellValue(i, 0, id_order);
             grid->SetReadOnly(i, 1, true);
-            grid->SetCellValue(i,1, us_client);
+            grid->SetCellValue(i, 1, us_client);
             grid->SetReadOnly(i, 2, true);
-            grid->SetCellValue(i,2, date);
+            grid->SetCellValue(i, 2, date);
             grid->SetReadOnly(i, 3, true);
-            grid->SetCellValue(i,3, status);
+            grid->SetCellValue(i, 3, status);
             i++;
         }
     }
+
     sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer_vertical = new wxBoxSizer(wxVERTICAL);
     View = new wxButton (this,IdButtonView,_T ("View"),wxDefaultPosition,wxDefaultSize,0);
@@ -126,23 +139,29 @@ void ManageRequestPage::OnConfirm(wxCommandEvent &event) {
     }
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
-    for (int i = 0; i < selectedRows.GetCount(); i++) {
-        row = selectedRows[i];
+    int id_order;
+    if(ctrl == 1) {
+
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row = selectedRows[i];
+        }
+
+        id_order = order[row]->get_id();
+    } else {
+        int row_op = 0;
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row_op = selectedRows[i];
+        }
+
+        id_order = order_op[row_op]->get_id();
     }
 
-    string status = order[row]->get_status();
-    int id_order = order[row]->get_id();
+    db_order->change_status("A", id_order);
 
-    if (ctrl == 1 && status != "S") {
-        wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
-    } else {
-        db_order->change_status("A", id_order);
-        if (ctrl == 0) {
-            grid->DeleteRows(row);
-        } else {
-            grid->SetCellValue(row, 3, "Accepted");
-            }
-       }
+    if (ctrl==0)
+        grid->DeleteRows(row);
+    else
+        grid->SetCellValue(row, 3, "Accepted");
 }
 
 void ManageRequestPage::OnDeny(wxCommandEvent &event) {
@@ -151,38 +170,54 @@ void ManageRequestPage::OnDeny(wxCommandEvent &event) {
     }
     wxArrayInt selectedRows = grid->GetSelectedRows();
     int row;
-    for (int i = 0; i < selectedRows.GetCount(); i++) {
-        row = selectedRows[i];
-    }
+    int id_order;
+    if(ctrl == 1) {
 
-    string status = order[row]->get_status();
-    int id_order = order[row]->get_id();
-    if (status!="Pending") {
-        wxMessageBox("The one you choosed it's already confirmed or denied", "Error", wxICON_ERROR);
-    } else {
-
-        db_order->change_status("D", id_order);
-
-        if (ctrl==0) {
-            grid->DeleteRows(row);
-        } else {
-            grid->SetCellValue(row, 3, "Denied");
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row = selectedRows[i];
         }
+
+        id_order = order[row]->get_id();
+    } else {
+        int row_op = 0;
+        for (int i = 0; i < selectedRows.GetCount(); i++) {
+            row_op = selectedRows[i];
+        }
+
+        id_order = order_op[row_op]->get_id();
     }
+
+    db_order->change_status("D", id_order);
+
+    if (ctrl==0)
+        grid->DeleteRows(row);
+    else
+        grid->SetCellValue(row, 3, "Denied");
+
 }
 
 void ManageRequestPage::ViewOrder(wxCommandEvent &event) {
     if (grid->GetSelectedRows().IsEmpty()) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
     } else {
-        std::string code;
         wxArrayInt selectedRows = grid->GetSelectedRows();
-        int row;
-        for (int i = 0; i < selectedRows.GetCount(); i++) {
-            row = selectedRows[i];
-        }
+        int code_order;
+        if(ctrl == 1) {
+            int row;
+            for (int i = 0; i < selectedRows.GetCount(); i++) {
+                row = selectedRows[i];
+            }
 
-        int code_order = order[row]->get_id();
+            code_order = order[row]->get_id();
+        } else {
+            int row_op = 0;
+            for (int i = 0; i < selectedRows.GetCount(); i++) {
+                row_op = selectedRows[i];
+            }
+
+            code_order = order_op[row_op]->get_id();
+
+        }
         auto *view = new SingleOrderProviderPage(engine, _T("ORDER LIST"), code_order);
         view->Show(TRUE);
     }

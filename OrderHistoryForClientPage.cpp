@@ -27,11 +27,12 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
 
     db_order = engine->get_db_order();
 
-    int row = db_order->select_count_for_client(ctrl);
+    int row = db_order->select_count_for_client();
+    int row_op = db_order->select_count_for_client_onlyp();
 
     grid = new wxGrid(this, wxID_ANY,wxDefaultPosition, wxSize(450,300));
     if (ctrl==0) {
-        grid->CreateGrid(row, 2);
+        grid->CreateGrid(row_op, 2);
         grid->SetColLabelValue(0, "Code order");
         grid->SetColLabelValue(1, "Date");
 
@@ -45,30 +46,47 @@ OrderHistoryForClientPage::OrderHistoryForClientPage(Engine *e, const wxString &
     orders_list = client->get_order_list();
     order = orders_list->get_orders();
 
-    for (int i = 0; i < row; i++) {
-        shared_ptr<Date> d = order[i]->get_date();
-        std::string date = d->to_string("%d/%m/%Y");
-        string status = order[i]->get_status();
-        int id_o = order[i]->get_id();
-        string id_order = (to_string(id_o));
+    if(ctrl == 0) {
+        int i = 0;
+        int j = 0;
+        while(i < row) {
+            if(order[i]->get_status() == "S") {
+                shared_ptr<Date> d = order[i]->get_date();
+                std::string date = d->to_string("%d/%m/%Y");
+                int id_o = order[i]->get_id();
+                string id_order = (to_string(id_o));
+                shared_ptr<Order> o = make_shared<Order>(id_o, "S", username);
+                o->set_date(d);
+                order_op.push_back(o);
 
-        if (ctrl == 0 ) {
-            if(status == "S") {
-                grid->SetReadOnly(i, 0, true);
-                grid->SetCellValue(i, 0, id_order);
-                grid->SetReadOnly(i, 1, true);
-                grid->SetCellValue(i, 1, date);
-            }
+                grid->SetReadOnly(j, 0, true);
+                grid->SetCellValue(j, 0, id_order);
+                grid->SetReadOnly(j, 1, true);
+                grid->SetCellValue(j, 1, date);
+                j++;
+                i++;
+            } else
+                i++;
         }
-        else if(ctrl == 1){
-                grid->SetReadOnly(i, 0, true);
-                grid->SetCellValue(i, 0, id_order);
-                grid->SetReadOnly(i, 1, true);
-                grid->SetCellValue(i, 1, date);
-                grid->SetReadOnly(i, 2, true);
-                grid->SetCellValue(i, 2, status);
+    } else {
+        int i = 0;
+        while( i < row) {
+            shared_ptr<Date> d = order[i]->get_date();
+            std::string date = d->to_string("%d/%m/%Y");
+            string status = order[i]->get_status();
+            int id_o = order[i]->get_id();
+            string id_order = (to_string(id_o));
+
+            grid->SetReadOnly(i, 0, true);
+            grid->SetCellValue(i, 0, id_order);
+            grid->SetReadOnly(i, 1, true);
+            grid->SetCellValue(i, 1, date);
+            grid->SetReadOnly(i, 2, true);
+            grid->SetCellValue(i, 2, status);
+            i++;
         }
     }
+
     grid->SetSelectionMode(wxGrid::wxGridSelectRows);
     grid->AutoSize();
 
@@ -119,13 +137,23 @@ void OrderHistoryForClientPage::ViewOrder(wxCommandEvent &event) {
         wxMessageBox("Choose a order", "Error", wxICON_ERROR);
     } else {
         wxArrayInt selectedRows = grid->GetSelectedRows();
-        int row;
-        size_t i = 0;
-        while (i < selectedRows.GetCount()) {
-            i++;
+        int code;
+        if(ctrl == 1) {
+            int row;
+            for (int i = 0; i < selectedRows.GetCount(); i++) {
+                row = selectedRows[i];
+            }
+
+            code = order[row]->get_id();
+        } else {
+            int row_op = 0;
+            for (int i = 0; i < selectedRows.GetCount(); i++) {
+                row_op = selectedRows[i];
+            }
+
+            code = order_op[row_op]->get_id();
+
         }
-        row = selectedRows[i];
-        int code = order[row]->get_id();
         auto *view = new SingleOrderClientPage(engine, _T("ORDER LIST"), code);
         view->Show(TRUE);
     }

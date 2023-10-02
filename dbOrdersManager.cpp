@@ -46,6 +46,7 @@ void dbOrdersManager::add_to_db(){
     SQLite::Statement query(*db, select_last_order_products);
 
     std::shared_ptr<Order> ord = std::make_shared<Order>(id_last_ord, "S", username);
+    ord->set_date(d);
 
     while (query.executeStep()) {
 
@@ -53,7 +54,7 @@ void dbOrdersManager::add_to_db(){
         int id_store = query.getColumn(4).getInt();
         string subcategories = query.getColumn(3).getText();
         int quantity = query.getColumn(2).getInt();
-        double price_prod = query.getColumn(1).getInt();
+        double price_prod = query.getColumn(1);
         string desc_prod = query.getColumn(0).getText();
 
         std::shared_ptr<Product> product = std::make_shared<Product>(desc_prod, price_prod, quantity,q_available, username, subcategories);
@@ -96,7 +97,7 @@ void dbOrdersManager::select_for_provider() {
 
             string select_orders = "SELECT orders.id, date_order, status, id_client FROM orders, orders_details, store WHERE orders.id = id_order AND id_prov = "+
                                    to_string(id_user)+" AND id_product = "+
-                                   to_string(id_store)+" GROUP BY date_order";
+                                   to_string(id_store)+" GROUP BY orders.id";
             SQLite::Statement query_ord(*db, select_orders);
 
             while (query_ord.executeStep()) {
@@ -172,9 +173,8 @@ void dbOrdersManager::select_for_client() {
             shared_ptr<Order> o = make_shared<Order>(id_order, status, username);
             o->set_date(date);
 
-            string select_products =
-                    "SELECT desc_prod, price_product, quantity, id_sub, id_product, available_quantity FROM store, orders_details, orders WHERE id_product = store.id orders.id = id_order AND id_order = '" +
-                    to_string(id_order) + "'AND id_client = '" + to_string(id_user) + "'";
+            string select_products = "SELECT desc_prod, price_product, quantity, id_sub, id_product, available_quantity FROM store, orders_details, orders WHERE id_product = store.id AND orders.id = id_order AND id_order = '" +
+                                      to_string(id_order) + "' AND id_client = '" + to_string(id_user) + "'";
             SQLite::Statement query_prod(*db, select_products);
 
             while (query_prod.executeStep()) {
@@ -222,68 +222,61 @@ void dbOrdersManager::cancel_order(int id_order) {
 
 }
 
-int dbOrdersManager::select_count_for_provider(int control) {
-    if (user->get_type() == "F") {
-        int count;
 
+int dbOrdersManager::select_count_for_provider_onlyp(int control) {
+    if (user->get_type() == "F") {
+        int count_s = 0;
         tab_order = user->get_order_list();
         if (control == 0) {
-            string sel_orders_s = "SELECT COUNT (*) FROM orders, orders_details, store, users WHERE orders.id = id_order AND store.id = id_product AND id_prov = users.id AND users.id = "+
-                                to_string(user->get_db_id())+" AND status = 'S'";
-            count = db->execAndGet(sel_orders_s);
-        } else {
-            string sel_orders = "SELECT COUNT (*) FROM orders, orders_details, store, users WHERE orders.id = id_order AND store.id = id_product AND id_prov = users.id AND users.id = "+
-                                to_string(user->get_db_id())+"";
-            count = db->execAndGet(sel_orders);
+            vector<shared_ptr<Order>> o_l = tab_order->get_orders();
+
+            for(int i = 0; i < o_l.size(); i++) {
+                if(o_l[i]->get_status() == "S")
+                    count_s++;
+            }
         }
-        return count;
+        int count = tab_order->get_num_order();
+        if(control == 0)
+            return count_s;
+        else
+            return count;
     } else
-        throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
+        throw std::runtime_error("Error, the user you selected isn't a provider");
 
 }
 
-
-/*int dbOrdersManager::select_count_for_provider(int control) {
+int dbOrdersManager::select_count_for_provider() {
     if (user->get_type() == "F") {
-        int count = 0;
-        //ERRORE QUA
         tab_order = user->get_order_list();
-        if (control == 0) {
-            vector<shared_ptr<Order>> o_l = tab_order->get_orders();
-            int i = 0;
-            while (i < o_l.size()) {
-                if (o_l[i]->get_status() == "S") {
-                    count++;
-                    i++;
-                }
-                i++;
-            }
-        }
-        count = tab_order->get_num_order();
+        int count = tab_order->get_num_order();
         return count;
-    } else
-        throw std::runtime_error("Errore, l'utente selezionato non è un fornitore");
-
-}*/
-
-int dbOrdersManager::select_count_for_client(int control){
-    if(user->get_type()== "C") {
-        int count = 0;
-        tab_order = user->get_order_list();
-        if (control == 0){
-            vector<shared_ptr<Order>> o_l = tab_order->get_orders();
-            int i = 0;
-            while(i < o_l.size()){
-                if(o_l[i]->get_status() == "S"){
-                    count ++;
-                    i++;
-                }
-                i++;
-            }
-        }else
-            count = tab_order->get_num_order();
-        return count;
+    } else {
+        throw std::runtime_error("Error, the user you selected isn't a provider");
     }
-    else
-        throw std::runtime_error("Errore, l'utente selezionato non è un cliente");
+}
+
+int dbOrdersManager::select_count_for_client_onlyp(){
+    if(user->get_type()== "C") {
+        int count_op = 0;
+        tab_order = user->get_order_list();
+        vector<shared_ptr<Order>> o_l = tab_order->get_orders();
+
+        for(int i = 0; i < o_l.size(); i++) {
+            if(o_l[i]->get_status() == "S")
+                count_op++;
+        }
+            return count_op;
+    } else
+        throw std::runtime_error("Error, the user you selected isn't a client");
+
+}
+
+int dbOrdersManager::select_count_for_client() {
+    if (user->get_type() == "C") {
+        tab_order = user->get_order_list();
+        int count = tab_order->get_num_order();
+        return count;
+    } else {
+        throw std::runtime_error("Error, the user you selected isn't a client");
+    }
 }

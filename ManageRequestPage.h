@@ -44,6 +44,7 @@ private:
     wxGrid *grid;
     std::string username;
     std::vector<shared_ptr<Order>> order;
+    std::vector<shared_ptr<Order>> order_op;
     int ctrl;
     Engine* engine;
     shared_ptr<Provider> prov;

@@ -20,7 +20,7 @@ public:
 
     ~Order();
 
-    int get_id() const {
+    [[nodiscard]] int get_id() const {
         return id;
     }
 
@@ -51,7 +51,6 @@ public:
     void set_date(shared_ptr<Date> d) {
         date = std::move(d);
     }
-
 
     static double get_total(const shared_ptr<Order>& o);
     void add_to_order(shared_ptr<Product> p);

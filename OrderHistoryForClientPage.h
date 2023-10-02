@@ -45,6 +45,7 @@ private:
     Engine *engine;
     shared_ptr<Client> client;
     std::vector<shared_ptr<Order>> order;
+    std::vector<shared_ptr<Order>> order_op;
     shared_ptr<dbOrdersManager> db_order;
     shared_ptr <OrdersList> orders_list;
 };

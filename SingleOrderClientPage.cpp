@@ -17,7 +17,6 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, i
 
 
     client = engine->get_client();
-    db_order = engine->get_db_order();
     shared_ptr<Database> db;
     db = engine->get_db();
     shared_ptr<SQLite::Database> database;
@@ -35,10 +34,6 @@ SingleOrderClientPage::SingleOrderClientPage(Engine *e, const wxString &title, i
 
     order = orders[i];
     order_p = order->get_order_prod();
-    //errore nel get_num, ritorna 3. dovrebbe essere 1
-    //int row = order->get_num_prod();
-    //sembrerebbe riaolto ma
-    //il problema rimane nel get_total perche i prodotticontinuano a rimanere 3 e da il totale su quei 3
     string sel_count = "SELECT COUNT (*) FROM orders, orders_details WHERE orders.id = id_order AND id_order = "+
                        to_string(id_order)+"";
     int row = database->execAndGet(sel_count);
